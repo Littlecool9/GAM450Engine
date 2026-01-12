@@ -12,24 +12,28 @@
 
 namespace rm
 {
-	class Application
-	{
-	public:
-		Application() = default;
-		virtual ~Application() = default;
-		void Init();
-		void Run();
-		void Shutdown();
+    class Scene;
+    class Application
+    {
+       public:
+        Application() = default;
+        virtual ~Application() = default;
+        void Init();
+        void Run();
+        void Shutdown();
 
-		void OnEvent(Event &e);
+        void OnEvent(Event& e);
 
-	private:
-		bool OnWindowClose(class WindowCloseEvent &e);
-		bool OnWindowResize(class WindowResizeEvent &e);
+       protected:
+        virtual Scene* GetInitialScene() = 0;
 
-		std::unique_ptr<Window> window;
-		bool isRunning = false;
-	};
+       private:
+        bool OnWindowClose(class WindowCloseEvent& e);
+        bool OnWindowResize(class WindowResizeEvent& e);
 
-	Application *CreateApplication();
-}
+        std::unique_ptr<Window> window;
+        bool isRunning = false;
+    };
+
+    Application* CreateApplication();
+}  // namespace rm

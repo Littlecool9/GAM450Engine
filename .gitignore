@@ -1,41 +1,42 @@
-# Prerequisites
-*.d
+# ===============================
+# Project Ignores
+# ===============================
+/[Bb]in/
+/[Bb]in-int/
+/[Ll]og/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+*.log
 
-# Precompiled Headers
-*.gch
-*.pch
+# ===============================
+# Third-Party Generated Files
+# ===============================
+# CMake build trees
+RM-Engine/third-party/build/
+RM-Engine/third-party/install/
 
-# Linker files
-*.ilk
+# CMake cache files (safety)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+*.cmake.user
 
-# Debugger Files
-*.pdb
+# ===============================
+# Visual Studio
+# ===============================
+.vs/
+*.sln
+*.slnx
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+# ===============================
+# Doxygen
+# ===============================
+docs/html/
+docs/latex/
+docs/rtf/
+docs/man/
+docs/xml/

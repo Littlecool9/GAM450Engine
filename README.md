@@ -1,198 +1,53 @@
-# gam541-olive
-Repository for DigiPen GAM541 team codenamed Olive
+# RM-Engine
 
-# Git Workflow Guide for Students
+> **Note:** This project uses the Visual Studio 2022 build configuration as it's the latest version supported by Premake. However, you can use any version of Visual Studio 2022 or newer—we're currently developing with Visual Studio 2026.
 
-This guide walks you through the full process of working with a GitHub repository: cloning it, creating your own branch, making changes, pushing your work, and creating a Pull Request (PR).  
-It is written for students who have only basic familiarity with Git and GitHub.
+## Solution Setup
 
----
+All solution and dependency generation is done through premake. Click on `GenerateProjects.bat` to generate `.sln` file.
 
-## 1. Cloning the Repository to Your Local Machine
+## Third-Party Library Setup
 
-Before you start, make sure you have:
+Libraries are managed through git submodule. Run `git submodule update --init --recursive` in the root folder.
 
-- Git installed on your computer  
-- A GitHub account  
-- Access to the repository you need to work on
+## ReSharper C++ Setup
 
-**Steps:**
+ReSharper C++ is recommended for enhanced code analysis and refactoring support. Students can obtain a free educational license using their college email through the [JetBrains Student Program](https://www.jetbrains.com/community/education/#students).
 
-1. Go to the repository page on GitHub in your web browser.
-2. Click the green **Code** button.
-3. Copy the HTTPS URL (it looks like `https://github.com/organization/repository.git`).
-4. Open your terminal (Command Prompt, PowerShell, or macOS Terminal).
-5. Navigate to the folder where you want the project to live.
-6. Run the following command:
+After obtaining your license, download and install ReSharper C++ from the [JetBrains website](https://www.jetbrains.com/resharper-cpp/). During installation, select your installed version of Visual Studio to integrate ReSharper into your development environment.
 
-```
-git clone <repository-url>
-```
+## Doxygen Setup
 
-Example:
+After cloning the repository, install Doxygen based on your operating system. For Windows users, download and run the installer from the [official Doxygen website](https://www.doxygen.nl/download.html). Linux and macOS users can follow the installation instructions provided on the same page.
 
-```
-git clone https://github.com/example-org/example-repo.git
-```
+Once installed, navigate to the `docs/` folder in the repository and run: `doxygen`
 
-7. Move into the project folder:
+This will generate the documentation using the provided Doxyfile configuration.
 
-```
-cd example-repo
-```
+## Templates Installation
 
----
+RM Engine uses a standardized format for license headers in all source and header files. Visual Studio templates implementing these headers are located in the `templates` folder within the main directory. Run the batch file corresponding to your Visual Studio installation's item templates directory. The script currently supports Visual Studio 2022 and 2026 (VS 18).
 
-## 2. Creating a Local Branch From `main`
+## Formatting
 
-You will create a branch based on the `main` branch.  
-Your branch name should follow this pattern:
+This project enforces Google-style C++ formatting via a repo-root .clang-format file. All contributors must format code using clang-format, not IDE-specific formatters.
 
-```
-firstname/featureNameOrBugId
-```
+### Visual Studio (VS 2026)
 
-Examples:
+- Go to Tools → Options → Text Editor → C/C++ → Formatting
+- Enable ClangFormat and ensure the default VS formatter is disabled for C++
+- Use Format Document (C++) to apply .clang-format
 
-- `alex/add-login-button`
-- `maria/fix-142-broken-link`
+### Visual Studio Code
 
-**Steps:**
+- Install C/C++ (ms-vscode.cpptools)
+- Ensure VS Code uses the repo config by setting: `"C_Cpp.clang_format_style": "file"`
+- (Optional) Enable `"editor.formatOnSave": true`
 
-1. Make sure you are on the `main` branch:
+### ReSharper (Visual Studio)
 
-```
-git checkout main
-```
+- Go to ReSharper → Options → Code Editing → C++ → Formatting Style
+- Set Formatter to ClangFormat
+- Enable Use .clang-format file from project
 
-2. Pull the latest changes so your copy is up to date:
-
-```
-git pull
-```
-
-3. Create your new branch:
-
-```
-git checkout -b firstname/featureNameOrBugId
-```
-
-This creates the branch and switches you to it.
-
----
-
-## 3. Making Changes on Your Local Branch
-
-Now you can open the project in your editor (VS Code, IntelliJ, etc.) and make your changes.
-
-When you are ready to save your work:
-
-1. Check which files you changed:
-
-```
-git status
-```
-
-2. Add the files you want to include in your commit:
-
-```
-git add <filename>
-```
-
-Or add everything:
-
-```
-git add .
-```
-
-3. Commit your changes with a meaningful message:
-
-```
-git commit -m "Describe what you changed"
-```
-
-You can repeat this process as many times as needed while you work.
-
----
-
-## 4. Pushing Your Branch to GitHub
-
-When you are done testing your changes locally:
-
-1. Push your branch to the remote repository:
-
-```
-git push -u origin firstname/featureNameOrBugId
-```
-
-The `-u` flag sets up tracking so future pushes can be done with just `git push`.
-
----
-
-## 5. Creating a Pull Request (PR)
-
-Once your branch is pushed:
-
-1. Go to the repository on GitHub in your browser.
-2. You should see a message offering to create a Pull Request from your branch.  
-   If not, click the **Pull Requests** tab and then **New Pull Request**.
-3. Make sure the base branch is `main` and the compare branch is your branch.
-4. Add a clear title and description explaining what you changed.
-5. Submit the Pull Request.
-
----
-
-## 6. Waiting for Code Review
-
-A teammate will now review your code.  
-They may:
-
-- Approve it  
-- Request changes  
-- Leave comments or questions  
-
-If changes are requested:
-
-1. Make the updates on your local branch.
-2. Commit them.
-3. Push again using:
-
-```
-git push
-```
-
-Your PR will automatically update.
-
----
-
-## 7. Merging Into `main`
-
-Once your PR is approved:
-
-1. Go to the Pull Request page on GitHub.
-2. Click the **Merge** button (usually labeled “Merge pull request”).
-3. Confirm the merge.
-4. After merging, you can delete your branch on GitHub if you want (GitHub will offer a button for this).
-
-Finally, update your local `main` branch:
-
-```
-git checkout main
-git pull
-```
-
----
-
-## Summary of Common Commands
-
-```
-git clone <url>
-git checkout main
-git pull
-git checkout -b firstname/featureNameOrBugId
-git status
-git add .
-git commit -m "message"
-git push -u origin firstname/featureNameOrBugId
-```
-
+> Formatting must always follow the committed .clang-format. IDE-specific styles must not override it.

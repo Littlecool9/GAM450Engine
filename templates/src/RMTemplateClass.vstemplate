@@ -1,0 +1,15 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+	<TemplateData>
+		<DefaultName>RMTemplateClass</DefaultName>
+		<Name>RMTemplateClass</Name>
+		<Description>Ramin engine - generic template class that creates both .cpp and .h files.</Description>
+		<ProjectType>VC</ProjectType>
+		<SortOrder>10</SortOrder>
+		<Icon>__TemplateIcon.ico</Icon>
+	</TemplateData>
+	<TemplateContent>
+		<References />
+		<ProjectItem SubType="" TargetFileName="$fileinputname$.cpp" ReplaceParameters="true">RMTemplateClass.cpp</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="$fileinputname$.h" ReplaceParameters="true">RMTemplateClass.h</ProjectItem>
+	</TemplateContent>
+</VSTemplate>

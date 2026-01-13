@@ -61,7 +61,7 @@ namespace rm
         if (s_targetFps <= 0 || s_paused)
             return;
 
-        const auto targetFrame = std::chrono::duration<double>(1.0 / double(s_targetFps));
+        const auto targetFrame = std::chrono::duration<double>(1.0 / static_cast<double>(s_targetFps));
 
         const auto now = Clock::now();
         auto elapsed = now - s_frameStart;
@@ -73,11 +73,6 @@ namespace rm
             if (remaining > s_sleepMargin)
             {
                 std::this_thread::sleep_for(remaining - s_sleepMargin);
-            }
-
-            while ((Clock::now() - s_frameStart) < targetFrame)
-            {
-                // optional: std::this_thread::yield();
             }
         }
     }

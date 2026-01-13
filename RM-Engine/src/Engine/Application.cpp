@@ -17,6 +17,8 @@
 
 #include "Input/Input.h"
 #include "SceneSystem/SceneSystem.h"
+#include "Time/FPSCounter.h"
+#include "Time/Time.h"
 
 namespace rm
 {
@@ -44,6 +46,10 @@ namespace rm
 
         glViewport(0, 0, window->GetWidth(), window->GetHeight());
 
+        Time::Init();
+        Time::SetFixedDt(1.0 / 60.0);
+        Time::SetTargetFps(60);
+
         Input::Init();
         SceneSystem::Init(GetInitialScene());
 
@@ -52,17 +58,28 @@ namespace rm
 
     void Application::Run()
     {
+        FPSCounter fps;
+
         while (isRunning)
         {
             // Clear "pressed/released this frame" BEFORE glfwPollEvents fires callbacks
+            Time::BeginFrame();
             Input::BeginFrame();
             window->Update();
 
-            // todo: update this with dt
-            SceneSystem::Update(0);
-            SceneSystem::LateUpdate(0);
+            const float dt = static_cast<float>(Time::FrameDt());
+
+            SceneSystem::Update(dt);
+            SceneSystem::LateUpdate(dt);
 
             SceneSystem::Render();
+
+            if (fps.Update(dt))
+            {
+                LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
+            }
+
+            Time::EndFrame();
         }
     }
 

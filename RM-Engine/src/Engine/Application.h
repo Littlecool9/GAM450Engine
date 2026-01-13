@@ -18,6 +18,7 @@ namespace rm
        public:
         Application() = default;
         virtual ~Application() = default;
+
         void Init();
         void Run();
         void Shutdown();

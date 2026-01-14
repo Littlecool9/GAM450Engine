@@ -82,6 +82,7 @@ project (engineName)
 
         -- Header-only deps (example: spdlog)
         IncludeDir["spdlog"],
+        IncludeDir["rapidjson"],
 
         -- Prebuilt deps (example: GLFW)
         IncludeDir["glfw"],

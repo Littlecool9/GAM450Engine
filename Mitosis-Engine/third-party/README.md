@@ -87,6 +87,7 @@ scripts\GenerateProjects.bat
 ## Header-only
 
 1. Put it in `third-party/header-only/<name>`
+2. If you are using git submodules then remember to `git submodule add [github path] [header-only path]` (refer to the paths added in .gitmodules)
 2. Add `IncludeDir["name"] = ...` in `third-party/dependencies/Dependencies.lua`
 3. Add `includedirs { IncludeDir["name"] }` to the project that uses it
 

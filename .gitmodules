@@ -1,3 +1,6 @@
 [submodule "Mitosis-Engine/third-party/header-only/spdlog"]
 	path = Mitosis-Engine/third-party/header-only/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "Mitosis-Engine/third-party/header-only/rapidjson"]
+	path = Mitosis-Engine/third-party/header-only/rapidjson
+	url = https://github.com/Tencent/rapidjson.git

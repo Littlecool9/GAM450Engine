@@ -1,5 +1,5 @@
 /**
- * @file EntryPoint.cpp
+ * @file main.cpp
  * @author sumin.park
  * @brief The launcher for the engine.
  *
@@ -14,12 +14,17 @@ int main(int argc, char** argv)
 {
     mts::Log::Init();
 
+    // Macro to check memory leaks on windows.
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    mts::MemoryManager::Init();
+
     auto app = mts::CreateApplication();
     app->Init();
     app->Run();
     app->Shutdown();
     delete app;
 
+    mts::MemoryManager::Shutdown();
     mts::Log::Shutdown();
     return 0;
 }

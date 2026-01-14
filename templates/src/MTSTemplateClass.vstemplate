@@ -9,7 +9,7 @@
 	</TemplateData>
 	<TemplateContent>
 		<References />
-		<ProjectItem SubType="" TargetFileName="$fileinputname$.cpp" ReplaceParameters="true">MitosisTemplateClass.cpp</ProjectItem>
-		<ProjectItem SubType="" TargetFileName="$fileinputname$.h" ReplaceParameters="true">MitosisTemplateClass.h</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="$fileinputname$.cpp" ReplaceParameters="true">MTSTemplateClass.cpp</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="$fileinputname$.h" ReplaceParameters="true">MTSTemplateClass.h</ProjectItem>
 	</TemplateContent>
 </VSTemplate>

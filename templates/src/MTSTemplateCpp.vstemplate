@@ -9,6 +9,6 @@
 	</TemplateData>
 	<TemplateContent>
 		<References />
-		<ProjectItem SubType="" TargetFileName="$fileinputname$.cpp" ReplaceParameters="true">MitosisTemplateCpp.cpp</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="$fileinputname$.cpp" ReplaceParameters="true">MTSTemplateCpp.cpp</ProjectItem>
 	</TemplateContent>
 </VSTemplate>

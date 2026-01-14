@@ -86,6 +86,7 @@ project (engineName)
 
         -- Prebuilt deps (example: GLFW)
         IncludeDir["glfw"],
+
     }
 
     filter "files:Mitosis-Engine/third-party/source/glad/src/glad.c"

@@ -28,12 +28,24 @@ namespace mts
         void LateUpdate(float dt) override;
         void Render() override;
 
+        const math::Vec3& GetPosition() const;
+        void SetPosition(const math::Vec3& pos);
+
+        const math::Vec3& GetScale() const;
+        void SetScale(const math::Vec3& s);
+
+        const float GetRotation() const;
+        void SetRotation(float r);
+
+
+        void Deserialize(JsonValue const& jsonObj) override;
         math::Mat3 LocalMatrix() const;
 
        private:
         math::Vec3 position;
         math::Vec3 scale;
         float rotation;
+        bool isDirty;
     };
 
 }  // namespace mts

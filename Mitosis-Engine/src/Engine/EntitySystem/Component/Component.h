@@ -10,14 +10,14 @@
  */
 
 #pragma once
-
+#include "Engine/Serialization/Deserializable.h"
 namespace mts
 {
     class GameObject;
 
-    class Component
-    {
-       public:
+	class Component : public Deserializable
+	{
+	public:
         Component(GameObject* owner);
         Component(const Component& other) = default;
         virtual ~Component() = default;

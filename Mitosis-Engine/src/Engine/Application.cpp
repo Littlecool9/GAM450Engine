@@ -19,6 +19,8 @@
 #include "SceneSystem/SceneSystem.h"
 #include "Time/FPSCounter.h"
 #include "Time/Time.h"
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "Serialization/SerializationUtility.h"
 
 namespace mts
 {
@@ -51,6 +53,11 @@ namespace mts
         Time::SetTargetFps(60);
 
         Input::Init();
+
+        Transform* test = new Transform(nullptr);
+        SerializationUtility::DeserializeFromFile(test, "Data/test.json");
+        float f = test->GetRotation();
+        delete test;
         SceneSystem::Init(GetInitialScene());
 
         isRunning = true;

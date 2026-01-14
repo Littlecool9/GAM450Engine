@@ -51,8 +51,12 @@ namespace mts
     {
     }
 
-    void MeshRenderer::Render()
+    void MeshRenderer::Deserialize(JsonValue const& jsonObj)
     {
+        
+    }
+
+    void MeshRenderer::Render() {
         if (!mesh || !material)
             return;
 

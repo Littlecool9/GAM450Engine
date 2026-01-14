@@ -3,15 +3,15 @@
  * @author rahul
  * @brief Includes frequently used includes in a desirable configuration for all projects.
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2025 - Mitosis Engine
  *
  */
 
 #pragma once
 
 // Windows Header Files
-#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
-#define NOMINMAX            // Disable the Windows.h versions of min/max
+#define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
+#define NOMINMAX             // Disable the Windows.h versions of min/max
 #include <windows.h>
 
 // C RunTime Header Files

@@ -11,8 +11,8 @@
 # Third-Party Generated Files
 # ===============================
 # CMake build trees
-RM-Engine/third-party/build/
-RM-Engine/third-party/install/
+Mitosis-Engine/third-party/build/
+Mitosis-Engine/third-party/install/
 
 # CMake cache files (safety)
 CMakeCache.txt

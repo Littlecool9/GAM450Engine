@@ -1,4 +1,4 @@
-# RM-Engine
+# Mitosis-Engine
 
 > **Note:** This project uses the Visual Studio 2022 build configuration as it's the latest version supported by Premake. However, you can use any version of Visual Studio 2022 or newer—we're currently developing with Visual Studio 2026.
 
@@ -26,7 +26,7 @@ This will generate the documentation using the provided Doxyfile configuration.
 
 ## Templates Installation
 
-RM Engine uses a standardized format for license headers in all source and header files. Visual Studio templates implementing these headers are located in the `templates` folder within the main directory. Run the batch file corresponding to your Visual Studio installation's item templates directory. The script currently supports Visual Studio 2022 and 2026 (VS 18).
+Mitosis Engine uses a standardized format for license headers in all source and header files. Visual Studio templates implementing these headers are located in the `templates` folder within the main directory. Run the batch file corresponding to your Visual Studio installation's item templates directory. The script currently supports Visual Studio 2022 and 2026 (VS 18).
 
 ## Formatting
 

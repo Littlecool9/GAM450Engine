@@ -1,4 +1,4 @@
-workspace "RM-Engine"
+workspace "Mitosis-Engine"
     configurations { "Debug", "Release" }
     architecture "x64"
     startproject "Sandbox"
@@ -7,16 +7,16 @@ workspace "RM-Engine"
 -- Project names and directories
 -- ---------------------------------------------------------
 
-engineName = "RM-Engine"
-launcherName = "RM-Launcher"
+engineName = "Mitosis-Engine"
+launcherName = "Mitosis-Launcher"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- ---------------------------------------------------------
 -- Third-party dependencies registry
 -- ---------------------------------------------------------
-dofile("RM-Engine/third-party/dependencies/Dependencies.lua")
-dofile("RM-Engine/third-party/dependencies/ThirdPartyHelpers.lua")
+dofile("Mitosis-Engine/third-party/dependencies/Dependencies.lua")
+dofile("Mitosis-Engine/third-party/dependencies/ThirdPartyHelpers.lua")
 
 -- ---------------------------------------------------------
 -- Common settings helper
@@ -33,7 +33,7 @@ function ApplyCommonSettings()
 
     filter "system:windows"
         systemversion "latest"
-        defines { "RM_PLATFORM_WINDOWS" }
+        defines { "MTS_PLATFORM_WINDOWS" }
 
     filter "toolset:msc*"
         buildoptions { "/Zc:preprocessor" }
@@ -41,18 +41,18 @@ function ApplyCommonSettings()
     filter "configurations:Debug"
         runtime "Debug"
         symbols "On"
-        defines { "RM_DEBUG" }
+        defines { "MTS_DEBUG" }
 
     filter "configurations:Release"
         runtime "Release"
         optimize "On"
-        defines { "RM_RELEASE" }
+        defines { "MTS_RELEASE" }
 
     filter {}
 end
 
 -- =========================================================
--- RM-Engine (Static Library)
+-- Mitosis-Engine (Static Library)
 -- =========================================================
 
 project (engineName)
@@ -87,7 +87,7 @@ project (engineName)
         IncludeDir["glfw"],
     }
 
-    filter "files:RM-Engine/third-party/source/glad/src/glad.c"
+    filter "files:Mitosis-Engine/third-party/source/glad/src/glad.c"
         language "C"
         flags { "NoPCH" }
     filter {}
@@ -95,7 +95,7 @@ project (engineName)
     -- If you want engine itself to link to some libs, do it here.
 
 -- =========================================================
--- RM-Launcher (Static Library)
+-- Mitosis-Launcher (Static Library)
 -- =========================================================
 
 project (launcherName)

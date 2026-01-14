@@ -3,18 +3,18 @@
  * @author $username$
  * @brief // TODO: Add a brief description of this header
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2025 - Mitosis Engine
  *
  */
 
 #pragma once
 
-namespace rm
+namespace mts
 {
-	class $safeitemname$
-	{
-	public:
-	private:
-	};
+    class $safeitemname$
+    {
+       public:
+       private:
+    };
 
-} // rm namespace
+}  // namespace mts

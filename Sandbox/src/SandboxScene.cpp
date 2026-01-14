@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 1/8/2026 10:15:55 AM
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2025 - Mitosis Engine
  *
  */
 
@@ -16,14 +16,16 @@
 #include <fstream>
 #include <sstream>
 
-GLuint CompileShader(GLenum type, const char* source) {
+GLuint CompileShader(GLenum type, const char* source)
+{
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &source, nullptr);
     glCompileShader(shader);
 
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
+    if (!success)
+    {
         char info[512];
         glGetShaderInfoLog(shader, 512, nullptr, info);
         printf("Shader compile error: %s\n", info);
@@ -32,7 +34,8 @@ GLuint CompileShader(GLenum type, const char* source) {
     return shader;
 }
 
-GLuint CreateProgram(const char* vertSrc, const char* fragSrc) {
+GLuint CreateProgram(const char* vertSrc, const char* fragSrc)
+{
     GLuint vs = CompileShader(GL_VERTEX_SHADER, vertSrc);
     GLuint fs = CompileShader(GL_FRAGMENT_SHADER, fragSrc);
 
@@ -47,15 +50,17 @@ GLuint CreateProgram(const char* vertSrc, const char* fragSrc) {
     return program;
 }
 
-std::string LoadTextFile(const char* path) {
+std::string LoadTextFile(const char* path)
+{
     std::ifstream file(path);
     std::stringstream ss;
     ss << file.rdbuf();
     return ss.str();
 }
 
-void SetTriangleMesh(rm::Mesh* mesh) {
-    rm::Vertex vertices[] = {{{-0.5f, -0.5f}}, {{0.5f, -0.5f}}, {{0.0f, 0.5f}}};
+void SetTriangleMesh(mts::Mesh* mesh)
+{
+    mts::Vertex vertices[] = {{{-0.5f, -0.5f}}, {{0.5f, -0.5f}}, {{0.0f, 0.5f}}};
 
     unsigned int indices[] = {0, 1, 2};
 
@@ -74,28 +79,30 @@ void SetTriangleMesh(rm::Mesh* mesh) {
 
     // layout(location = 0) vec2 position
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(rm::Vertex), (void*) 0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(mts::Vertex), (void*) 0);
 
     glBindVertexArray(0);
 }
 
-SandboxScene::~SandboxScene() {
+SandboxScene::~SandboxScene()
+{
 }
 
-void SandboxScene::OnInit() {
-    rm::GameObject* gameObject = CreateGameObject();
-    auto mr = gameObject->AddComponent<rm::MeshRenderer>();
-    
-    auto mat = new rm::Material();
-    auto mesh = new rm::Mesh();
+void SandboxScene::OnInit()
+{
+    mts::GameObject* gameObject = CreateGameObject();
+    auto mr = gameObject->AddComponent<mts::MeshRenderer>();
+
+    auto mat = new mts::Material();
+    auto mesh = new mts::Mesh();
 
     LOG_INFO("CWD: {}", std::filesystem::current_path().string());
 
-    auto vertSrc = LoadTextFile("../RM-Engine/src/Shaders/triangle.vert");
-    auto fragSrc = LoadTextFile("../RM-Engine/src/Shaders/triangle.frag");
-    
+    auto vertSrc = LoadTextFile("../Mitosis-Engine/src/Shaders/triangle.vert");
+    auto fragSrc = LoadTextFile("../Mitosis-Engine/src/Shaders/triangle.frag");
+
     mat->program = CreateProgram(vertSrc.c_str(), fragSrc.c_str());
-    
+
     SetTriangleMesh(mesh);
 
     mr->SetMaterial(mat);

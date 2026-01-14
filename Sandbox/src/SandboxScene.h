@@ -5,16 +5,18 @@
  * @version 0.1
  * @date 1/8/2026 10:15:55 AM
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2025 - Mitosis Engine
  *
  */
 
 #pragma once
-#include <RMEngine.h>
+#include <MitosisEngine.h>
 
-class SandboxScene : public rm::Scene {
-public:
+class SandboxScene : public mts::Scene
+{
+   public:
     ~SandboxScene() override;
+
    protected:
     void OnInit() override;
 };

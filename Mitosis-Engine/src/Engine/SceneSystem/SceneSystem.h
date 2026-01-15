@@ -10,10 +10,14 @@
  */
 
 #pragma once
+#include <functional>
+#include "Engine/Delegate/Delegate.h"
 
 namespace mts
 {
     class Scene;
+    class GameObject;
+
     class SceneSystem
     {
        public:
@@ -22,10 +26,32 @@ namespace mts
         static void LateUpdate(float dt);
         static void Render();
         static void Shutdown();
-        static void ChangeCurrentScene(Scene* newScene);
+        static void SetNextScene(Scene* newScene);
+
+        static void AddDontDestroyObject(GameObject* obj);
+        static void RemoveDontDestroyObject(GameObject* obj);
+
+       public:
+        static Delegate<> onChangeSceneDelegate;
 
        private:
+        static void UpdateCurrentScene();
+
+       private:
+        /*
+         * @brief: The logic of dontDestroyObjects is :
+         * 1. The gameplay logic register a gameobject to dontDestroyObjects before changing scene
+         * 2. when deleting a scene, SceneSystem will skip deleting those objects
+         * 3. when initializing a new scene, SceneSystem will re-add those objects to the new scene
+         */
+        static std::vector<GameObject*> dontDestroyObjects;
+
         static Scene* currentScene;
+        static Scene* nextScene;
+
+        static bool isRestarting;
+        static bool isChangingScene;
     };
+
 
 }  // namespace mts

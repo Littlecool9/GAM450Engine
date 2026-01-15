@@ -14,8 +14,8 @@
 namespace mts
 {
     class GameObject;
-    class Scene
-    {
+    class Scene {
+        // Jackey TODO: multiple layers support
        public:
         Scene() = default;
         virtual ~Scene();

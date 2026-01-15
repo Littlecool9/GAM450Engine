@@ -48,8 +48,11 @@ namespace mts
             return nullptr;
         }
 
-       private:
+        void SetDontDestroy(bool value) { dontDestroy = value; }
+        bool GetDontDestroy() const { return dontDestroy; }
+	private:
         std::vector<Component*> components;
-    };
+        bool dontDestroy = false;
+	};
 
 }  // namespace mts

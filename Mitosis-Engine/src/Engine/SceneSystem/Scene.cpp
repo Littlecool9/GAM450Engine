@@ -15,10 +15,12 @@
 
 namespace mts
 {
-    Scene::~Scene()
-    {
-        for (auto g : gameObjects)
-        {
+    Scene::~Scene() {
+        for (auto g : gameObjects) {
+            // Skip dontDestroy objects
+            if (g->GetDontDestroy()) {
+                continue;
+            }
             delete g;
         }
     }
@@ -56,8 +58,8 @@ namespace mts
         }
     }
 
-    GameObject* Scene::CreateGameObject()
-    {
+    // Jackey TODO: Replace this part with a gameobject factory implementation
+    GameObject* Scene::CreateGameObject() {
         GameObject* newGameObject = new GameObject();
         gameObjects.push_back(newGameObject);
         return newGameObject;

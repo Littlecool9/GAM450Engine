@@ -30,6 +30,15 @@ Examples: assimp, freetype, etc.
   - `third-party/build/<LibName>/...` (build tree)
   - `third-party/install/<LibName>/...` (clean install output used by Premake)
 
+## 4) vcpkg (`third-party/vcpkg-installed/`)
+
+Examples: boost.
+
+- Allowing adding library through vcpkg, a c++ package manager.
+- Project files are generated with vcpkg toolchain file.
+- Premake uses:
+  - `vcpkg-installed/x64-windows/include/<LibName>`
+
 ---
 
 # First-time Setup
@@ -111,3 +120,12 @@ scripts\GenerateProjects.bat
     - `third-party/install/<name>/...`
 
 5. Link it in Premake via `libdirs/links`
+
+## vcpkg package manager
+
+1. add the library as the value to the "dependencies" key in the `vcpkg.json`.
+2. add the dir of the library to the `Dependencies.lua` file.
+  - `IncludeDir["name"] = "vcpkg-installed/x64-windows/include/<name>"`
+3. In `premake5.lua`, add `includedirs { IncludeDir["name"] }`
+4. Run `ThirdPartyInit.bat` to install the new package.
+5. run `GenerateProjects.bat`

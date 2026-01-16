@@ -7,6 +7,7 @@ ThirdParty.Prebuilt   = ThirdParty.Root .. "/prebuilt"
 ThirdParty.Source     = ThirdParty.Root .. "/source"
 ThirdParty.Build      = ThirdParty.Root .. "/build"
 ThirdParty.Install    = ThirdParty.Root .. "/install"
+ThirdParty.VCPKG      = ThirdParty.Root .. "/vcpkg-installed"
 
 IncludeDir = {}
 LibDir     = {}
@@ -29,6 +30,11 @@ IncludeDir["rapidjson"] = ThirdParty.HeaderOnly .. "/rapidjson/include"
 IncludeDir["glfw"] = ThirdParty.Prebuilt .. "/glfw/include"
 LibDir["glfw"]     = ThirdParty.Prebuilt .. "/glfw/lib-vc2022"
 BinDir["glfw"]     = ThirdParty.Prebuilt .. "/glfw/lib-vc2022"
+
+-- =========================
+-- vcpkg-managed dependencies
+-- =========================
+IncludeDir["boost"] = "vcpkg_installed/x64-windows/include"
 
 -- =========================
 -- CMake-built dependencies (installed output)

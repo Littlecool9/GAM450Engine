@@ -51,7 +51,7 @@ function ApplyCommonSettings()
     filter {}
 end
 
--- =========================================================
+-- ========================================================= 
 -- Mitosis-Engine (Static Library)
 -- =========================================================
 
@@ -87,6 +87,8 @@ project (engineName)
         -- Prebuilt deps (example: GLFW)
         IncludeDir["glfw"],
 
+        -- vcpkg-managed deps (example: Boost)
+        IncludeDir["boost"],
     }
 
     filter "files:Mitosis-Engine/third-party/source/glad/src/glad.c"

@@ -66,5 +66,4 @@ namespace mts
         ComponentFactory* componentFactory; 
         bool dontDestroy = false;
 	};
-
 }  // namespace mts

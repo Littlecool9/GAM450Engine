@@ -10,14 +10,17 @@
  */
 
 #pragma once
+#include "Engine/Serialization/Deserializable.h"
 
 namespace mts
 {
     class Component;
-    class GameObject
+    class ComponentFactory;
+    class GameObject: public Deserializable
     {
        public:
         GameObject();
+        GameObject(ComponentFactory* obj);
         virtual ~GameObject();
 
        public:
@@ -25,6 +28,11 @@ namespace mts
         void Update(float dt);
         void LateUpdate(float dt);
         void Render();
+
+        // Deserializable interface
+        void Deserialize(JsonValue const& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
+        //end
 
         template <typename T>
         T* AddComponent()
@@ -52,6 +60,10 @@ namespace mts
         bool GetDontDestroy() const { return dontDestroy; }
 	private:
         std::vector<Component*> components;
+        // pointer to component factory for deserialization, to be deleted/removed once we figure
+        // out where we want this component factory to stay, e.g. scene/system level singleton, etc.
+        // then we can remove this and change the deserialize code accordingly
+        ComponentFactory* componentFactory; 
         bool dontDestroy = false;
 	};
 

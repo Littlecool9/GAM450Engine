@@ -20,6 +20,8 @@
 #include "Time/FPSCounter.h"
 #include "Time/Time.h"
 #include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "EntitySystem/Component/ComponentFactory.h"
 #include "Serialization/SerializationUtility.h"
 
 namespace mts
@@ -54,10 +56,24 @@ namespace mts
 
         Input::Init();
 
+        ///////////Testing Serialization Utility, delete after ///////////
         Transform* test = new Transform(nullptr);
         SerializationUtility::DeserializeFromFile(test, "Data/test.json");
         float f = test->GetRotation();
+
+        SerializationUtility::SerializeToFile(test, "Data/writetest.json");
+
         delete test;
+
+        ComponentFactory* compFactory = new ComponentFactory();
+        GameObject* obj = new GameObject(compFactory);
+        SerializationUtility::DeserializeFromFile(obj, "Data/TestEntity.json");
+        SerializationUtility::SerializeToFile(obj, "Data/WriteTestEntity.json");
+
+        delete compFactory;
+        delete obj;
+        ////////////////TEST END////////////////
+        
         SceneSystem::Init(GetInitialScene());
 
         isRunning = true;

@@ -56,6 +56,10 @@ namespace mts
         
     }
 
+    void MeshRenderer::Serialize(JsonDocument& doc) const
+    {
+    }
+
     void MeshRenderer::Render() {
         if (!mesh || !material)
             return;

@@ -26,6 +26,7 @@ namespace mts
         void LateUpdate(float dt) override;
         void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
         void SetMesh(Mesh* newMesh) { mesh = newMesh; }
         void SetMaterial(Material* newMaterial) { material = newMaterial; }
 

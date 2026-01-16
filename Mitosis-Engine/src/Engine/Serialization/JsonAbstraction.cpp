@@ -12,25 +12,38 @@
 #include "JsonAbstraction.h"
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/prettywriter.h>
 #include <fstream>
+#include <vector>
 namespace mts
 {
 
     using RjValue = rapidjson::Value;
+    using RjDocument = rapidjson::Document;
+    using RJIStreamWrapper = rapidjson::IStreamWrapper;
+    using RJOStreamWrapper = rapidjson::OStreamWrapper;
+    using pf = rapidjson::ParseFlag;
+    using pw = rapidjson::PrettyWriter<RJOStreamWrapper>;
 
     struct JsonDocument::Impl
     {
-        rapidjson::Document doc;
+        RjDocument doc;
+        std::vector<RjValue*> stack;
     };
 
     JsonDocument::JsonDocument() : impl_(std::make_unique<Impl>())
     {
+        impl_->doc.SetObject();
+        impl_->stack.clear();
+        impl_->stack.push_back(&impl_->doc);
     }
-    JsonDocument::~JsonDocument() 
+    JsonDocument::~JsonDocument()
     {
     }
 
-    bool JsonDocument::LoadFromFile(const std::string& filepath) const    
+    bool JsonDocument::LoadFromFile(const std::string& filepath) const
     {
         std::ifstream ifs(filepath, std::ios::in);
         if (!ifs.is_open())
@@ -38,9 +51,8 @@ namespace mts
             return false;
         }
 
-        rapidjson::IStreamWrapper isw(ifs);
+        RJIStreamWrapper isw(ifs);
 
-        using pf = rapidjson::ParseFlag;
         impl_->doc.ParseStream<pf::kParseCommentsFlag | pf::kParseTrailingCommasFlag |
                                pf::kParseEscapedApostropheFlag>(isw);
 
@@ -58,6 +70,141 @@ namespace mts
         return JsonValue(&impl_->doc);
     }
 
+    void JsonDocument::BeginObject()
+    {
+        auto* parent = impl_->stack.empty() ? nullptr : impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+
+        // Case A: first object in the document (root)
+        if (!parent)
+        {
+            impl_->doc.SetObject();
+            impl_->stack.push_back(&impl_->doc);
+            return;
+        }
+
+        // Case B: we are inside an array -> append a new object element
+        if (parent->IsArray())
+        {
+            parent->PushBack(RjValue(rapidjson::kObjectType), alloc);
+            RjValue& child = (*parent)[parent->Size() - 1];
+            impl_->stack.push_back(&child);
+            return;
+        }
+
+        // Case C: parent is an object -> you must use BeginObject(key)
+        assert(false && "BeginObject() called with object parent. Use BeginObject(key).");
+    }
+    void JsonDocument::BeginObject(const char* key)
+    {
+        RjValue obj(rapidjson::kObjectType);
+        RjValue k(key, impl_->doc.GetAllocator());
+
+        impl_->stack.back()->AddMember(k, obj, impl_->doc.GetAllocator());
+        impl_->stack.push_back(&(*impl_->stack.back())[key]);
+    }
+    void JsonDocument::EndObject()
+    {
+        impl_->stack.pop_back();
+    }
+
+    void JsonDocument::BeginArray(const char* key)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+
+        assert(obj && obj->IsObject());
+
+        RjValue k;
+        k.SetString(key, alloc);
+
+        RjValue arr(rapidjson::kArrayType);
+
+        // Move both key and value into the object
+        obj->AddMember(k.Move(), arr.Move(), alloc);
+
+        // Get a pointer to the inserted array
+        auto it = obj->FindMember(key);
+        assert(it != obj->MemberEnd() && it->value.IsArray());
+
+        impl_->stack.push_back(&it->value);
+    }
+
+    void JsonDocument::EndArray()
+    {
+        impl_->stack.pop_back();
+    }
+
+    void JsonDocument::WriteFloat(const char* key, float value)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+
+        assert(obj && obj->IsObject());
+
+        RjValue k;
+        k.SetString(key, alloc);
+
+        obj->AddMember(k.Move(), value, alloc);
+    }
+
+    void JsonDocument::WriteFloat(float value)
+    {
+        impl_->stack.back()->PushBack(value, impl_->doc.GetAllocator());
+    }
+
+    void JsonDocument::WriteInt(const char* key, int value)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+        assert(obj && obj->IsObject());
+        RjValue k;
+        k.SetString(key, alloc);
+        obj->AddMember(k.Move(), value, alloc);
+    }
+
+    void JsonDocument::WriteInt(int value)
+    {
+        impl_->stack.back()->PushBack(value, impl_->doc.GetAllocator());
+    }
+
+    void JsonDocument::WriteString(const char* key, const char* value)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+        assert(obj && obj->IsObject());
+        RjValue k;
+        k.SetString(key, alloc);
+        RjValue v;
+        v.SetString(value, alloc);
+        obj->AddMember(k.Move(), v.Move(), alloc);
+    }
+
+    void JsonDocument::WriteString(const char* value)
+    {
+        auto& alloc = impl_->doc.GetAllocator();
+        RjValue v;
+        v.SetString(value, alloc);
+        impl_->stack.back()->PushBack(v.Move(), alloc);
+    }
+
+    bool JsonDocument::SaveToFile(const std::string& path)
+    {
+        std::ofstream ofs(path);
+        if (!ofs.is_open())
+        {
+            return false;
+        }
+
+        RJOStreamWrapper osw(ofs);
+
+        pw writer(osw);
+        writer.SetIndent(' ', 4);
+        writer.SetFormatOptions(rapidjson::kFormatDefault);
+        impl_->doc.Accept(writer);
+
+        return true;
+    }
 
     bool JsonValue::IsObject() const
     {
@@ -130,4 +277,4 @@ namespace mts
         return v->GetString();
     }
 
-}  // namespace rm
+}  // namespace mts

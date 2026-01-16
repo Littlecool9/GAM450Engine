@@ -14,7 +14,7 @@
 
 namespace mts
 {
-    Transform::Transform(GameObject* owner) : Component(owner), position(0.5), scale(1), rotation(0)
+    Transform::Transform(GameObject* owner) : Component(owner), position(0.5), scale(1), rotation(0), isDirty(true)
     {
     }
 
@@ -98,6 +98,30 @@ namespace mts
         SetPosition(p);
         SetScale(s);
     }
+
+    void Transform::Serialize(JsonDocument& json) const
+    {
+
+        json.WriteString("Type", "Transform");
+        json.BeginObject("Data"); 
+
+
+        json.BeginArray("Position");
+        json.WriteFloat(position.x);
+        json.WriteFloat(position.y);
+        json.WriteFloat(position.z);
+        json.EndArray();
+
+        json.BeginArray("Scale");
+        json.WriteFloat(scale.x);
+        json.WriteFloat(scale.y);
+        json.WriteFloat(scale.z);
+        json.EndArray();
+
+        json.WriteFloat("Rotation", rotation);
+        json.EndObject();  // end Data
+    }
+
     math::Mat3 Transform::LocalMatrix() const
     {
         // todo: create Rotate, Scale, Translate functions inside Mat

@@ -41,5 +41,13 @@ namespace mts
 
             item->Deserialize(doc.Root());
         }
+        bool SerializeToFile(Deserializable* item, const std::string& path)
+        {
+            JsonDocument doc;
+
+            item->Serialize(doc);  // builds the document
+
+            return doc.SaveToFile(path);
+        }
     } 
 }  

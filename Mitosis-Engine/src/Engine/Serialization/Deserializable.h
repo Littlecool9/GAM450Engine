@@ -1,7 +1,7 @@
 /**
  * @file JsonAbstraction.h
  * @author Dong Ta
- * @brief  The interface to implement for deserilzation support.
+ * @brief  The interface to implement for deserilzation/serialization support.
  * @version 0.1
  * @date 1/8/2026 7:06:27 AM
  *
@@ -27,5 +27,7 @@ namespace mts
        public:  
 
         virtual void Deserialize(JsonValue const& jsonObj) = 0;
+
+        virtual void Serialize(JsonDocument& doc) const = 0;
     };
 }  

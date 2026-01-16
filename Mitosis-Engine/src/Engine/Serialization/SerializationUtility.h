@@ -12,12 +12,16 @@
 #pragma once
 #include <string>
 #include "Deserializable.h"
+
 namespace mts
 {
     namespace SerializationUtility
     {
+        //Reading from a file
         void DeserializeFromFile(Deserializable* item, std::string const& filepath);
         void DeserializeFromString(Deserializable* item, std::string const& str);
+        //Writing to a file
+        bool SerializeToFile(Deserializable* item, const std::string& path);
     }  // namespace SerializationUtility
 }   
 

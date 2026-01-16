@@ -39,6 +39,8 @@ namespace mts
 
 
         void Deserialize(JsonValue const& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
+
         math::Mat3 LocalMatrix() const;
 
        private:

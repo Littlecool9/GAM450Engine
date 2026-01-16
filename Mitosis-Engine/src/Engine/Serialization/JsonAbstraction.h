@@ -56,6 +56,24 @@ namespace mts
         bool LoadFromString(const std::string& json) const;
         JsonValue Root() const;  // view into the document root
 
+        void BeginObject();
+        void BeginObject(const char* key);
+        void EndObject();
+
+        void BeginArray(const char* key);
+        void EndArray();
+
+        void WriteFloat(const char* key, float value);
+        void WriteInt(const char* key, int value);
+        void WriteString(const char* key, const char* value);
+
+        void WriteFloat(float value);  // array version
+        void WriteInt(int value);      // array version
+        void WriteString(const char* value);  // array version
+
+        bool SaveToFile(const std::string& path);
+
+
        private:
         struct Impl;                  // opaque (defined in .cpp)
         std::unique_ptr<Impl> impl_;  // owns RapidJSON document inside .cpp

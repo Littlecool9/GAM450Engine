@@ -12,6 +12,7 @@
 #include "pch.h"
 #include "ComponentFactory.h"
 // Include all component headers here
+#include "ActionList.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 namespace mts
@@ -25,9 +26,6 @@ namespace mts
         Register("Transform", +[](GameObject* o) -> Component* { return new Transform(o); });
 
         Register("MeshRenderer", +[](GameObject* o) -> Component* { return new MeshRenderer(o); });
-        //Register("ActionList", +[](GameObject* o) -> Component* { return new ActionList(o); });
-    }
-    ComponentFactory::~ComponentFactory()
-    {
+        Register("ActionList", +[](GameObject* o) -> Component* { return new ActionList(o); });
     }
 }  // namespace mts

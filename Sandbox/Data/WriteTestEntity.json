@@ -15,6 +15,9 @@
                 ],
                 "Rotation": 0.0
             }
+        },
+        {
+            "Type": "ActionList"
         }
     ]
 }

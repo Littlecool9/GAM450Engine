@@ -33,7 +33,7 @@ namespace mts
        protected:
         virtual void OnInit() = 0;
 
-       private:
+       protected:
         std::vector<GameObject*> gameObjects;
     };
 

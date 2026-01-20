@@ -20,7 +20,7 @@ namespace mts
         using CreatorFn = Component* (*)(GameObject*);
         public:
         ComponentFactory();
-        ~ComponentFactory();
+        ~ComponentFactory() = default;
 
         void Register(std::string name, CreatorFn fn)
         {

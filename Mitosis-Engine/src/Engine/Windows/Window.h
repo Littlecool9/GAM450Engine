@@ -33,8 +33,14 @@ namespace mts
 
         virtual void SetVsync(bool enable) = 0;
 
-        virtual void Update() = 0;
+        // TODO : Move this to Renderer if we ever have one later
+        virtual void ClearScreen() = 0;
 
+        virtual void PollEvents() = 0;
+
+        // TODO : Move this to a swapchain class
+        virtual void SwapBuffer() = 0;
+        
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
         virtual void* NativeWindow() const = 0;

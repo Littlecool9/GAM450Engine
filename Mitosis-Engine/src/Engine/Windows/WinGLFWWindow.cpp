@@ -198,9 +198,18 @@ namespace mts
         windowData.VSync = enable;
     }
 
-    void WinGLFWwindow::Update()
+    void WinGLFWwindow::ClearScreen()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
+    void WinGLFWwindow::PollEvents()
     {
         glfwPollEvents();
+    }
+
+    void WinGLFWwindow::SwapBuffer()
+    {
         glfwSwapBuffers(window);
     }
 

@@ -88,7 +88,8 @@ namespace mts
             // Clear "pressed/released this frame" BEFORE glfwPollEvents fires callbacks
             Time::BeginFrame();
             Input::BeginFrame();
-            window->Update();
+            window->PollEvents();
+            window->ClearScreen();
 
             const float dt = static_cast<float>(Time::FrameDt());
 
@@ -102,6 +103,7 @@ namespace mts
                 LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
             }
 
+            window->SwapBuffer();
             Time::EndFrame();
         }
     }

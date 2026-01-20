@@ -12,7 +12,6 @@
 #include "pch.h"
 #include "MeshRenderer.h"
 #include "Engine/Resource/Mesh.h"
-#include "Engine/Resource/Material.h"
 #include "Engine/Math/Mat3.h"
 #include "Transform.h"
 #include "../GameObject/GameObject.h"
@@ -25,17 +24,21 @@ namespace mts
 
     MeshRenderer::~MeshRenderer()
     {
-        // Todo: mesh and material should be controlled by resource mananger
+        // Todo: mesh, shader, & texture should be controlled by resource mananger
         if (mesh != nullptr)
         {
-            delete mesh;
+            MTS_DELETE(mesh);
             mesh = nullptr;
         }
-
-        if (material != nullptr)
+        if (shader != nullptr)
         {
-            delete material;
-            material = nullptr;
+            MTS_DELETE(shader);
+            shader = nullptr;
+        }
+        if (texture != nullptr)
+        {
+            MTS_DELETE(texture);
+            texture = nullptr;
         }
     }
 
@@ -53,33 +56,85 @@ namespace mts
 
     void MeshRenderer::Deserialize(JsonValue const& jsonObj)
     {
+        // Read in uv size
+        int numRows = 1;
+        int numCols = 1;
+
+        if (jsonObj.Has("NumRows"))
+        {
+            numRows = jsonObj["NumRows"].GetInt(numRows);
+        }
+        if (jsonObj.Has("NumCols"))
+        {
+            numCols = jsonObj["NumCols"].GetInt(numCols);
+        }
+
+        // Read in mesh color
+        math::Vec3 color(1.0f, 1.0f, 1.0f);
+
+        if (jsonObj.Has("MeshColor"))
+        {
+            JsonValue mc = jsonObj["MeshColor"];
+            if (mc.IsArray() && mc.Size() >= 3)
+            {
+                color.x = mc[0].GetFloat(color.x);
+                color.y = mc[1].GetFloat(color.y);
+                color.z = mc[2].GetFloat(color.z);
+            }
+        }
+
+        // TODO: move mesh creation to resource manager
+        // Build mesh
+        mesh = MTS_NEW(Mesh);
+        mesh->BuildQuad(numCols, numRows, color);
+
+        // Read in shaders
+        auto vertFile = "";
+        auto fragFile = "";
         
+        if (jsonObj.Has("VertexShader"))
+        {
+            vertFile = jsonObj["VertexShader"].GetString("");
+        }
+        if (jsonObj.Has("FragmentShader"))
+        {
+            fragFile = jsonObj["FragmentShader"].GetString("");
+        }
+        
+        std::string vertSrcLoc("../Mitosis-Engine/src/Shaders/");
+        vertSrcLoc.append(vertFile);
+        std::string fragSrcLoc("../Mitosis-Engine/src/Shaders/");
+        fragSrcLoc.append(fragFile);
+
+        // TODO: move shader creation to resource manager
+        // Build shader
+        shader = MTS_NEW(Shader);
+        auto vertSrc = Shader::LoadTextFile(vertSrcLoc.c_str());
+        auto fragSrc = Shader::LoadTextFile(fragSrcLoc.c_str());
+        shader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
     }
 
+    // TODO: serialize meshRenderer data
     void MeshRenderer::Serialize(JsonDocument& doc) const
     {
     }
 
     void MeshRenderer::Render() {
-        if (!mesh || !material)
+        if (!mesh || !shader)
             return;
 
-        glUseProgram(material->program);
+        shader->UseProgram();
 
         auto transform = GetGameObject()->GetComponent<Transform>();
         MTS_ASSERT(transform != nullptr);
 
         math::Mat3 model = transform->LocalMatrix();
+        // Josh TODO: This should be an ortho projections
         math::Mat3 viewProj(1.0f);
 
-        GLint uModel = glGetUniformLocation(material->program, "u_Model");
-        GLint uViewProj = glGetUniformLocation(material->program, "u_ViewProj");
+        shader->SetMatrix3("u_Model", model);
+        shader->SetMatrix3("u_ViewProj", viewProj);
 
-        glUniformMatrix3fv(uModel, 1, GL_FALSE, &model[0][0]);
-        glUniformMatrix3fv(uViewProj, 1, GL_FALSE, &viewProj[0][0]);
-
-        glBindVertexArray(mesh->vao);
-        glDrawElements(GL_TRIANGLES, mesh->indexCount, GL_UNSIGNED_INT, nullptr);
-        glBindVertexArray(0);
+        mesh->Draw();
     }
 }  // namespace mts

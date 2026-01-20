@@ -27,6 +27,9 @@ namespace mts
 
         GameObject* CreateGameObject();
 
+        // TODO: REMOVE, TEMPORARY SETTER FOR TESTING
+        void AddGameObject(GameObject* g) { gameObjects.push_back(g);}
+
        protected:
         virtual void OnInit() = 0;
 

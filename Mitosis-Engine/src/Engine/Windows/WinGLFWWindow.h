@@ -25,7 +25,11 @@ namespace mts
 
         void SetVsync(bool enable) override;
 
-        void Update() override;
+        void ClearScreen() override;
+
+        virtual void PollEvents() override;
+
+        virtual void SwapBuffer() override;
 
         void SetEventCallback(const EventCallbackFn& callback) override
         {

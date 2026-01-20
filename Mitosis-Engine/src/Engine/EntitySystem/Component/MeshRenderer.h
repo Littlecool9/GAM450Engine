@@ -11,8 +11,10 @@
 
 #pragma once
 #include "Component.h"
-#include "Engine/Resource/Material.h"
 #include "Engine/Resource/Mesh.h"
+#include "Engine/Resource/Shader.h"
+#include "Engine/Resource/Texture.h"
+
 namespace mts
 {
     class MeshRenderer : public Component
@@ -28,11 +30,13 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
         void SetMesh(Mesh* newMesh) { mesh = newMesh; }
-        void SetMaterial(Material* newMaterial) { material = newMaterial; }
+        void SetShader(Shader* newShader) { shader = newShader; }
+        void SetTexture(Texture* newTexture) { texture = newTexture; }
 
        private:
         Mesh* mesh = nullptr;
-        Material* material = nullptr;
+        Shader* shader = nullptr;
+        Texture* texture = nullptr;
     };
 
 }  // namespace mts

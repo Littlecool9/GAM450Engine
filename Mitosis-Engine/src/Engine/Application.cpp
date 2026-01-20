@@ -24,6 +24,45 @@
 #include "EntitySystem/Component/ComponentFactory.h"
 #include "Serialization/SerializationUtility.h"
 
+#if MTS_AUDIO_FMOD
+#include <fmod_studio.hpp>
+#include <fmod_errors.h>
+
+static void TestFMODStudioInit()
+{
+    FMOD::Studio::System* studioSystem = nullptr;
+
+    FMOD_RESULT result = FMOD::Studio::System::create(&studioSystem);
+
+    if (result != FMOD_OK)
+    {
+        LOG_ERROR("[FMOD TEST] Failed to create Studio System : {}", FMOD_ErrorString(result));
+        return;
+    }
+
+    result = studioSystem->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr);
+
+    if (result != FMOD_OK)
+    {
+        LOG_ERROR("[FMOD TEST] Failed to initialize : {}", FMOD_ErrorString(result));
+        studioSystem->release();
+        return;
+    }
+
+    LOG_INFO("[FMOD TEST] FMOD Studio initialized successfully.");
+
+    // Quick test one update tick
+    studioSystem->update();
+
+    LOG_INFO("[FMOD TEST] FMOD Studio update() successful.");
+
+    studioSystem->release();
+
+    LOG_INFO("[FMOD TEST] FMOD Studio shutdown cleanly.");
+}
+
+#endif
+
 namespace mts
 {
     void Application::Init()
@@ -56,6 +95,10 @@ namespace mts
 
         Input::Init();
 
+#if MTS_AUDIO_FMOD
+        TestFMODStudioInit();
+#endif
+
         ///////////Testing Serialization Utility, delete after ///////////
         Transform* test = new Transform(nullptr);
         SerializationUtility::DeserializeFromFile(test, "Data/test.json");
@@ -73,7 +116,7 @@ namespace mts
         delete compFactory;
         delete obj;
         ////////////////TEST END////////////////
-        
+
         SceneSystem::Init(GetInitialScene());
 
         isRunning = true;

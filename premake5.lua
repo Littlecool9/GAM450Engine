@@ -91,6 +91,11 @@ project (engineName)
         IncludeDir["boost"],
     }
 
+    -- -------------------------
+    -- External dependency: FMOD (SDK via FMOD_SDK env var)
+    -- -------------------------
+    AddFMODHeaders()
+
     filter "files:Mitosis-Engine/third-party/source/glad/src/glad.c"
         language "C"
         flags { "NoPCH" }
@@ -169,6 +174,12 @@ project "Sandbox"
     -- -------------------------
     LinkPrebuilt("glfw", { "glfw3dll.lib" })
     CopyRuntimeDLL("glfw", "glfw3.dll")
+
+    -- -------------------------
+    -- External dependency: FMOD (SDK via FMOD_SDK env var)
+    -- Link + copy runtime DLLs for the executable
+    -- -------------------------
+    LinkFMODStudio()
 
     -- -------------------------
     -- Example: CMake-installed dependency (if you add one)

@@ -23,6 +23,7 @@ IncludeDir["glad"] = ThirdParty.Source .. "/glad/include"
 -- =========================
 IncludeDir["spdlog"] = ThirdParty.HeaderOnly .. "/spdlog/include"
 IncludeDir["rapidjson"] = ThirdParty.HeaderOnly .. "/rapidjson/include"
+IncludeDir["glm"] = ThirdParty.HeaderOnly .. "/glm"
 
 -- =========================
 -- Prebuilt dependencies

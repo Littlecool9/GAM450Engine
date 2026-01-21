@@ -83,6 +83,7 @@ project (engineName)
         -- Header-only deps (example: spdlog)
         IncludeDir["spdlog"],
         IncludeDir["rapidjson"],
+        IncludeDir["glm"],
 
         -- Prebuilt deps (example: GLFW)
         IncludeDir["glfw"],
@@ -126,6 +127,7 @@ project (launcherName)
     {
         engineName .. "/src",
         IncludeDir["glad"],
+        IncludeDir["glm"],
     }
 
     links
@@ -158,6 +160,7 @@ project "Sandbox"
     {
         engineName .. "/src",        
         IncludeDir["glad"],
+        IncludeDir["glm"],
     }
 
     links

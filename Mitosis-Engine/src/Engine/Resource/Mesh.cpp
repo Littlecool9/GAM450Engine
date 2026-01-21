@@ -14,16 +14,16 @@
 
 namespace mts
 {
-    void Mesh::BuildQuad(int numCols, int numRows, const math::Vec3 color)
+    void Mesh::BuildQuad(int numCols, int numRows, const glm::vec3 color)
     {
         float uSize = 1.0f / numCols;
         float vSize = 1.0f / numRows;
 
         Vertex vertices[] = {
-            {.pos = math::Vec2(0.0f, 0.0f), .uv = math::Vec2(0.0f, 0.0f), .color = color},
-            {.pos = math::Vec2(0.0f, 1.0f), .uv = math::Vec2(0.0f, vSize), .color = color},
-            {.pos = math::Vec2(1.0f, 0.0f), .uv = math::Vec2(uSize, 0.0f), .color = color},
-            {.pos = math::Vec2(1.0f, 1.0f), .uv = math::Vec2(uSize, vSize), .color = color}
+            {.pos = glm::vec2(0.0f, 0.0f), .uv = glm::vec2(0.0f, 0.0f), .color = color},
+            {.pos = glm::vec2(0.0f, 1.0f), .uv = glm::vec2(0.0f, vSize), .color = color},
+            {.pos = glm::vec2(1.0f, 0.0f), .uv = glm::vec2(uSize, 0.0f), .color = color},
+            {.pos = glm::vec2(1.0f, 1.0f), .uv = glm::vec2(uSize, vSize), .color = color}
         };
 
         unsigned int indices[] = {

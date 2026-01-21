@@ -12,21 +12,22 @@
 #pragma once
 #include <glad/glad.h>
 
-#include "Engine/Math/Vec2.h"
-#include "Engine/Math/Vec3.h"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+
 namespace mts
 {
     struct Vertex
     {
-        math::Vec2 pos;
-        math::Vec2 uv;
-        math::Vec3 color;
+        glm::vec2 pos;
+        glm::vec2 uv;
+        glm::vec3 color;
     };
 
     class Mesh
     {
        public:
-        void BuildQuad(int numCols, int numRows, const math::Vec3 color);
+        void BuildQuad(int numCols, int numRows, const glm::vec3 color);
         void Draw() const;
        private:
         GLuint vao = 0, vbo = 0, ibo = 0;

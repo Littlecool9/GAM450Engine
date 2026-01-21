@@ -10,8 +10,8 @@
 #pragma once
 
 #include <glad/glad.h>
-#include "Engine/Math/Mat3.h"
-#include "Engine/Math/Mat4.h"
+#include <glm/mat3x3.hpp>
+#include <glm/mat4x4.hpp>
 
 namespace mts
 {
@@ -32,9 +32,9 @@ namespace mts
         void SetVector3i(const char* name, const int* iv) const;
         void SetVector4i(const char* name, const int* iv) const;
         void SetMatrix3(const char* name, const float* fm) const;
-        void SetMatrix3(const char* name, const math::Mat3 fm) const;
+        void SetMatrix3(const char* name, const glm::mat3& fm) const;
         void SetMatrix4(const char* name, const float* fm) const;
-        void SetMatrix4(const char* name, const math::Mat4 fm) const;
+        void SetMatrix4(const char* name, const glm::mat4& fm) const;
 
         // Josh TODO: File io should be moved elsewhere
         static std::string LoadTextFile(const char* path);

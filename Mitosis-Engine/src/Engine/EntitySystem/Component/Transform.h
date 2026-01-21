@@ -11,8 +11,9 @@
 
 #pragma once
 #include "Component.h"
-#include "Engine/Math/Mat3.h"
-#include "Engine/Math/Vec3.h"
+#include <glm/mat4x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/vec3.hpp>
 
 namespace mts
 {
@@ -28,24 +29,24 @@ namespace mts
         void LateUpdate(float dt) override;
         void Render() override;
 
-        const math::Vec3& GetPosition() const;
-        void SetPosition(const math::Vec3& pos);
+        const glm::vec3& GetPosition() const;
+        void SetPosition(const glm::vec3& pos);
 
-        const math::Vec3& GetScale() const;
-        void SetScale(const math::Vec3& s);
+        const glm::vec3& GetScale() const;
+        void SetScale(const glm::vec3& s);
 
-        const float GetRotation() const;
+        float GetRotation() const;
         void SetRotation(float r);
 
 
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-        math::Mat3 LocalMatrix() const;
+        glm::mat4 LocalMatrix() const;
 
        private:
-        math::Vec3 position;
-        math::Vec3 scale;
+        glm::vec3 position;
+        glm::vec3 scale;
         float rotation;
         bool isDirty;
     };

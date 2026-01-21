@@ -14,7 +14,6 @@
 #include "Engine/Logging/AppLog.h"
 #include "Engine/Memory/MemoryManager.h"
 #include "Engine/Logging/Assert.h"
-#include "Engine/Math/Vec3.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/Transform.h"

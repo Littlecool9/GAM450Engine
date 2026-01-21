@@ -132,7 +132,7 @@ namespace mts
         glUniformMatrix3fv(loc, 1, GL_FALSE, fm);
     }
 
-    void Shader::SetMatrix3(const char* name, const math::Mat3 fm) const
+    void Shader::SetMatrix3(const char* name, const glm::mat3& fm) const
     {
         SetMatrix3(name, &fm[0][0]);
     }
@@ -143,7 +143,7 @@ namespace mts
         glUniformMatrix4fv(loc, 1, GL_FALSE, fm);
     }
 
-    void Shader::SetMatrix4(const char* name, const math::Mat4 fm) const
+    void Shader::SetMatrix4(const char* name, const glm::mat4& fm) const
     {
         SetMatrix4(name, &fm[0][0]);
     }

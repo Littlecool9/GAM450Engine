@@ -34,21 +34,21 @@ namespace mts
     {
     }
 
-    void Transform::SetPosition(const math::Vec3& pos)
+    void Transform::SetPosition(const glm::vec3& pos)
     {
         position = pos;
         isDirty = true;
     }
-    const math::Vec3& Transform::GetPosition() const
+    const glm::vec3& Transform::GetPosition() const
     {
         return position;
     }
-    void Transform::SetScale(const math::Vec3& s)
+    void Transform::SetScale(const glm::vec3& s)
     {
         scale = s;
         isDirty = true;
     }
-    const math::Vec3& Transform::GetScale() const
+    const glm::vec3& Transform::GetScale() const
     {
         return scale;
     }
@@ -57,15 +57,15 @@ namespace mts
         rotation = r;
         isDirty = true;
     }
-    const float Transform::GetRotation() const
+    float Transform::GetRotation() const
     {
         return rotation;
     }
 
     void Transform::Deserialize(JsonValue const& jsonObj)
     {
-        math::Vec3 p(0);
-        math::Vec3 s(0);
+        glm::vec3 p(0);
+        glm::vec3 s(0);
         float r(0);
 
         if (jsonObj.Has("Position"))
@@ -122,15 +122,14 @@ namespace mts
         json.EndObject();  // end Data
     }
 
-    math::Mat3 Transform::LocalMatrix() const
+    glm::mat4 Transform::LocalMatrix() const
     {
-        // todo: create Rotate, Scale, Translate functions inside Mat
-        // todo: change this to Mat4
-
-        float c = cos(rotation), s = sin(rotation);
-        math::Mat3 R(c, s, 0, -s, c, 0, 0, 0, 1);
-        math::Mat3 S(scale.x, 0, 0, 0, scale.y, 0, 0, 0, 1);
-        math::Mat3 T(1, 0, 0, 0, 1, 0, position.x, position.y, 1);
+        glm::mat4 S = glm::scale(glm::mat4(1.0f), scale);
+        // origin of mesh is top-left, so have to translate origin to center when rotating
+        glm::mat4 R = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * scale.x, 0.5f * scale.y, 0.0f)) * 
+            glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0.0f,0.0f,1.0f)) *
+            glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f * scale.x, -0.5f * scale.y, 0.0f));
+        glm::mat4 T = glm::translate(glm::mat4(1.0f), position);
         return T * R * S;
     }
 }  // namespace mts

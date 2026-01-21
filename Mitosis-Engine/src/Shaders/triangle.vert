@@ -7,13 +7,13 @@ layout(location = 2) in vec3 color;
 out vec2 TexCoords;
 out vec3 v_Color;
 
-uniform mat3 u_Model;
-uniform mat3 u_ViewProj;
+uniform mat4 u_Model;
+uniform mat4 u_ViewProj;
 
 void main()
 {
     TexCoords = texCoord;
     v_Color = color;
-    vec3 world = u_ViewProj * u_Model * vec3(a_Pos, 1.0);
-    gl_Position = vec4(world.xy, 0.0, 1.0);
+    vec4 world = u_ViewProj * u_Model * vec4(a_Pos, 0.0, 1.0);
+    gl_Position = world;
 }

@@ -12,9 +12,12 @@
 #include "pch.h"
 #include "MeshRenderer.h"
 #include "Engine/Resource/Mesh.h"
-#include "Engine/Math/Mat3.h"
 #include "Transform.h"
 #include "../GameObject/GameObject.h"
+#include "Engine/Windows/WinGLFWwindow.h"
+
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace mts
 {
@@ -70,7 +73,7 @@ namespace mts
         }
 
         // Read in mesh color
-        math::Vec3 color(1.0f, 1.0f, 1.0f);
+        glm::vec3 color(1.0f, 1.0f, 1.0f);
 
         if (jsonObj.Has("MeshColor"))
         {
@@ -128,12 +131,13 @@ namespace mts
         auto transform = GetGameObject()->GetComponent<Transform>();
         MTS_ASSERT(transform != nullptr);
 
-        math::Mat3 model = transform->LocalMatrix();
-        // Josh TODO: This should be an ortho projections
-        math::Mat3 viewProj(1.0f);
+        glm::mat4 model = transform->LocalMatrix();
+        glm::ivec4 viewportSize;
+        glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
+        glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), 0.0f, static_cast<float>(viewportSize.w), -1.0f, 1.0f);
 
-        shader->SetMatrix3("u_Model", model);
-        shader->SetMatrix3("u_ViewProj", viewProj);
+        shader->SetMatrix4("u_Model", model);
+        shader->SetMatrix4("u_ViewProj", viewProj);
 
         mesh->Draw();
     }

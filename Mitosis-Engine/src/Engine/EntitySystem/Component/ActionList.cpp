@@ -55,7 +55,11 @@ namespace mts
         SpeedUp = false;
     }
 
-    void ActionList::AddTranslateAction(math::Vec3 Goal, GameObject* target, float TimeToComplete, int id, float delay,
+    void ActionList::AddTranslateAction(glm::vec3 Goal,
+                                        GameObject* target,
+                                        float TimeToComplete,
+                                        int id,
+                                        float delay,
                                         bool block, BaseAction::EaseType ease)
     {
         // create a new TranslateAction and add it to the list
@@ -63,7 +67,11 @@ namespace mts
             new TranslateAction(Goal, target, id, TimeToComplete, delay, block, ease);
         Actions.push_back(action);
     }
-    void ActionList::AddRotateAction(math::Vec3 Goal, GameObject* target, float TimeToComplete, int id, float delay,
+    void ActionList::AddRotateAction(glm::vec3 Goal,
+                                     GameObject* target,
+                                     float TimeToComplete,
+                                     int id,
+                                     float delay,
                                      bool block, BaseAction::EaseType ease)
     {
         // create a new RotateAction and add it to the list
@@ -72,7 +80,11 @@ namespace mts
         Actions.push_back(action);
     }
 
-    void ActionList::AddScaleAction(math::Vec3 Goal, GameObject* target, float TimeToComplete, int id, float delay, 
+    void ActionList::AddScaleAction(glm::vec3 Goal,
+                                    GameObject* target,
+                                    float TimeToComplete,
+                                    int id,
+                                    float delay, 
                                     bool block, BaseAction::EaseType ease)
     {
         // create a new ScaleAction and add it to the list

@@ -30,17 +30,17 @@ namespace mts
         // Todo: mesh, shader, & texture should be controlled by resource mananger
         if (mesh != nullptr)
         {
-            MTS_DELETE(mesh);
+            delete mesh;
             mesh = nullptr;
         }
         if (shader != nullptr)
         {
-            MTS_DELETE(shader);
+            delete shader;
             shader = nullptr;
         }
         if (texture != nullptr)
         {
-            MTS_DELETE(texture);
+            delete texture;
             texture = nullptr;
         }
     }
@@ -88,7 +88,7 @@ namespace mts
 
         // TODO: move mesh creation to resource manager
         // Build mesh
-        mesh = MTS_NEW(Mesh);
+        mesh = new Mesh();
         mesh->BuildQuad(numCols, numRows, color);
 
         // Read in shaders
@@ -111,7 +111,7 @@ namespace mts
 
         // TODO: move shader creation to resource manager
         // Build shader
-        shader = MTS_NEW(Shader);
+        shader = new Shader();
         auto vertSrc = Shader::LoadTextFile(vertSrcLoc.c_str());
         auto fragSrc = Shader::LoadTextFile(fragSrcLoc.c_str());
         shader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());

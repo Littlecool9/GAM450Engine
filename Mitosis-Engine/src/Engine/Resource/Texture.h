@@ -15,6 +15,7 @@ namespace mts
 {
     class Texture
     {
+        MTS_CLASS_NEW_DELETE();
        public:
         Texture();
         Texture(GLint internal_format,

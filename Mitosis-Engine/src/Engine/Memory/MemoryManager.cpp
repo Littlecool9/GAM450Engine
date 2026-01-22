@@ -18,7 +18,11 @@ namespace mts
     static bool initialized = false;
     static std::size_t allocatedBytes = 0;
     static std::size_t allocations = 0;
+    static std::size_t maxAllocatedBytes = 0;
+    static std::size_t maxAllocations = 0;
     static std::unordered_map<void*, MemoryInfo> allocationInfo;
+
+    // we're not on multi-thread, but in case we ever do.
     static std::mutex memoryMutex;
 
     static void* PlatformAlloc(std::size_t sizeBytes, std::size_t alignBytes)
@@ -62,6 +66,7 @@ namespace mts
         {
             LOG_INFO("=== No Leak ===");
         }
+        LOG_INFO("Allocations : {}, {} bytes", maxAllocations, maxAllocatedBytes);
 
         allocationInfo.clear();
         allocatedBytes = 0;
@@ -73,6 +78,12 @@ namespace mts
         std::size_t align,
         std::source_location location)
     {
+        if (!initialized)
+        {
+            LOG_CRITICAL("MemoryManager::Alloc called before MemoryManager::Init()");
+            return nullptr;
+        }
+
         void* ptr = PlatformAlloc(sizeBytes, align);
 
         MemoryInfo info = {
@@ -95,8 +106,11 @@ namespace mts
             std::scoped_lock lock(memoryMutex);
             allocatedBytes += sizeBytes;
             allocations += 1;
+            maxAllocatedBytes += sizeBytes;
+            maxAllocations += 1;
             allocationInfo[ptr] = info;
         }
+
         return ptr;
     }
 

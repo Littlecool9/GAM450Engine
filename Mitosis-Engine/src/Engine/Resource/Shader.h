@@ -17,6 +17,7 @@ namespace mts
 {
     class Shader
     {
+        MTS_CLASS_NEW_DELETE();
        public:
         void UseProgram() const;
         void CreateProgram(const GLchar* vertexShaderSource, const GLchar* fragmentShaderSource);

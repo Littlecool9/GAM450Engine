@@ -6,7 +6,7 @@
 
 namespace mts
 {
-    TranslateAction::TranslateAction(math::Vec3 Goal,
+    TranslateAction::TranslateAction(glm::vec3 Goal,
                                      GameObject* tar,
                                      int id,
                                      float lifeSpan,
@@ -37,7 +37,7 @@ namespace mts
 
                 FirstTime = false;
             }
-            math::Vec3 pos = startPosition + (targetPosition - startPosition) * Percent;
+            glm::vec3 pos = startPosition + (targetPosition - startPosition) * Percent;
             Target->GetComponent<Transform>()->SetPosition(pos);
             if (Percent >= 1)
             {

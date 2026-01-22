@@ -6,7 +6,7 @@
 
 namespace mts
 {
-    ScaleAction::ScaleAction(math::Vec3 Goal,
+    ScaleAction::ScaleAction(glm::vec3 Goal,
                                   GameObject* tar,
                                   int id,
                                   float lifeSpan,
@@ -35,7 +35,7 @@ namespace mts
                 startScale = Target->GetComponent<Transform>()->GetScale();
                 FirstTime = false;
             }
-            math::Vec3 scale = startScale + (targetScale - startScale) * Percent;
+            glm::vec3 scale = startScale + (targetScale - startScale) * Percent;
             Target->GetComponent<Transform>()->SetScale(scale);
             if (Percent >= 1)
             {

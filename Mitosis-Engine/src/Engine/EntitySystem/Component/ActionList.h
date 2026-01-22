@@ -12,10 +12,10 @@
 
 #pragma once
 #include <bitset>
+#include <glm/vec3.hpp>
 
 #include "Component.h"
 #include "Actions/BaseAction.h"
-#include "Engine/Math/Vec3.h"
 
 namespace mts
 {
@@ -34,21 +34,21 @@ namespace mts
             void FastForward();
             void ResetSpeed();
             bool IsEmpty() const;
-            void AddScaleAction(math::Vec3 Goal,
+            void AddScaleAction(glm::vec3 Goal,
                                 GameObject* target,
                                 float TimeToComplete = 1,
                                 int id = 0,
                                 float delay = 0,
                                 bool block = false,
                                 BaseAction::EaseType ease = BaseAction::EaseType::Linear);
-            void AddRotateAction(math::Vec3 Goal,
+            void AddRotateAction(glm::vec3 Goal,
                                  GameObject* target,
                                  float TimeToComplete = 1,
                                  int id = 0,
                                  float delay = 0,
                                  bool block = false,
                                  BaseAction::EaseType ease = BaseAction::EaseType::Linear);
-            void AddTranslateAction(math::Vec3 Goal,
+            void AddTranslateAction(glm::vec3 Goal,
                                     GameObject* target,
                                     float TimeToComplete = 1,
                                     int id = 0,

@@ -10,18 +10,19 @@
  */
 
 #pragma once
+#include <glm/vec3.hpp>
+
 #include "BaseAction.h"
-#include "Engine/Math/Vec3.h"
 
 namespace mts
 {
     class TranslateAction : public BaseAction
     {
         public:
-        math::Vec3 startPosition;
-        math::Vec3 targetPosition;
+        glm::vec3 startPosition;
+        glm::vec3 targetPosition;
 
-        TranslateAction(math::Vec3 Goal,
+        TranslateAction(glm::vec3 Goal,
                         GameObject* target,
                         int id,
                         float lifeSpan,

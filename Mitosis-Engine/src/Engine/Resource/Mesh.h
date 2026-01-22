@@ -26,6 +26,7 @@ namespace mts
 
     class Mesh
     {
+        MTS_CLASS_NEW_DELETE();
        public:
         void BuildQuad(int numCols, int numRows, const glm::vec3 color);
         void Draw() const;

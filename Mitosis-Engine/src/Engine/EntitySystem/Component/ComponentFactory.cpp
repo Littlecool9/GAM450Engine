@@ -1,9 +1,7 @@
 /**
  * @file ComponentFactory.cpp
- * @author Dong Ta
- * @brief  Contains definitions for ComponentFactory class
- * @version 0.1
- * @date 1/15/2026 6:55:28 AM
+ * @author Jackey Cen
+ * @brief: Component Factory Implementation
  *
  * @copyright Copyright (c) 2025 - Mitosis Engine
  *
@@ -15,17 +13,24 @@
 #include "ActionList.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+
 namespace mts
 {
-    ComponentFactory::ComponentFactory()
-    {
-        // Whenever a new component is created, remember to register it here,
-        // This assumes component constructors take in a gameobject as parameter like in the
-        // provided transform and meshrenderer examples
-        // THIS IS CASE SENSITIVE
-        Register("Transform", +[](GameObject* o) -> Component* { return new Transform(o); });
+    std::unordered_map<std::string, ComponentFactory::ComponentCreator>
+        ComponentFactory::componentCreators = {
+            {"Transform", []() -> Component* { return MTS_NEW (Transform); }},
+            {"MeshRenderer", []() -> Component* { return MTS_NEW (MeshRenderer); }},
+            {"ActionList", []() -> Component* { return MTS_NEW (ActionList); }},
+    };
 
-        Register("MeshRenderer", +[](GameObject* o) -> Component* { return new MeshRenderer(o); });
-        Register("ActionList", +[](GameObject* o) -> Component* { return new ActionList(o); });
+    bool ComponentFactory::RegisterComponent(const std::string& componentName,
+                                             ComponentCreator creator)
+    {
+        if (IsRegistered(componentName))
+        {
+            return false;
+        }
+        componentCreators[componentName] = creator;
+        return true;
     }
 }  // namespace mts

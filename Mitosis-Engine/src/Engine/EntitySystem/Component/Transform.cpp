@@ -18,6 +18,10 @@ namespace mts
     {
     }
 
+    Transform::Transform() : position(0.5), scale(1), rotation(0)
+    {
+    }
+
     void Transform::Init()
     {
     }

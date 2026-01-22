@@ -12,6 +12,7 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 
 namespace mts
 {
@@ -58,10 +59,15 @@ namespace mts
         }
     }
 
-    // Jackey TODO: Replace this part with a gameobject factory implementation
+    // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
     GameObject* Scene::CreateGameObject() {
-        GameObject* newGameObject = new GameObject();
-        gameObjects.push_back(newGameObject);
-        return newGameObject;
+
+        //GameObject* newGameObject = GameObjectFactory::CreateGameObjectForTest(true);
+        //gameObjects.push_back(newGameObject);
+
+        GameObject* newGameObject2 = GameObjectFactory::CreateGameObjectForTest(false);
+        gameObjects.emplace_back(newGameObject2);
+
+        return newGameObject2;
     }
 }  // namespace mts

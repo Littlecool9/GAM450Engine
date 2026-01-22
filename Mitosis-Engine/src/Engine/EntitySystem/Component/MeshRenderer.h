@@ -21,6 +21,7 @@ namespace mts
     {
        public:
         MeshRenderer(GameObject* owner);
+        MeshRenderer() = default;
         ~MeshRenderer() override;
 
         void Init() override;

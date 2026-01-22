@@ -25,6 +25,7 @@ namespace mts
     {
     }
 
+
     MeshRenderer::~MeshRenderer()
     {
         // Todo: mesh, shader, & texture should be controlled by resource mananger

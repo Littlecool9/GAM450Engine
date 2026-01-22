@@ -21,6 +21,7 @@ namespace mts
     {
        public:
         Transform(GameObject* owner);
+        Transform();
         ~Transform() override = default;
 
        public:

@@ -9,40 +9,53 @@
  *
  */
 
+#pragma once
+#include <functional>
 
 #pragma once
 #include "unordered_map"
 #include "Component.h"
 namespace mts
 {
+    class Component;
     class ComponentFactory
     {
-        using CreatorFn = Component* (*)(GameObject*);
-        public:
-        ComponentFactory();
-        ~ComponentFactory() = default;
+       private:
+        typedef std::function<Component*()> ComponentCreator;
 
-        void Register(std::string name, CreatorFn fn)
+       public:
+        // @brief: Create a component based on its string name
+        // @brief: string-based creation requires manual registration of new component types in the
+        // cpp file
+        // @brief: string-based creation is mainly used for deserialization from files
+        template <typename... Args>
+        static Component* CreateComponent(const std::string& componentName, Args&&... args)
         {
-            creators_[std::move(name)] = fn;
-        }
-        //called to create a component. CASE SENSITIVE
-        Component* Create(std::string_view type, GameObject* owner) const
-        {
-            auto it = creators_.find(std::string(type));
-
-            if (it == creators_.end())
+            if (componentCreators.find(componentName) != componentCreators.end())
             {
-                assert(false && "Component was not added to the factory.");
+                ComponentCreator constructor = componentCreators.at(componentName);
+                return constructor(std::forward<Args>(args)...);
             }
-            else
-            {
-                return it->second(owner);
-            }
+            return nullptr;
         }
 
-        private:
-        // a map of component type names to their constructor functions
-        std::unordered_map<std::string, CreatorFn> creators_;
+        // @brief: Create a component based on its type
+        // @brief: type-based creation does not require manual registration of new component types
+        // @brief: type-based creation is mainly used for gameplay logic
+        template <typename T, typename... Args>
+        static T* CreateComponent(Args&&... args)
+        {
+            return new T(std::forward<Args>(args)...);
+        }
+
+        static bool RegisterComponent(const std::string& componentName, ComponentCreator creator);
+        static bool IsRegistered(const std::string& objectName)
+        {
+            return componentCreators.find(objectName) != componentCreators.end();
+        }
+
+       private:
+        static std::unordered_map<std::string, ComponentCreator> componentCreators;
     };
-}
+
+}  // namespace mts

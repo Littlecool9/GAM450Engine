@@ -14,7 +14,33 @@
 
 namespace mts
 {
-    Component::Component(GameObject* owner) : owner(owner)
+    Component::Component() : owner(nullptr), isDeserialized(false), isEnabled(true)
     {
+    }
+    Component::Component(GameObject* owner) : owner(owner), isDeserialized(false), isEnabled(true)
+    {
+    }
+
+    void Component::Deserialize(JsonValue const& jsonObj)
+    {
+        if (isDeserialized)
+            return;
+        // Jackey TODO: implement component specific deserialization here
+        isDeserialized = true;
+    }
+
+    void Component::SetEnabled(bool enabled)
+    {
+        if (isEnabled == enabled)
+            return;
+        isEnabled = enabled;
+        if (isEnabled)
+        {
+            onEnable.Invoke();
+        }
+        else
+        {
+            onDisable.Invoke();
+        }
     }
 }  // namespace mts

@@ -16,15 +16,29 @@
 #include "../Component/ComponentFactory.h"
 namespace mts
 {
-    GameObject::GameObject()
+    std::unordered_map<std::string, Tag> TagRegistry::nameToTag;
+    uint32_t TagRegistry::nextId = 0;
+
+    GameObject::GameObject() : id_(boost::uuids::random_generator()()), dontDestroy(false)
     {
         AddComponent<Transform>();
     }
-    GameObject::GameObject(ComponentFactory* obj)
+
+    GameObject::GameObject(const GameObject& other)
+        : id_(boost::uuids::random_generator()()),
+          name(other.name),
+          dontDestroy(other.dontDestroy),
+          isActive(other.isActive),
+          objectLayer(other.objectLayer),
+          tags(other.tags)
     {
-        // AddComponent<Transform>();
-        componentFactory = obj;
     }
+
+    GameObject::GameObject(const std::string& name)
+        : id_(boost::uuids::random_generator()()), name(name), dontDestroy(false), isActive(true)
+    {
+    }
+
     GameObject::~GameObject()
     {
         for (auto c : components)
@@ -40,10 +54,6 @@ namespace mts
         }
          */
 
-        if (componentFactory == nullptr)
-        {
-            return;
-        }
         if (!jsonObj.Has("Components"))
         {
             return;
@@ -68,8 +78,7 @@ namespace mts
             if (!typeName || typeName[0] == '\0')
                 continue;
 
-
-            auto comp = componentFactory->Create(typeName, this);
+            auto comp = ComponentFactory::CreateComponent(typeName);
             if (!comp)
                 continue;
 
@@ -78,7 +87,8 @@ namespace mts
             {
                 comp->Deserialize(item["Data"]);
             }
-            components.push_back(comp);
+            comp->owner = this;
+            components.emplace_back(comp);
         }
     }
 
@@ -97,28 +107,62 @@ namespace mts
 
     }
 
+#define FOR_CONDITION_COMPONENTS(cond, action) \
+    for (auto c : components)                \
+        if (c->cond)                  \
+            action
+
     void GameObject::Init()
     {
-        for (auto c : components)
-            c->Init();
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->Init());
     }
 
     void GameObject::Update(float dt)
     {
-        for (auto c : components)
-            c->Update(dt);
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->Update(dt));
     }
 
     void GameObject::LateUpdate(float dt)
     {
-        for (auto c : components)
-            c->LateUpdate(dt);
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->LateUpdate(dt));
     }
 
     void GameObject::Render()
     {
-        for (auto c : components)
-            c->Render();
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->Render());
+    }
+
+    GameObject* GameObject::GetChildByName(const std::string& childName) const
+    {
+        for (auto child : children)
+        {
+            if (child->GetName() == childName)
+                return child;
+        }
+        return nullptr;
+    }
+
+    void GameObject::AddTag(const std::string& tagName)
+    {
+        Tag tag = TagRegistry::GetOrCreate(tagName);
+        tags.emplace_back(tag);
+    }
+
+    bool GameObject::HasTag(const std::string& tagName) const
+    {
+        Tag tag = TagRegistry::GetOrCreate(tagName);
+        return std::find(tags.begin(), tags.end(), tag) != tags.end();
+    }
+
+    Tag TagRegistry::GetOrCreate(const std::string& name)
+    {
+        auto it = nameToTag.find(name);
+        if (it != nameToTag.end())
+            return it->second;
+
+        Tag tag{nextId++};
+        nameToTag.emplace(name, tag);
+        return tag;
     }
 
 }  // namespace mts

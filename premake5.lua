@@ -128,6 +128,7 @@ project (launcherName)
         engineName .. "/src",
         IncludeDir["glad"],
         IncludeDir["glm"],
+        IncludeDir["boost"]
     }
 
     links
@@ -160,6 +161,8 @@ project "Sandbox"
     {
         engineName .. "/src",        
         IncludeDir["glad"],
+
+        IncludeDir["boost"],
         IncludeDir["glm"],
     }
 

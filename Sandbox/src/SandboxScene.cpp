@@ -14,6 +14,7 @@
 
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/EntitySystem/Component/ComponentFactory.h"
 
 //void SetTriangleMesh(mts::Mesh* mesh)
@@ -48,10 +49,8 @@ SandboxScene::~SandboxScene()
 
 void SandboxScene::OnInit()
 {
-    mts::ComponentFactory* compFactory = new mts::ComponentFactory();
-    mts::GameObject* obj = new mts::GameObject(compFactory);
-    AddGameObject(obj);
-    mts::SerializationUtility::DeserializeFromFile(obj, "Data/TestMeshEntity.json");
+    mts::GameObject* go = CreateGameObject();
+    go->SetName("SandBoxTestGameObject");
 
     /*LOG_INFO("CWD: {}", std::filesystem::current_path().string());
 

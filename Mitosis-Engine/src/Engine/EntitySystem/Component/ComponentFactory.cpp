@@ -18,9 +18,9 @@ namespace mts
 {
     std::unordered_map<std::string, ComponentFactory::ComponentCreator>
         ComponentFactory::componentCreators = {
-            {"Transform", []() -> Component* { return MTS_NEW (Transform); }},
-            {"MeshRenderer", []() -> Component* { return MTS_NEW (MeshRenderer); }},
-            {"ActionList", []() -> Component* { return MTS_NEW (ActionList); }},
+            {"Transform", []() -> Component* { return new Transform(); }},
+            {"MeshRenderer", []() -> Component* { return new MeshRenderer(); }},
+            {"ActionList", []() -> Component* { return new ActionList(); }},
     };
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,

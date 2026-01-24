@@ -69,14 +69,8 @@ namespace mts
        public:
         virtual ~GameObject();
 
-        static void* operator new(std::size_t size,
-                                  std::source_location loc = std::source_location::current())
-        {
-            return MTS_ALLOC_T(GameObject);
-        }
-        static void operator delete(void* ptr) { MTS_FREE(ptr); }
-
-        static void operator delete(void* ptr, std::source_location) { MTS_FREE(ptr); }
+        // May need to include header file here
+        MTS_CLASS_NEW_DELETE();
 
        public:
         virtual void Init();

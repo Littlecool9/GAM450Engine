@@ -66,6 +66,10 @@ namespace mts
     {                                                                                     \
         ::mts::MemoryManager::Free(p);                                                    \
     }                                                                                     \
+    static void operator delete(void* p, std::source_location) noexcept                   \
+    {                                                                                     \
+        ::mts::MemoryManager::Free(p);                                                    \
+    }                                                                                     \
     static void* operator new(std::size_t sz,                                             \
                               std::align_val_t al,                                        \
                               std::source_location loc = std::source_location::current()) \

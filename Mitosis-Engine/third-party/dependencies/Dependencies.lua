@@ -16,6 +16,8 @@ BinDir     = {}
 -- Source-built (compiled into engine)
 -- =========================
 IncludeDir["glad"] = ThirdParty.Source .. "/glad/include"
+IncludeDir["imgui"] = ThirdParty.Source .. "/imgui"
+IncludeDir["imgui_backends"] = ThirdParty.Source .. "/imgui/backends"
 
 -- =========================
 -- Header-only dependencies

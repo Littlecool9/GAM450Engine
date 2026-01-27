@@ -71,6 +71,13 @@ project (engineName)
         
         -- Custom compilation for glad.c file (better design can be added later)
         "%{prj.name}/third-party/source/glad/src/glad.c",
+
+        -- imgui core
+        "%{prj.name}/third-party/source/imgui/imgui*.cpp",
+
+        -- imgui backends
+        "%{prj.name}/third-party/source/imgui/backends/imgui_impl_glfw.cpp",
+        "%{prj.name}/third-party/source/imgui/backends/imgui_impl_opengl3.cpp",
     }
 
     includedirs
@@ -79,6 +86,8 @@ project (engineName)
 
         -- Source deps (example; GLAD)
         IncludeDir["glad"],
+        IncludeDir["imgui"],
+        IncludeDir["imgui_backends"],
 
         -- Header-only deps (example: spdlog)
         IncludeDir["spdlog"],
@@ -128,7 +137,9 @@ project (launcherName)
         engineName .. "/src",
         IncludeDir["glad"],
         IncludeDir["glm"],
-        IncludeDir["boost"]
+        IncludeDir["boost"],
+        IncludeDir["imgui"],
+        IncludeDir["imgui_backends"],
     }
 
     links
@@ -161,7 +172,8 @@ project "Sandbox"
     {
         engineName .. "/src",        
         IncludeDir["glad"],
-
+        IncludeDir["imgui"],
+        IncludeDir["imgui_backends"],
         IncludeDir["boost"],
         IncludeDir["glm"],
     }

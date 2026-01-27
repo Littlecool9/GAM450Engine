@@ -7,3 +7,6 @@
 [submodule "Mitosis-Engine/third-party/header-only/glm"]
 	path = Mitosis-Engine/third-party/header-only/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Mitosis-Engine/third-party/source/imgui"]
+	path = Mitosis-Engine/third-party/source/imgui
+	url = https://github.com/ocornut/imgui.git

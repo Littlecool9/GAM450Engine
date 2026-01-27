@@ -1,6 +1,6 @@
 /**
  * @file ComponentFactory.cpp
- * @author Jackey Cen
+ * @author Dong Ta
  * @brief: Component Factory Implementation
  *
  * @copyright Copyright (c) 2025 - Mitosis Engine
@@ -13,6 +13,7 @@
 #include "ActionList.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Button.h"
 
 namespace mts
 {
@@ -21,6 +22,7 @@ namespace mts
             {"Transform", []() -> Component* { return new Transform(); }},
             {"MeshRenderer", []() -> Component* { return new MeshRenderer(); }},
             {"ActionList", []() -> Component* { return new ActionList(); }},
+            {"Button", []() -> Component* { return new Button(); }},
     };
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,

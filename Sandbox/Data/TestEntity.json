@@ -10,8 +10,8 @@
           0
         ],
         "Scale": [
-          0,
-          0,
+          15,
+          15,
           0
         ],
         "Rotation": 0.0
@@ -19,6 +19,30 @@
     },
     {
       "Type": "ActionList"
+    },
+    {
+      "Type": "Button",
+      "Data": {
+        "ButtonBoundary": [
+          50.0,
+          50.0
+        ],
+        "OnClickEvent": "Hello World"
+      }
+    },
+        {
+      "Type": "MeshRenderer",
+      "Data": {
+        "NumRows": 1,
+        "NumCols": 1,
+        "MeshColor": [
+          0.5,
+          1.0,
+          0.2
+        ],
+        "VertexShader": "triangle.vert",
+        "FragmentShader": "triangle.frag"
+      }
     }
   ]
 }

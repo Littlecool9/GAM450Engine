@@ -52,6 +52,9 @@ void SandboxScene::OnInit()
     mts::GameObject* go = CreateGameObject();
     go->SetName("SandBoxTestGameObject");
 
+    mts::SerializationUtility::DeserializeFromFile(go, "Data/TestEntity.json");
+
+
     /*LOG_INFO("CWD: {}", std::filesystem::current_path().string());
 
     auto vertSrc = LoadTextFile("../Mitosis-Engine/src/Shaders/triangle.vert");

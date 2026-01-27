@@ -30,7 +30,8 @@ namespace mts
         MouseButtonPressed,
         MouseButtonReleased,
         MouseMoved,
-        MouseScrolled
+        MouseScrolled,
+        UIButtonClicked
     };
 
     enum EventCategory
@@ -41,7 +42,8 @@ namespace mts
         EventCategoryKeyboard = 1 << 2,
         EventCategoryMouse = 1 << 3,
         EventCategoryMouseButton = 1 << 4,
-        EventCategoryWindow = 1 << 5
+        EventCategoryWindow = 1 << 5,
+        EventCategoryUI = 1 << 6
     };
 
 #define MTS_EVENT_CLASS_TYPE(type)                  \

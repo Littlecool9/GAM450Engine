@@ -24,7 +24,7 @@ namespace mts
             mts::JsonDocument doc;
             if (!doc.LoadFromFile(filepath))
             {
-                printf("File parsing error occurred\n");
+                LOG_INFO("File parsing error occurred\n");
                 return;
             }
 
@@ -35,7 +35,7 @@ namespace mts
             mts::JsonDocument doc;
             if (!doc.LoadFromString(str))
             {
-                printf("String parsing error occurred\n");
+                LOG_INFO("String parsing error occurred\n");
                 return;
             }
 

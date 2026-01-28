@@ -1,0 +1,58 @@
+name: PR - Windows Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: pr-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-windows:
+    # Skip draft PRs
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: windows-2022
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Run ThirdPartyInit.bat
+        shell: cmd
+        run: |
+          call ThirdPartyInit.bat
+
+      - name: Run GenerateProjects.bat
+        shell: cmd
+        run: |
+          call GenerateProjects.bat
+
+      # Adds msbuild to PATH
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Find solution (.sln)
+        id: find_sln
+        shell: pwsh
+        run: |
+          $sln = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.sln |
+                 Select-Object -First 1
+          if (-not $sln) { throw "No .sln file found after GenerateProjects.bat" }
+          "sln_path=$($sln.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "Found solution: $($sln.FullName)"
+
+      # Build
+      - name: Build (Debug)
+        shell: pwsh
+        run: |
+          msbuild "${{ steps.find_sln.outputs.sln_path }}" `
+            /m `
+            /p:Configuration=Debug `
+            /p:Platform=x64 `
+            /p:TreatWarningsAsErrors=false `
+            /verbosity:minimal

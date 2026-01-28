@@ -111,6 +111,10 @@ project (engineName)
         flags { "NoPCH" }
     filter {}
 
+    filter "files:Mitosis-Engine/third-party/source/imgui/**.cpp"
+        flags { "NoPCH" }
+    filter {}
+
     -- If you want engine itself to link to some libs, do it here.
 
 -- =========================================================
@@ -204,5 +208,3 @@ project "Sandbox"
     -- -------------------------
     -- LinkInstalled("assimp", { "assimp-vc143-mt.lib" }) -- (name differs per build; set yours)
     -- CopyRuntimeDLL("assimp", "assimp-vc143-mt.dll")
-
-    filter {}

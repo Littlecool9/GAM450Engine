@@ -9,6 +9,8 @@
 
 #include "pch.h"
 #include "Texture.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 namespace mts
 {
@@ -25,42 +27,70 @@ namespace mts
                      GLint wrap_s,
                      GLint wrap_t,
                      GLint wrap_r)
-        : width(0),
-          height(0),
-          internal_format(internal_format),
-          data_format(data_format),
-          data_type(data_type),
-          min_filter(min_filter),
-          mag_filter(mag_filter),
-          wrap_s(wrap_s),
-          wrap_t(wrap_t),
-          wrap_r(wrap_r)
+        : mWidth(0),
+          mHeight(0),
+          mInternal_format(internal_format),
+          mData_format(data_format),
+          mData_type(data_type),
+          mMin_filter(min_filter),
+          mMag_filter(mag_filter),
+          mWrap_s(wrap_s),
+          mWrap_t(wrap_t),
+          mWrap_r(wrap_r)
     {
-        glGenTextures(1, &this->ID);
+        glGenTextures(1, &mID);
     }
     
-    void Texture::GenerateTexture(GLsizei width, GLsizei height, const GLuint* data)
+    void Texture::GenerateTexture(const std::string& filepath, bool hasAlpha)
     {
-        this->width = width;
-        this->height = height;
-        glBindTexture(GL_TEXTURE_2D, this->ID);
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,this->internal_format,
-                     this->width,
-                     this->height,
-                     0,
-                     this->data_format,
-                     this->data_type,
-                     data);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_s);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_t);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, wrap_r);
+        if (hasAlpha)
+        {
+            mInternal_format = GL_RGBA;
+            mData_format = GL_RGBA;
+        }
+
+        int channels;
+
+        // Load image file
+        unsigned char* data = stbi_load(filepath.c_str(), &mWidth, &mHeight, &channels, 0);
+
+        if (data)
+        {
+            glBindTexture(GL_TEXTURE_2D, mID);
+            glTexImage2D(GL_TEXTURE_2D,
+                         0,
+                         mInternal_format,
+                         mWidth,
+                         mHeight,
+                         0,
+                         mData_format,
+                         mData_type,
+                         data);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mMin_filter);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mMag_filter);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mWrap_s);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mWrap_t);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, mWrap_r);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+        else
+        {
+            LOG_ERROR("Failed to load texture");
+        }
+
+        // Free image file data
+        stbi_image_free(data);
     }
 
     void Texture::BindTexture() const
     {
-        glBindTexture(GL_TEXTURE_2D, this->ID);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, mID);
+    }
+
+    void Texture::UnbindTexture() const
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }  // namespace mts

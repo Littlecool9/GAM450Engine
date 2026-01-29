@@ -41,7 +41,7 @@ namespace mts
         {
             GLchar infoLog[512];
             glGetProgramInfoLog(this->ID, 512, nullptr, infoLog);
-            LOG_ERROR("Shader linking error: ", infoLog);
+            LOG_ERROR("Shader linking error: {}", infoLog);
 
             glDeleteProgram(this->ID);
             glDeleteShader(vertexShader);
@@ -69,7 +69,7 @@ namespace mts
         {
             GLchar infoLog[512];
             glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-            LOG_ERROR("Shader compilation error: ", infoLog);
+            LOG_ERROR("Shader compilation error: {}", infoLog);
 
             glDeleteShader(shader);
             return NULL;
@@ -90,37 +90,37 @@ namespace mts
         glUniform1f(loc, f);
     }
 
-    void Shader::SetVector2f(const char* name, const float* fv) const
+    void Shader::SetVector2f(const char* name, const glm::vec2& fv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform2fv(loc, 1, &(fv[0]));
     }
 
-    void Shader::SetVector3f(const char* name, const float* fv) const
+    void Shader::SetVector3f(const char* name, const glm::vec3& fv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform3fv(loc, 1, &(fv[0]));
     }
 
-    void Shader::SetVector4f(const char* name, const float* fv) const
+    void Shader::SetVector4f(const char* name, const glm::vec4& fv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform4fv(loc, 1, &(fv[0]));
     }
 
-    void Shader::SetVector2i(const char* name, const int* iv) const
+    void Shader::SetVector2i(const char* name, const glm::ivec2& iv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform2iv(loc, 1, &(iv[0]));
     }
 
-    void Shader::SetVector3i(const char* name, const int* iv) const
+    void Shader::SetVector3i(const char* name, const glm::ivec3& iv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform3iv(loc, 1, &(iv[0]));
     }
 
-    void Shader::SetVector4i(const char* name, const int* iv) const
+    void Shader::SetVector4i(const char* name, const glm::ivec4& iv) const
     {
         GLint loc = glGetUniformLocation(this->ID, name);
         glUniform4iv(loc, 1, &(iv[0]));

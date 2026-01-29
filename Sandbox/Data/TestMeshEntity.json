@@ -5,8 +5,8 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          300,
-          300,
+          10,
+          10,
           0
         ],
         "Scale": [
@@ -20,15 +20,18 @@
     {
       "Type": "MeshRenderer",
       "Data": {
-        "NumRows": 1,
-        "NumCols": 1,
-        "MeshColor": [
-          0.5,
+        "NumRows": 2,
+        "NumCols": 4,
+        "TintColor": [
           1.0,
-          0.2
+          1.0,
+          1.0
         ],
+        "Alpha": 1.0,
+        "FrameIndex": 1,
         "VertexShader": "triangle.vert",
-        "FragmentShader": "triangle.frag"
+        "FragmentShader": "triangle.frag",
+        "Texture": "../Sandbox/Assets/platformerPack_character@2.png"
       }
     }
   ]

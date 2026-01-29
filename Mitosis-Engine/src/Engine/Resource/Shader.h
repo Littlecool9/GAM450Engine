@@ -26,14 +26,14 @@ namespace mts
         GLuint GetID() const { return ID; }
 
         // Uniform setting wrapper functions
-        void SetInt(const char* name, const int i) const;
-        void SetFloat(const char* name, const float f) const;
-        void SetVector2f(const char* name, const float* fv) const;
-        void SetVector3f(const char* name, const float* fv) const;
-        void SetVector4f(const char* name, const float* fv) const;
-        void SetVector2i(const char* name, const int* iv) const;
-        void SetVector3i(const char* name, const int* iv) const;
-        void SetVector4i(const char* name, const int* iv) const;
+        void SetInt(const char* name, int i) const;
+        void SetFloat(const char* name, float f) const;
+        void SetVector2f(const char* name, const glm::vec2& fv) const;
+        void SetVector3f(const char* name, const glm::vec3& fv) const;
+        void SetVector4f(const char* name, const glm::vec4& fv) const;
+        void SetVector2i(const char* name, const glm::ivec2& iv) const;
+        void SetVector3i(const char* name, const glm::ivec3& iv) const;
+        void SetVector4i(const char* name, const glm::ivec4& iv) const;
         void SetMatrix3(const char* name, const float* fm) const;
         void SetMatrix3(const char* name, const glm::mat3& fm) const;
         void SetMatrix4(const char* name, const float* fm) const;

@@ -25,6 +25,7 @@ IncludeDir["imgui_backends"] = ThirdParty.Source .. "/imgui/backends"
 IncludeDir["spdlog"] = ThirdParty.HeaderOnly .. "/spdlog/include"
 IncludeDir["rapidjson"] = ThirdParty.HeaderOnly .. "/rapidjson/include"
 IncludeDir["glm"] = ThirdParty.HeaderOnly .. "/glm"
+IncludeDir["stb_image"] = ThirdParty.HeaderOnly .. "/stb_image"
 
 -- =========================
 -- Prebuilt dependencies

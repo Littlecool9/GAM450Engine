@@ -21,7 +21,6 @@ namespace mts
 
     GameObject::GameObject() : dontDestroy(false)
     {
-        AddComponent<Transform>();
     }
 
     GameObject::GameObject(const GameObject& other):

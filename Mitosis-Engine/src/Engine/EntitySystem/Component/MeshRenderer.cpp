@@ -29,20 +29,20 @@ namespace mts
     MeshRenderer::~MeshRenderer()
     {
         // Todo: mesh, shader, & texture should be controlled by resource mananger
-        if (mesh != nullptr)
+        if (mMesh != nullptr)
         {
-            delete mesh;
-            mesh = nullptr;
+            delete mMesh;
+            mMesh = nullptr;
         }
-        if (shader != nullptr)
+        if (mShader != nullptr)
         {
-            delete shader;
-            shader = nullptr;
+            delete mShader;
+            mShader = nullptr;
         }
-        if (texture != nullptr)
+        if (mTexture != nullptr)
         {
-            delete texture;
-            texture = nullptr;
+            delete mTexture;
+            mTexture = nullptr;
         }
     }
 
@@ -60,37 +60,64 @@ namespace mts
 
     void MeshRenderer::Deserialize(JsonValue const& jsonObj)
     {
+        // Read in texture image file
+        auto textureFile = "";
+        if (jsonObj.Has("Texture"))
+        {
+            textureFile = jsonObj["Texture"].GetString("");
+        }
+
+        // TODO: move texture creation to resource manager
+        // Build texture
+        if (textureFile != "")
+        {
+            mTexture = new Texture();
+            mTexture->GenerateTexture(textureFile, true);
+        }
+
         // Read in uv size
-        int numRows = 1;
-        int numCols = 1;
 
         if (jsonObj.Has("NumRows"))
         {
-            numRows = jsonObj["NumRows"].GetInt(numRows);
+            mNumRows = jsonObj["NumRows"].GetInt(mNumRows);
         }
         if (jsonObj.Has("NumCols"))
         {
-            numCols = jsonObj["NumCols"].GetInt(numCols);
+            mNumCols = jsonObj["NumCols"].GetInt(mNumCols);
         }
 
-        // Read in mesh color
+        // Read in tint color
         glm::vec3 color(1.0f, 1.0f, 1.0f);
 
-        if (jsonObj.Has("MeshColor"))
+        if (jsonObj.Has("TintColor"))
         {
-            JsonValue mc = jsonObj["MeshColor"];
+            JsonValue mc = jsonObj["TintColor"];
             if (mc.IsArray() && mc.Size() >= 3)
             {
-                color.x = mc[0].GetFloat(color.x);
-                color.y = mc[1].GetFloat(color.y);
-                color.z = mc[2].GetFloat(color.z);
+                mTintColor.x = mc[0].GetFloat(color.x);
+                mTintColor.y = mc[1].GetFloat(color.y);
+                mTintColor.z = mc[2].GetFloat(color.z);
             }
         }
 
+        // Read in alpha value
+        if (jsonObj.Has("Alpha"))
+        {
+            mAlpha = jsonObj["Alpha"].GetFloat(mAlpha);
+        }
+
+        // Read in starting frame index
+        int frameIndex = 0;
+        if (jsonObj.Has("FrameIndex"))
+        {
+            frameIndex = jsonObj["FrameIndex"].GetInt(frameIndex);
+        }
+        SetFrame(frameIndex);
+
         // TODO: move mesh creation to resource manager
         // Build mesh
-        mesh = new Mesh();
-        mesh->BuildQuad(numCols, numRows, color);
+        mMesh = new Mesh();
+        mMesh->BuildQuad(mNumCols, mNumRows);
 
         // Read in shaders
         auto vertFile = "";
@@ -112,10 +139,10 @@ namespace mts
 
         // TODO: move shader creation to resource manager
         // Build shader
-        shader = new Shader();
+        mShader = new Shader();
         auto vertSrc = Shader::LoadTextFile(vertSrcLoc.c_str());
         auto fragSrc = Shader::LoadTextFile(fragSrcLoc.c_str());
-        shader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
+        mShader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
     }
 
     // TODO: serialize meshRenderer data
@@ -124,10 +151,10 @@ namespace mts
     }
 
     void MeshRenderer::Render() {
-        if (!mesh || !shader)
+        if (!mMesh || !mShader || !mTexture)
             return;
 
-        shader->UseProgram();
+        mShader->UseProgram();
 
         auto transform = GetGameObject()->GetComponent<Transform>();
         MTS_ASSERT(transform != nullptr);
@@ -135,11 +162,27 @@ namespace mts
         glm::mat4 model = transform->LocalMatrix();
         glm::ivec4 viewportSize;
         glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-        glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), 0.0f, static_cast<float>(viewportSize.w), -1.0f, 1.0f);
+        glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
 
-        shader->SetMatrix4("u_Model", model);
-        shader->SetMatrix4("u_ViewProj", viewProj);
+        // set shader uniforms
+        mShader->SetMatrix4("model", model);
+        mShader->SetMatrix4("viewProj", viewProj);
+        mShader->SetVector2f("uvOffset", mUvOffset);
+        mShader->SetVector3f("tintColor", mTintColor);
+        mShader->SetFloat("alpha", mAlpha);
 
-        mesh->Draw();
+        mTexture->BindTexture();
+        mMesh->Draw();
+        mTexture->UnbindTexture();
+    }
+    
+    void MeshRenderer::SetFrame(int frameIndex)
+    {
+        // Set member variable
+        mFrameIndex = frameIndex;
+
+        // Calculate texture offset
+        mUvOffset = {(1.0f / static_cast<float>(mNumCols)) * static_cast<float>(mFrameIndex % mNumCols),
+                        (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(mFrameIndex / mNumCols)};
     }
 }  // namespace mts

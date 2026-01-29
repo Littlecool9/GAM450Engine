@@ -28,33 +28,34 @@ namespace mts
                 GLint wrap_t,
                 GLint wrap_r);
 
-        // Generates texture from image data
-        void GenerateTexture(GLsizei width, GLsizei height, const GLuint* data);
+        // Generates texture from image file
+        void GenerateTexture(const std::string& filepath, bool hasAlpha);
         
         // Binds object's ID as current texture
         void BindTexture() const;
+        void UnbindTexture() const;
 
-        GLuint GetID() const { return ID; }
+        GLuint GetID() const { return mID; }
 
        private:
         // texture internal opengl id
-        GLuint ID;
+        GLuint mID;
 
         // texture dimensions
-        GLsizei width;
-        GLsizei height;
+        GLsizei mWidth;
+        GLsizei mHeight;
 
         // texture image params
-        GLint internal_format;
-        GLenum data_format;
-        GLenum data_type;
+        GLint mInternal_format;
+        GLenum mData_format;
+        GLenum mData_type;
 
         // texture params
-        GLint min_filter;
-        GLint mag_filter;
-        GLint wrap_s;
-        GLint wrap_t;
-        GLint wrap_r;
+        GLint mMin_filter;
+        GLint mMag_filter;
+        GLint mWrap_s;
+        GLint mWrap_t;
+        GLint mWrap_r;
     };
 
 }  // namespace mts

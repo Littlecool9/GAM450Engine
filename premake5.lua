@@ -93,6 +93,7 @@ project (engineName)
         IncludeDir["spdlog"],
         IncludeDir["rapidjson"],
         IncludeDir["glm"],
+		IncludeDir["stb_image"],
 
         -- Prebuilt deps (example: GLFW)
         IncludeDir["glfw"],

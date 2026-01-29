@@ -30,14 +30,22 @@ namespace mts
         void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
-        void SetMesh(Mesh* newMesh) { mesh = newMesh; }
-        void SetShader(Shader* newShader) { shader = newShader; }
-        void SetTexture(Texture* newTexture) { texture = newTexture; }
+        void SetMesh(Mesh* newMesh) { mMesh = newMesh; }
+        void SetShader(Shader* newShader) { mShader = newShader; }
+        void SetTexture(Texture* newTexture) { mTexture = newTexture; }
+        void SetFrame(int frameIndex);
 
        private:
-        Mesh* mesh = nullptr;
-        Shader* shader = nullptr;
-        Texture* texture = nullptr;
+        Mesh* mMesh = nullptr;
+        Shader* mShader = nullptr;
+        Texture* mTexture = nullptr;
+        int mNumRows = 1;
+        int mNumCols = 1;
+        int mFrameIndex = 0;
+        // TODO: implement alpha blending (need to figure out how we want to sort sprites so they can be drawn back to front for alpha to work)
+        float mAlpha = 1.0f;
+        glm::vec3 mTintColor = {1.0f, 1.0f, 1.0f};
+        glm::vec2 mUvOffset = {0.0f, 0.0f};
     };
 
 }  // namespace mts

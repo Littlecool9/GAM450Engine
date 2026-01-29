@@ -23,18 +23,18 @@ namespace mts
     {
         glm::vec2 pos;
         glm::vec2 uv;
-        glm::vec3 color;
     };
 
     class Mesh : public Entity
     {
         MTS_CLASS_NEW_DELETE();
        public:
-        void BuildQuad(int numCols, int numRows, const glm::vec3 color);
+        void BuildQuad(int numCols, int numRows);
         void Draw() const;
        private:
-        GLuint vao = 0, vbo = 0, ibo = 0;
-        GLsizei indexCount = 0;
+        GLuint mVAO = 0, mVBO = 0, mIBO = 0;
+        GLsizei mIndexCount = 0;
+        
     };
 
 }  // namespace mts

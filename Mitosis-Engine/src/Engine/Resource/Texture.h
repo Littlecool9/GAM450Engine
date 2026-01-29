@@ -10,10 +10,11 @@
 #pragma once
 
 #include <glad/glad.h>
+#include "Engine/Entity/Entity.h"
 
 namespace mts
 {
-    class Texture
+    class Texture : public Entity
     {
         MTS_CLASS_NEW_DELETE();
        public:

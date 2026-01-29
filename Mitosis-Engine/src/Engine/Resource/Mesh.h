@@ -15,6 +15,8 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
+#include "Engine/Entity/Entity.h"
+
 namespace mts
 {
     struct Vertex
@@ -24,7 +26,7 @@ namespace mts
         glm::vec3 color;
     };
 
-    class Mesh
+    class Mesh : public Entity
     {
         MTS_CLASS_NEW_DELETE();
        public:

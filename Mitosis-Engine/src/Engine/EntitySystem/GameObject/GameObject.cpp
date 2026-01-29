@@ -19,13 +19,12 @@ namespace mts
     std::unordered_map<std::string, Tag> TagRegistry::nameToTag;
     uint32_t TagRegistry::nextId = 0;
 
-    GameObject::GameObject() : id_(boost::uuids::random_generator()()), dontDestroy(false)
+    GameObject::GameObject() : dontDestroy(false)
     {
         AddComponent<Transform>();
     }
 
-    GameObject::GameObject(const GameObject& other)
-        : id_(boost::uuids::random_generator()()),
+    GameObject::GameObject(const GameObject& other):
           name(other.name),
           dontDestroy(other.dontDestroy),
           isActive(other.isActive),
@@ -35,7 +34,7 @@ namespace mts
     }
 
     GameObject::GameObject(const std::string& name)
-        : id_(boost::uuids::random_generator()()), name(name), dontDestroy(false), isActive(true)
+        : name(name), dontDestroy(false), isActive(true)
     {
     }
 

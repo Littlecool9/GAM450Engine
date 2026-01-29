@@ -10,12 +10,10 @@
  */
 
 #pragma once
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include "Engine/Serialization/Deserializable.h"
 #include "Engine/EntitySystem/Component/ComponentFactory.h"
 #include "Engine/EntitySystem/Component/Component.h"
+#include "Engine/Entity/Entity.h"
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -25,27 +23,6 @@ namespace mts
     // forward declarations
     class JsonValue;
     class Deserializable;
-
-    // @brief: Multi-layer rendering requires pre-process in the camera and renderer.
-    class GameObjectId
-    {
-       public:
-        GameObjectId() : id_(boost::uuids::random_generator()()) {}
-        explicit GameObjectId(const boost::uuids::uuid& uuid) : id_(uuid) {}
-
-        std::string toString() const { return boost::uuids::to_string(id_); }
-
-        bool operator==(const GameObjectId& other) const { return id_ == other.id_; }
-
-        bool operator!=(const GameObjectId& other) const { return id_ != other.id_; }
-
-        bool operator<(const GameObjectId& other) const { return id_ < other.id_; }
-
-        const boost::uuids::uuid& uuid() const { return id_; }
-
-       private:
-        boost::uuids::uuid id_;
-    };
 
     // Tag is a lightweight identifier
     // This class is not hashable in this implementation
@@ -64,7 +41,7 @@ namespace mts
         static uint32_t nextId;
     };
 
-    class GameObject : public Deserializable
+    class GameObject : public Deserializable, public Entity
     {
        public:
         virtual ~GameObject();
@@ -93,8 +70,11 @@ namespace mts
         template <typename T>
         T* AddComponent()
         {
-            // todo: check if component already exists
-            // todo: also check if T is actually a type of component
+            if (GetComponent<T>() != nullptr)
+            {
+                LOG_WARN("GameObject {} already has component of type {}", name, typeid(T).name());
+                return nullptr;
+            }
             Component* newComp = ComponentFactory::CreateComponent<T>();
             if (newComp == nullptr)
             {
@@ -102,6 +82,7 @@ namespace mts
                 return nullptr;
             }
             components.emplace_back(newComp);
+            LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);    
             newComp->owner = this;
             T* res = dynamic_cast<T*>(newComp);
             
@@ -121,7 +102,6 @@ namespace mts
         }
 
         // Getters and Setters
-        inline const std::string GetIdString() const { return id_.toString(); }
         inline void SetDontDestroy(bool value) { dontDestroy = value; }
         inline bool GetDontDestroy() const { return dontDestroy; }
         inline bool IsActive() const { return isActive; }
@@ -147,7 +127,6 @@ namespace mts
        private:
         friend class GameObjectFactory;
 
-        GameObjectId id_;
         bool isDeserialized = false;
 
         // GameObject properties 

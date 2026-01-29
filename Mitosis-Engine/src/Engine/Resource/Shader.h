@@ -13,9 +13,11 @@
 #include <glm/mat3x3.hpp>
 #include <glm/mat4x4.hpp>
 
+#include "Engine/Entity/Entity.h"
+
 namespace mts
 {
-    class Shader
+    class Shader : public Entity
     {
         MTS_CLASS_NEW_DELETE();
        public:

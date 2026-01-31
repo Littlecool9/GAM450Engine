@@ -8,6 +8,10 @@
  */
 
 #include "pch.h"
+
+// TODO: Needs to be updated in a better manner to use a NullAudioBackend for redundancy.
+#if MTS_AUDIO_FMOD
+
 #include "FMODBackend.h"
 
 #include <fmod.hpp>
@@ -387,3 +391,5 @@ namespace mts::audio
     }
 
 }  // namespace mts::audio
+
+#endif  // MTS_AUDIO_FMOD

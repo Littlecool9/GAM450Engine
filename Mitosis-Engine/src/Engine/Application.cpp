@@ -19,11 +19,8 @@
 #include "SceneSystem/SceneSystem.h"
 #include "Time/FPSCounter.h"
 #include "Time/Time.h"
-#include "Engine/EntitySystem/Component/Transform.h"
+#include "Physics2D/PhysicsSystem2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
-#include "EntitySystem/Component/ComponentFactory.h"
-#include "Serialization/SerializationUtility.h"
-#include "UI/UIEvent.h"
 
 #if MTS_AUDIO_FMOD
 #include <fmod_studio.hpp>
@@ -68,8 +65,8 @@ namespace mts
 {
     void Application::Init()
     {
-        window = Window::Create();
-        window->SetEventCallback([this](Event& e) { OnEvent(e); });
+        mWindow = Window::Create();
+        mWindow->SetEventCallback([this](Event& e) { OnEvent(e); });
 
         // ---- GLAD sanity check ----
         const GLubyte* vendor = glGetString(GL_VENDOR);
@@ -88,7 +85,7 @@ namespace mts
         }
         // ---------------------------
 
-        glViewport(0, 0, window->GetWidth(), window->GetHeight());
+        glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
 
         Time::Init();
         Time::SetFixedDt(1.0 / 60.0);
@@ -102,25 +99,27 @@ namespace mts
 
         SceneSystem::Init(GetInitialScene());
 
-        isRunning = true;
+        mIsRunning = true;
     }
 
     void Application::Run()
     {
         FPSCounter fps;
 
-        while (isRunning)
+        while (mIsRunning)
         {
             // Clear "pressed/released this frame" BEFORE glfwPollEvents fires callbacks
             Time::BeginFrame();
             Input::BeginFrame();
-            window->PollEvents();
-            window->ClearScreen();
+            mWindow->PollEvents();
+            mWindow->ClearScreen();
 
             const float dt = static_cast<float>(Time::FrameDt());
 
             SceneSystem::Update(dt);
             SceneSystem::LateUpdate(dt);
+
+            physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
             SceneSystem::Render();
 
@@ -129,7 +128,7 @@ namespace mts
                 LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
             }
 
-            window->SwapBuffer();
+            mWindow->SwapBuffer();
             Time::EndFrame();
 
         }
@@ -137,12 +136,12 @@ namespace mts
 
     void Application::Shutdown()
     {
-        isRunning = false;
+        mIsRunning = false;
 
         // Important to shutdown the opposite way from initializing
         SceneSystem::Shutdown();
         Input::Shutdown();
-        window.reset();
+        mWindow.reset();
     }
 
     void Application::OnEvent(Event& e)
@@ -158,7 +157,7 @@ namespace mts
 
     bool Application::OnWindowClose(class WindowCloseEvent& e)
     {
-        isRunning = false;
+        mIsRunning = false;
         return true;
     }
 

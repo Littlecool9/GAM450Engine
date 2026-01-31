@@ -10,6 +10,11 @@
 #include "Engine/Windows/Window.h"
 #include <memory>
 
+namespace mts::physics
+{
+    class PhysicsSystem2D;
+}
+
 namespace mts
 {
     class Scene;
@@ -32,8 +37,9 @@ namespace mts
         bool OnWindowClose(class WindowCloseEvent& e);
         bool OnWindowResize(class WindowResizeEvent& e);
 
-        std::unique_ptr<Window> window;
-        bool isRunning = false;
+       private:
+        std::unique_ptr<Window> mWindow;
+        bool mIsRunning = false;
     };
 
     Application* CreateApplication();

@@ -45,6 +45,22 @@
         "FragmentShader": "triangle.frag",
         "Texture": "../Sandbox/Assets/platformerPack_character@2.png"
       }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 1.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 20,
+        "LinearDamping": 0,
+        "AngularDamping": 0,
+        "GravityScale": 0,
+        "BodyType": 1
+      }
     }
   ]
 }

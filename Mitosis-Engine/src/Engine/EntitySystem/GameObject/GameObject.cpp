@@ -130,6 +130,11 @@ namespace mts
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->Render());
     }
 
+    void GameObject::Destroy()
+    {
+        isDead = true;
+    }
+
     GameObject* GameObject::GetChildByName(const std::string& childName) const
     {
         for (auto child : children)

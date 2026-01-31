@@ -54,6 +54,7 @@ namespace mts
         virtual void Update(float dt);
         virtual void LateUpdate(float dt);
         virtual void Render();
+        void Destroy();
 
         // One Object can only be in one layer at a time
         enum LayerMasks
@@ -65,7 +66,7 @@ namespace mts
         // Deserializable interface
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
-        //end
+        // end
 
         template <typename T>
         T* AddComponent()
@@ -85,7 +86,7 @@ namespace mts
             LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);    
             newComp->owner = this;
             T* res = dynamic_cast<T*>(newComp);
-            
+
             return res;
         }
 
@@ -100,10 +101,10 @@ namespace mts
             }
             return nullptr;
         }
-
         // Getters and Setters
         inline void SetDontDestroy(bool value) { dontDestroy = value; }
         inline bool GetDontDestroy() const { return dontDestroy; }
+        inline bool IsDead() const { return isDead; }
         inline bool IsActive() const { return isActive; }
         inline bool SetActive(bool active) { return isActive = active; }
         inline void SetLayer(LayerMasks layer) { objectLayer = layer; }
@@ -129,12 +130,13 @@ namespace mts
 
         bool isDeserialized = false;
 
-        // GameObject properties 
+        // GameObject properties
         // (preferably initialized in the deserialization process)
         // (or modified in gameplay)
 
         bool dontDestroy;
         bool isActive;
+        bool isDead = false;  // in the queue for destruction;
 
         // @brief: Name can be non-unique
         std::string name;

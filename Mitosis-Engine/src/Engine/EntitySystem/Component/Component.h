@@ -29,10 +29,10 @@ namespace mts
         MTS_CLASS_NEW_DELETE();
 
        public:
-        virtual void Init() = 0;
-        virtual void Update(float dt) = 0;
-        virtual void LateUpdate(float dt) = 0;
-        virtual void Render() = 0;
+        virtual void Init() {};
+        virtual void Update(float dt) {};
+        virtual void LateUpdate(float dt) {};
+        virtual void Render() {};
 
         virtual void Deserialize(JsonValue const& jsonObj) override;
         GameObject* GetGameObject() { return owner; }

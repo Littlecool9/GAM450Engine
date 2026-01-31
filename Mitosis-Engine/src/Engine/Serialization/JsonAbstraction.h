@@ -10,13 +10,14 @@
  */
 #pragma once
 #include <string_view>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
 namespace mts
 {
     class JsonValue
     {
        public:
-
         // ---- queries ----
         bool IsObject() const;
         bool IsArray() const;
@@ -32,6 +33,9 @@ namespace mts
         //---- value access ----
         float GetFloat(float def = 0.f) const;
         int GetInt(int def = 0) const;
+        glm::vec3 GetVec3(glm::vec3 def = {});
+        glm::vec2 GetVec2(glm::vec2 def = {});
+
         const char* GetString(const char* def = "") const;
 
        private:
@@ -40,9 +44,8 @@ namespace mts
         explicit JsonValue(const void* impl) : impl(impl) {}
 
         // opaque pointer to backend value to hide RapidJSON from header
-        const void* impl = nullptr; 
+        const void* impl = nullptr;
     };
-
 
     class JsonDocument
     {
@@ -50,9 +53,8 @@ namespace mts
         JsonDocument();
         ~JsonDocument();
 
-        
-        bool LoadFromFile(const std::string& filepath) const; 
-        
+        bool LoadFromFile(const std::string& filepath) const;
+
         bool LoadFromString(const std::string& json) const;
         JsonValue Root() const;  // view into the document root
 
@@ -67,15 +69,14 @@ namespace mts
         void WriteInt(const char* key, int value);
         void WriteString(const char* key, const char* value);
 
-        void WriteFloat(float value);  // array version
-        void WriteInt(int value);      // array version
+        void WriteFloat(float value);         // array version
+        void WriteInt(int value);             // array version
         void WriteString(const char* value);  // array version
 
         bool SaveToFile(const std::string& path);
-
 
        private:
         struct Impl;                  // opaque (defined in .cpp)
         std::unique_ptr<Impl> impl_;  // owns RapidJSON document inside .cpp
     };
-}  // namespace rm
+}  // namespace mts

@@ -266,6 +266,45 @@ namespace mts
         return v->GetInt();
     }
 
+    glm::vec3 JsonValue::GetVec3(glm::vec3 def)
+    {
+        auto* v = static_cast<const RjValue*>(impl);
+        if (!v || !v->IsArray() || v->Size() != 3)
+        {
+            return def;
+        }
+
+        const auto& x = (*v)[0];
+        const auto& y = (*v)[1];
+        const auto& z = (*v)[2];
+
+        if (!x.IsNumber() || !y.IsNumber() || !z.IsNumber())
+        {
+            return def;
+        }
+
+        return {x.GetFloat(), y.GetFloat(), z.GetFloat()};
+    }
+
+    glm::vec2 JsonValue::GetVec2(glm::vec2 def)
+    {
+        auto* v = static_cast<const RjValue*>(impl);
+        if (!v || !v->IsArray() || v->Size() != 2)
+        {
+            return def;
+        }
+
+        const auto& x = (*v)[0];
+        const auto& y = (*v)[1];
+
+        if (!x.IsNumber() || !y.IsNumber())
+        {
+            return def;
+        }
+
+        return {x.GetFloat(), y.GetFloat()};
+    }
+
     const char* JsonValue::GetString(const char* def) const
     {
         auto* v = static_cast<const RjValue*>(impl);

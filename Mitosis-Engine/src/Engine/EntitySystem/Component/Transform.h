@@ -39,7 +39,6 @@ namespace mts
         float GetRotation() const;
         void SetRotation(float r);
 
-
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 

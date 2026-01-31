@@ -14,11 +14,12 @@
 
 namespace mts
 {
-    Transform::Transform(GameObject* owner) : Component(owner), position(0.5), scale(1), rotation(0), isDirty(true)
+    Transform::Transform(GameObject* owner)
+        : Component(owner), position(0.5), scale(1), rotation(0), isDirty(true)
     {
     }
 
-    Transform::Transform() : position(0.5), scale(1), rotation(0)
+    Transform::Transform() : position(0.5), scale(1), rotation(0), isDirty(true)
     {
     }
 
@@ -74,24 +75,12 @@ namespace mts
 
         if (jsonObj.Has("Position"))
         {
-            JsonValue t = jsonObj["Position"];
-            if (t.IsArray() && t.Size() >= 3)
-            {
-                p.x = t[0].GetFloat(p.x);
-                p.y = t[1].GetFloat(p.y);
-                p.z = t[2].GetFloat(p.z);
-            }
+            p = jsonObj["Position"].GetVec3();
         }
 
         if (jsonObj.Has("Scale"))
         {
-            JsonValue sc = jsonObj["Scale"];
-            if (sc.IsArray() && sc.Size() >= 3)
-            {
-                s.x = sc[0].GetFloat(s.x);
-                s.y = sc[1].GetFloat(s.y);
-                s.z = sc[2].GetFloat(s.z);
-            }
+            s = jsonObj["Scale"].GetVec3();
         }
 
         if (jsonObj.Has("Rotation"))
@@ -105,10 +94,8 @@ namespace mts
 
     void Transform::Serialize(JsonDocument& json) const
     {
-
         json.WriteString("Type", "Transform");
-        json.BeginObject("Data"); 
-
+        json.BeginObject("Data");
 
         json.BeginArray("Position");
         json.WriteFloat(position.x);
@@ -130,8 +117,9 @@ namespace mts
     {
         glm::mat4 S = glm::scale(glm::mat4(1.0f), scale);
         // origin of mesh is top-left, so have to translate origin to center when rotating
-        glm::mat4 R = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * scale.x, 0.5f * scale.y, 0.0f)) * 
-            glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0.0f,0.0f,1.0f)) *
+        glm::mat4 R =
+            glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * scale.x, 0.5f * scale.y, 0.0f)) *
+            glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0.0f, 0.0f, 1.0f)) *
             glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f * scale.x, -0.5f * scale.y, 0.0f));
         glm::mat4 T = glm::translate(glm::mat4(1.0f), position);
         return T * R * S;

@@ -14,7 +14,8 @@
 namespace mts
 {
     class GameObject;
-    class Scene {
+    class Scene
+    {
         // Jackey TODO: multiple layers support
        public:
         Scene() = default;
@@ -25,10 +26,12 @@ namespace mts
         void LateUpdate(float dt);
         void Render();
 
+        std::vector<GameObject*>& GetGameObjects() { return gameObjects; }
+
         GameObject* CreateGameObject();
 
         // TODO: REMOVE, TEMPORARY SETTER FOR TESTING
-        void AddGameObject(GameObject* g) { gameObjects.push_back(g);}
+        void AddGameObject(GameObject* g) { gameObjects.push_back(g); }
 
        protected:
         virtual void OnInit() = 0;

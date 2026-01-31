@@ -68,6 +68,9 @@ project (engineName)
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+
+        "%{prj.name}/src/**.frag",
+        "%{prj.name}/src/**.vert",
         
         -- Custom compilation for glad.c file (better design can be added later)
         "%{prj.name}/third-party/source/glad/src/glad.c",

@@ -27,6 +27,7 @@ namespace mts
         static void Render();
         static void Shutdown();
         static void SetNextScene(Scene* newScene);
+        static Scene* GetCurrentScene() { return currentScene; }
 
         static void AddDontDestroyObject(GameObject* obj);
         static void RemoveDontDestroyObject(GameObject* obj);
@@ -52,6 +53,5 @@ namespace mts
         static bool isRestarting;
         static bool isChangingScene;
     };
-
 
 }  // namespace mts

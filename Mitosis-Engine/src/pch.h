@@ -27,3 +27,4 @@
 #include "Engine/Logging/EngineLog.h"
 #include "Engine/Logging/Assert.h"
 #include "Engine/Memory/MemoryManager.h"
+#include "Engine/Helpers/Math.h"

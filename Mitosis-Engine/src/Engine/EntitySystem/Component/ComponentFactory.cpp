@@ -14,6 +14,9 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Button.h"
+#include "PhysicsComponents/RigidBody2D.h"
+#include "PhysicsComponents/BoxCollider2D.h"
+#include "PhysicsComponents/CircleCollider2D.h"
 
 namespace mts
 {
@@ -23,7 +26,9 @@ namespace mts
             {"MeshRenderer", []() -> Component* { return new MeshRenderer(); }},
             {"ActionList", []() -> Component* { return new ActionList(); }},
             {"Button", []() -> Component* { return new Button(); }},
-    };
+            {"RigidBody2D", []() -> Component* { return new RigidBody2D(); }},
+            {"BoxCollider2D", []() -> Component* { return new BoxCollider2D(); }},
+            {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }}};
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,
                                              ComponentCreator creator)

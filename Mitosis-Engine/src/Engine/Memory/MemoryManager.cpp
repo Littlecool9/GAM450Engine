@@ -9,7 +9,7 @@
 
 #include "pch.h"
 #include "MemoryManager.h"
-#include "Engine/String/Format.h"
+#include "Engine/Helpers/Format.h"
 #include <unordered_map>
 #include <mutex>
 
@@ -27,15 +27,15 @@ namespace mts
 
     static void* PlatformAlloc(std::size_t sizeBytes, std::size_t alignBytes)
     {
-        //todo: platform specific needed
+        // todo: platform specific needed
         alignBytes = std::max<std::size_t>(alignBytes, alignof(std::max_align_t));
         return _aligned_malloc(sizeBytes, alignBytes);
     }
 
     static void PlatformFree(void* ptr)
     {
-        //todo: platform specific needed
-        
+        // todo: platform specific needed
+
         _aligned_free(ptr);
     }
 
@@ -75,8 +75,8 @@ namespace mts
     }
 
     void* MemoryManager::Alloc(std::size_t sizeBytes,
-        std::size_t align,
-        std::source_location location)
+                               std::size_t align,
+                               std::source_location location)
     {
         if (!initialized)
         {
@@ -86,14 +86,12 @@ namespace mts
 
         void* ptr = PlatformAlloc(sizeBytes, align);
 
-        MemoryInfo info = {
-            .sizeBytes = sizeBytes,
-            .alignBytes = align,
-            .fileName = string_format::ShortFile(location.file_name()),
-            .functionName = string_format::ShortFunc(location.function_name()),
-            .line = location.line()
-        };
-        
+        MemoryInfo info = {.sizeBytes = sizeBytes,
+                           .alignBytes = align,
+                           .fileName = string_format::ShortFile(location.file_name()),
+                           .functionName = string_format::ShortFunc(location.function_name()),
+                           .line = location.line()};
+
         if (ptr == nullptr)
         {
             LOG_CRITICAL("Memory allocation failure at [{}: line {}][{}]",
@@ -143,4 +141,4 @@ namespace mts
     {
         return allocatedBytes;
     }
-} // mts namespace
+}  // namespace mts

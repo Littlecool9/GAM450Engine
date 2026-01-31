@@ -18,6 +18,8 @@
 #include "Engine/Input/Input.h"
 #include "Engine/Resource/Mesh.h"
 #include "Engine/Events/InputEvent.h"
+#include "Engine/UI/UIEvent.h"
+
 namespace mts
 {
     void Button::TransformCheck()
@@ -52,9 +54,9 @@ namespace mts
             ButtonBoundary.x = bb[0].GetFloat(ButtonBoundary.x);
             ButtonBoundary.y = bb[1].GetFloat(ButtonBoundary.y);
         }
-        if (jsonObj.Has("OnClickAction"))
+        if (jsonObj.Has("OnClickEvent"))
         {
-            OnClickEvent = jsonObj["OnClickAction"].GetString("");
+            OnClickEvent = jsonObj["OnClickEvent"].GetString("");
         }
     }
     void Button::LateUpdate(float dt)
@@ -79,10 +81,12 @@ namespace mts
 
     void Button::Update(float dt)
     {
+        // TODO: mousex and y are in screen space, need to convert to world space
+
         glm::vec2 mousePos{Input::GetMouseX(), Input::GetMouseY()};
         glm::vec3 buttonPos = GetGameObject()->GetComponent<Transform>()->GetPosition();
         if ((mousePos.x >= buttonPos.x - ButtonBoundary.x ||
-             mousePos.x <= buttonPos.x - ButtonBoundary.x) &&
+             mousePos.x <= buttonPos.x + ButtonBoundary.x) &&
             (mousePos.y >= buttonPos.y - ButtonBoundary.y ||
              mousePos.y <= buttonPos.y + buttonPos.y))
         {
@@ -95,8 +99,9 @@ namespace mts
             if (Input::IsMouseReleased(MouseButton::Left))
             {
                 // Execute OnClickAction
-                ButtonClickedEvent event(OnClickEvent);
-                //Input::OnEvent(event);
+
+                //Delegate<>
+
                 LOG_INFO("Button Clicked! action={}", OnClickEvent.c_str());
             }
         }

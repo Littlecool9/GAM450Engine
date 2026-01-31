@@ -27,7 +27,7 @@
           50.0,
           50.0
         ],
-        "OnClickEvent": "Hello World"
+        "OnClickEvent": "Quit"
       }
     },
     {

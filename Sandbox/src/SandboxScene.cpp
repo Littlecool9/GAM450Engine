@@ -12,6 +12,7 @@
 #include "pch.h"
 #include "SandboxScene.h"
 
+#include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
@@ -28,7 +29,7 @@ void SandboxScene::OnInit()
 
     mts::SerializationUtility::DeserializeFromFile(go, "Data/TestEntity.json");
 
-
+    go->GetComponent<mts::ActionList>()->AddTranslateAction(glm::vec3(2, 2, 2), go, 4);
     /*LOG_INFO("CWD: {}", std::filesystem::current_path().string());
 
     auto vertSrc = LoadTextFile("../Mitosis-Engine/src/Shaders/triangle.vert");

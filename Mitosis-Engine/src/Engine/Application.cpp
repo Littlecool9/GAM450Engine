@@ -23,6 +23,7 @@
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "EntitySystem/Component/ComponentFactory.h"
 #include "Serialization/SerializationUtility.h"
+#include "UI/UIEvent.h"
 
 #if MTS_AUDIO_FMOD
 #include <fmod_studio.hpp>
@@ -130,6 +131,7 @@ namespace mts
 
             window->SwapBuffer();
             Time::EndFrame();
+
         }
     }
 

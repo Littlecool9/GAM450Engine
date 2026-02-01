@@ -19,6 +19,8 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Engine/Renderer.h"
+
 namespace mts
 {
     MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner)
@@ -160,10 +162,24 @@ namespace mts
         MTS_ASSERT(transform != nullptr);
 
         glm::mat4 model = transform->LocalMatrix();
-        glm::ivec4 viewportSize;
-        glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-        glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
 
+
+        //glm::ivec4 viewportSize;
+        //glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
+        //glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
+        const auto& cam = mts::Renderer::GetActiveCamera();
+        glm::mat4 viewProj;
+        if (cam.valid)
+        {
+            viewProj = cam.viewProj;
+        }
+        else
+        {
+            // Fallback (so nothing breaks if no camera exists yet)
+             glm::ivec4 viewportSize;
+             glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
+             glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
+        }
         // set shader uniforms
         mShader->SetMatrix4("model", model);
         mShader->SetMatrix4("viewProj", viewProj);

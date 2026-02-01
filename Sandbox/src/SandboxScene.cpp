@@ -17,6 +17,7 @@
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/EntitySystem/Component/ComponentFactory.h"
+#include "Engine/EntitySystem/Component/Camera/CameraFollow.h"
 
 SandboxScene::~SandboxScene()
 {
@@ -29,7 +30,13 @@ void SandboxScene::OnInit()
 
     mts::SerializationUtility::DeserializeFromFile(go, "Data/TestEntity.json");
 
-    go->GetComponent<mts::ActionList>()->AddTranslateAction(glm::vec3(2, 2, 2), go, 4);
+    go->GetComponent<mts::ActionList>()->AddTranslateAction(go->GetComponent<mts::Transform>()->GetPosition() * 5.0f,go, 4, 0, 0, true);
+
+    mts::GameObject* cam = CreateGameObject();
+    cam->SetName("CameraObject");
+    mts::SerializationUtility::DeserializeFromFile(cam, "Data/Camera.json");
+    cam->GetComponent<mts::CameraFollow>()->SetObjectToFollow(go->GetComponent<mts::Transform>());;
+    //go->GetComponent<mts::ActionList>()->AddTranslateAction(cam->GetComponent<mts::Transform>()->GetPosition() * 2.0f, cam,4);
     /*LOG_INFO("CWD: {}", std::filesystem::current_path().string());
 
     auto vertSrc = LoadTextFile("../Mitosis-Engine/src/Shaders/triangle.vert");

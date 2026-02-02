@@ -231,7 +231,8 @@ namespace mts
     JsonValue JsonValue::operator[](size_t index) const
     {
         auto* v = static_cast<const RjValue*>(impl);
-        return JsonValue(&(*v)[index]);
+        MTS_ASSERT(index <= std::numeric_limits<rapidjson::SizeType>::max());
+        return JsonValue(&(*v)[static_cast<rapidjson::SizeType>(index)]);
     }
 
     size_t JsonValue::Size() const

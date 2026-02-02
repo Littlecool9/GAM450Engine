@@ -46,6 +46,13 @@ jobs:
           "sln_path=$($sln.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           Write-Host "Found solution: $($sln.FullName)"
 
+      - name: Force CI macro for MSVC (disable FMOD)
+        shell: pwsh
+        run: |
+          # /DMTS_CI defines CI macro for all C++ compilations
+          # /UMTS_AUDIO_FMOD undefines FMOD macro if premake/project accidentally defines it
+          "CL=/DMTS_CI /UMTS_AUDIO_FMOD $env:CL" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       # Build
       - name: Build (Debug)
         shell: pwsh

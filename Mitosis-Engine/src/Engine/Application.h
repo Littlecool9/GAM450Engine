@@ -7,7 +7,8 @@
  *
  */
 #pragma once
-#include "Engine/Windows/Window.h"
+#include "Windows/Window.h"
+#include "Audio/AudioManager.h"
 #include <memory>
 
 namespace mts::physics
@@ -25,7 +26,7 @@ namespace mts
         virtual ~Application() = default;
 
         void Init();
-        void Run();
+        void Run() const;
         void Shutdown();
 
         void OnEvent(Event& e);
@@ -35,10 +36,11 @@ namespace mts
 
        private:
         bool OnWindowClose(class WindowCloseEvent& e);
-        bool OnWindowResize(class WindowResizeEvent& e);
+        static bool OnWindowResize(const class WindowResizeEvent& e);
 
        private:
         std::unique_ptr<Window> mWindow;
+        std::unique_ptr<AudioManager> mAudio;
         bool mIsRunning = false;
     };
 

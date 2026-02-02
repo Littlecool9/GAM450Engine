@@ -9,56 +9,30 @@
 
 #include "pch.h"
 #include "Application.h"
+
 #include "Windows/WinGLFWWindow.h"
 #include "glad/glad.h"
 
-#include "Engine/Events/Event.h"
-#include "Engine/Events/WindowEvent.h"
+#include "Events/Event.h"
+#include "Events/WindowEvent.h"
 
 #include "Input/Input.h"
 #include "SceneSystem/SceneSystem.h"
 #include "Time/FPSCounter.h"
 #include "Time/Time.h"
 #include "Physics2D/PhysicsSystem2D.h"
-#include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Audio/AudioManager.h"
 
-#if MTS_AUDIO_FMOD
-#include <fmod_studio.hpp>
-#include <fmod_errors.h>
+#ifdef MTS_CI
+#define MTS_AUDIO_USE_FMOD 0
+#else
+#define MTS_AUDIO_USE_FMOD 1
+#endif
 
-static void TestFMODStudioInit()
-{
-    FMOD::Studio::System* studioSystem = nullptr;
-
-    FMOD_RESULT result = FMOD::Studio::System::create(&studioSystem);
-
-    if (result != FMOD_OK)
-    {
-        LOG_ERROR("[FMOD TEST] Failed to create Studio System : {}", FMOD_ErrorString(result));
-        return;
-    }
-
-    result = studioSystem->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr);
-
-    if (result != FMOD_OK)
-    {
-        LOG_ERROR("[FMOD TEST] Failed to initialize : {}", FMOD_ErrorString(result));
-        studioSystem->release();
-        return;
-    }
-
-    LOG_INFO("[FMOD TEST] FMOD Studio initialized successfully.");
-
-    // Quick test one update tick
-    studioSystem->update();
-
-    LOG_INFO("[FMOD TEST] FMOD Studio update() successful.");
-
-    studioSystem->release();
-
-    LOG_INFO("[FMOD TEST] FMOD Studio shutdown cleanly.");
-}
-
+#if MTS_AUDIO_USE_FMOD
+#include "Audio/Backends/FMODBackend.h"
+#else
+#include "Audio/Backends/NullAudioBackend.h"
 #endif
 
 namespace mts
@@ -93,16 +67,37 @@ namespace mts
 
         Input::Init();
 
-#if MTS_AUDIO_FMOD
-        TestFMODStudioInit();
+        SceneSystem::Init(GetInitialScene());
+
+        mAudio = std::make_unique<AudioManager>();
+
+        AudioConfig audioConfig{};
+        audioConfig.liveUpdate = true;  // Dev only
+        audioConfig.maxVirtualVoices = 1024;
+        audioConfig.maxRealVoices = 64;
+
+        // Create backend
+        std::unique_ptr<IAudioBackend> backend;
+
+#if defined(MTS_AUDIO_FMOD) && !defined(MTS_CI)
+        backend = std::make_unique<FMODBackend>();
+#else
+        backend = std::make_unique<NullAudioBackend>();
 #endif
 
-        SceneSystem::Init(GetInitialScene());
+        if (!mAudio->Init(std::move(backend), audioConfig))
+        {
+            LOG_CRITICAL("AudioManager Init failed.");
+        }
+        else
+        {
+            LOG_INFO("AudioManager Init OK.");
+        }
 
         mIsRunning = true;
     }
 
-    void Application::Run()
+    void Application::Run() const
     {
         FPSCounter fps;
 
@@ -130,7 +125,6 @@ namespace mts
 
             mWindow->SwapBuffer();
             Time::EndFrame();
-
         }
     }
 
@@ -138,7 +132,7 @@ namespace mts
     {
         mIsRunning = false;
 
-        // Important to shutdown the opposite way from initializing
+        // Important to shut down the opposite way from initializing
         SceneSystem::Shutdown();
         Input::Shutdown();
         mWindow.reset();
@@ -161,11 +155,11 @@ namespace mts
         return true;
     }
 
-    bool Application::OnWindowResize(class WindowResizeEvent& e)
+    bool Application::OnWindowResize(const class WindowResizeEvent& e)
     {
-        // TODO: Notify the render swapchain, etc.
+        // TODO: Notify the render swap chain, etc.
 
-        glViewport(0, 0, (GLsizei) e.GetWidth(), (GLsizei) e.GetHeight());
+        glViewport(0, 0, static_cast<GLsizei>(e.GetWidth()), static_cast<GLsizei>(e.GetHeight()));
 
         LOG_INFO("Resize -> {}x{}", e.GetWidth(), e.GetHeight());
         return false;  // Allow others to react as well

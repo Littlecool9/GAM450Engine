@@ -11,7 +11,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
-namespace mts::audio
+namespace mts
 {
     // TODO: Needs to be refactored once the new Event ID system is created
     using AudioEventId = std::string;
@@ -65,4 +65,4 @@ namespace mts::audio
         return a;
     }
 
-}  // namespace mts::audio
+}  // namespace mts

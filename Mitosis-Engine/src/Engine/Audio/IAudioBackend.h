@@ -10,7 +10,7 @@
 #pragma once
 #include "AudioTypes.h"
 
-namespace mts::audio
+namespace mts
 {
     /**
      * Banks = what exists in memory
@@ -55,4 +55,4 @@ namespace mts::audio
             const std::string& snapshotEventId) = 0;  // returns handle to control/stop
     };
 
-}  // namespace mts::audio
+}  // namespace mts

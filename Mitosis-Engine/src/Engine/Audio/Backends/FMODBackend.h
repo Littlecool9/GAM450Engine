@@ -8,9 +8,14 @@
  */
 
 #pragma once
+
+#if !defined(MTS_AUDIO_FMOD) && !defined(MTS_CI)
+#error FMODBackend included but MTS_AUDIO_FMOD is not enabled. Use NullAudioBackend.
+#endif
+
 #include "Engine/Audio/IAudioBackend.h"
 
-namespace mts::audio
+namespace mts
 {
     class FMODBackend final : public IAudioBackend
     {
@@ -46,4 +51,4 @@ namespace mts::audio
         Impl* m = nullptr;
     };
 
-}  // namespace mts::audio
+}  // namespace mts

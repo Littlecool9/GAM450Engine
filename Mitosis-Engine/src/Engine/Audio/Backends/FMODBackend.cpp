@@ -9,10 +9,15 @@
 
 #include "pch.h"
 
-// TODO: Needs to be updated in a better manner to use a NullAudioBackend for redundancy.
-#if MTS_AUDIO_FMOD
-
 #include "FMODBackend.h"
+
+// CI override OR FMOD disabled => compile as empty TU
+#if defined(MTS_CI) || !defined(MTS_AUDIO_FMOD)
+
+// FMOD is disabled (CI / non-FMOD builds).
+// This translation unit intentionally compiles as empty.
+
+#else
 
 #include <fmod.hpp>
 #include <fmod_errors.h>
@@ -20,33 +25,11 @@
 #include <ranges>
 #include <unordered_map>
 
-namespace mts::audio
+namespace mts
 {
     static float Clamp01(float v)
     {
         return std::max(0.f, std::min(1.f, v));
-    }
-
-    static float Attenuation(float dist, float minD, float maxD, float rolloff)
-    {
-        if (maxD <= minD)
-            return (dist <= minD) ? 1.f : 0.f;
-        if (dist <= minD)
-            return 1.f;
-        if (dist >= maxD)
-            return 0.f;
-
-        float t = (dist - minD) / (maxD - minD);    // 0..1
-        t = std::pow(t, std::max(0.01f, rolloff));  // curve
-        return 1.f - t;                             // 1..0
-    }
-
-    static float Pan(float dx, float panRange)
-    {
-        if (panRange <= 0.0001f)
-            return 0.f;
-        float p = dx / panRange;
-        return std::max(-1.f, std::min(1.f, p));
     }
 
     static bool FmodOk(FMOD_RESULT r)
@@ -75,7 +58,7 @@ namespace mts::audio
         std::unordered_map<std::string, FMOD::Studio::Bus*> busCache;
 
         // Handle table
-        uint32_t nextHandle = 1;
+        uint32_t nextHandle = 0;
         std::unordered_map<uint32_t, FMOD::Studio::EventInstance*> instances;
 
         SpatialAttributes listener{};
@@ -390,6 +373,6 @@ namespace mts::audio
         return h;
     }
 
-}  // namespace mts::audio
+}  // namespace mts
 
 #endif  // MTS_AUDIO_FMOD

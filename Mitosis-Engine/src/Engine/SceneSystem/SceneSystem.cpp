@@ -58,6 +58,12 @@ namespace mts
         currentScene->Render();
     }
 
+    void SceneSystem::DebugRender()
+    {
+        MTS_ASSERT(currentScene != nullptr);
+        currentScene->DebugRender();
+    }
+
     void SceneSystem::Shutdown()
     {
     }

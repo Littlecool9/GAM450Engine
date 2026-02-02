@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "Application.h"
 
+#include "Debug/DebugDraw.h"
 #include "Windows/WinGLFWWindow.h"
 #include "glad/glad.h"
 
@@ -20,6 +21,8 @@
 #include "SceneSystem/SceneSystem.h"
 #include "Time/FPSCounter.h"
 #include "Time/Time.h"
+#include "Physics2D/PhysicsSystem2D.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Audio/AudioManager.h"
 
@@ -60,6 +63,8 @@ namespace mts
         // ---------------------------
 
         glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
+
+        debug::DebugDraw::Init();
 
         Time::Init();
         Time::SetFixedDt(1.0 / 60.0);
@@ -117,7 +122,10 @@ namespace mts
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
             SceneSystem::Render();
+            SceneSystem::DebugRender();
 
+            // todo: get main camera from scene and put into draw
+            debug::DebugDraw::Draw({});
             if (fps.Update(dt))
             {
                 LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
@@ -135,6 +143,8 @@ namespace mts
         // Important to shut down the opposite way from initializing
         SceneSystem::Shutdown();
         Input::Shutdown();
+
+        debug::DebugDraw::Shutdown();
         mWindow.reset();
     }
 

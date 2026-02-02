@@ -50,7 +50,7 @@
       "Type": "RigidBody2D",
       "Data": {
         "Mass": 1.0,
-        "Inertia": 1.0,
+        "Inertia": 0.0,
         "LinearVelocity": [
           0.0,
           0
@@ -60,6 +60,27 @@
         "AngularDamping": 0,
         "GravityScale": 0,
         "BodyType": 1
+      }
+    },
+    {
+      "Type": "BoxCollider2D",
+      "Data": {
+        "Width": 1.0,
+        "Height": 1.0,
+        "Offset": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Type": "CircleCollider2D",
+      "Data": {
+        "Radius": 1.0,
+        "Offset": [
+          0,
+          0
+        ]
       }
     }
   ]

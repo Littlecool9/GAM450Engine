@@ -24,9 +24,6 @@ namespace mts
        public:
         virtual ~Collider2D() override;
 
-        void Serialize(JsonDocument& doc) const override;
-        void Deserialize(const JsonValue& jsonObj) override;
-
         virtual ColliderType GetColliderType() const = 0;
         virtual bool IsColliding(const Collider2D& collider) = 0;
 

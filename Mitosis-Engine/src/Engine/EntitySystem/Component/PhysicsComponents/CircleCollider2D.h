@@ -19,8 +19,12 @@ namespace mts
        public:
         ~CircleCollider2D() override;
 
+        void DebugRender() override;
         ColliderType GetColliderType() const override { return ColliderType::Circle; }
         bool IsColliding(const Collider2D& collider) override;
+
+        void Deserialize(const JsonValue& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
 
        private:
         float mRadius = 1.0f;

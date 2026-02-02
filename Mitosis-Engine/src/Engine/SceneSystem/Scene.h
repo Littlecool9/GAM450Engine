@@ -25,6 +25,7 @@ namespace mts
         void Update(float dt);
         void LateUpdate(float dt);
         void Render();
+        void DebugRender();
 
         std::vector<GameObject*>& GetGameObjects() { return gameObjects; }
 

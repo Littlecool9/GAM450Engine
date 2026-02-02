@@ -54,6 +54,7 @@ namespace mts
         virtual void Update(float dt);
         virtual void LateUpdate(float dt);
         virtual void Render();
+        virtual void DebugRender();
         void Destroy();
 
         // One Object can only be in one layer at a time
@@ -83,7 +84,7 @@ namespace mts
                 return nullptr;
             }
             components.emplace_back(newComp);
-            LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);    
+            LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);
             newComp->owner = this;
             T* res = dynamic_cast<T*>(newComp);
 

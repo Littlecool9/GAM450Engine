@@ -23,8 +23,8 @@ namespace mts
     {
     }
 
-    GameObject::GameObject(const GameObject& other):
-          name(other.name),
+    GameObject::GameObject(const GameObject& other)
+        : name(other.name),
           dontDestroy(other.dontDestroy),
           isActive(other.isActive),
           objectLayer(other.objectLayer),
@@ -32,8 +32,7 @@ namespace mts
     {
     }
 
-    GameObject::GameObject(const std::string& name)
-        : name(name), dontDestroy(false), isActive(true)
+    GameObject::GameObject(const std::string& name) : name(name), dontDestroy(false), isActive(true)
     {
     }
 
@@ -93,7 +92,8 @@ namespace mts
     void GameObject::Serialize(JsonDocument& json) const
     {
         // If you have name/id/etc
-        // doc.WriteString("Name", name.c_str()); //or use writeint/writefloat if it's an id, or use string and do logic to read later 
+        // doc.WriteString("Name", name.c_str()); //or use writeint/writefloat if it's an id, or use
+        // string and do logic to read later
         json.BeginArray("Components");  // "Components": [ ... ]
         for (auto c : components)
         {
@@ -101,14 +101,13 @@ namespace mts
             c->Serialize(json);
             json.EndObject();  // }
         }
-        json.EndArray();   // end "Components"
-
+        json.EndArray();  // end "Components"
     }
 
 #define FOR_CONDITION_COMPONENTS(cond, action) \
-    for (auto c : components)                \
-        if (c->cond)                  \
-            action
+    for (auto c : components)                  \
+        if (c->cond)                           \
+    action
 
     void GameObject::Init()
     {
@@ -128,6 +127,11 @@ namespace mts
     void GameObject::Render()
     {
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->Render());
+    }
+
+    void GameObject::DebugRender()
+    {
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->DebugRender());
     }
 
     void GameObject::Destroy()

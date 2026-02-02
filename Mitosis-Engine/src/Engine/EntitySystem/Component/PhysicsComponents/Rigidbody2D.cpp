@@ -102,7 +102,7 @@ namespace mts
             SetMass(jsonObj["Mass"].GetFloat());
 
         if (jsonObj.Has("Inertia"))
-            SetMass(jsonObj["Inertia"].GetFloat());
+            SetInertia(jsonObj["Inertia"].GetFloat());
 
         if (jsonObj.Has("LinearVelocity"))
             mLinearVelocity = jsonObj["LinearVelocity"].GetVec2();

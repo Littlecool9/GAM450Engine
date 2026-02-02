@@ -20,12 +20,14 @@ namespace mts
     class Shader : public Entity
     {
         MTS_CLASS_NEW_DELETE();
+
        public:
         void UseProgram() const;
         void CreateProgram(const GLchar* vertexShaderSource, const GLchar* fragmentShaderSource);
         GLuint GetID() const { return ID; }
 
         // Uniform setting wrapper functions
+        // Tech Dept : cache location
         void SetInt(const char* name, int i) const;
         void SetFloat(const char* name, float f) const;
         void SetVector2f(const char* name, const glm::vec2& fv) const;
@@ -42,7 +44,6 @@ namespace mts
         // Josh TODO: File io should be moved elsewhere
         static std::string LoadTextFile(const char* path);
 
-       private:
         // shader program ID
         GLuint ID;
 

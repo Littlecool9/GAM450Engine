@@ -16,10 +16,13 @@
 
 namespace mts
 {
-    Scene::~Scene() {
-        for (auto g : gameObjects) {
+    Scene::~Scene()
+    {
+        for (auto g : gameObjects)
+        {
             // Skip dontDestroy objects
-            if (g->GetDontDestroy()) {
+            if (g->GetDontDestroy())
+            {
                 continue;
             }
             delete g;
@@ -59,11 +62,19 @@ namespace mts
         }
     }
 
-    // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
-    GameObject* Scene::CreateGameObject() {
+    void Scene::DebugRender()
+    {
+        for (auto g : gameObjects)
+        {
+            g->DebugRender();
+        }
+    }
 
-        //GameObject* newGameObject = GameObjectFactory::CreateGameObjectForTest(true);
-        //gameObjects.push_back(newGameObject);
+    // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
+    GameObject* Scene::CreateGameObject()
+    {
+        // GameObject* newGameObject = GameObjectFactory::CreateGameObjectForTest(true);
+        // gameObjects.push_back(newGameObject);
 
         GameObject* newGameObject2 = GameObjectFactory::CreateGameObjectForTest(false);
         gameObjects.emplace_back(newGameObject2);

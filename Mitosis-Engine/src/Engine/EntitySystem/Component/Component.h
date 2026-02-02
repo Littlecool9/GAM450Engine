@@ -33,6 +33,7 @@ namespace mts
         virtual void Update(float dt) {};
         virtual void LateUpdate(float dt) {};
         virtual void Render() {};
+        virtual void DebugRender() {}
 
         virtual void Deserialize(JsonValue const& jsonObj) override;
         GameObject* GetGameObject() { return owner; }

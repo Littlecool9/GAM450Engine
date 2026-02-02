@@ -17,9 +17,13 @@ namespace mts
     {
        public:
         ~BoxCollider2D() override;
+        void DebugRender() override;
 
         ColliderType GetColliderType() const override { return ColliderType::Box; }
         bool IsColliding(const Collider2D& collider) override;
+
+        void Deserialize(const JsonValue& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
 
        private:
         float mWidth = 1.0f;

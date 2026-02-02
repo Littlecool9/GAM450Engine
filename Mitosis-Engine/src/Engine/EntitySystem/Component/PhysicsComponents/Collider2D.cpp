@@ -15,12 +15,4 @@ namespace mts
     Collider2D::~Collider2D()
     {
     }
-
-    void Collider2D::Serialize(JsonDocument& doc) const
-    {
-    }
-    void Collider2D::Deserialize(const JsonValue& jsonObj)
-    {
-        Component::Deserialize(jsonObj);
-    }
 }  // namespace mts

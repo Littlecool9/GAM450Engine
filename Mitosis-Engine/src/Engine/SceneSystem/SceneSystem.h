@@ -25,6 +25,7 @@ namespace mts
         static void Update(float dt);
         static void LateUpdate(float dt);
         static void Render();
+        static void DebugRender();
         static void Shutdown();
         static void SetNextScene(Scene* newScene);
         static Scene* GetCurrentScene() { return currentScene; }

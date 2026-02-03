@@ -10,10 +10,6 @@
 #include "pch.h"
 #include "Shader.h"
 
-#include <filesystem>
-#include <fstream>
-#include <sstream>
-
 namespace mts
 {
     void Shader::UseProgram() const
@@ -146,14 +142,6 @@ namespace mts
     void Shader::SetMatrix4(const char* name, const glm::mat4& fm) const
     {
         SetMatrix4(name, &fm[0][0]);
-    }
-
-    std::string Shader::LoadTextFile(const char* path)
-    {
-        std::ifstream file(path);
-        std::stringstream ss;
-        ss << file.rdbuf();
-        return ss.str();
     }
 
 }  // namespace mts

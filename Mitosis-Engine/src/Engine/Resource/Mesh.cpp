@@ -16,6 +16,9 @@ namespace mts
 {
     void Mesh::BuildQuad(int numCols, int numRows)
     {
+        mNumCols = numCols;
+        mNumRows = numRows;
+
         float uSize = 1.0f / static_cast<float>(numCols);
         float vSize = 1.0f / static_cast<float>(numRows);
 
@@ -59,4 +62,5 @@ namespace mts
         glDrawElements(GL_TRIANGLES, this->mIndexCount, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
     }
+
 }  // namespace mts

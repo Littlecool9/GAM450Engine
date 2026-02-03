@@ -20,8 +20,6 @@
     {
       "Type": "MeshRenderer",
       "Data": {
-        "NumRows": 2,
-        "NumCols": 4,
         "TintColor": [
           1.0,
           1.0,
@@ -29,9 +27,8 @@
         ],
         "Alpha": 1.0,
         "FrameIndex": 1,
-        "VertexShader": "triangle.vert",
-        "FragmentShader": "triangle.frag",
-        "Texture": "../Sandbox/Assets/platformerPack_character@2.png"
+        "TextureResource": "../Sandbox/Data/Resources/TestCharacterTextureResource.json",
+        "MeshResource": "../Sandbox/Data/Resources/4x2MeshResource.json"
       }
     }
   ]

@@ -20,7 +20,6 @@ namespace mts
     class Shader : public Entity
     {
         MTS_CLASS_NEW_DELETE();
-
        public:
         void UseProgram() const;
         void CreateProgram(const GLchar* vertexShaderSource, const GLchar* fragmentShaderSource);
@@ -41,11 +40,9 @@ namespace mts
         void SetMatrix4(const char* name, const float* fm) const;
         void SetMatrix4(const char* name, const glm::mat4& fm) const;
 
-        // Josh TODO: File io should be moved elsewhere
-        static std::string LoadTextFile(const char* path);
-
+       private:
         // shader program ID
-        GLuint ID;
+        GLuint ID = 0;
 
         static GLuint CompileShader(GLenum shaderType, const GLchar* shaderSource);
     };

@@ -23,6 +23,7 @@
 #include "Time/Time.h"
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Resource/ResourceManager.h"
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Audio/AudioManager.h"
 
@@ -64,8 +65,6 @@ namespace mts
 
         glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
 
-        debug::DebugDraw::Init();
-
         Time::Init();
         Time::SetFixedDt(1.0 / 60.0);
         Time::SetTargetFps(60);
@@ -73,6 +72,8 @@ namespace mts
         Input::Init();
 
         SceneSystem::Init(GetInitialScene());
+        ResourceManager::Init();
+        debug::DebugDraw::Init();
 
         mAudio = std::make_unique<AudioManager>();
 
@@ -142,11 +143,13 @@ namespace mts
     {
         mIsRunning = false;
 
-        // Important to shut down the opposite way from initializing
+        // Important to shutdown the opposite way from initializing
+        debug::DebugDraw::Shutdown();
+        ResourceManager::Shutdown();
         SceneSystem::Shutdown();
         Input::Shutdown();
 
-        debug::DebugDraw::Shutdown();
+
         mWindow.reset();
     }
 

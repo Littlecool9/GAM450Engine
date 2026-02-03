@@ -12,7 +12,7 @@ uniform vec2 uvOffset;
 
 void main()
 {
-    texCoord = uvCoord + uvOffset + vec2(0.0, 0.09);
+    texCoord = uvCoord + uvOffset;
     vec4 world = viewProj * model * vec4(pos, 0.0, 1.0);
     gl_Position = world;
 }

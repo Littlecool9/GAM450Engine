@@ -15,6 +15,7 @@
 #include "Transform.h"
 #include "../GameObject/GameObject.h"
 #include "Engine/Windows/WinGLFWwindow.h"
+#include "Engine/Resource/ResourceManager.h"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -30,22 +31,6 @@ namespace mts
 
     MeshRenderer::~MeshRenderer()
     {
-        // Todo: mesh, shader, & texture should be controlled by resource mananger
-        if (mMesh != nullptr)
-        {
-            delete mMesh;
-            mMesh = nullptr;
-        }
-        if (mShader != nullptr)
-        {
-            delete mShader;
-            mShader = nullptr;
-        }
-        if (mTexture != nullptr)
-        {
-            delete mTexture;
-            mTexture = nullptr;
-        }
     }
 
     void MeshRenderer::Init()
@@ -62,32 +47,6 @@ namespace mts
 
     void MeshRenderer::Deserialize(JsonValue const& jsonObj)
     {
-        // Read in texture image file
-        auto textureFile = "";
-        if (jsonObj.Has("Texture"))
-        {
-            textureFile = jsonObj["Texture"].GetString("");
-        }
-
-        // TODO: move texture creation to resource manager
-        // Build texture
-        if (textureFile != "")
-        {
-            mTexture = new Texture();
-            mTexture->GenerateTexture(textureFile, true);
-        }
-
-        // Read in uv size
-
-        if (jsonObj.Has("NumRows"))
-        {
-            mNumRows = jsonObj["NumRows"].GetInt(mNumRows);
-        }
-        if (jsonObj.Has("NumCols"))
-        {
-            mNumCols = jsonObj["NumCols"].GetInt(mNumCols);
-        }
-
         // Read in tint color
         glm::vec3 color(1.0f, 1.0f, 1.0f);
 
@@ -116,35 +75,33 @@ namespace mts
         }
         SetFrame(frameIndex);
 
-        // TODO: move mesh creation to resource manager
-        // Build mesh
-        mMesh = new Mesh();
-        mMesh->BuildQuad(mNumCols, mNumRows);
-
-        // Read in shaders
-        auto vertFile = "";
-        auto fragFile = "";
-        
-        if (jsonObj.Has("VertexShader"))
+        // Read in texture resource
+        auto textureResourcePath = "";
+        if (jsonObj.Has("TextureResource"))
         {
-            vertFile = jsonObj["VertexShader"].GetString("");
+            textureResourcePath = jsonObj["TextureResource"].GetString(textureResourcePath);
         }
-        if (jsonObj.Has("FragmentShader"))
-        {
-            fragFile = jsonObj["FragmentShader"].GetString("");
-        }
-        
-        std::string vertSrcLoc("../Mitosis-Engine/src/Shaders/");
-        vertSrcLoc.append(vertFile);
-        std::string fragSrcLoc("../Mitosis-Engine/src/Shaders/");
-        fragSrcLoc.append(fragFile);
+        mTexture = ResourceManager::GetTexture(textureResourcePath);
 
-        // TODO: move shader creation to resource manager
-        // Build shader
-        mShader = new Shader();
-        auto vertSrc = Shader::LoadTextFile(vertSrcLoc.c_str());
-        auto fragSrc = Shader::LoadTextFile(fragSrcLoc.c_str());
-        mShader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
+        // Read in mesh resource
+        auto meshResourcePath = "";
+        if (jsonObj.Has("MeshResource"))
+        {
+            meshResourcePath = jsonObj["MeshResource"].GetString(meshResourcePath);
+        }
+        mMesh = ResourceManager::GetMesh(meshResourcePath);
+
+        mNumCols = mMesh->GetNumCols();
+        mNumRows = mMesh->GetNumRows();
+
+        // Read in shader resource
+        auto shaderResourcePath = "";
+        if (jsonObj.Has("ShaderResource"))
+        {
+            shaderResourcePath = jsonObj["ShaderResource"].GetString(shaderResourcePath);
+        }
+        mShader = ResourceManager::GetShader(shaderResourcePath);
+       
     }
 
     // TODO: serialize meshRenderer data
@@ -163,10 +120,6 @@ namespace mts
 
         glm::mat4 model = transform->GetLocalMatrix();
 
-
-        //glm::ivec4 viewportSize;
-        //glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-        //glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
         const auto& cam = mts::Renderer::GetActiveCamera();
         glm::mat4 viewProj;
         if (cam.valid)

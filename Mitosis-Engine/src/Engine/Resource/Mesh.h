@@ -31,9 +31,13 @@ namespace mts
        public:
         void BuildQuad(int numCols, int numRows);
         void Draw() const;
+        int GetNumRows() const { return mNumRows; }
+        int GetNumCols() const { return mNumCols; }
        private:
         GLuint mVAO = 0, mVBO = 0, mIBO = 0;
         GLsizei mIndexCount = 0;
+        int mNumCols = 1;
+        int mNumRows = 1;
         
     };
 

@@ -14,6 +14,7 @@
 #include <glm/gtc/constants.hpp>
 
 #include "Engine/Resource/Shader.h"
+#include "Engine/Resource/ResourceManager.h"
 
 namespace mts::debug
 {
@@ -36,11 +37,7 @@ namespace mts::debug
     {
         initialized = true;
 
-        shader = new Shader();
-
-        auto vertSrc = Shader::LoadTextFile("../Mitosis-Engine/src/Shaders/debug.vert");
-        auto fragSrc = Shader::LoadTextFile("../Mitosis-Engine/src/Shaders/debug.frag");
-        shader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
+        shader = ResourceManager::GetShader("../Mitosis-Engine/src/Resources/DebugShaderResource.json");
 
         glGenVertexArrays(1, &vao);
         glGenBuffers(1, &vbo);
@@ -96,7 +93,6 @@ namespace mts::debug
 
         debugVerticies.clear();
 
-        delete shader;
         shader = nullptr;
 
         initialized = false;

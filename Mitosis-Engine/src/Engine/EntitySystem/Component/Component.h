@@ -36,6 +36,7 @@ namespace mts
         virtual void DebugRender() {}
 
         virtual void Deserialize(JsonValue const& jsonObj) override;
+        GameObject* GetGameObject() const { return owner; }
         GameObject* GetGameObject() { return owner; }
 
         Delegate<> onEnable;

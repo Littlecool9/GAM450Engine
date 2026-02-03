@@ -20,18 +20,15 @@ namespace mts
     class Transform : public Component
     {
        public:
-        Transform(GameObject* owner);
-        Transform();
+        Transform() = default;
         ~Transform() override = default;
 
        public:
-        void Init() override;
-        void Update(float dt) override;
-        void LateUpdate(float dt) override;
-        void Render() override;
+        void DebugRender() override;
 
         const glm::vec3& GetPosition() const;
         void SetPosition(const glm::vec3& pos);
+        void SetPosition(const glm::vec2& pos);
 
         const glm::vec3& GetScale() const;
         void SetScale(const glm::vec3& s);
@@ -42,13 +39,16 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-        glm::mat4 LocalMatrix() const;
+        glm::mat4 GetLocalMatrix();
+        glm::vec3 GetRight();
+        glm::vec3 GetUp();
 
        private:
-        glm::vec3 position;
-        glm::vec3 scale;
-        float rotation;
-        bool isDirty;
+        glm::mat4 mLocalMatrix = glm::identity<glm::mat4>();
+        glm::vec3 mPosition = {0.0, 0.0, 0.0};
+        glm::vec3 mScale = {1.0, 1.0, 1.0};
+        float mRotation = 0.0;
+        bool mIsDirty = false;
     };
 
 }  // namespace mts

@@ -14,6 +14,8 @@
 #include "../Component/Component.h"
 #include "../Component/Transform.h"
 #include "../Component/ComponentFactory.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
+
 namespace mts
 {
     std::unordered_map<std::string, Tag> TagRegistry::nameToTag;
@@ -137,6 +139,26 @@ namespace mts
     void GameObject::Destroy()
     {
         isDead = true;
+    }
+
+    void GameObject::OnCollisionEnter2D(const GameObject* other)
+    {
+        // go down scripts and call OnCollisionEnter for all of them.
+        LOG_INFO("{} collide start with {}", name, other->name);
+        GetComponent<Collider2D>()->SetIsColliding(true);
+    }
+
+    void GameObject::OnCollisionStay2D(const GameObject* other)
+    {
+        // go down scripts and call OnCollisionStay for all of them.
+        LOG_INFO("{} colliding with {}", name, other->name);
+    }
+
+    void GameObject::OnCollisionExit2D(const GameObject* other)
+    {
+        // go down scripts and call OnCollisionExit for all of them.
+        LOG_INFO("{} collide end with {}", name, other->name);
+        GetComponent<Collider2D>()->SetIsColliding(false);
     }
 
     GameObject* GameObject::GetChildByName(const std::string& childName) const

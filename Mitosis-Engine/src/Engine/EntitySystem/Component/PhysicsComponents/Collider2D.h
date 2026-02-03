@@ -9,7 +9,6 @@
 
 #pragma once
 #include "../Component.h"
-
 namespace mts
 {
     class Collider2D : public Component
@@ -25,12 +24,20 @@ namespace mts
         virtual ~Collider2D() override;
 
         virtual ColliderType GetColliderType() const = 0;
-        virtual bool IsColliding(const Collider2D& collider) = 0;
 
         bool IsTrigger() const { return mIsTrigger; }
 
+        void SetIsTrigger(bool isTrigger) { mIsTrigger = isTrigger; }
+
+        // test purposes
+        void SetIsColliding(bool isColliding) { mIsColliding = isColliding; }
+
+       protected:
+        bool IsColliding() { return mIsColliding; }
+
        private:
         bool mIsTrigger = false;
+        bool mIsColliding = false;  // test purposes
     };
 
 }  // namespace mts

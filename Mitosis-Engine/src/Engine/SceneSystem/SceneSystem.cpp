@@ -68,6 +68,12 @@ namespace mts
     {
     }
 
+    void SceneSystem::SceneCleanUp()
+    {
+        MTS_ASSERT(currentScene != nullptr);
+        currentScene->DestroyGameObjects();
+    }
+
     // @brief: change the current scene if the next scene is set
     // @brief: this design require this function must be called before the SceneManager::Update
     void SceneSystem::UpdateCurrentScene()

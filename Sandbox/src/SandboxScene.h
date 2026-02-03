@@ -19,4 +19,8 @@ class SandboxScene : public mts::Scene
 
    protected:
     void OnInit() override;
+    void OnUpdate() override;
+
+    mts::GameObject* test1;
+    mts::GameObject* test2;
 };

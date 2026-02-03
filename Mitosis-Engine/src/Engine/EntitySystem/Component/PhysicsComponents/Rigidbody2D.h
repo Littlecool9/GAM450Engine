@@ -46,6 +46,7 @@ namespace mts
 
         void SetMass(float mass);
         void SetInertia(float inertia);
+        void SetBody(BodyType type) { mBodyType = type; }
 
        private:
         // invMass = 0 for static objects
@@ -68,7 +69,7 @@ namespace mts
         float mTorqueAccumulation = 0.0f;
 
         // 0 for no gravity
-        float mGravityScale = 1.0f;
+        float mGravityScale = 0.0f;
 
         BodyType mBodyType = BodyType::Static;
 

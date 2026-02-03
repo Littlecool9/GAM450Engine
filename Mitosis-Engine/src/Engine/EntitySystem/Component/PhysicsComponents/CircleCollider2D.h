@@ -21,10 +21,15 @@ namespace mts
 
         void DebugRender() override;
         ColliderType GetColliderType() const override { return ColliderType::Circle; }
-        bool IsColliding(const Collider2D& collider) override;
 
         void Deserialize(const JsonValue& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
+
+        void SetRadius(float radius) { mRadius = radius; }
+
+        glm::vec2 GetCenter() const;
+        float GetSize() { return mRadius; }
+        float GetRadius() const;
 
        private:
         float mRadius = 1.0f;

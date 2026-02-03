@@ -20,6 +20,7 @@
 
 namespace mts
 {
+    class Collider2D;
     // forward declarations
     class JsonValue;
     class Deserializable;
@@ -56,6 +57,10 @@ namespace mts
         virtual void Render();
         virtual void DebugRender();
         void Destroy();
+
+        void OnCollisionEnter2D(const GameObject* other);
+        void OnCollisionStay2D(const GameObject* other);
+        void OnCollisionExit2D(const GameObject* other);
 
         // One Object can only be in one layer at a time
         enum LayerMasks

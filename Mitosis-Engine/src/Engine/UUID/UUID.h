@@ -12,14 +12,12 @@
 #include <functional>
 #include <cstdint>
 
-
 namespace mts
 {
     // TODO: Determined whether uuid needs to extends from serializable / deserializable
     class UUID
     {
        public:
-
         UUID(const UUID&) = default;
         UUID& operator=(const UUID&) = default;
         // used for deserialization
@@ -35,15 +33,15 @@ namespace mts
 
         static UUID GenerateRandom();
         // Generates a nil UUID (all zeros)
-        // useful for default or placeholder initialization 
+        // useful for default or placeholder initialization
         static UUID GenerateNil();
 
         bool operator==(const UUID& other) const noexcept;
         bool operator!=(const UUID& other) const noexcept;
 
        private:
-
         friend struct std::hash<UUID>;
+        friend struct UUIDPairKey;
 
         UUID() = default;
 
@@ -63,4 +61,4 @@ namespace std
             return hash<uint64_t>()(id.m_High) ^ (hash<uint64_t>()(id.m_Low) << 1);
         }
     };
-}
+}  // namespace std

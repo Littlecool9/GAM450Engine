@@ -24,38 +24,77 @@ namespace mts
     {
         Transform* tr = GetGameObject()->GetComponent<Transform>();
         glm::vec2 scale = math::ToVec2(tr->GetScale());
-        glm::vec2 halfScale = scale * 0.5f;
 
         // this one works for the current sprite system will need sprite to change.
         // glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset + halfScale;
         glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset;
 
-        glm::vec2 halfExtents = halfScale * glm::vec2{mWidth, mHeight};
+        glm::vec2 halfExtents = scale * glm::vec2{mHalfWidth, mHalfHeight};
 
         float rotation = tr->GetRotation();
         glm::vec4 color = {0, 1.0, 0, 1.0};
+        if (IsColliding())
+            color = {1.0, 0.0, 0.0, 1.0};
 
         debug::DebugDraw::Box(center, halfExtents, rotation, color);
-    }
-
-    bool BoxCollider2D::IsColliding(const Collider2D& collider)
-    {
-        return false;
     }
 
     void BoxCollider2D::Deserialize(const JsonValue& jsonObj)
     {
         if (jsonObj.Has("Width"))
-            mWidth = jsonObj["Width"].GetFloat();
-
+            SetWidth(jsonObj["Width"].GetFloat());
         if (jsonObj.Has("Height"))
-            mHeight = jsonObj["Height"].GetFloat();
-
+            SetHeight(jsonObj["Height"].GetFloat());
         if (jsonObj.Has("Offset"))
             mOffset = jsonObj["Offset"].GetVec2();
+        if (jsonObj.Has("IsTrigger"))
+            SetIsTrigger(jsonObj["IsTrigger"].GetInt());
     }
 
     void BoxCollider2D::Serialize(JsonDocument& doc) const
     {
+    }
+
+    void BoxCollider2D::SetWidth(float width)
+    {
+        mWidth = width;
+        mHalfWidth = width * 0.5f;
+    }
+
+    void BoxCollider2D::SetHeight(float height)
+    {
+        mHeight = height;
+        mHalfHeight = height * 0.5f;
+    }
+
+    glm::vec2 BoxCollider2D::GetCenter() const
+    {
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return math::ToVec2(tr->GetPosition()) + mOffset;
+    }
+
+    glm::vec2 BoxCollider2D::GetHalfExtents() const
+    {
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return {tr->GetScale().x * mHalfWidth, tr->GetScale().y * mHalfHeight};
+    }
+
+    glm::vec2 BoxCollider2D::GetSize() const
+    {
+        return {mWidth, mHeight};
+    }
+
+    glm::vec2 BoxCollider2D::GetUp() const
+    {
+        // if any extra calc is done, remember to normalize
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return tr->GetUp();
+    }
+
+    glm::vec2 BoxCollider2D::GetRight() const
+    {
+        // if any extra calc is done, remember to normalize
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return tr->GetRight();
     }
 }  // namespace mts

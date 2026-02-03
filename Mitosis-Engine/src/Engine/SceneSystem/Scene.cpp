@@ -40,6 +40,7 @@ namespace mts
 
     void Scene::Update(float dt)
     {
+        OnUpdate();
         for (auto g : gameObjects)
         {
             g->Update(dt);
@@ -80,5 +81,32 @@ namespace mts
         gameObjects.emplace_back(newGameObject2);
 
         return newGameObject2;
+    }
+
+    GameObject* Scene::FindGameObjectUUID(const UUID& uuid)
+    {
+        for (auto g : gameObjects)
+        {
+            if (!g->IsDead() && g->GetId() == uuid)
+                return g;
+        }
+        return nullptr;
+    }
+
+    void Scene::DestroyGameObjects()
+    {
+        for (auto it = gameObjects.begin(); it != gameObjects.end(); /* no increment here */)
+        {
+            if ((*it)->IsDead())
+            {
+                GameObject* g = *it;
+                it = gameObjects.erase(it);
+                delete g;
+            }
+            else
+            {
+                ++it;  // only increment if no element was erased
+            }
+        }
     }
 }  // namespace mts

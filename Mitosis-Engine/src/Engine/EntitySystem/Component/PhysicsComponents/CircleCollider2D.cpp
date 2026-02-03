@@ -21,17 +21,12 @@ namespace mts
 
     void CircleCollider2D::DebugRender()
     {
-        Transform* transformtr = GetGameObject()->GetComponent<Transform>();
-        glm::vec2 center = math::ToVec2(transformtr->GetPosition()) + mOffset;
-        float radius = transformtr->GetScale().x * mRadius * 0.5f;
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset;
+        float radius = tr->GetScale().x * mRadius * 0.5f;
         glm::vec4 color = {0, 1.0, 0, 1.0};
 
         debug::DebugDraw::Circle(center, radius, 16, color);
-    }
-
-    bool CircleCollider2D::IsColliding(const Collider2D& collider)
-    {
-        return false;
     }
 
     void CircleCollider2D::Deserialize(const JsonValue& jsonObj)
@@ -40,9 +35,24 @@ namespace mts
             mRadius = jsonObj["Radius"].GetFloat();
         if (jsonObj.Has("Offset"))
             mOffset = jsonObj["Offset"].GetVec2();
+        if (jsonObj.Has("IsTrigger"))
+            SetIsTrigger(jsonObj["IsTrigger"].GetInt());
     }
 
     void CircleCollider2D::Serialize(JsonDocument& doc) const
     {
     }
+
+    glm::vec2 CircleCollider2D::GetCenter() const
+    {
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return math::ToVec2(tr->GetPosition()) + mOffset;
+    }
+
+    float CircleCollider2D::GetRadius() const
+    {
+        Transform* tr = GetGameObject()->GetComponent<Transform>();
+        return tr->GetScale().x * mRadius;
+    }
+
 }  // namespace mts

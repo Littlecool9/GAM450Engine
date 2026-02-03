@@ -132,6 +132,8 @@ namespace mts
             }
 
             mWindow->SwapBuffer();
+            SceneSystem::SceneCleanUp();
+
             Time::EndFrame();
         }
     }

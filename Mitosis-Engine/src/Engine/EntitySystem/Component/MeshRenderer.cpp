@@ -161,7 +161,7 @@ namespace mts
         auto transform = GetGameObject()->GetComponent<Transform>();
         MTS_ASSERT(transform != nullptr);
 
-        glm::mat4 model = transform->LocalMatrix();
+        glm::mat4 model = transform->GetLocalMatrix();
 
 
         //glm::ivec4 viewportSize;

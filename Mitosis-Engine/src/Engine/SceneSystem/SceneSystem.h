@@ -27,6 +27,8 @@ namespace mts
         static void Render();
         static void DebugRender();
         static void Shutdown();
+
+        static void SceneCleanUp();
         static void SetNextScene(Scene* newScene);
         static Scene* GetCurrentScene() { return currentScene; }
 

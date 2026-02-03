@@ -12,59 +12,54 @@
 #include "pch.h"
 #include "Transform.h"
 
+#include "Engine/Debug/DebugDraw.h"
+
 namespace mts
 {
-    Transform::Transform(GameObject* owner)
-        : Component(owner), position(0.5), scale(1), rotation(0), isDirty(true)
+    void Transform::DebugRender()
     {
-    }
-
-    Transform::Transform() : position(0.5), scale(1), rotation(0), isDirty(true)
-    {
-    }
-
-    void Transform::Init()
-    {
-    }
-
-    void Transform::Update(float dt)
-    {
-    }
-
-    void Transform::LateUpdate(float dt)
-    {
-    }
-
-    void Transform::Render()
-    {
+        glm::vec2 pos = math::ToVec2(mPosition);
+        glm::vec2 up = math::ToVec2(GetUp()) * 200.0f;
+        up += pos;
+        glm::vec2 right = math::ToVec2(GetRight()) * 200.0f;
+        right += pos;
+        debug::DebugDraw::Line(pos, up, {1.0, 0, 0, 1.0});
+        debug::DebugDraw::Line(pos, right, {0.0, 0, 1.0, 1.0});
     }
 
     void Transform::SetPosition(const glm::vec3& pos)
     {
-        position = pos;
-        isDirty = true;
+        mPosition = pos;
+        mIsDirty = true;
     }
+
+    void Transform::SetPosition(const glm::vec2& pos)
+    {
+        mPosition = math::ToVec3(pos, mPosition.z);
+        mIsDirty = true;
+    }
+
     const glm::vec3& Transform::GetPosition() const
     {
-        return position;
+        return mPosition;
     }
     void Transform::SetScale(const glm::vec3& s)
     {
-        scale = s;
-        isDirty = true;
+        mScale = s;
+        mIsDirty = true;
     }
     const glm::vec3& Transform::GetScale() const
     {
-        return scale;
+        return mScale;
     }
     void Transform::SetRotation(float r)
     {
-        rotation = r;
-        isDirty = true;
+        mRotation = r;
+        mIsDirty = true;
     }
     float Transform::GetRotation() const
     {
-        return rotation;
+        return mRotation;
     }
 
     void Transform::Deserialize(JsonValue const& jsonObj)
@@ -98,30 +93,45 @@ namespace mts
         json.BeginObject("Data");
 
         json.BeginArray("Position");
-        json.WriteFloat(position.x);
-        json.WriteFloat(position.y);
-        json.WriteFloat(position.z);
+        json.WriteFloat(mPosition.x);
+        json.WriteFloat(mPosition.y);
+        json.WriteFloat(mPosition.z);
         json.EndArray();
 
         json.BeginArray("Scale");
-        json.WriteFloat(scale.x);
-        json.WriteFloat(scale.y);
-        json.WriteFloat(scale.z);
+        json.WriteFloat(mScale.x);
+        json.WriteFloat(mScale.y);
+        json.WriteFloat(mScale.z);
         json.EndArray();
 
-        json.WriteFloat("Rotation", rotation);
+        json.WriteFloat("Rotation", mRotation);
         json.EndObject();  // end Data
     }
 
-    glm::mat4 Transform::LocalMatrix() const
+    glm::mat4 Transform::GetLocalMatrix()
     {
-        glm::mat4 S = glm::scale(glm::mat4(1.0f), scale);
+        if (!mIsDirty)
+            return mLocalMatrix;
+        glm::mat4 S = glm::scale(glm::mat4(1.0f), mScale);
         // origin of mesh is top-left, so have to translate origin to center when rotating
         glm::mat4 R =
-            glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * scale.x, 0.5f * scale.y, 0.0f)) *
-            glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0.0f, 0.0f, 1.0f)) *
-            glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f * scale.x, -0.5f * scale.y, 0.0f));
-        glm::mat4 T = glm::translate(glm::mat4(1.0f), position);
-        return T * R * S;
+            glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * mScale.x, 0.5f * mScale.y, 0.0f)) *
+            glm::rotate(glm::mat4(1.0f), mRotation, glm::vec3(0.0f, 0.0f, 1.0f)) *
+            glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f * mScale.x, -0.5f * mScale.y, 0.0f));
+        glm::mat4 T = glm::translate(glm::mat4(1.0f), mPosition);
+        mLocalMatrix = T * R * S;
+        return mLocalMatrix;
+    }
+
+    glm::vec3 Transform::GetRight()
+    {
+        glm::mat4 m = GetLocalMatrix();
+        return glm::normalize(glm::vec3(m[0]));
+    }
+
+    glm::vec3 Transform::GetUp()
+    {
+        glm::mat4 m = GetLocalMatrix();
+        return glm::normalize(glm::vec3(m[1]));
     }
 }  // namespace mts

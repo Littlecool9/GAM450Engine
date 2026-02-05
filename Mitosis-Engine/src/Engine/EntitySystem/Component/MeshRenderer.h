@@ -22,7 +22,7 @@ namespace mts
        public:
         MeshRenderer(GameObject* owner);
         MeshRenderer() = default;
-        ~MeshRenderer() override;
+        ~MeshRenderer() override = default;
 
         void Init() override;
         void Update(float dt) override;
@@ -30,10 +30,17 @@ namespace mts
         void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
+        void DrawSprite();
+
         void SetMesh(Mesh* newMesh) { mMesh = newMesh; }
         void SetShader(Shader* newShader) { mShader = newShader; }
         void SetTexture(Texture* newTexture) { mTexture = newTexture; }
         void SetFrame(int frameIndex);
+        void SetAlpha(float alpha) { mAlpha = alpha; }
+        float GetAlpha() const { return mAlpha; }
+        bool HasTextureAlpha() const { return mHasTextureAlpha; }
+        void SetTintColor(glm::vec3 tintColor) { mTintColor = tintColor; }
+        glm::vec3 GetTintColor() const { return mTintColor; }
 
        private:
         Mesh* mMesh = nullptr;
@@ -42,8 +49,8 @@ namespace mts
         int mNumRows = 1;
         int mNumCols = 1;
         int mFrameIndex = 0;
-        // TODO: implement alpha blending (need to figure out how we want to sort sprites so they can be drawn back to front for alpha to work)
         float mAlpha = 1.0f;
+        bool mHasTextureAlpha = true;
         glm::vec3 mTintColor = {1.0f, 1.0f, 1.0f};
         glm::vec2 mUvOffset = {0.0f, 0.0f};
     };

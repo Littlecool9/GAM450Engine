@@ -23,10 +23,10 @@ namespace mts
         float vSize = 1.0f / static_cast<float>(numRows);
 
         Vertex vertices[] = {
-            {.pos = glm::vec2(0.0f, 0.0f), .uv = glm::vec2(0.0f, 0.0f)},
-            {.pos = glm::vec2(0.0f, 1.0f), .uv = glm::vec2(0.0f, vSize)},
-            {.pos = glm::vec2(1.0f, 0.0f), .uv = glm::vec2(uSize, 0.0f)},
-            {.pos = glm::vec2(1.0f, 1.0f), .uv = glm::vec2(uSize, vSize)}
+            {.pos = glm::vec2(-0.5f, -0.5f), .uv = glm::vec2(0.0f, 0.0f)},
+            {.pos = glm::vec2(-0.5f, 0.5f), .uv = glm::vec2(0.0f, vSize)},
+            {.pos = glm::vec2(0.5f, -0.5f), .uv = glm::vec2(uSize, 0.0f)},
+            {.pos = glm::vec2(0.5f, 0.5f), .uv = glm::vec2(uSize, vSize)}
         };
 
         unsigned int indices[] = {

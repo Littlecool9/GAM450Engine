@@ -26,6 +26,7 @@
 #include "Engine/Resource/ResourceManager.h"
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Audio/AudioManager.h"
+#include "Renderer.h"
 
 #ifdef MTS_CI
 #define MTS_AUDIO_USE_FMOD 0
@@ -103,8 +104,8 @@ namespace mts
         mAudio->LoadBankGroup(BankGroup::Music);
         mIsRunning = true;
 
-        SceneSystem::Init(GetInitialScene());
         ResourceManager::Init();
+        SceneSystem::Init(GetInitialScene());
         debug::DebugDraw::Init();
 
 
@@ -132,6 +133,7 @@ namespace mts
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
             SceneSystem::Render();
+            Renderer::DrawSprites(SceneSystem::GetCurrentScene());
             SceneSystem::DebugRender();
 
             // todo: get main camera from scene and put into draw
@@ -154,8 +156,8 @@ namespace mts
 
         // Important to shutdown the opposite way from initializing
         debug::DebugDraw::Shutdown();
-        ResourceManager::Shutdown();
         SceneSystem::Shutdown();
+        ResourceManager::Shutdown();
         Input::Shutdown();
 
 

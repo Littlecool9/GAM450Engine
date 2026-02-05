@@ -121,7 +121,7 @@ namespace mts
         }
 
         Texture* texture = new Texture();
-        texture->GenerateTexture(imageFile, true);
+        texture->GenerateTexture(imageFile);
 
         mTextureSources.insert(std::pair(textureSourcePath, texture));
         return texture;

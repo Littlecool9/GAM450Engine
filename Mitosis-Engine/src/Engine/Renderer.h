@@ -1,7 +1,6 @@
 ﻿
-
-
 #pragma once
+#include "SceneSystem/Scene.h"
 #include <glm/mat4x4.hpp>
 
 namespace mts
@@ -19,6 +18,9 @@ namespace mts
        public:
         static void SetActiveCamera(const RenderCamera& cam) { ActiveCamera = cam; }
         static const RenderCamera& GetActiveCamera() { return ActiveCamera; }
+
+        // Sort sprites with MeshRenderer components and draw them to screen
+        static void DrawSprites(Scene* scene);
 
        private:
         static RenderCamera ActiveCamera;

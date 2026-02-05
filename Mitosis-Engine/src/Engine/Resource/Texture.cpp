@@ -41,18 +41,25 @@ namespace mts
         glGenTextures(1, &mID);
     }
     
-    void Texture::GenerateTexture(const std::string& filepath, bool hasAlpha)
+    void Texture::GenerateTexture(const std::string& filepath)
     {
-        if (hasAlpha)
-        {
-            mInternal_format = GL_RGBA;
-            mData_format = GL_RGBA;
-        }
-
         int channels;
 
         // Load image file
         unsigned char* data = stbi_load(filepath.c_str(), &mWidth, &mHeight, &channels, 0);
+
+        if (channels == 4)
+        {
+            mHasTextureAlpha = true;
+            mInternal_format = GL_RGBA;
+            mData_format = GL_RGBA;
+        }
+        else
+        {
+            mHasTextureAlpha = false;
+            mInternal_format = GL_RGB;
+            mData_format = GL_RGB;
+        }
 
         if (data)
         {

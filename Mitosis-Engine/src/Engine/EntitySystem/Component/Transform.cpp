@@ -113,11 +113,7 @@ namespace mts
         if (!mIsDirty)
             return mLocalMatrix;
         glm::mat4 S = glm::scale(glm::mat4(1.0f), mScale);
-        // origin of mesh is top-left, so have to translate origin to center when rotating
-        glm::mat4 R =
-            glm::translate(glm::mat4(1.0f), glm::vec3(0.5f * mScale.x, 0.5f * mScale.y, 0.0f)) *
-            glm::rotate(glm::mat4(1.0f), mRotation, glm::vec3(0.0f, 0.0f, 1.0f)) *
-            glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f * mScale.x, -0.5f * mScale.y, 0.0f));
+        glm::mat4 R = glm::rotate(glm::mat4(1.0f), mRotation, glm::vec3(0.0f, 0.0f, 1.0f));
         glm::mat4 T = glm::translate(glm::mat4(1.0f), mPosition);
         mLocalMatrix = T * R * S;
         return mLocalMatrix;

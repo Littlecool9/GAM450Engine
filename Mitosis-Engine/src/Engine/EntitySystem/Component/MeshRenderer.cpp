@@ -14,22 +14,15 @@
 #include "Engine/Resource/Mesh.h"
 #include "Transform.h"
 #include "../GameObject/GameObject.h"
-#include "Engine/Windows/WinGLFWwindow.h"
+#include "Engine/Renderer.h"
 #include "Engine/Resource/ResourceManager.h"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Engine/Renderer.h"
-
 namespace mts
 {
     MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner)
-    {
-    }
-
-
-    MeshRenderer::~MeshRenderer()
     {
     }
 
@@ -82,6 +75,7 @@ namespace mts
             textureResourcePath = jsonObj["TextureResource"].GetString(textureResourcePath);
         }
         mTexture = ResourceManager::GetTexture(textureResourcePath);
+        mHasTextureAlpha = mTexture->HasTextureAlpha();
 
         // Read in mesh resource
         auto meshResourcePath = "";
@@ -109,7 +103,13 @@ namespace mts
     {
     }
 
+    // Sprites don't render themselves, done through Renderer calling DrawSprite
     void MeshRenderer::Render() {
+        // no-op
+    }
+    
+    void MeshRenderer::DrawSprite()
+    {
         if (!mMesh || !mShader || !mTexture)
             return;
 
@@ -120,7 +120,7 @@ namespace mts
 
         glm::mat4 model = transform->GetLocalMatrix();
 
-        const auto& cam = mts::Renderer::GetActiveCamera();
+        const auto& cam = Renderer::GetActiveCamera();
         glm::mat4 viewProj;
         if (cam.valid)
         {
@@ -129,9 +129,14 @@ namespace mts
         else
         {
             // Fallback (so nothing breaks if no camera exists yet)
-             glm::ivec4 viewportSize;
-             glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-             glm::mat4 viewProj = glm::ortho(0.0f, static_cast<float>(viewportSize.z), static_cast<float>(viewportSize.w), 0.0f, -1.0f, 1.0f);
+            glm::ivec4 viewportSize;
+            glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
+            viewProj = glm::ortho(0.0f,
+                                            static_cast<float>(viewportSize.z),
+                                            static_cast<float>(viewportSize.w),
+                                            0.0f,
+                                            -1.0f,
+                                            1.0f);
         }
         // set shader uniforms
         mShader->SetMatrix4("model", model);
@@ -144,7 +149,7 @@ namespace mts
         mMesh->Draw();
         mTexture->UnbindTexture();
     }
-    
+
     void MeshRenderer::SetFrame(int frameIndex)
     {
         // Set member variable

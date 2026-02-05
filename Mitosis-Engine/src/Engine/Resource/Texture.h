@@ -29,13 +29,16 @@ namespace mts
                 GLint wrap_r);
 
         // Generates texture from image file
-        void GenerateTexture(const std::string& filepath, bool hasAlpha);
+        void GenerateTexture(const std::string& filepath);
         
         // Binds object's ID as current texture
         void BindTexture() const;
         void UnbindTexture() const;
 
         GLuint GetID() const { return mID; }
+        
+        // Returns true if texture has an alpha channel
+        bool HasTextureAlpha() const { return mHasTextureAlpha; }
 
        private:
         // texture internal opengl id
@@ -56,6 +59,8 @@ namespace mts
         GLint mWrap_s;
         GLint mWrap_t;
         GLint mWrap_r;
+
+        bool mHasTextureAlpha = true;
     };
 
 }  // namespace mts

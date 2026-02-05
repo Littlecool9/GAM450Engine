@@ -70,12 +70,9 @@ namespace mts
         Time::SetTargetFps(60);
 
         Input::Init();
-
-        SceneSystem::Init(GetInitialScene());
-        ResourceManager::Init();
-        debug::DebugDraw::Init();
-
         mAudio = std::make_unique<AudioManager>();
+
+        AudioManager::SetManager(mAudio.get());
 
         AudioConfig audioConfig{};
         audioConfig.liveUpdate = true;  // Dev only
@@ -99,8 +96,20 @@ namespace mts
         {
             LOG_INFO("AudioManager Init OK.");
         }
-
+        mAudio->AddBankToGroup(BankGroup::Core, "../Sandbox/Assets/Audio/Desktop/Master.bank");
+        mAudio->AddBankToGroup(BankGroup::Core,"../Sandbox/Assets/Audio/Desktop/Master.strings.bank");
+        mAudio->AddBankToGroup(BankGroup::Music, "../Sandbox/Assets/Audio/Desktop/Music.bank");
+        mAudio->LoadBankGroup(BankGroup::Core);
+        mAudio->LoadBankGroup(BankGroup::Music);
         mIsRunning = true;
+
+        SceneSystem::Init(GetInitialScene());
+        ResourceManager::Init();
+        debug::DebugDraw::Init();
+
+
+
+
     }
 
     void Application::Run() const
@@ -119,7 +128,7 @@ namespace mts
 
             SceneSystem::Update(dt);
             SceneSystem::LateUpdate(dt);
-
+            mAudio->Update(dt);
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
             SceneSystem::Render();

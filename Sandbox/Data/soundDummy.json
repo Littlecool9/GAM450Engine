@@ -1,0 +1,52 @@
+{
+  "Name": "sfx",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          150,
+          150,
+          0
+        ],
+        "Scale": [
+          250,
+          250,
+          0
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "MeshRenderer",
+      "Data": {
+        "NumRows": 2,
+        "NumCols": 4,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 1,
+        "TextureResource": "../Sandbox/Data/Resources/TestCharacterTextureResource.json",
+        "MeshResource": "../Sandbox/Data/Resources/4x2MeshResource.json"
+      }
+    },
+    {
+      "Type": "AudioEmitter",
+      "Data": {
+        "EventId": "event:/Music/troll", 
+        "PositionOffset": [
+          0.0,
+          0.0
+        ],
+        "StartVolume": 1.0,
+        "StartPitch" : 1.0,
+        "MaxAudibleDistance": 1500.0,
+        "PlayOnStart": 1,
+        "Spatialized2D": 1,
+        "IsOneShot": 0
+      }
+    }
+  ]
+}

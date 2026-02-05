@@ -47,6 +47,12 @@ namespace mts
     class AudioManager
     {
        public:
+
+        static AudioManager& Get() { return *sManager; }
+        static void SetManager(AudioManager* mgr) { sManager = mgr; }
+
+
+
         AudioManager();
         ~AudioManager();
 
@@ -59,6 +65,10 @@ namespace mts
 
         // --- Listener (2D) ---
         void SetListener2D(glm::vec2 pos, glm::vec2 vel = {0.f, 0.f});
+        glm::vec2 GetListener2D() { return mListenerPos; }
+
+        // --- Spatial instance helpers ---
+        void SetInstance2D(AudioHandle h, glm::vec2 pos, glm::vec2 vel = {0.f, 0.f}) const;
 
         // --- Banks ---
         void AddBankToGroup(BankGroup group, const std::string& bankPath);
@@ -125,6 +135,8 @@ namespace mts
         float mSongTime = 0.f;
         int mBeatIndex = 0;
         float mBeatPhase = 0.f;
+
+        static AudioManager* sManager;
     };
 
 }  // namespace mts

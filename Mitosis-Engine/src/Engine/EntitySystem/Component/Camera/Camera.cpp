@@ -1,4 +1,12 @@
-﻿#include "pch.h"
+﻿/**
+ * @file Camera.cpp
+ * @author Dong Ta
+ * @brief Functionality for camera component
+ *        
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
+#include "pch.h"
 #include "Camera.h"
 
 #include <glad/glad.h>

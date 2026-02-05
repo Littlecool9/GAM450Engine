@@ -1,4 +1,13 @@
-﻿
+﻿/**
+ * @file TranslateAction.cpp
+ * @author Dong Ta
+ * @brief  functionality for translate action
+ * @version 0.1
+ * @date 1/8/2026 7:06:27 AM
+ *
+ * @copyright Copyright (c) 2025 - Mitosis Engine
+ *
+ */
 #include "pch.h"
 #include "TranslateAction.h"
 

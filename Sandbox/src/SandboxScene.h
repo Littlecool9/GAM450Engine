@@ -23,4 +23,5 @@ class SandboxScene : public mts::Scene
 
     mts::GameObject* test1;
     mts::GameObject* test2;
+    mts::GameObject* test3;
 };

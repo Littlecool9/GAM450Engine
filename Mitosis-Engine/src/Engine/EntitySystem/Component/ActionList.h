@@ -20,6 +20,7 @@ namespace mts
 {
     class ActionList : public Component
     {
+        MTS_CLASS_NEW_DELETE();
        public:
         ActionList() {};
         ActionList(GameObject* owner);

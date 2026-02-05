@@ -1,4 +1,14 @@
-﻿#include "pch.h"
+﻿/**
+ * @file RotateAction.cpp
+ * @author Dong Ta
+ * @brief  Functionality for rotate action
+ * @version 0.1
+ * @date 1/8/2026 7:06:27 AM
+ *
+ * @copyright Copyright (c) 2025 - Mitosis Engine
+ *
+ */
+#include "pch.h"
 #include "RotateAction.h"
 
 #include "Engine/EntitySystem/Component/Transform.h"

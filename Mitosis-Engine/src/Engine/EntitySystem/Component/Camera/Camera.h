@@ -1,4 +1,11 @@
-﻿
+﻿/**
+ * @file Camera.h
+ * @author Dong Ta
+ * @brief Component for camera functionality
+ *        
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
 
 
 #pragma once

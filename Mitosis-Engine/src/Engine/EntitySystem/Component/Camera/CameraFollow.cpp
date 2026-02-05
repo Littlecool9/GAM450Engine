@@ -1,4 +1,11 @@
-﻿
+﻿/**
+ * @file CameraFollow.cpp
+ * @author Dong Ta
+ * @brief Functionality for Camera follow component
+ *        
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
 
 
 #include "pch.h"

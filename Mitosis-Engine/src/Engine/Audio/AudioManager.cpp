@@ -12,6 +12,8 @@
 
 namespace mts
 {
+    AudioManager* AudioManager::sManager = nullptr;
+
     AudioManager::AudioManager()
     {
         // Default bus paths (FMOD-style)
@@ -30,6 +32,7 @@ namespace mts
 
     bool AudioManager::Init(std::unique_ptr<IAudioBackend> backend, const AudioConfig& config)
     {
+
         if (mInitialized)
         {
             LOG_WARN("Init called more than once. Ignoring.");
@@ -96,6 +99,18 @@ namespace mts
     {
         mListenerPos = pos;
         mListenerVel = vel;
+    }
+
+    void AudioManager::SetInstance2D(AudioHandle h, glm::vec2 pos, glm::vec2 vel) const
+    {
+        if (!EnsureInitOrWarn(__func__))
+            return;
+
+        if (!h)  // invalid handle
+            return;
+
+        SpatialAttributes attrs = Make2DAttributes(pos, vel);
+        mBackend->SetInstanceAttributes(h, attrs);
     }
 
     void AudioManager::AddBankToGroup(BankGroup group, const std::string& bankPath)

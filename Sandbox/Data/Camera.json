@@ -5,8 +5,8 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          150,
-          150,
+          0,
+          0,
           0
         ],
         "Scale": [
@@ -36,6 +36,9 @@
                 0
             ]
         }
+    },
+    {
+      "Type": "AudioListener"
     }
   ]
 }

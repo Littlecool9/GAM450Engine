@@ -5,8 +5,8 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          150,
-          150,
+          500,
+          500,
           0
         ],
         "Scale": [
@@ -54,7 +54,7 @@
           0.0,
           0
         ],
-        "AngularVelocity": 20,
+        "AngularVelocity": 0,
         "LinearDamping": 0,
         "AngularDamping": 0,
         "GravityScale": 0,

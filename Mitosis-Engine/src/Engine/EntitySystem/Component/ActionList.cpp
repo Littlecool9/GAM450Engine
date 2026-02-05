@@ -1,3 +1,13 @@
+/**
+ * @file ActionList.cpp
+ * @author Dong Ta
+ * @brief  functionality for action list
+ * @version 0.1
+ * @date 1/8/2026 7:06:27 AM
+ *
+ * @copyright Copyright (c) 2025 - Mitosis Engine
+ *
+ */
 #include "pch.h"
 #include "ActionList.h"
 #include "Actions/BaseAction.h"
@@ -29,7 +39,7 @@ namespace mts
     void ActionList::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "ActionList");
-        doc.EndObject();
+        //doc.EndObject();
     }
 
     bool ActionList::IsEmpty() const
@@ -127,8 +137,7 @@ namespace mts
                         }
                     }
                     if (Actions[i]->Update(dt * SpeedModifier) == BaseAction::ActionResult::Success ||
-                        Actions[i]->Update(dt* SpeedModifier) ==
-                            BaseAction::ActionResult::Failed)  // remove the action if it's done or failed
+                        Actions[i]->Update(dt* SpeedModifier) == BaseAction::ActionResult::Failed)  // remove the action if it's done or failed
                     {
                         if (Actions[i]->IsBlocking())  // unblock all the other actions in the same group
                         {

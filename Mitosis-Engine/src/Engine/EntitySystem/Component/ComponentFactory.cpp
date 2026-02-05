@@ -19,6 +19,8 @@
 #include "PhysicsComponents/RigidBody2D.h"
 #include "PhysicsComponents/BoxCollider2D.h"
 #include "PhysicsComponents/CircleCollider2D.h"
+#include "Audio/AudioEmitter.h"
+#include "Audio/AudioListener.h"
 
 namespace mts
 {
@@ -32,6 +34,8 @@ namespace mts
             {"BoxCollider2D", []() -> Component* { return new BoxCollider2D(); }},
             {"CameraComponent", []() -> Component* { return new CameraComponent(); }},
             {"CameraFollow", []() -> Component* { return new CameraFollow(); }},
+            {"AudioListener", []() -> Component* { return new AudioListener(); }},
+            {"AudioEmitter", []() -> Component* { return new AudioEmitter(); }},
             {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }}};
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,

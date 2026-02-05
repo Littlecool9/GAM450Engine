@@ -1,4 +1,13 @@
-﻿#pragma once
+﻿/**
+ * @file CameraFollow.h
+ * @author Dong Ta
+ * @brief Component to attach to camera in conjunction with camera component to allow 
+ *        the component to follow its designated target
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
+
+#pragma once
 #include "Engine/EntitySystem/Component/Component.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 

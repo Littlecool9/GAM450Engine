@@ -1,4 +1,13 @@
-﻿
+﻿/**
+ * @file RotateAction.h
+ * @author Dong Ta
+ * @brief  Rotates an object to X degrees over y time
+ * @version 0.1
+ * @date 1/8/2026 7:06:27 AM
+ *
+ * @copyright Copyright (c) 2025 - Mitosis Engine
+ *
+ */
 
 #pragma once
 #include "BaseAction.h"

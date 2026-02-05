@@ -24,40 +24,47 @@ SandboxScene::~SandboxScene() = default;
 
 void SandboxScene::OnInit()
 {
-    /*
-    mts::GameObject* go = CreateGameObject();
-    go->SetName("SandBoxTestGameObject");
-
-    mts::SerializationUtility::DeserializeFromFile(go, "Data/TestEntity.json");
-
-    go->GetComponent<mts::ActionList>()->AddTranslateAction(
-        go->GetComponent<mts::Transform>()->GetPosition() * 5.0f,
-        go,
-        4,
-        0,
-        0,
-        true);
-
-    mts::GameObject* cam = CreateGameObject();
-    cam->SetName("CameraObject");
-    mts::SerializationUtility::DeserializeFromFile(cam, "Data/Camera.json");
-    cam->GetComponent<mts::CameraFollow>()->SetObjectToFollow(go->GetComponent<mts::Transform>());
-    */
+    
     test1 = CreateGameObject();
-    test1->SetName("Test1");
-    auto tr = test1->AddComponent<mts::Transform>();
-    tr->SetScale({250.0, 250.0, 1.0});
-    auto rb = test1->AddComponent<mts::RigidBody2D>();
-    rb->SetBody(mts::RigidBody2D::BodyType::Dynamic);
-    auto col = test1->AddComponent<mts::BoxCollider2D>();
+    test1->SetName("SandBoxTestGameObject");
+
+    mts::SerializationUtility::DeserializeFromFile(test1, "Data/TestEntity.json");
 
     test2 = CreateGameObject();
-    test2->SetName("Test2");
-    tr = test2->AddComponent<mts::Transform>();
-    tr->SetScale({250.0, 250.0, 1.0});
-    tr->SetPosition({500, 500, 0});
-    rb = test2->AddComponent<mts::RigidBody2D>();
-    col = test2->AddComponent<mts::BoxCollider2D>();
+    test2->SetName("CameraObject");
+    mts::SerializationUtility::DeserializeFromFile(test2, "Data/Camera.json");
+    test2->GetComponent<mts::CameraFollow>()->SetObjectToFollow(test1->GetComponent<mts::Transform>());
+
+    test3 = CreateGameObject();
+    test3->SetName("soundDummy");
+
+    mts::SerializationUtility::DeserializeFromFile(test3, "Data/soundDummy.json");
+
+    glm::vec3 test = test3->GetComponent<mts::Transform>()->GetPosition();
+    test *= 10.f;
+
+    test1->GetComponent<mts::ActionList>()->AddTranslateAction(test,test3, 7, 0, 0, true);
+    test *= 2.f;
+    test1->GetComponent<mts::ActionList>()->AddTranslateAction(test, test1, 14, 0, 0, true);
+    
+    //test1 = CreateGameObject();
+    //test1->SetName("Test1");
+    //auto tr = test1->AddComponent<mts::Transform>();
+    //tr->SetScale({250.0, 250.0, 1.0});
+    //auto rb = test1->AddComponent<mts::RigidBody2D>();
+    //rb->SetBody(mts::RigidBody2D::BodyType::Dynamic);
+    //auto col = test1->AddComponent<mts::BoxCollider2D>();
+
+    //test2 = CreateGameObject();
+    //test2->SetName("Test2");
+    //tr = test2->AddComponent<mts::Transform>();
+    //tr->SetScale({250.0, 250.0, 1.0});
+    //tr->SetPosition({500, 500, 0});
+    //rb = test2->AddComponent<mts::RigidBody2D>();
+    //col = test2->AddComponent<mts::BoxCollider2D>();
+
+
+
 }
 
 void SandboxScene::OnUpdate()

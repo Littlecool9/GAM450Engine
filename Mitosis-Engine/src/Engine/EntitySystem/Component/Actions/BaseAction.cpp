@@ -14,6 +14,28 @@
 
 namespace mts
 {
+
+    constexpr float kHalf              = 0.5f;
+    constexpr float kTwo               = 2.0f;
+    constexpr float kFour              = 4.0f;
+
+
+    constexpr float kBounceN           = 7.5625f;
+    constexpr float kBounceD           = 2.75f;
+
+
+    constexpr float kBounceThresh1Mul  = 1.0f;
+    constexpr float kBounceThresh2Mul  = 2.0f;
+    constexpr float kBounceThresh3Mul  = 2.5f;
+
+
+    constexpr float kBounceShift1      = 1.5f;
+    constexpr float kBounceShift2      = 2.25f;
+    constexpr float kBounceShift3      = 2.625f;
+
+    constexpr float kBounceAdd1        = 0.75f;
+    constexpr float kBounceAdd2        = 0.9375f;
+    constexpr float kBounceAdd3        = 0.984375f;
     float BaseAction::Ease(float p, EaseType type)
     {
         if (p <= 0)
@@ -26,45 +48,60 @@ namespace mts
         }
         switch (type)
         {
-            // todo Refine more easing functions and maybe find some solution to magic numbers
             case EaseType::Linear:
                 return p;
             case EaseType::EaseIn:
                 return sqrtf(p);
             case EaseType::EaseOut:
-                return powf(p, 2.0f);
+                return powf(p, kTwo);
             case EaseType::FastIn:
-                return sqrtf(std::sqrt(p));
+                return sqrtf(sqrtf(p));
             case EaseType::FastOut:
-                return powf(p, 4.0f);
+                return powf(p, kFour);
             case EaseType::InAndOut:
-                if (p < 0.5f)
+                if (p < kHalf)
                 {
-                    return powf(p * 2.0f, 2.0f) * 0.5f;
+                    // powf((p * 2.0f), 2.0f) * 0.5f;
+                    return powf(p * kTwo, kTwo) * kHalf;
                 }
                 else
                 {
-                    return sqrtf((p - 0.5f) * 2.0f) * 0.5f + 0.5f;
+                    // sqrtf((p - 0.5f) * 2.0f) * 0.5f + 0.5f;
+                    return sqrtf((p - kHalf) * kTwo) * kHalf + kHalf;
                 }
             case EaseType::Bounce:
-                float n = 7.5625f;
-                float d = 2.75f;
-                if (p < 1.0f / d)
+            {
+                const float n = kBounceN;
+                const float d = kBounceD;
+
+                const float threshold1 = kBounceThresh1Mul / d; // 1.0f / d
+                const float threshold2 = kBounceThresh2Mul / d; // 2.0f / d
+                const float threshold3 = kBounceThresh3Mul / d; // 2.5f / d
+
+                if (p < threshold1)
                 {
+                    // n * p * p;
                     return n * p * p;
                 }
-                else if (p < 2.0f / d)
+                else if (p < threshold2)
                 {
-                    return n * (p -= 1.5f / d) * p + 0.75f;
+                    // n * (p -= 1.5f / d) * p + 0.75f;
+                    const float t = p - (kBounceShift1 / d);
+                    return n * t * t + kBounceAdd1;
                 }
-                else if (p < 2.5f / d)
+                else if (p < threshold3)
                 {
-                    return n * (p -= 2.25f / d) * p + 0.9375f;
+                    // n * (p -= 2.25f / d) * p + 0.9375f;
+                    const float t = p - (kBounceShift2 / d);
+                    return n * t * t + kBounceAdd2;
                 }
                 else
                 {
-                    return n * (p -= 2.625f / d) * p + 0.984375f;
+                    // n * (p -= 2.625f / d) * p + 0.984375f;
+                    const float t = p - (kBounceShift3 / d);
+                    return n * t * t + kBounceAdd3;
                 }
+            }
         }
         return p;
     }

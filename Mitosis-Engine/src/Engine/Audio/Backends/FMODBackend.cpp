@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file FMODBackend.cpp
  * @author rahul
  * @brief FMOD-only implementation directly connecting with API
@@ -56,6 +56,8 @@ namespace mts
         std::unordered_map<std::string, FMOD::Studio::Bank*> banks;
         std::unordered_map<std::string, FMOD::Studio::EventDescription*> eventDescCache;
         std::unordered_map<std::string, FMOD::Studio::Bus*> busCache;
+        // new container for bank bytes to use file mannager
+        std::unordered_map<std::string, std::vector<std::uint8_t> > bankBytes;
 
         // Handle table
         uint32_t nextHandle = 0;
@@ -129,6 +131,40 @@ namespace mts
         m = nullptr;
     }
 
+    //new function that communicates with file manager
+    bool FMODBackend::LoadBankBytes(const std::string& bankKey,
+                                    const std::vector<std::uint8_t>& bytes)
+    {
+        if (!m || !m->studio)
+            return false;
+
+        if (bytes.empty())
+            return false;
+
+        // FMOD wants "int length"
+        if (bytes.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
+            return false;
+
+        const char* mem = reinterpret_cast<const char*>(bytes.data());
+        const int len = static_cast<int>(bytes.size());
+
+        if (m->banks.contains(bankKey))
+            return true;
+
+        FMOD::Studio::Bank* bank = nullptr;
+
+        FMOD_RESULT r = m->studio->loadBankMemory(mem,len,FMOD_STUDIO_LOAD_MEMORY,  FMOD_STUDIO_LOAD_BANK_NORMAL,&bank);
+
+        if (r != FMOD_OK || !bank)
+        {
+            LOG_ERROR("[FMODBackend] loadBankMemory failed. key='{}' size={} err='{}'", bankKey,bytes.size(), FMOD_ErrorString(r));
+            return false;
+        }
+
+        m->banks[bankKey] = bank;
+        bank->loadSampleData();
+        return true;
+    }
     bool FMODBackend::Init(const AudioConfig& config)
     {
         if (m->studio)
@@ -236,7 +272,18 @@ namespace mts
         bank->loadSampleData();
         return true;
     }
+    bool FMODBackend::IsPlaying(AudioHandle handle) const
+    {
+        auto it = m->instances.find(handle.value);
+        if (it == m->instances.end() || !it->second)
+            return false;  // no instance → definitely not playing
 
+        FMOD_STUDIO_PLAYBACK_STATE state;
+        if (!FmodOk(it->second->getPlaybackState(&state)))
+            return false;
+
+        return state != FMOD_STUDIO_PLAYBACK_STOPPED;
+    }
     bool FMODBackend::UnloadBank(const std::string& bankPath)
     {
         auto it = m->banks.find(bankPath);
@@ -250,7 +297,7 @@ namespace mts
             bank->unload();
         }
         m->banks.erase(it);
-
+        m->bankBytes.erase(bankPath);
         // Caches may also at this point contain invalid pointers.
         m->eventDescCache.clear();
         m->busCache.clear();

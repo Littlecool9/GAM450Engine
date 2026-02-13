@@ -25,8 +25,6 @@ namespace mts
         Transform* tr = GetGameObject()->GetComponent<Transform>();
         glm::vec2 scale = math::ToVec2(tr->GetScale());
 
-        // this one works for the current sprite system will need sprite to change.
-        // glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset + halfScale;
         glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset;
 
         glm::vec2 halfExtents = scale * glm::vec2{mHalfWidth, mHalfHeight};

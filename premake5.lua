@@ -1,7 +1,7 @@
 workspace "Mitosis-Engine"
     configurations { "Debug", "Release" }
     architecture "x64"
-    startproject "Sandbox"
+    startproject "TechDemo"
 
 -- ---------------------------------------------------------
 -- Project names and directories
@@ -49,6 +49,183 @@ function ApplyCommonSettings()
         defines { "MTS_RELEASE" }
 
     filter {}
+end
+
+-- -----------------------------------------
+-- App scaffolding helpers
+-- -----------------------------------------
+function EnsureDir(path)
+    -- creates nested dirs fine in premake's os.mkdir
+    os.mkdir(path)
+end
+
+function EnsureFile(path, contents)
+    local f = io.open(path, "r")
+    if f then f:close(); return end -- already exists
+    f = io.open(path, "w")
+    if not f then
+        print("Failed to create file: " .. path)
+        return
+    end
+    f:write(contents or "")
+    f:close()
+end
+
+function ScaffoldApp(appDir, appName)
+    EnsureDir(appDir)
+    EnsureDir(appDir .. "/src")
+    EnsureDir(appDir .. "/Assets")
+    EnsureDir(appDir .. "/Data")
+
+    -- -------------------------
+    -- <AppName>Scene.h
+    -- -------------------------
+    EnsureFile(appDir .. "/src/" .. appName .. "Scene.h", string.format([[
+#pragma once
+#include <MitosisEngine.h>
+
+class %sScene : public mts::Scene
+{
+public:
+    ~%sScene() override;
+
+protected:
+    void OnInit() override {};
+    void OnUpdate() override {};
+};
+]], appName, appName))
+    -- -------------------------
+    -- pch.h
+    -- -------------------------
+    EnsureFile(appDir .. "/src/pch.h", [[
+#pragma once
+#include <MitosisEngine.h>
+]])
+
+    -- -------------------------
+    -- pch.cpp
+    -- -------------------------
+    EnsureFile(appDir .. "/src/pch.cpp", [[
+#include "pch.h"
+]])
+    -- -------------------------
+    -- <AppName>Scene.cpp
+    -- -------------------------
+    EnsureFile(appDir .. "/src/" .. appName .. "Scene.cpp", string.format([[
+#include "pch.h"
+#include "%sScene.h"
+
+%sScene::~%sScene() = default;
+]], appName, appName, appName))
+
+    -- -------------------------
+    -- <AppName>.h
+    -- -------------------------
+    EnsureFile(appDir .. "/src/" .. appName .. ".h", string.format([[
+#pragma once
+#include <MitosisEngine.h>
+
+#include "%sScene.h"
+
+class %s : public mts::Application
+{
+public:
+    %s();
+    ~%s();
+
+private:
+    mts::Scene* GetInitialScene() override { return exampleScene; }
+
+private:
+    %sScene* exampleScene;
+};
+]], appName, appName, appName, appName, appName))
+
+    -- -------------------------
+    -- <AppName>.cpp
+    -- -------------------------
+    EnsureFile(appDir .. "/src/" .. appName .. ".cpp", string.format([[
+#include "pch.h"
+#include "%s.h"
+
+mts::Application* mts::CreateApplication()
+{
+    return new %s();
+}
+
+%s::%s()
+{
+    exampleScene = new %sScene();
+}
+
+%s::~%s()
+{
+    delete exampleScene;
+}
+]], appName, appName, appName, appName, appName, appName, appName))
+end
+
+
+-- ========================================================= 
+-- App creation helper
+-- =========================================================
+function CreateApp(appName, appDir)
+    project (appName)
+        location (appDir)
+        kind "ConsoleApp"
+
+        ApplyCommonSettings()
+
+        pchheader "pch.h"
+        pchsource (appDir .. "/src/pch.cpp")
+
+        files
+        {
+            appDir .. "/src/**.h",
+            appDir .. "/src/**.cpp",
+            appDir .. "/**.h",
+            appDir .. "/**.cpp"
+        }
+
+        includedirs
+        {
+            engineName .. "/src",
+            launcherName .. "/src",
+            IncludeDir["glad"],
+            IncludeDir["imgui"],
+            IncludeDir["imgui_backends"],
+            IncludeDir["boost"],
+            IncludeDir["glm"],
+        }
+
+        links
+        {
+            launcherName,
+            engineName,
+            "opengl32.lib",
+            "user32.lib",
+            "gdi32.lib",
+            "shell32.lib",
+        }
+
+
+        -- -------------------------
+        -- Prebuilt dependency: GLFW
+        -- -------------------------
+        LinkPrebuilt("glfw", { "glfw3dll.lib" })
+        CopyRuntimeDLL("glfw", "glfw3.dll")
+
+        -- -------------------------
+        -- External dependency: FMOD (SDK via FMOD_SDK env var)
+        -- Link + copy runtime DLLs for the executable
+        -- -------------------------
+        LinkFMODStudio()
+
+        -- -------------------------
+        -- Example: CMake-installed dependency (if you add one)
+        -- -------------------------
+        -- LinkInstalled("assimp", { "assimp-vc143-mt.lib" }) -- (name differs per build; set yours)
+        -- CopyRuntimeDLL("assimp", "assimp-vc143-mt.dll") 
 end
 
 -- ========================================================= 
@@ -158,57 +335,11 @@ project (launcherName)
 -- =========================================================
 -- Sandbox (Console Application)
 -- =========================================================
+ScaffoldApp("Sandbox", "Sandbox")
+CreateApp("Sandbox", "Sandbox")
 
-project "Sandbox"
-    location "Sandbox"
-    kind "ConsoleApp"
-
-    ApplyCommonSettings()
-
-    pchheader "pch.h"
-    pchsource "%{prj.name}/src/pch.cpp"
-
-    files
-    {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp",
-        "%{prj.name}/**.h",
-        "%{prj.name}/**.cpp"
-    }
-
-    includedirs
-    {
-        engineName .. "/src",        
-        IncludeDir["glad"],
-        IncludeDir["imgui"],
-        IncludeDir["imgui_backends"],
-        IncludeDir["boost"],
-        IncludeDir["glm"],
-    }
-
-    links
-    {
-        launcherName,
-        "opengl32.lib",
-        "user32.lib",
-        "gdi32.lib",
-        "shell32.lib",
-    }
-
-    -- -------------------------
-    -- Prebuilt dependency: GLFW
-    -- -------------------------
-    LinkPrebuilt("glfw", { "glfw3dll.lib" })
-    CopyRuntimeDLL("glfw", "glfw3.dll")
-
-    -- -------------------------
-    -- External dependency: FMOD (SDK via FMOD_SDK env var)
-    -- Link + copy runtime DLLs for the executable
-    -- -------------------------
-    LinkFMODStudio()
-
-    -- -------------------------
-    -- Example: CMake-installed dependency (if you add one)
-    -- -------------------------
-    -- LinkInstalled("assimp", { "assimp-vc143-mt.lib" }) -- (name differs per build; set yours)
-    -- CopyRuntimeDLL("assimp", "assimp-vc143-mt.dll")
+-- =========================================================
+-- TechDemo (Console Application)
+-- =========================================================
+ScaffoldApp("TechDemo", "TechDemo")
+CreateApp("TechDemo", "TechDemo")

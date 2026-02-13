@@ -1,5 +1,5 @@
 /**
- * @file MeshRenderer.h
+ * @file SpriteRenderer.h
  * @author sumin.park
  * @brief  Renderer Component
  * @version 0.1
@@ -10,6 +10,7 @@
  */
 
 #pragma once
+
 #include "Component.h"
 #include "Engine/Resource/Mesh.h"
 #include "Engine/Resource/Shader.h"
@@ -17,12 +18,12 @@
 
 namespace mts
 {
-    class MeshRenderer : public Component
+    class SpriteRenderer : public Component
     {
        public:
-        MeshRenderer(GameObject* owner);
-        MeshRenderer() = default;
-        ~MeshRenderer() override = default;
+        SpriteRenderer(GameObject* owner);
+        SpriteRenderer() = default;
+        ~SpriteRenderer() override = default;
 
         void Init() override;
         void Update(float dt) override;
@@ -37,9 +38,13 @@ namespace mts
         void SetTexture(Texture* newTexture) { mTexture = newTexture; }
         void SetFrame(int frameIndex);
         void SetAlpha(float alpha) { mAlpha = alpha; }
+        void SetFlipX(bool flip) { mFlipX = flip; }
+        void SetFlipY(bool flip) { mFlipY = flip; }
         float GetAlpha() const { return mAlpha; }
         bool HasTextureAlpha() const { return mHasTextureAlpha; }
         void SetTintColor(glm::vec3 tintColor) { mTintColor = tintColor; }
+        void SetRows(int r);
+        void SetCols(int c);
         glm::vec3 GetTintColor() const { return mTintColor; }
 
        private:
@@ -51,6 +56,8 @@ namespace mts
         int mFrameIndex = 0;
         float mAlpha = 1.0f;
         bool mHasTextureAlpha = true;
+        bool mFlipX = false;
+        bool mFlipY = false;
         glm::vec3 mTintColor = {1.0f, 1.0f, 1.0f};
         glm::vec2 mUvOffset = {0.0f, 0.0f};
     };

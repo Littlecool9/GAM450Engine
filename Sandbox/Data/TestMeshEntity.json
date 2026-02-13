@@ -18,7 +18,7 @@
       }
     },
     {
-      "Type": "MeshRenderer",
+      "Type": "SpriteRenderer",
       "Data": {
         "TintColor": [
           1.0,

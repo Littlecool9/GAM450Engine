@@ -29,14 +29,16 @@ namespace mts
 
         // Content
         virtual bool LoadBank(const std::string& bankPath) = 0;
+        virtual bool LoadBankBytes(const std::string& bankKey,
+                                   const std::vector<std::uint8_t>& bytes) = 0;
         virtual bool UnloadBank(const std::string& bankPath) = 0;
 
         // Playback
         virtual AudioHandle CreateInstance(const AudioEventId& eventId) = 0;
         virtual void Start(AudioHandle h) = 0;
         virtual void Stop(AudioHandle h, StopMode mode) = 0;
-        virtual void Release(AudioHandle h) = 0;  // safe to call multiple times
-
+        virtual void Release(AudioHandle h) = 0;               // safe to call multiple times
+        virtual bool IsPlaying(AudioHandle handle) const = 0;  // check for playing state of handle
         // Spatial (will work for 2D and 3D)
         virtual void SetListenerAttributes(int listenerIndex, const SpatialAttributes& a) = 0;
         virtual void SetInstanceAttributes(AudioHandle h, const SpatialAttributes& a) = 0;
@@ -46,7 +48,6 @@ namespace mts
         virtual void SetGlobalParameter(const std::string& name, float value) = 0;
 
         // Mixing
-        // TODO: Curently done using buses by path but needs to be friendly name mapping later
         virtual void SetBusVolume(const std::string& busPath, float volume01) = 0;
         virtual void SetBusPaused(const std::string& busPath, bool paused) = 0;
 

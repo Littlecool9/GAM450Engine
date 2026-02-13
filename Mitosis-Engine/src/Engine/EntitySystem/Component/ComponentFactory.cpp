@@ -12,22 +12,27 @@
 // Include all component headers here
 #include "ActionList.h"
 #include "Transform.h"
-#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
 #include "Button.h"
 #include "Camera/Camera.h"
 #include "Camera/CameraFollow.h"
 #include "PhysicsComponents/RigidBody2D.h"
 #include "PhysicsComponents/BoxCollider2D.h"
 #include "PhysicsComponents/CircleCollider2D.h"
+#include "Particles/ParticleEmitter.h"
 #include "Audio/AudioEmitter.h"
 #include "Audio/AudioListener.h"
+#include "Animation.h"
+#include "AnimationSystem.h"
+#include "Engine/Scripting/NativeScriptComponent.h"
+#include "Engine/Tilemap/Tilemap.h"
 
 namespace mts
 {
     std::unordered_map<std::string, ComponentFactory::ComponentCreator>
         ComponentFactory::componentCreators = {
             {"Transform", []() -> Component* { return new Transform(); }},
-            {"MeshRenderer", []() -> Component* { return new MeshRenderer(); }},
+            {"SpriteRenderer", []() -> Component* { return new SpriteRenderer(); }},
             {"ActionList", []() -> Component* { return new ActionList(); }},
             {"Button", []() -> Component* { return new Button(); }},
             {"RigidBody2D", []() -> Component* { return new RigidBody2D(); }},
@@ -36,7 +41,13 @@ namespace mts
             {"CameraFollow", []() -> Component* { return new CameraFollow(); }},
             {"AudioListener", []() -> Component* { return new AudioListener(); }},
             {"AudioEmitter", []() -> Component* { return new AudioEmitter(); }},
-            {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }}};
+            {"Animation", []() -> Component* { return new Animation(); }},
+            {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }},
+            {"ParticleEmitter", []() -> Component* { return new ParticleEmitter(); }},
+            {"NativeScript", []() -> Component* { return new NativeScriptComponent(); }},
+            {"AnimationSystem", []() -> Component* { return new AnimationSystem(); }},
+            {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }}
+    };
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,
                                              ComponentCreator creator)

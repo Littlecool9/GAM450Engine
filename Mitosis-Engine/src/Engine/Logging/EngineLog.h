@@ -9,7 +9,7 @@
 
 #pragma once
 #include "Log.h"
-
+// todo: have a way to strip this
 #define LOG_BASE(loggerId, level, fmt, ...)                             \
     ::mts::Log::Submit((loggerId),                                      \
                        (level),                                         \

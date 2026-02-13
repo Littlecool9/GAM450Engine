@@ -17,6 +17,6 @@
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/Transform.h"
-#include "Engine/EntitySystem/Component/MeshRenderer.h"
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
 
 #include "Engine/Resource/Mesh.h"

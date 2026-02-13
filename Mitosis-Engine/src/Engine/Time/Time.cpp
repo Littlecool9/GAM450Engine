@@ -10,7 +10,6 @@
 
 #include "pch.h"
 #include "Time.h"
-
 namespace mts
 {
     void Time::Init()
@@ -19,6 +18,7 @@ namespace mts
         s_paused = false;
 
         s_lastTick = Clock::now();
+        s_nextFrame = Clock::now();
         s_frameStart = s_lastTick;
 
         s_frameDt = 0.0;
@@ -58,24 +58,34 @@ namespace mts
     {
         EnsureInit();
 
-        if (s_targetFps <= 0 || s_paused)
-            return;
-
-        const auto targetFrame =
-            std::chrono::duration<double>(1.0 / static_cast<double>(s_targetFps));
-
-        const auto now = Clock::now();
-        auto elapsed = now - s_frameStart;
-
-        if (elapsed < targetFrame)
+        if (s_targetFps <= 0)
         {
-            auto remaining = targetFrame - elapsed;
-
-            if (remaining > s_sleepMargin)
-            {
-                std::this_thread::sleep_for(remaining - s_sleepMargin);
-            }
+            // unlimited: reset scheduler anchor so it doesn't "catch up" later
+            s_nextFrame = Clock::now();
+            return;
         }
+
+        const auto frameStep =
+            std::chrono::nanoseconds((long long) (1'000'000'000LL / s_targetFps));
+
+        // Initialize nextFrame if this is first time or we fell behind a lot
+        auto now = Clock::now();
+        if (s_nextFrame < now - frameStep)
+            s_nextFrame = now;
+
+        s_nextFrame += frameStep;
+
+        // Sleep until close to deadline (sleep_until is better than sleep_for)
+        // Leave a small margin for scheduler jitter
+        constexpr auto margin = std::chrono::microseconds(500);  // 0.5ms
+        now = Clock::now();
+
+        if (now + margin < s_nextFrame)
+            std::this_thread::sleep_until(s_nextFrame - margin);
+
+        // Finish with a short spin/yield for precision
+        while (Clock::now() < s_nextFrame)
+            std::this_thread::yield();
     }
 
     // ---- Getters ----

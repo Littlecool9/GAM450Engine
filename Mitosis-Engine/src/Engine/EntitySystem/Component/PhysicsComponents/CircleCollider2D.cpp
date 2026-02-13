@@ -25,6 +25,8 @@ namespace mts
         glm::vec2 center = math::ToVec2(tr->GetPosition()) + mOffset;
         float radius = tr->GetScale().x * mRadius * 0.5f;
         glm::vec4 color = {0, 1.0, 0, 1.0};
+        if (IsColliding())
+            color = {1.0, 0.0, 0.0, 1.0};
 
         debug::DebugDraw::Circle(center, radius, 16, color);
     }

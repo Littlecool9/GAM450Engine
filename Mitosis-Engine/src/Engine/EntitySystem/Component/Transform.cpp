@@ -19,9 +19,9 @@ namespace mts
     void Transform::DebugRender()
     {
         glm::vec2 pos = math::ToVec2(mPosition);
-        glm::vec2 up = math::ToVec2(GetUp()) * 200.0f;
+        glm::vec2 up = math::ToVec2(GetUp()) * mScale.y;
         up += pos;
-        glm::vec2 right = math::ToVec2(GetRight()) * 200.0f;
+        glm::vec2 right = math::ToVec2(GetRight()) * mScale.x;
         right += pos;
         debug::DebugDraw::Line(pos, up, {1.0, 0, 0, 1.0});
         debug::DebugDraw::Line(pos, right, {0.0, 0, 1.0, 1.0});

@@ -5,20 +5,59 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          500,
-          500,
+          1,
+          1,
           0
         ],
         "Scale": [
-          250,
-          250,
-          0
+          5,
+          5,
+          1
         ],
         "Rotation": 0.3
       }
     },
     {
-      "Type": "ActionList"
+      "Type": "Animation",
+      "Data": {
+        "FrameIndex": 0,
+        "FrameCount": 0,
+        "FrameDelay": 0,
+        "FrameDuration": 0.0,
+        "IsRunning": 0,
+        "IsLooping": 0
+      }
+    },
+    {
+      "Type": "AnimationSystem",
+      "Data":{
+        "States": [
+            {
+              "State": 0,
+              "TextureResource": "../Sandbox/Data/Resources/TestCharacterTextureResource.json",
+              "MeshResource": "../Sandbox/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 0,
+              "FrameIndex": 1,
+              "FrameCount": 0,
+              "FrameDelay": 0,
+              "FrameDuration": 0.0,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 1,
+              "TextureResource": "../Sandbox/Data/Resources/TestCharacterTextureResource.json",
+              "MeshResource": "../Sandbox/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 1,
+              "FrameCount": 8,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.5,
+              "IsRunning": 0,
+              "IsLooping": 1
+            }
+        ]
+      }
     },
     {
       "Type": "Button",
@@ -31,7 +70,7 @@
       }
     },
     {
-      "Type": "MeshRenderer",
+      "Type": "SpriteRenderer",
       "Data": {
         "NumRows": 2,
         "NumCols": 4,
@@ -45,6 +84,26 @@
         "MeshResource": "../Sandbox/Data/Resources/4x2MeshResource.json"
       }
     },
+     {
+       "Type": "ParticleEmitter",
+       "Data": {
+         "MeshResource": "",
+         "TextureResource": "",
+         "TintColor": [ 1.0, 1.0, 1.0, 1.0 ],
+         "Scale": [ 1.0, 1.0 ],
+         "ParticleScaleMin": [ 1.0, 1.0 ],
+         "ParticleScaleMax": [ 3.0, 3.0 ],
+         "EmitRate": 50.0,
+         "EmitMax": 200,
+         "LifetimeMin": 0.5,
+         "LifetimeMax": 1.0,
+         "SpeedMin": 10.0,
+         "SpeedMax": 20.0,
+         "RotationSpeedMin": 0.2,
+         "RotationSpeedMax": 0.5,
+         "OneShot": false
+       }
+     },
     {
       "Type": "RigidBody2D",
       "Data": {

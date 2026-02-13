@@ -1,0 +1,33 @@
+{
+    "Name": "TestTileset",
+    "TilesetId": 1,
+    "AtlasTileCountPerRow": 6.0,
+    "AtlasTileCountPerCol": 7.0,
+    "TilePixelWidth": 64,
+    "TilePixelHeight": 64,
+    "Comment": "32ppu is the default, so the tile size is 1x1 in world space",
+    
+    "TileDefinitions":
+    [
+        {
+            "TileID": 1,
+            "Name": "Test_Tile_1",
+            "IndexX": 4,
+            "IndexY": 3,
+
+            "Tag": "Dirt",
+            "IsCollidable": true
+        },
+        {
+            "TileID": 2,
+            "Name": "Test_Tile_2",
+            "IndexX": 0,
+            "IndexY": 2,
+
+            "Tag": "Grass",
+            "IsCollidable": true,
+
+            "IsFullTile": false
+        }
+    ]
+}

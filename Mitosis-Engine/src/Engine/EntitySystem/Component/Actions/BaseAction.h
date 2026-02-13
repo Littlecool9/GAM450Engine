@@ -15,6 +15,8 @@ namespace mts
 {
     class BaseAction
     {
+        MTS_CLASS_NEW_DELETE();
+
        public:
         enum class EaseType
         {
@@ -37,7 +39,7 @@ namespace mts
         };
         virtual ~BaseAction() = default;
         void IncrementTime(float dt);
-        float Ease(float p, EaseType type);;
+        float Ease(float p, EaseType type);
         virtual ActionResult Update(float dt) = 0;
         void SetLifeSpan(float lifespan);
         float PercentDone();
@@ -49,10 +51,9 @@ namespace mts
         bool IsBlocking() const;
         int GetGroupId();
         float GetDelay();
+
        protected:
-
-
-        float Age;  // how much time has passed
+        float Age = 0;  // how much time has passed
 
         bool FirstTime = true;
 
@@ -63,10 +64,9 @@ namespace mts
         float Delay = 0;
 
         bool Block = false;  // if this is true, the action will block all subsequent actions on
-                              // the list from running until it's done
-        int GroupID;          // the group this action belongs to, used for blocking
+                             // the list from running until it's done
+        int GroupID;         // the group this action belongs to, used for blocking
         GameObject* Target = nullptr;  // target action will be performed on
         EaseType Easing = EaseType::Linear;
-        
     };
-}
+}  // namespace mts

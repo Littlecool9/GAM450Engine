@@ -31,7 +31,8 @@ namespace mts
                           std::size_t align,
                           std::source_location location = std::source_location::current());
         static void Free(void* ptr);
-
+        static void MemorymaDrawProfilerWindow(float dt);
+        static void BeginFrame();
         static std::size_t ActiveAllocationCount();
         static std::size_t ActiveBytes();
 	};

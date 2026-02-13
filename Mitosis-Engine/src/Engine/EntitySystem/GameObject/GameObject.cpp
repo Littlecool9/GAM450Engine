@@ -46,13 +46,14 @@ namespace mts
 
     void GameObject::Deserialize(JsonValue const& jsonObj)
     {
-        /*An example if gameobject were to have a name
         if (jsonObj.Has("Name"))
         {
             SetName(jsonObj["Name"].GetString(""));
         }
-         */
-
+        if (jsonObj.Has("Layer"))
+        {
+            SetLayer(static_cast<LayerMasks>(jsonObj["Layer"].GetInt()));
+        }
         if (!jsonObj.Has("Components"))
         {
             return;
@@ -81,12 +82,13 @@ namespace mts
             if (!comp)
                 continue;
 
-            // "Data" is optional depending on component
+            comp->owner = this;
+
             if (item.Has("Data"))
             {
                 comp->Deserialize(item["Data"]);
             }
-            comp->owner = this;
+
             components.emplace_back(comp);
         }
     }
@@ -144,21 +146,30 @@ namespace mts
     void GameObject::OnCollisionEnter2D(const GameObject* other)
     {
         // go down scripts and call OnCollisionEnter for all of them.
-        LOG_INFO("{} collide start with {}", name, other->name);
         GetComponent<Collider2D>()->SetIsColliding(true);
+
+        for (auto c : components)
+            if (c->IsEnabled())
+                c->OnCollisionEnter2D(other);
     }
 
     void GameObject::OnCollisionStay2D(const GameObject* other)
     {
         // go down scripts and call OnCollisionStay for all of them.
-        LOG_INFO("{} colliding with {}", name, other->name);
+
+        for (auto c : components)
+            if (c->IsEnabled())
+                c->OnCollisionStay2D(other);
     }
 
     void GameObject::OnCollisionExit2D(const GameObject* other)
     {
         // go down scripts and call OnCollisionExit for all of them.
-        LOG_INFO("{} collide end with {}", name, other->name);
         GetComponent<Collider2D>()->SetIsColliding(false);
+
+        for (auto c : components)
+            if (c->IsEnabled())
+                c->OnCollisionExit2D(other);
     }
 
     GameObject* GameObject::GetChildByName(const std::string& childName) const

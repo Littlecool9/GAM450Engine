@@ -19,11 +19,24 @@ namespace mts
 {
     ActionList::ActionList(GameObject* owner) : Component(owner)
     {
-
     }
+
+    void ActionList::Clear()
+    {
+        for (BaseAction* a : Actions)
+            delete a;  // or MTS_DELETE(a, ???) if using your macro allocator
+
+        Actions.clear();
+    }
+
+    ActionList::~ActionList()
+    {
+        Clear();
+    }
+
     void ActionList::Init()
     {
-        //actions_.clear();
+        // actions_.clear();
         Groups.reset();
     }
     void ActionList::LateUpdate(float dt)
@@ -34,12 +47,11 @@ namespace mts
     }
     void ActionList::Deserialize(JsonValue const& jsonObj)
     {
-        
     }
     void ActionList::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "ActionList");
-        //doc.EndObject();
+        // doc.EndObject();
     }
 
     bool ActionList::IsEmpty() const
@@ -70,23 +82,25 @@ namespace mts
                                         float TimeToComplete,
                                         int id,
                                         float delay,
-                                        bool block, BaseAction::EaseType ease)
+                                        bool block,
+                                        BaseAction::EaseType ease)
     {
         // create a new TranslateAction and add it to the list
         BaseAction* action =
             new TranslateAction(Goal, target, id, TimeToComplete, delay, block, ease);
         Actions.push_back(action);
     }
-    void ActionList::AddRotateAction(glm::vec3 Goal,
+
+    void ActionList::AddRotateAction(float Goal,
                                      GameObject* target,
                                      float TimeToComplete,
                                      int id,
                                      float delay,
-                                     bool block, BaseAction::EaseType ease)
+                                     bool block,
+                                     BaseAction::EaseType ease)
     {
         // create a new RotateAction and add it to the list
-        BaseAction* action =
-            new RotateAction(Goal.x, target, id, TimeToComplete, delay, block, ease);
+        BaseAction* action = new RotateAction(Goal, target, id, TimeToComplete, delay, block, ease);
         Actions.push_back(action);
     }
 
@@ -94,8 +108,9 @@ namespace mts
                                     GameObject* target,
                                     float TimeToComplete,
                                     int id,
-                                    float delay, 
-                                    bool block, BaseAction::EaseType ease)
+                                    float delay,
+                                    bool block,
+                                    BaseAction::EaseType ease)
     {
         // create a new ScaleAction and add it to the list
         BaseAction* action = new ScaleAction(Goal, target, id, TimeToComplete, delay, block, ease);
@@ -136,10 +151,13 @@ namespace mts
                             continue;  // don't run if it does
                         }
                     }
-                    if (Actions[i]->Update(dt * SpeedModifier) == BaseAction::ActionResult::Success ||
-                        Actions[i]->Update(dt* SpeedModifier) == BaseAction::ActionResult::Failed)  // remove the action if it's done or failed
+                    auto result = Actions[i]->Update(dt * SpeedModifier);
+                    if (result == BaseAction::ActionResult::Success ||
+                        result == BaseAction::ActionResult::Failed)  // remove the action if it's
+                                                                     // done or failed
                     {
-                        if (Actions[i]->IsBlocking())  // unblock all the other actions in the same group
+                        if (Actions[i]
+                                ->IsBlocking())  // unblock all the other actions in the same group
                         {
                             block = false;
                             Groups[Actions[i]->GetGroupId()] = false;
@@ -155,15 +173,16 @@ namespace mts
                         {
                             Actions[i]->IncrementTime(dt * SpeedModifier);
                         }
-                        if (Actions[i]->IsBlocking() == true)  // if this action is blocking, then just return
-                                                    // so the rest dont run the rest of actions
+                        if (Actions[i]->IsBlocking() ==
+                            true)  // if this action is blocking, then just return
+                                   // so the rest dont run the rest of actions
                         {
                             block = true;
                             Groups[Actions[i]->GetGroupId()] = true;
                         }
                     }
                 }
-                Groups.reset();// reset the groups
+                Groups.reset();  // reset the groups
             }
         }
     }

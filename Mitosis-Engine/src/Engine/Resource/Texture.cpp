@@ -15,7 +15,14 @@
 namespace mts
 {
     Texture::Texture()
-        : Texture(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT, GL_REPEAT)
+        : Texture(GL_RGB,
+                  GL_RGB,
+                  GL_UNSIGNED_BYTE,
+                  GL_NEAREST,
+                  GL_NEAREST,
+                  GL_REPEAT,
+                  GL_REPEAT,
+                  GL_REPEAT)
     {
     }
 

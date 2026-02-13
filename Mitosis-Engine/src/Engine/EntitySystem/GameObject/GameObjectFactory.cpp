@@ -13,18 +13,19 @@
 #include <functional>
 
 #include "GameObject.h "
-#include "TestGameObjects.h"
+#include "Engine/SceneSystem/Scene.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/Serialization/SerializationUtility.h"
 
 namespace mts
 {
-    std::string const GameObjectFactory::deserializePath = "Assets/Serialization/GameObjects/";
+    // std::string const GameObjectFactory::deserializePath = "Assets/Serialization/GameObjects/";
 
     // Maps for string and enum to creator functions
     // Require manual registration of new GameObject types here
     std::unordered_map<std::string, std::function<GameObject*()>>
         GameObjectFactory::stringToTypeMap = {
             {"GameObject", []() -> GameObject* { return new GameObject(); }},
-            {"TestGameObjects", []() -> GameObject* { return new TestGameObjects(); }},
     };
 
     // Maps for string and enum to creator functions
@@ -38,7 +39,7 @@ namespace mts
 
     std::vector<GameObject*> GameObjectFactory::archetypes;
 
-    GameObject* GameObjectFactory::CreateGameObjectImpl(const std::string& gameObjectName)
+    GameObject* GameObjectFactory::CreateGameObjectFromArchetype(const std::string& gameObjectName)
     {
         GameObject* archetype = nullptr;
         for (auto GameObject : archetypes)
@@ -57,11 +58,11 @@ namespace mts
         else
         {
             // Failed to find in archetypes, create new one
-            GameObject* obj = stringToTypeMap[gameObjectName]();
+            GameObject* obj = new GameObject();  // stringToTypeMap[gameObjectName]();
 
             // Deserialize from file
             JsonDocument doc = JsonDocument();
-            std::string filepath = deserializePath + gameObjectName + ".json";
+            std::string filepath = gameObjectName;
             bool res = doc.LoadFromFile(filepath);
             if (!res)
             {
@@ -70,33 +71,29 @@ namespace mts
             }
             obj->Deserialize(doc.Root());
 
-            archetypes.emplace_back(obj);
-            return new GameObject(*obj);
+            return obj;
         }
         return nullptr;
     }
 
-    GameObject* GameObjectFactory::CreateGameObject(const std::string& type)
+    // Return Empty GameObject
+    GameObject* GameObjectFactory::CreateGameObject()
     {
-        return CreateGameObjectImpl(type);
-    }
-
-    // GameObject* GameObjectFactory::CreateGameObject(const mts::GameObjectType type)
-    //{
-    //     return CreateGameObjectImpl(typeToCreatorMap, type,
-    //     std::to_string(static_cast<int>(type)));
-    // }
-
-    // Create GameObject for testing purposes
-    // remove it when it is no longer needed
-    GameObject* GameObjectFactory::CreateGameObjectForTest(bool test)
-    {
-        if (test)
+        GameObject* obj = new GameObject();
+        Scene* currentScene = SceneSystem::GetCurrentScene();
+        if (currentScene)
         {
-            return new TestGameObjects();
+            LOG_INFO("Created GameObject {} and added to current scene", obj->GetName());
+            currentScene->AddGameObject(obj);
         }
-        return new GameObject();
+        return obj;
     }
 
+    GameObject* GameObjectFactory::CreateGameObject(const std::string& file)
+    {
+        auto crate1 = CreateGameObject();
+        mts::SerializationUtility::DeserializeFromFile(crate1, file);
+        return crate1;
+    }
 
 }  // namespace mts

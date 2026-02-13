@@ -1,0 +1,74 @@
+{
+    "Name": "Enemy",
+    "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          18,
+          8.4,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 0.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 0,
+        "LinearDamping": 0,
+        "AngularDamping": 0,
+        "GravityScale": 0,
+        "BodyType": 2
+      }
+    },
+    {
+      "Type": "CircleCollider2D",
+      "Data": {
+        "Width": 1.0,
+        "Height": 1.0,
+        "Offset": [
+          0,
+          0
+        ],        
+        "IsTrigger": 1
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 2,
+        "NumCols": 4,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 1,
+        "TextureResource": "../TechDemo/Data/Resources/EnemyTextureResource.json",
+        "MeshResource": "../TechDemo/Data/Resources/1x1MeshResource.json"
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+      "Class": "EnemyController",
+        "Fields": {
+        "moveTime":3,
+        "spinDegrees": 180
+      }
+    }
+  }
+]
+}

@@ -1,0 +1,37 @@
+{
+  "Name": "BGM",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "AudioEmitter",
+      "Data": {
+        "EventId": "event:/Made In Taiwan",
+        "PositionOffset": [
+          0.0,
+          0.0
+        ],
+        "StartVolume": 1.0,
+        "StartPitch" : 1.0,
+        "MaxAudibleDistance": 0,
+        "PlayOnStart": 1,
+        "Spatialized2D": 0,
+        "IsOneShot": 0
+      }
+    }
+  ]
+}

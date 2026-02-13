@@ -21,6 +21,7 @@ namespace mts
     {
         GameObject,
         TestGameObjects,
+        TilemapColliderObject,
     };
 
     class GameObjectFactory
@@ -30,23 +31,19 @@ namespace mts
         // @param type: name of the GameObject
         // @return: pointer to created GameObject, nullptr if failed
         static GameObject* CreateGameObject(const std::string& type);
+        static GameObject* CreateGameObject();
 
         // @brief: Create GameObject by enum type
         // @param type: enum type of the GameObject
         // @return: pointer to created GameObject, nullptr if failed
         // static GameObject* CreateGameObject(const mts::GameObjectType type);
 
-        static GameObject* CreateGameObjectForTest(bool test);
-
        private:
         // @brief: Actual creator functions
         // @brief: Template function to create GameObject from given map and key
-        // @param creatorMap: map of key to creator functions (string map or enum map (not
-        // implemented))
         // @param key: key to find in the map (string or enum(not implemented))
         // @param typeString: string representation of the type for deserialization file lookup
-        static GameObject* CreateGameObjectImpl(const std::string& typeString);
-
+        static GameObject* CreateGameObjectFromArchetype(const std::string& typeString);
 
         static std::unordered_map<std::string, std::function<GameObject*()>> stringToTypeMap;
         // static std::unordered_map<mts::GameObjectType, std::function<GameObject*()>>

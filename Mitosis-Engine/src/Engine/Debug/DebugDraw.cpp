@@ -37,7 +37,8 @@ namespace mts::debug
     {
         initialized = true;
 
-        shader = ResourceManager::GetShader("../Mitosis-Engine/src/Resources/DebugShaderResource.json");
+        shader =
+            ResourceManager::GetShader("../Mitosis-Engine/src/Resources/DebugShaderResource.json");
 
         glGenVertexArrays(1, &vao);
         glGenBuffers(1, &vbo);
@@ -113,16 +114,7 @@ namespace mts::debug
                         debugVerticies.data());
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        // TODO: sync with scene main camera
-        glm::ivec4 viewportSize;
-        glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-        glm::mat4 tempViewProj = glm::ortho(0.0f,
-                                            static_cast<float>(viewportSize.z),
-                                            static_cast<float>(viewportSize.w),
-                                            0.0f,
-                                            -1.0f,
-                                            1.0f);
-        shader->SetMatrix4("viewProj", tempViewProj);
+        shader->SetMatrix4("viewProj", viewProj);
 
         glBindVertexArray(vao);
         glDrawArrays(GL_LINES, 0, (GLsizei) debugVerticies.size());

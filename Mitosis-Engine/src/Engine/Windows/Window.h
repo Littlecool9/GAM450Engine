@@ -19,7 +19,7 @@ namespace mts
         std::string Title = "Mitosis-Engine";
         uint32_t Width = 1600;
         uint32_t Height = 900;
-        bool VSync = true;
+        bool VSync = false;
     };
 
     class Window
@@ -40,7 +40,7 @@ namespace mts
 
         // TODO : Move this to a swapchain class
         virtual void SwapBuffer() = 0;
-        
+
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
         virtual void* NativeWindow() const = 0;

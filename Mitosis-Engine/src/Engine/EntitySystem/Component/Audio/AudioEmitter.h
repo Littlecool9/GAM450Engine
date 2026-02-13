@@ -49,6 +49,7 @@ namespace mts
         void Stop(StopMode mode = StopMode::AllowFadeOut);
         void SetVolume(float value);
         void SetPitch(float value);
+        bool IsPlaying() const;
 
        private:
         glm::vec2 mPrevPos{0.f, 0.f};

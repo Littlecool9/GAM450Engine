@@ -1,5 +1,5 @@
 /**
- * @file MeshRenderer.cpp
+ * @file SpriteRenderer.cpp
  * @author sumin.park
  * @brief  Renderer Component
  * @version 0.1
@@ -10,7 +10,7 @@
  */
 
 #include "pch.h"
-#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
 #include "Engine/Resource/Mesh.h"
 #include "Transform.h"
 #include "../GameObject/GameObject.h"
@@ -22,23 +22,23 @@
 
 namespace mts
 {
-    MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner)
+    SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner)
     {
     }
 
-    void MeshRenderer::Init()
+    void SpriteRenderer::Init()
     {
     }
 
-    void MeshRenderer::Update(float dt)
+    void SpriteRenderer::Update(float dt)
     {
     }
 
-    void MeshRenderer::LateUpdate(float dt)
+    void SpriteRenderer::LateUpdate(float dt)
     {
     }
 
-    void MeshRenderer::Deserialize(JsonValue const& jsonObj)
+    void SpriteRenderer::Deserialize(JsonValue const& jsonObj)
     {
         // Read in tint color
         glm::vec3 color(1.0f, 1.0f, 1.0f);
@@ -66,7 +66,6 @@ namespace mts
         {
             frameIndex = jsonObj["FrameIndex"].GetInt(frameIndex);
         }
-        SetFrame(frameIndex);
 
         // Read in texture resource
         auto textureResourcePath = "";
@@ -88,6 +87,8 @@ namespace mts
         mNumCols = mMesh->GetNumCols();
         mNumRows = mMesh->GetNumRows();
 
+        SetFrame(frameIndex);
+
         // Read in shader resource
         auto shaderResourcePath = "";
         if (jsonObj.Has("ShaderResource"))
@@ -95,20 +96,30 @@ namespace mts
             shaderResourcePath = jsonObj["ShaderResource"].GetString(shaderResourcePath);
         }
         mShader = ResourceManager::GetShader(shaderResourcePath);
-       
     }
 
-    // TODO: serialize meshRenderer data
-    void MeshRenderer::Serialize(JsonDocument& doc) const
+    void SpriteRenderer::SetCols(int c)
+    {
+        mNumCols = c;
+    }
+
+    void SpriteRenderer::SetRows(int r)
+    {
+        mNumRows = r;
+    }
+
+    // TODO: serialize spriteRenderer data
+    void SpriteRenderer::Serialize(JsonDocument& doc) const
     {
     }
 
     // Sprites don't render themselves, done through Renderer calling DrawSprite
-    void MeshRenderer::Render() {
+    void SpriteRenderer::Render()
+    {
         // no-op
     }
-    
-    void MeshRenderer::DrawSprite()
+
+    void SpriteRenderer::DrawSprite()
     {
         if (!mMesh || !mShader || !mTexture)
             return;
@@ -119,6 +130,10 @@ namespace mts
         MTS_ASSERT(transform != nullptr);
 
         glm::mat4 model = transform->GetLocalMatrix();
+        if (mFlipX)
+            model *= glm::scale(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, 1.0f));
+        if (mFlipY)
+            model *= glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, -1.0f, 1.0f));
 
         const auto& cam = Renderer::GetActiveCamera();
         glm::mat4 viewProj;
@@ -132,11 +147,11 @@ namespace mts
             glm::ivec4 viewportSize;
             glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
             viewProj = glm::ortho(0.0f,
-                                            static_cast<float>(viewportSize.z),
-                                            static_cast<float>(viewportSize.w),
-                                            0.0f,
-                                            -1.0f,
-                                            1.0f);
+                                  static_cast<float>(viewportSize.z),
+                                  static_cast<float>(viewportSize.w),
+                                  0.0f,
+                                  -1.0f,
+                                  1.0f);
         }
         // set shader uniforms
         mShader->SetMatrix4("model", model);
@@ -150,13 +165,14 @@ namespace mts
         mTexture->UnbindTexture();
     }
 
-    void MeshRenderer::SetFrame(int frameIndex)
+    void SpriteRenderer::SetFrame(int frameIndex)
     {
         // Set member variable
         mFrameIndex = frameIndex;
 
         // Calculate texture offset
-        mUvOffset = {(1.0f / static_cast<float>(mNumCols)) * static_cast<float>(mFrameIndex % mNumCols),
-                        (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(mFrameIndex / mNumCols)};
+        mUvOffset = {
+            (1.0f / static_cast<float>(mNumCols)) * static_cast<float>(mFrameIndex % mNumCols),
+            (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(mFrameIndex / mNumCols)};
     }
 }  // namespace mts

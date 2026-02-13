@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "AudioManager.h"
 
+#include "Engine/Serialization/FileManager.h"
+
 namespace mts
 {
     AudioManager* AudioManager::sManager = nullptr;
@@ -17,7 +19,6 @@ namespace mts
     AudioManager::AudioManager()
     {
         // Default bus paths (FMOD-style)
-        // TODO: Needs to be refactored during audio import. Needs to be moved to a config file.
         mBusPaths[AudioCategory::Master] = "bus:/";
         mBusPaths[AudioCategory::Music] = "bus:/Music";
         mBusPaths[AudioCategory::SFX] = "bus:/SFX";
@@ -32,7 +33,6 @@ namespace mts
 
     bool AudioManager::Init(std::unique_ptr<IAudioBackend> backend, const AudioConfig& config)
     {
-
         if (mInitialized)
         {
             LOG_WARN("Init called more than once. Ignoring.");
@@ -137,9 +137,33 @@ namespace mts
         }
 
         bool ok = true;
-        for (const auto& path : it->second)
-            ok = mBackend->LoadBank(path) && ok;
+        // old code
+        // for (const auto& path : it->second)
+        //     ok = mBackend->LoadBank(path) && ok;
+        //
+        for (const std::string& logicalPath : it->second)
+        {
+            std::vector<std::uint8_t> bytes;
 
+            // using file manager for io
+            if (!FileManager::ReadAllBytes(logicalPath, bytes))
+            {
+                LOG_ERROR("[AudioManager] Failed to read bank '{}' (resolved='{}')",
+                          logicalPath,
+                          FileManager::Resolve(logicalPath));
+                ok = false;
+                continue;
+            }
+
+            // Backend loads from memory
+            if (!mBackend->LoadBankBytes(logicalPath, bytes))
+            {
+                LOG_ERROR("[AudioManager] Backend failed to load bank '{}' (size={})",
+                          logicalPath,
+                          bytes.size());
+                ok = false;
+            }
+        }
         if (ok)
         {
             LOG_INFO("Bank group loaded successfully.");
@@ -341,6 +365,12 @@ namespace mts
         mBackend->Release(mMusicHandle);
         mMusicHandle = {};
         mMusicPlaying = false;
+    }
+    bool AudioManager::IsPlaying(AudioHandle h) const
+    {
+        if (!EnsureInitOrWarn("IsPlaying"))
+            return false;
+        return mBackend->IsPlaying(h);
     }
 
     void AudioManager::UpdateRhythm(float dt)

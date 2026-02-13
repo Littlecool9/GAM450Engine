@@ -1,0 +1,152 @@
+{
+  "Name": "Player",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          1,
+          12,
+          0
+        ],
+        "Scale": [
+          2,
+          2,
+          1
+        ],
+        "Rotation": 0
+      }
+    },
+    {
+      "Type": "BoxCollider2D",
+      "Data": {
+        "Width": 0.75,
+        "Height": 0.8,
+        "Offset": [
+          0,
+          -0.2
+        ]
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 0.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 0,
+        "LinearDamping": 0,
+        "AngularDamping": 0,
+        "GravityScale": 3,
+        "BodyType": 1
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 2,
+        "NumCols": 4,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 1,
+        "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json"
+      }
+    },
+    {
+      "Type": "Animation",
+      "Data": {
+        "FrameIndex": 0,
+        "FrameCount": 0,
+        "FrameDelay": 0,
+        "FrameDuration": 0.0,
+        "IsRunning": 0,
+        "IsLooping": 0
+      }
+    },
+    {
+      "Type": "AnimationSystem",
+      "Data":{
+        "States": [
+            {
+              "State": 0,
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 0,
+              "FrameCount": 1,
+              "FrameDelay": 0,
+              "FrameDuration": 0.0,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 1,
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 2,
+              "FrameCount": 2,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.2,
+              "IsRunning": 0,
+              "IsLooping": 1
+            },
+            {
+              "State": 2,
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 1,
+              "FrameCount": 1,
+              "FrameDelay": 0,
+              "FrameDuration": 0.0,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 3,
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 2,
+              "FrameCount": 1,
+              "FrameDelay": 0,
+              "FrameDuration": 0.0,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 4,
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "HasAnimation": 1,
+              "FrameIndex": 4,
+              "FrameCount": 4,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.5,
+              "IsRunning": 0,
+              "IsLooping": 0
+            }
+        ]
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+      "Class": "PlayerController",
+        "Fields": {
+        "moveSpeed":3.0,
+          "jumpSpeed": 14.0,
+          "walkParticleCooldown": 0.1
+        }
+    }
+  }
+  ]
+}

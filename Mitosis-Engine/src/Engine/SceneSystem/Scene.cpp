@@ -31,6 +31,7 @@ namespace mts
 
     void Scene::Init()
     {
+        gameObjects.reserve(250);
         OnInit();
         for (auto g : gameObjects)
         {
@@ -74,13 +75,8 @@ namespace mts
     // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
     GameObject* Scene::CreateGameObject()
     {
-        // GameObject* newGameObject = GameObjectFactory::CreateGameObjectForTest(true);
-        // gameObjects.push_back(newGameObject);
-
-        GameObject* newGameObject2 = GameObjectFactory::CreateGameObjectForTest(false);
-        gameObjects.emplace_back(newGameObject2);
-
-        return newGameObject2;
+        GameObject* newGameObject = GameObjectFactory::CreateGameObject();
+        return newGameObject;
     }
 
     GameObject* Scene::FindGameObjectUUID(const UUID& uuid)

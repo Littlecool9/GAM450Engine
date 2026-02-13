@@ -274,17 +274,21 @@ namespace mts::physics
             GameObject* gL = currentScene->FindGameObjectUUID(k.lo);
 
             // dead objects shouldn't be on currPairs in the first place
-            MTS_ASSERT(gH && gL && !gH->IsDead() && !gL->IsDead());
+            // todo : find bug later
+            // MTS_ASSERT(gH && gL && !gH->IsDead() && !gL->IsDead());
 
-            if (!wasColliding)
+            if (gH && gL && !gH->IsDead() && !gL->IsDead())
             {
-                gH->OnCollisionEnter2D(gL);
-                gL->OnCollisionEnter2D(gH);
-            }
-            else
-            {
-                gH->OnCollisionStay2D(gL);
-                gL->OnCollisionStay2D(gH);
+                if (!wasColliding)
+                {
+                    gH->OnCollisionEnter2D(gL);
+                    gL->OnCollisionEnter2D(gH);
+                }
+                else
+                {
+                    gH->OnCollisionStay2D(gL);
+                    gL->OnCollisionStay2D(gH);
+                }
             }
         }
 

@@ -10,13 +10,16 @@
 #include "pch.h"
 #include "Application.h"
 
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include "Debug/DebugDraw.h"
 #include "Windows/WinGLFWWindow.h"
 #include "glad/glad.h"
 
 #include "Events/Event.h"
 #include "Events/WindowEvent.h"
-
+#include "imgui.h"
 #include "Input/Input.h"
 #include "SceneSystem/SceneSystem.h"
 #include "Time/FPSCounter.h"
@@ -27,6 +30,8 @@
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Audio/AudioManager.h"
 #include "Renderer.h"
+#include "Helpers/Random.h"
+#include "Serialization/FileManager.h"
 
 #ifdef MTS_CI
 #define MTS_AUDIO_USE_FMOD 0
@@ -68,7 +73,9 @@ namespace mts
 
         Time::Init();
         Time::SetFixedDt(1.0 / 60.0);
-        Time::SetTargetFps(60);
+        Time::SetTargetFps(0);
+
+        Random::Init();
 
         Input::Init();
         mAudio = std::make_unique<AudioManager>();
@@ -97,20 +104,27 @@ namespace mts
         {
             LOG_INFO("AudioManager Init OK.");
         }
-        mAudio->AddBankToGroup(BankGroup::Core, "../Sandbox/Assets/Audio/Desktop/Master.bank");
-        mAudio->AddBankToGroup(BankGroup::Core,"../Sandbox/Assets/Audio/Desktop/Master.strings.bank");
-        mAudio->AddBankToGroup(BankGroup::Music, "../Sandbox/Assets/Audio/Desktop/Music.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.strings.bank");
+        mAudio->AddBankToGroup(BankGroup::Music, "Assets/Audio/Desktop/Music.bank");
+        mAudio->AddBankToGroup(BankGroup::Level, "Assets/Audio/Desktop/SFX.bank");
         mAudio->LoadBankGroup(BankGroup::Core);
         mAudio->LoadBankGroup(BankGroup::Music);
+        mAudio->LoadBankGroup(BankGroup::Level);
         mIsRunning = true;
 
         ResourceManager::Init();
         SceneSystem::Init(GetInitialScene());
         debug::DebugDraw::Init();
 
+        // TODO: Decide whether ImGUI Code stays here or seperate class
+        ImGui::CreateContext();
+        ImGui::StyleColorsDark();
 
-
-
+        GLFWwindow* glfwWindow = static_cast<GLFWwindow*>(mWindow->NativeWindow());
+        ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+        ImGui_ImplOpenGL3_Init("#version 450");  // or "#version 330"
+        // END IMGUI CODE
     }
 
     void Application::Run() const
@@ -122,6 +136,7 @@ namespace mts
             // Clear "pressed/released this frame" BEFORE glfwPollEvents fires callbacks
             Time::BeginFrame();
             Input::BeginFrame();
+            MemoryManager::BeginFrame();
             mWindow->PollEvents();
             mWindow->ClearScreen();
 
@@ -132,18 +147,34 @@ namespace mts
             mAudio->Update(dt);
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
-            SceneSystem::Render();
             Renderer::DrawSprites(SceneSystem::GetCurrentScene());
-            SceneSystem::DebugRender();
-
-            // todo: get main camera from scene and put into draw
-            debug::DebugDraw::Draw({});
-            if (fps.Update(dt))
+            SceneSystem::Render();
+            if (mInDebugView)
             {
-                LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
+                SceneSystem::DebugRender();
+                auto camera = Renderer::GetActiveCamera();
+                debug::DebugDraw::Draw(camera.viewProj);
+
+                if (fps.Update(dt))
+                {
+                    LOG_INFO("FPS: {} ({:.2f} ms)", fps.FPSRounded(), fps.FrameMS());
+                }
+
+                // Begin ImGui frame TODO: Decide whether ImGUI Code stays here or seperate class
+                ImGui_ImplOpenGL3_NewFrame();
+                ImGui_ImplGlfw_NewFrame();
+                ImGui::NewFrame();
+
+                MemoryManager::MemorymaDrawProfilerWindow(dt);
+
+                // End ImGui frame (still before swap)
+                ImGui::Render();
+                ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+                // END IMGUI CODE
             }
 
             mWindow->SwapBuffer();
+
             SceneSystem::SceneCleanUp();
 
             Time::EndFrame();
@@ -160,7 +191,6 @@ namespace mts
         ResourceManager::Shutdown();
         Input::Shutdown();
 
-
         mWindow.reset();
     }
 
@@ -173,6 +203,8 @@ namespace mts
                                               { return OnWindowClose(ev); });
         dispatcher.Dispatch<WindowResizeEvent>([this](WindowResizeEvent& ev)
                                                { return OnWindowResize(ev); });
+        if (Input::IsKeyPressed(Key::C))
+            mInDebugView = !mInDebugView;
     }
 
     bool Application::OnWindowClose(class WindowCloseEvent& e)

@@ -29,6 +29,7 @@ namespace mts
                         float delay,
                         bool block,
                         EaseType ease);
+        ~TranslateAction() override = default;
         ActionResult Update(float dt) override;
     };
 } 

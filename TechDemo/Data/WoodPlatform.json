@@ -1,0 +1,64 @@
+{
+  "Name": "WoodPlatform",
+  "Layer": 1,
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          15.5,
+          5.5,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 7,
+        "NumCols": 14,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 58,
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 0.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 0,
+        "LinearDamping": 5.0,
+        "AngularDamping": 0,
+        "GravityScale": 5.0,
+        "BodyType": 0
+      }
+    },
+    {
+      "Type": "BoxCollider2D",
+      "Data": {
+        "Width": 1.0,
+        "Height": 0.4,
+        "Offset": [
+          0,
+          0.3
+        ]
+      }
+    }
+  ]
+}

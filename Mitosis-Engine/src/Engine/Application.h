@@ -42,6 +42,7 @@ namespace mts
         std::unique_ptr<Window> mWindow;
         std::unique_ptr<AudioManager> mAudio;
         bool mIsRunning = false;
+        bool mInDebugView = false;
     };
 
     Application* CreateApplication();

@@ -37,6 +37,9 @@ namespace mts
         glm::vec2 GetVec2(glm::vec2 def = {});
 
         const char* GetString(const char* def = "") const;
+        bool GetBool(bool def = false) const;
+
+        std::string ToJsonString() const;
 
        private:
         friend class RapidJsonBackend;

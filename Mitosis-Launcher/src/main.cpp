@@ -15,7 +15,8 @@ int main(int argc, char** argv)
     mts::Log::Init();
 
     // Macro to check memory leaks on windows.
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
+    //_CrtSetBreakAlloc(1879);
     mts::MemoryManager::Init();
 
     auto app = mts::CreateApplication();

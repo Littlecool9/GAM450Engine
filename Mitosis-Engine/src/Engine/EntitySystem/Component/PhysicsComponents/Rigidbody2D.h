@@ -41,6 +41,7 @@ namespace mts
         void AddTorque(float radTorque);
         void AddAngularImpulse(float radImpulse);
         void SetVelocity(glm::vec2 velocity);
+        glm::vec2 GetVelocity() const { return mLinearVelocity; }
         void SetAngularVelocity(float radAngularVelocity);
         void Teleport(glm::vec2 newPos, float newRot);
 

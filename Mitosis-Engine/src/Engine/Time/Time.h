@@ -81,6 +81,7 @@ namespace mts
         // Clock
         static inline Clock::time_point s_lastTick{};
         static inline Clock::time_point s_frameStart{};
+        static inline Clock::time_point s_nextFrame{};
 
         // Frame timing
         static inline double s_unclampedFrameDt = 0.0;

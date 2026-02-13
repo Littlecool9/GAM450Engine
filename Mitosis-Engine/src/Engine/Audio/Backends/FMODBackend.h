@@ -28,8 +28,12 @@ namespace mts
         void Update(float dt) override;
 
         bool LoadBank(const std::string& bankPath) override;
-        bool UnloadBank(const std::string& bankPath) override;
+        // using this instead of LoadBank for filemanager support 
+        bool LoadBankBytes(const std::string& bankKey, const std::vector<std::uint8_t>& bytes) override;
 
+        bool UnloadBank(const std::string& bankPath) override;
+        bool IsPlaying(AudioHandle handle) const override;
+        
         AudioHandle CreateInstance(const AudioEventId& eventId) override;
         void Start(AudioHandle h) override;
         void Stop(AudioHandle h, StopMode mode) override;

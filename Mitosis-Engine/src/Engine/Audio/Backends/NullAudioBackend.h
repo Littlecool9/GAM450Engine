@@ -26,12 +26,15 @@ namespace mts
         // Content
         bool LoadBank(const std::string& bankPath) override;
         bool UnloadBank(const std::string& bankPath) override;
+        bool LoadBankBytes(const std::string& bankKey,
+                           const std::vector<std::uint8_t>& bytes) override;
 
         // Playback
         AudioHandle CreateInstance(const AudioEventId& eventId) override;
         void Start(AudioHandle h) override;
         void Stop(AudioHandle h, StopMode mode) override;
         void Release(AudioHandle h) override;
+        bool IsPlaying(AudioHandle handle) const override;
 
         // Spatial
         void SetListenerAttributes(int listenerIndex, const SpatialAttributes& a) override;

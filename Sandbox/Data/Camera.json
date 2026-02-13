@@ -5,13 +5,13 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          0,
-          0,
+          20,
+          10,
           0
         ],
         "Scale": [
-          250,
-          250,
+          1,
+          1,
           0
         ],
         "Rotation": 0.0
@@ -31,8 +31,8 @@
             "MaxAcceleration": 500.0,
             "Interpolant": 2.0,
             "CameraOffset": [
-                -250,
-                -250,
+                0,
+                0,
                 0
             ]
         }

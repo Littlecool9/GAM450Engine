@@ -30,10 +30,16 @@ namespace mts
 
     bool NullAudioBackend::LoadBank(const std::string&)
     {
-        return true;  // pretend success
+        return true;
     }
 
     bool NullAudioBackend::UnloadBank(const std::string&)
+    {
+        return true;
+    }
+
+    bool NullAudioBackend::LoadBankBytes(const std::string& bankKey,
+                                         const std::vector<std::uint8_t>& bytes)
     {
         return true;
     }
@@ -56,6 +62,11 @@ namespace mts
     void NullAudioBackend::Release(AudioHandle)
     {
         // no-op (safe to call multiple times)
+    }
+
+    bool NullAudioBackend::IsPlaying(AudioHandle handle) const
+    {
+        return true;
     }
 
     void NullAudioBackend::SetListenerAttributes(int, const SpatialAttributes&)

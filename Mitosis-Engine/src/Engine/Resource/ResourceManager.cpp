@@ -19,6 +19,8 @@
 #include <sstream>
 #include <ranges>
 
+#include "Engine/Serialization/FileManager.h"
+
 namespace mts
 {
     const std::string defaultTextureSource = "../Mitosis-Engine/src/Resources/DefaultTextureResource.json";
@@ -131,6 +133,7 @@ namespace mts
     {
         if (shaderSourcePath.empty())
         {
+            LOG_INFO("Path: {} invalid", shaderSourcePath);
             LOG_INFO("No Shader Source Specified");
             return GetShader(defaultShaderSource);
         }
@@ -206,10 +209,13 @@ namespace mts
     
     std::string ResourceManager::LoadTextFile(const char* path)
     {
-        std::ifstream file(path);
-        std::stringstream ss;
-        ss << file.rdbuf();
-        return ss.str();
+        std::string out;
+        if (!FileManager::ReadAllText(path, out))
+        {
+            LOG_WARN("Failed to read text file: {}", path);
+            return {};
+        }
+        return out;
     }
 
 }  // namespace mts

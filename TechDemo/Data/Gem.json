@@ -1,0 +1,96 @@
+{
+  "Name": "Gem",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          5,
+          12,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 7,
+        "NumCols": 14,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 50,
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+      }
+    },
+    {
+      "Type": "ParticleEmitter",
+      "Data": {
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+        "FrameIndex": 36,
+        "TintColor": [ 1.0, 1.0, 0.0, 1.0 ],
+        "Scale": [ 0, 0 ],
+        "ParticleScaleMin": [ 0.2, 0.2 ],
+        "ParticleScaleMax": [ 0.3, 0.3 ],
+        "EmitRate": 20.0,
+        "EmitMax": 50,
+        "LifetimeMin": 0.5,
+        "LifetimeMax": 0.8,
+        "SpeedMin": 0.4,
+        "SpeedMax": 1.0,
+        "RotationSpeedMin": 0.2,
+        "RotationSpeedMax": 0.8,
+        "OneShot": false
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "BodyType": 0
+      }
+    },
+    {
+      "Type": "CircleCollider2D",
+      "Data": {
+        "Radius": 0.5,
+        "Offset": [
+          0,
+          0
+        ],
+        "IsTrigger": 1
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "CollectableController"
+      }
+    },
+    {
+      "Type": "AudioEmitter",
+      "Data": {
+        "EventId": "event:/Coin",
+        "PositionOffset": [
+          0.0,
+          0.0
+        ],
+        "StartVolume": 1.0,
+        "StartPitch": 1.0,
+        "MaxAudibleDistance": 1500.0,
+        "PlayOnStart": 0,
+        "Spatialized2D": 1,
+        "IsOneShot": 1
+      }
+    }
+  ]
+}

@@ -45,3 +45,8 @@ docs/latex/
 docs/rtf/
 docs/man/
 docs/xml/
+
+# ===============================
+# Imgui
+# ===============================
+imgui.ini

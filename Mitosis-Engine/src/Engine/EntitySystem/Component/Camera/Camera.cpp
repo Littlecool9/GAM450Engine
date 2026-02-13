@@ -2,7 +2,7 @@
  * @file Camera.cpp
  * @author Dong Ta
  * @brief Functionality for camera component
- *        
+ *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
  */
@@ -18,10 +18,11 @@
 
 namespace mts
 {
-    CameraComponent::CameraComponent(): isActive(true), nearPlane(-1.0f), farPlane(1.0f)
+    CameraComponent::CameraComponent() : isActive(true), nearPlane(-1.0f), farPlane(1.0f)
     {
     }
-    CameraComponent::CameraComponent(GameObject* owner): Component(owner), isActive(true), nearPlane(-1.0f), farPlane(1.0f)
+    CameraComponent::CameraComponent(GameObject* owner)
+        : Component(owner), isActive(true), nearPlane(-1.0f), farPlane(1.0f)
     {
     }
 
@@ -64,7 +65,7 @@ namespace mts
         MTS_ASSERT(trans != nullptr);
 
         const glm::vec3 pos = trans->GetPosition();
-        const float rot = trans->GetRotation();  
+        const float rot = trans->GetRotation();
 
         glm::mat4 V(1.0f);
         V = glm::rotate(V, -rot, glm::vec3(0, 0, 1));
@@ -81,7 +82,16 @@ namespace mts
         const float w = static_cast<float>(vp.z);
         const float h = static_cast<float>(vp.w);
 
-        return glm::ortho(0.0f, w, h, 0.0f, nearPlane, farPlane);
+        float logicW = w / mts::PixelsPerUnit;
+        float logicH = h / mts::PixelsPerUnit;
+
+        // The camera position is now at the center
+        return glm::ortho(-logicW / 2.0f,
+                          logicW / 2.0f,
+                          -logicH / 2.0f,
+                          logicH / 2.0f,
+                          nearPlane,
+                          farPlane);
     }
 
     void CameraComponent::Update(float dt)
@@ -90,6 +100,7 @@ namespace mts
             return;
 
         RenderCamera cam;
+        cam.position = GetGameObject()->GetComponent<Transform>()->GetPosition();
         cam.view = BuildView2D();
         cam.proj = BuildProjFromViewport();
         cam.viewProj = cam.proj * cam.view;
@@ -98,4 +109,4 @@ namespace mts
         Renderer::SetActiveCamera(cam);
     }
 
-}
+}  // namespace mts

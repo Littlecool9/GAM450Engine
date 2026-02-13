@@ -80,7 +80,7 @@ namespace mts
         AudioHandle Play2D(const AudioEventId& eventId, glm::vec2 pos) const;  // Spatial 2D (Z=0)
         void Stop(AudioHandle h, StopMode mode) const;
         void Release(AudioHandle h) const;
-
+        bool IsPlaying(AudioHandle h) const;
         // One-shot helpers
         void PlayOneShot(const AudioEventId& eventId) const;
         void PlayOneShot2D(const AudioEventId& eventId, glm::vec2 pos) const;

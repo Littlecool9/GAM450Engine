@@ -66,6 +66,7 @@ namespace mts
         enum LayerMasks
         {
             Default,
+            Ground,
             UI,
         };
 
@@ -114,6 +115,7 @@ namespace mts
         inline bool IsActive() const { return isActive; }
         inline bool SetActive(bool active) { return isActive = active; }
         inline void SetLayer(LayerMasks layer) { objectLayer = layer; }
+        inline LayerMasks GetLayer() const { return objectLayer; }
         inline void SetName(std::string const& name) { this->name = name; }
         inline std::string const& GetName() const { return name; }
         inline std::vector<GameObject*> const& GetChildren() const { return children; }

@@ -12,7 +12,6 @@
 #include "SerializationUtility.h"
 
 // other includes
-#include <fstream>
 #include "JsonAbstraction.h"
 
 namespace mts

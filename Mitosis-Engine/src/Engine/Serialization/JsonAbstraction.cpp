@@ -10,13 +10,17 @@
  */
 #include "pch.h"
 #include "JsonAbstraction.h"
+
+#include <filesystem>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/prettywriter.h>
-#include <fstream>
 #include <vector>
+
+#include "FileManager.h"
+
 namespace mts
 {
 
@@ -45,16 +49,11 @@ namespace mts
 
     bool JsonDocument::LoadFromFile(const std::string& filepath) const
     {
-        std::ifstream ifs(filepath, std::ios::in);
-        if (!ifs.is_open())
-        {
+        std::string json;
+        if (!FileManager::ReadAllText(filepath, json))
             return false;
-        }
 
-        RJIStreamWrapper isw(ifs);
-
-        impl_->doc.ParseStream<pf::kParseCommentsFlag | pf::kParseTrailingCommasFlag |
-                               pf::kParseEscapedApostropheFlag>(isw);
+        impl_->doc.Parse<pf::kParseCommentsFlag | pf::kParseTrailingCommasFlag | pf::kParseEscapedApostropheFlag>(json.c_str());
 
         return !impl_->doc.HasParseError();
     }
@@ -190,20 +189,14 @@ namespace mts
 
     bool JsonDocument::SaveToFile(const std::string& path)
     {
-        std::ofstream ofs(path);
-        if (!ofs.is_open())
-        {
-            return false;
-        }
-
-        RJOStreamWrapper osw(ofs);
-
-        pw writer(osw);
+        rapidjson::StringBuffer buffer;
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
         writer.SetIndent(' ', 4);
         writer.SetFormatOptions(rapidjson::kFormatDefault);
+
         impl_->doc.Accept(writer);
 
-        return true;
+        return FileManager::WriteAllText(path, buffer.GetString(), true);
     }
 
     bool JsonValue::IsObject() const
@@ -317,4 +310,27 @@ namespace mts
         return v->GetString();
     }
 
+    bool JsonValue::GetBool(bool def) const
+    {
+        auto* v = static_cast<const RjValue*>(impl);
+        if (!v || !v->IsBool())
+        {
+            return def;
+        }
+        return v->GetBool();
+    }
+
+    std::string JsonValue::ToJsonString() const
+    {
+        if (!impl)
+            return "{}";
+
+        auto* v = static_cast<const rapidjson::Value*>(impl);
+
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer writer(buffer);
+        v->Accept(writer);
+
+        return buffer.GetString();
+    }
 }  // namespace mts

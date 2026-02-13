@@ -24,7 +24,7 @@ namespace mts
        public:
         ActionList() {};
         ActionList(GameObject* owner);
-        ~ActionList() override = default;
+        ~ActionList() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
         void LateUpdate(float dt) override;
@@ -41,7 +41,7 @@ namespace mts
                             float delay = 0,
                             bool block = false,
                             BaseAction::EaseType ease = BaseAction::EaseType::Linear);
-        void AddRotateAction(glm::vec3 Goal,
+        void AddRotateAction(float Goal,
                              GameObject* target,
                              float TimeToComplete = 1,
                              int id = 0,
@@ -57,7 +57,7 @@ namespace mts
                                 BaseAction::EaseType ease = BaseAction::EaseType::Linear);
         void AddAction(BaseAction* action);
         void Update(float dt) override;
-
+        void Clear();
        private:
         std::vector<BaseAction*> Actions;
         std::bitset<8> Groups;

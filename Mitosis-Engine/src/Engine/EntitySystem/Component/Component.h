@@ -29,13 +29,18 @@ namespace mts
         MTS_CLASS_NEW_DELETE();
 
        public:
-        virtual void Init() {};
-        virtual void Update(float dt) {};
-        virtual void LateUpdate(float dt) {};
-        virtual void Render() {};
+        virtual void Init() {}
+        virtual void Update(float dt) {}
+        virtual void LateUpdate(float dt) {}
+        virtual void Render() {}
         virtual void DebugRender() {}
 
-        virtual void Deserialize(JsonValue const& jsonObj) override;
+        virtual void OnCollisionEnter2D(const GameObject* /*other*/) {}
+        virtual void OnCollisionStay2D(const GameObject* /*other*/) {}
+        virtual void OnCollisionExit2D(const GameObject* /*other*/) {}
+
+        void Deserialize(JsonValue const& jsonObj) override;
+
         GameObject* GetGameObject() const { return owner; }
         GameObject* GetGameObject() { return owner; }
 

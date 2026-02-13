@@ -13,7 +13,6 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 
-
 namespace mts
 {
     Transform* AudioEmitter::GetTransform() const
@@ -23,14 +22,21 @@ namespace mts
 
     AudioEmitter::AudioEmitter()
     {
-        //no op comment 
+        // no op comment
     }
 
-    AudioEmitter::AudioEmitter(GameObject* owner): Component(owner)
+    AudioEmitter::AudioEmitter(GameObject* owner) : Component(owner)
     {
-        //no op comment 
+        // no op comment
     }
-
+    bool AudioEmitter::IsPlaying() const
+    {
+        if (handle && AudioManager::Get().IsPlaying(handle))
+        {
+            return true;
+        }
+        return false;
+    }
     AudioEmitter::~AudioEmitter()
     {
         if (handle)
@@ -45,17 +51,16 @@ namespace mts
 
     void AudioEmitter::Render()
     {
-        //no op comment 
+        // no op comment
     }
 
     void AudioEmitter::LateUpdate(float dt)
     {
-        //no op comment 
+        // no op comment
     }
 
     void AudioEmitter::Deserialize(JsonValue const& jsonObj)
     {
-
         if (jsonObj.Has("EventId"))
         {
             eventId = jsonObj["EventId"].GetString();
@@ -99,7 +104,6 @@ namespace mts
         json.WriteString("Type", "AudioEmitter");
         json.BeginObject("Data");
 
-
         json.WriteString("EventId", eventId.c_str());
 
         json.BeginArray("PositionOffset");
@@ -116,12 +120,12 @@ namespace mts
         json.EndObject();  // end Data
     }
 
-    //TODO: Potentially change this to get world position depending on how we do things
+    // TODO: Potentially change this to get world position depending on how we do things
     glm::vec2 AudioEmitter::Get2DPosition() const
     {
         if (auto* t = GetTransform())
         {
-            //change from 3d to 2d
+            // change from 3d to 2d
             glm::vec3 p3 = t->GetPosition();
             glm::vec2 p2{p3.x, p3.y};
             return p2 + positionOffset;
@@ -156,10 +160,11 @@ namespace mts
 
         glm::vec2 listenerPos = AudioManager::Get().GetListener2D();
         float dist = glm::length(currentPos - listenerPos);
-        float t = dist / maxAudibleDistance;
+
+        float t = maxAudibleDistance > 1e-4f ? dist / maxAudibleDistance : 1;
         AudioManager::Get().SetInstance2D(handle, currentPos, vel);
         AudioManager::Get().SetParameter(handle, "Distance", t);
-        LOG_INFO("Distance between listener and emitter: {}", dist);
+
         mPrevPos = currentPos;
         mFirstFrame = false;
     }
@@ -184,17 +189,18 @@ namespace mts
         // Apply initial params
         if (isPlaying && handle)
         {
-            AudioManager::Get().SetParameter(handle, "Volume", startVolume);  
+            AudioManager::Get().SetParameter(handle, "Volume", startVolume);
         }
 
         // Reset motion state
         mPrevPos = Get2DPosition();
         mFirstFrame = true;
 
-        //if oneshot, call play oneshot and dont bother updating position
+        // if oneshot, call play oneshot and dont bother updating position
         if (isOneShot)
         {
             AudioManager::Get().PlayOneShot2D(eventId, Get2DPosition());
+            
         }
     }
     void AudioEmitter::Stop(StopMode mode)
@@ -203,7 +209,7 @@ namespace mts
             return;
 
         AudioManager::Get().Stop(handle, mode);
-
+        
         if (isOneShot)
         {
             AudioManager::Get().Release(handle);
@@ -229,4 +235,4 @@ namespace mts
         }
     }
 
-}
+}  // namespace mts

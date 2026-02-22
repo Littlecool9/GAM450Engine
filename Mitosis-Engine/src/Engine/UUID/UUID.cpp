@@ -70,5 +70,4 @@ namespace mts
         return UUID{};
     }
 
-
-} // mts namespace
+}  // namespace mts

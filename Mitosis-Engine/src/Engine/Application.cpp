@@ -27,11 +27,9 @@
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Resource/ResourceManager.h"
-#include "Physics2D/PhysicsSystem2D.h"
 #include "Audio/AudioManager.h"
 #include "Renderer.h"
 #include "Helpers/Random.h"
-#include "Serialization/FileManager.h"
 
 #ifdef MTS_CI
 #define MTS_AUDIO_USE_FMOD 0

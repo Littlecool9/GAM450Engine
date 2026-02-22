@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{90B97858-7C87-6C5E-651B-DD84518848C3}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Mitosis-Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)..\bin\Debug-windows-x86_64\Mitosis-Engine\</OutDir>
+    <IntDir>$(ProjectDir)..\bin-int\Debug-windows-x86_64\Mitosis-Engine\</IntDir>
+    <TargetName>Mitosis-Engine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)..\bin\Release-windows-x86_64\Mitosis-Engine\</OutDir>
+    <IntDir>$(ProjectDir)..\bin-int\Release-windows-x86_64\Mitosis-Engine\</IntDir>
+    <TargetName>Mitosis-Engine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>MTS_PLATFORM_WINDOWS;MTS_DEBUG;MTS_AUDIO_FMOD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>MTS_PLATFORM_WINDOWS;MTS_RELEASE;MTS_AUDIO_FMOD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\Audio\AudioManager.h" />
+    <ClInclude Include="src\Engine\Audio\AudioTypes.h" />
+    <ClInclude Include="src\Engine\Audio\Backends\FMODBackend.h" />
+    <ClInclude Include="src\Engine\Audio\Backends\NullAudioBackend.h" />
+    <ClInclude Include="src\Engine\Audio\IAudioBackend.h" />
+    <ClInclude Include="src\Engine\Debug\DebugDraw.h" />
+    <ClInclude Include="src\Engine\Delegate\Delegate.h" />
+    <ClInclude Include="src\Engine\Entity\Entity.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\ActionList.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Actions\BaseAction.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Actions\RotateAction.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Actions\ScaleAction.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Actions\TranslateAction.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Animation.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\AnimationSystem.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Audio\AudioEmitter.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Audio\AudioListener.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Button.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Camera\Camera.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Camera\CameraFollow.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Component.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\ComponentFactory.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Particles\ParticleContainer.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Particles\ParticleEmitter.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\PhysicsComponents\BoxCollider2D.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\PhysicsComponents\CircleCollider2D.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\PhysicsComponents\Collider2D.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\PhysicsComponents\Rigidbody2D.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\SpriteRenderer.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\Transform.h" />
+    <ClInclude Include="src\Engine\EntitySystem\GameObject\GameObject.h" />
+    <ClInclude Include="src\Engine\EntitySystem\GameObject\GameObjectFactory.h" />
+    <ClInclude Include="src\Engine\EntitySystem\GameObject\TestGameObjects.h" />
+    <ClInclude Include="src\Engine\Events\Event.h" />
+    <ClInclude Include="src\Engine\Events\EventButton.h" />
+    <ClInclude Include="src\Engine\Events\InputEvent.h" />
+    <ClInclude Include="src\Engine\Events\WindowEvent.h" />
+    <ClInclude Include="src\Engine\Helpers\Format.h" />
+    <ClInclude Include="src\Engine\Helpers\Math.h" />
+    <ClInclude Include="src\Engine\Helpers\Random.h" />
+    <ClInclude Include="src\Engine\Input\Input.h" />
+    <ClInclude Include="src\Engine\Input\InputCodes.h" />
+    <ClInclude Include="src\Engine\Logging\AppLog.h" />
+    <ClInclude Include="src\Engine\Logging\Assert.h" />
+    <ClInclude Include="src\Engine\Logging\EngineLog.h" />
+    <ClInclude Include="src\Engine\Logging\Log.h" />
+    <ClInclude Include="src\Engine\Memory\MemoryManager.h" />
+    <ClInclude Include="src\Engine\Memory\MemoryTests.h" />
+    <ClInclude Include="src\Engine\Physics2D\PhysicsCommand2D.h" />
+    <ClInclude Include="src\Engine\Physics2D\PhysicsSystem2D.h" />
+    <ClInclude Include="src\Engine\Renderer.h" />
+    <ClInclude Include="src\Engine\Resource\Mesh.h" />
+    <ClInclude Include="src\Engine\Resource\ResourceManager.h" />
+    <ClInclude Include="src\Engine\Resource\Shader.h" />
+    <ClInclude Include="src\Engine\Resource\Texture.h" />
+    <ClInclude Include="src\Engine\SceneSystem\Scene.h" />
+    <ClInclude Include="src\Engine\SceneSystem\SceneSystem.h" />
+    <ClInclude Include="src\Engine\Scripting\NativeScriptComponent.h" />
+    <ClInclude Include="src\Engine\Scripting\ScriptBase.h" />
+    <ClInclude Include="src\Engine\Scripting\ScriptFactory.h" />
+    <ClInclude Include="src\Engine\Serialization\Deserializable.h" />
+    <ClInclude Include="src\Engine\Serialization\FileManager.h" />
+    <ClInclude Include="src\Engine\Serialization\JsonAbstraction.h" />
+    <ClInclude Include="src\Engine\Serialization\SerializationUtility.h" />
+    <ClInclude Include="src\Engine\Tilemap\Chunk.h" />
+    <ClInclude Include="src\Engine\Tilemap\ChunkLoader.h" />
+    <ClInclude Include="src\Engine\Tilemap\ChunkManager.h" />
+    <ClInclude Include="src\Engine\Tilemap\Tile.h" />
+    <ClInclude Include="src\Engine\Tilemap\Tilemap.h" />
+    <ClInclude Include="src\Engine\Tilemap\TilemapRenderer.h" />
+    <ClInclude Include="src\Engine\Tilemap\Tileset.h" />
+    <ClInclude Include="src\Engine\Time\FPSCounter.h" />
+    <ClInclude Include="src\Engine\Time\Time.h" />
+    <ClInclude Include="src\Engine\UI\UIEvent.h" />
+    <ClInclude Include="src\Engine\UUID\UUID.h" />
+    <ClInclude Include="src\Engine\UUID\UUIDPairKey.h" />
+    <ClInclude Include="src\Engine\Windows\GLFWInputMapper.h" />
+    <ClInclude Include="src\Engine\Windows\WinGLFWWindow.h" />
+    <ClInclude Include="src\Engine\Windows\Window.h" />
+    <ClInclude Include="src\MitosisEngine.h" />
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="src\Engine\Audio\Backends\FMODBackend.cpp" />
+    <ClCompile Include="src\Engine\Audio\Backends\NullAudioBackend.cpp" />
+    <ClCompile Include="src\Engine\Debug\DebugDraw.cpp" />
+    <ClCompile Include="src\Engine\Entity\Entity.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\ActionList.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Actions\BaseAction.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Actions\RotateAction.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Actions\ScaleAction.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Actions\TranslateAction.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Animation.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\AnimationSystem.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Audio\AudioEmitter.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Audio\AudioListener.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Button.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Camera\Camera.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Camera\CameraFollow.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Component.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\ComponentFactory.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Particles\ParticleContainer.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Particles\ParticleEmitter.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\PhysicsComponents\BoxCollider2D.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\PhysicsComponents\CircleCollider2D.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\PhysicsComponents\Collider2D.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\PhysicsComponents\Rigidbody2D.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\Transform.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\GameObject\GameObjectFactory.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\GameObject\TestGameObjects.cpp" />
+    <ClCompile Include="src\Engine\Helpers\Random.cpp" />
+    <ClCompile Include="src\Engine\Input\Input.cpp" />
+    <ClCompile Include="src\Engine\Logging\Log.cpp" />
+    <ClCompile Include="src\Engine\Memory\MemoryManager.cpp" />
+    <ClCompile Include="src\Engine\Physics2D\PhysicsSystem2D.cpp" />
+    <ClCompile Include="src\Engine\Renderer.cpp" />
+    <ClCompile Include="src\Engine\Resource\Mesh.cpp" />
+    <ClCompile Include="src\Engine\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\Engine\Resource\Shader.cpp" />
+    <ClCompile Include="src\Engine\Resource\Texture.cpp" />
+    <ClCompile Include="src\Engine\SceneSystem\Scene.cpp" />
+    <ClCompile Include="src\Engine\SceneSystem\SceneSystem.cpp" />
+    <ClCompile Include="src\Engine\Scripting\NativeScriptComponent.cpp" />
+    <ClCompile Include="src\Engine\Scripting\ScriptFactory.cpp" />
+    <ClCompile Include="src\Engine\Serialization\FileManager.cpp" />
+    <ClCompile Include="src\Engine\Serialization\JsonAbstraction.cpp" />
+    <ClCompile Include="src\Engine\Serialization\SerializationUtility.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\Chunk.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\ChunkLoader.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\ChunkManager.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\Tile.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\Tilemap.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\TilemapRenderer.cpp" />
+    <ClCompile Include="src\Engine\Tilemap\Tileset.cpp" />
+    <ClCompile Include="src\Engine\Time\Time.cpp" />
+    <ClCompile Include="src\Engine\UI\UIEvent.cpp" />
+    <ClCompile Include="src\Engine\UUID\UUID.cpp" />
+    <ClCompile Include="src\Engine\Windows\WinGLFWWindow.cpp" />
+    <ClCompile Include="src\Engine\Windows\Window.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\debug.frag" />
+    <None Include="src\Shaders\debug.vert" />
+    <None Include="src\Shaders\standard.frag" />
+    <None Include="src\Shaders\standard.vert" />
+    <None Include="src\Shaders\standardTile.frag" />
+    <None Include="src\Shaders\standardTile.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -21,17 +21,12 @@ cmake_install.cmake
 *.cmake.user
 
 # vcpkg package management
-Mitosis-Engine/third-party/tools
-Mitosis-Engine/third-party/vcpkg-installed
-vcpkg_installed
+vcpkg_installed/
 
 # ===============================
 # Visual Studio
 # ===============================
 .vs/
-*.sln
-*.slnx
-*.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 *.VC.db

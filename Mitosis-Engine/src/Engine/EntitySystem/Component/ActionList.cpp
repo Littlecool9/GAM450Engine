@@ -51,7 +51,6 @@ namespace mts
     void ActionList::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "ActionList");
-        // doc.EndObject();
     }
 
     bool ActionList::IsEmpty() const

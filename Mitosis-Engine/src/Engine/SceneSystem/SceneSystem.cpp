@@ -13,6 +13,7 @@
 #include "SceneSystem.h"
 #include "Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Serialization/SerializationUtility.h"
 
 namespace mts
 {
@@ -66,6 +67,16 @@ namespace mts
 
     void SceneSystem::Shutdown()
     {
+    }
+
+    void SceneSystem::SaveScene(Scene* scene, const std::string& fileName)
+    {
+        SerializationUtility::SerializeToFile(scene, fileName);
+    }
+
+    void SceneSystem::LoadScene(Scene* scene, const std::string& fileName)
+    {
+        SerializationUtility::DeserializeFromFile(scene, fileName);
     }
 
     void SceneSystem::SceneCleanUp()

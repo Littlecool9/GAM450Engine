@@ -20,8 +20,6 @@ namespace mts
        public:
         UUID(const UUID&) = default;
         UUID& operator=(const UUID&) = default;
-        // used for deserialization
-        explicit UUID(const std::string& uuidStr);
 
         UUID(UUID&&) noexcept = default;
         UUID& operator=(UUID&&) noexcept = default;
@@ -46,8 +44,8 @@ namespace mts
         UUID() = default;
 
         // avoid including boost headers in header files
-        uint64_t m_High = 0;
-        uint64_t m_Low = 0;
+        uint64_t mHigh = 0;
+        uint64_t mLow = 0;
     };
 }  // namespace mts
 
@@ -58,7 +56,7 @@ namespace std
     {
         size_t operator()(const mts::UUID& id) const noexcept
         {
-            return hash<uint64_t>()(id.m_High) ^ (hash<uint64_t>()(id.m_Low) << 1);
+            return hash<uint64_t>()(id.mHigh) ^ (hash<uint64_t>()(id.mLow) << 1);
         }
     };
 }  // namespace std

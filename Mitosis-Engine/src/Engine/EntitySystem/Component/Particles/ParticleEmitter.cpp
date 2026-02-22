@@ -26,14 +26,15 @@ namespace mts
     {
     }
 
-     ParticleEmitter::~ParticleEmitter()
+    ParticleEmitter::~ParticleEmitter()
     {
-         delete mContainer;
+        if (mContainer != nullptr)
+            delete mContainer;
     }
 
     void ParticleEmitter::Init()
     {
-        //no-op
+        // no-op
     }
 
     void ParticleEmitter::Update(float dt)
@@ -81,12 +82,12 @@ namespace mts
 
     void ParticleEmitter::LateUpdate(float dt)
     {
-        //no-op
+        // no-op
     }
 
     void ParticleEmitter::Render()
     {
-        //no-op
+        // no-op
     }
 
     void ParticleEmitter::DrawParticles()
@@ -116,9 +117,13 @@ namespace mts
         {
             if (particle.lifetime > 0)
             {
-                glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(particle.scale.x, particle.scale.y, 1.0f));
-                glm::mat4 R = glm::rotate(glm::mat4(1.0f), particle.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
-                glm::mat4 T = glm::translate(glm::mat4(1.0f),glm::vec3(particle.position.x, particle.position.y, emitterZ));
+                glm::mat4 S = glm::scale(glm::mat4(1.0f),
+                                         glm::vec3(particle.scale.x, particle.scale.y, 1.0f));
+                glm::mat4 R =
+                    glm::rotate(glm::mat4(1.0f), particle.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+                glm::mat4 T =
+                    glm::translate(glm::mat4(1.0f),
+                                   glm::vec3(particle.position.x, particle.position.y, emitterZ));
                 glm::mat4 model = T * R * S;
                 mShader->SetMatrix4("model", model);
                 mShader->SetFloat("alpha", mAlpha * particle.lifetime / mLifetimeMin);
@@ -226,13 +231,50 @@ namespace mts
         if (jsonObj.Has("IsRunning"))
             mIsRunning = jsonObj["IsRunning"].GetInt(mIsRunning);
 
-        mContainer = new ParticleContainer(mEmitMax, mOneShot);
+        if (mContainer != nullptr)
+            delete mContainer;
 
+        mContainer = new ParticleContainer(mEmitMax, mOneShot);
     }
 
     void ParticleEmitter::Serialize(JsonDocument& doc) const
     {
-    
+        doc.WriteString("Type", "ParticleEmitter");
+        doc.BeginObject("Data");
+
+        doc.WriteVec3("TintColor", mTintColor);
+        doc.WriteFloat("Alpha", mAlpha);
+
+        doc.WriteString("TextureResource", mTexture->GetPath().c_str());
+        doc.WriteString("MeshResource", mMesh->GetPath().c_str());
+        doc.WriteInt("FrameIndex", mFrameIndex);
+        doc.WriteString("ShaderResource", mShader->GetPath().c_str());
+
+        doc.WriteVec2("Scale", mEmitterScale);
+        doc.WriteVec2("ParticleScaleMin", mScaleMin);
+        doc.WriteVec2("ParticleScaleMax", mScaleMax);
+        doc.WriteVec2("Acceleration", mAcceleration);
+        doc.WriteVec2("DirectionRange", mDirectionRange);
+
+        doc.WriteFloat("EmitRate", mEmitRate);
+        doc.WriteInt("EmitMax", mEmitMax);
+
+        doc.WriteFloat("LifetimeMin", mLifetimeMin);
+        doc.WriteFloat("LifetimeMax", mLifetimeMax);
+
+        doc.WriteFloat("SpeedMin", mSpeedMin);
+        doc.WriteFloat("SpeedMax", mSpeedMax);
+
+        doc.WriteFloat("RotationSpeedMin", mRotationSpeedMin);
+        doc.WriteFloat("RotationSpeedMax", mRotationSpeedMax);
+
+        doc.WriteFloat("RotationMin", mRotationMin);
+        doc.WriteFloat("RotationMax", mRotationMax);
+
+        doc.WriteInt("OneShot", mOneShot ? 1 : 0);
+        doc.WriteInt("IsRunning", mIsRunning ? 1 : 0);
+
+        doc.EndObject();
     }
 
     void ParticleEmitter::SetFrame(int frameIndex)
@@ -298,10 +340,11 @@ namespace mts
         }
     }
 
-    void ParticleEmitter::ForEachParticle(std::function<void(Particle& particle, float dt)> const &lambda, float dt)
+    void ParticleEmitter::ForEachParticle(
+        std::function<void(Particle& particle, float dt)> const& lambda,
+        float dt)
     {
         mContainer->Update(lambda, dt);
     }
-
 
 }  // namespace mts

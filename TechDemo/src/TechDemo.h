@@ -5,13 +5,13 @@
 
 class TechDemo : public mts::Application
 {
-public:
+   public:
     TechDemo();
     ~TechDemo();
 
-private:
-    mts::Scene* GetInitialScene() override { return exampleScene; }
+   private:
+    mts::Scene* GetInitialScene() override;
 
-private:
+   private:
     TechDemoScene* exampleScene;
 };

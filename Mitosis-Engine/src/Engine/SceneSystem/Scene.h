@@ -10,12 +10,13 @@
  */
 
 #pragma once
+#include "Engine/Serialization/Deserializable.h"
 
 namespace mts
 {
     class GameObject;
     class UUID;
-    class Scene
+    class Scene : public Deserializable
     {
         // Jackey TODO: multiple layers support
        public:
@@ -28,22 +29,26 @@ namespace mts
         void Render();
         void DebugRender();
 
-        std::vector<GameObject*>& GetGameObjects() { return gameObjects; }
+        std::vector<GameObject*>& GetGameObjects() { return mGameObjects; }
 
         GameObject* CreateGameObject();
         GameObject* FindGameObjectUUID(const UUID& uuid);
+        GameObject* FindGameObjectByName(const std::string& name);
 
         // TODO: REMOVE, TEMPORARY SETTER FOR TESTING
-        void AddGameObject(GameObject* g) { gameObjects.push_back(g); }
+        void AddGameObject(GameObject* g) { mGameObjects.push_back(g); }
 
         void DestroyGameObjects();
+
+        void Deserialize(JsonValue const& jsonObj) override;
+        void Serialize(JsonDocument& doc) const override;
 
        protected:
         virtual void OnInit() = 0;
         virtual void OnUpdate() {};  // testing purposes
 
        protected:
-        std::vector<GameObject*> gameObjects;
+        std::vector<GameObject*> mGameObjects;
     };
 
 }  // namespace mts

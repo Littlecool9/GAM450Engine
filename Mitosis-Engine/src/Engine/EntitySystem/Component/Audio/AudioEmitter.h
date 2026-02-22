@@ -23,13 +23,13 @@ namespace mts
         AudioEventId eventId{};    
         AudioHandle handle{};
         // Optional offset from the GameObject’s position
-        glm::vec2 positionOffset{0.f, 0.f};
-        float startVolume = 1.0f;
-        float startPitch = 1.0f;
-        float maxAudibleDistance = 900.0f;
-        bool playOnStart = false;   // auto play when component starts
-        bool spatialized2D = true;  // false => non-spatial Play()
-        bool isOneShot = false;     // auto Release after Stop, or just fire-and-forget
+        glm::vec2 mPositionOffset{0.f, 0.f};
+        float mStartVolume = 1.0f;
+        float mStartPitch = 1.0f;
+        float mMaxAudibleDistance = 900.0f;
+        bool mPlayOnStart = false;   // auto play when component starts
+        bool mSpatialized2D = true;  // false => non-spatial Play()
+        bool mIsOneShot = false;     // auto Release after Stop, or just fire-and-forget
         bool isPlaying = false;
 
         AudioEmitter();

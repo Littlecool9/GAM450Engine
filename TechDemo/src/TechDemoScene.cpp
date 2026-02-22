@@ -3,11 +3,14 @@
 
 #include "Engine/EntitySystem/Component/Camera/CameraFollow.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Script/CollectableController.h"
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
+
+#define TestLoad
 
 TechDemoScene::~TechDemoScene() = default;
 
@@ -28,16 +31,30 @@ void TechDemoScene::OnUpdate()
 
 void TechDemoScene::OnInit()
 {
-    mts::ScriptFactory::RegisterScript("PlayerController",
-                                        []() { return new PlayerController(); });
+    mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
 
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new EnemyController(); });
 
     mts::ScriptFactory::RegisterScript("CollectableController",
-                                        []() { return new CollectableController(); });
+                                       []() { return new CollectableController(); });
+
+#ifdef TestLoad
+    mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/TechDemo.json");
+
+    auto player = FindGameObjectByName("Player");
+    camera = FindGameObjectByName("CameraObject");
+    assert(camera != nullptr);
+
+    camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
+        player->GetComponent<mts::Transform>());
+
+    background = FindGameObjectByName("Sky");
+#else
 
     auto player = mts::GameObjectFactory::CreateGameObject("Data/Player.json");
     player->AddTag("Player");
+
+    mts::GameObjectFactory::CreateGameObject("Data/Ground.json");
 
     auto enemy = mts::GameObjectFactory::CreateGameObject("Data/Enemy.json");
 
@@ -130,4 +147,7 @@ void TechDemoScene::OnInit()
 
     // if this is not created last it crashes
     auto tilemap = mts::GameObjectFactory::CreateGameObject("Data/DemoTilemapEntity.json");
+
+    mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/TechDemo.json");
+#endif
 }

@@ -42,6 +42,12 @@ void EnemyController::DeserializeFields(mts::JsonValue const& fields)
         mSpinDegrees = fields["spinDegrees"].GetFloat(mSpinDegrees);
 }
 
+void EnemyController::SerializeFields(mts::JsonDocument& out) const
+{
+    out.WriteFloat("moveTime", mMoveTime);
+    out.WriteFloat("spinDegrees", mSpinDegrees);
+}
+
 void EnemyController::OnCollisionEnter2D(const mts::GameObject* game_object)
 {
 }

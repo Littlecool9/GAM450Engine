@@ -70,11 +70,17 @@ namespace mts
 
         void WriteFloat(const char* key, float value);
         void WriteInt(const char* key, int value);
+        void WriteBool(const char* key, bool value);
         void WriteString(const char* key, const char* value);
+        void WriteVec2(const char* key, const glm::vec2 value);
+        void WriteVec3(const char* key, const glm::vec3 value);
 
         void WriteFloat(float value);         // array version
         void WriteInt(int value);             // array version
         void WriteString(const char* value);  // array version
+
+        bool WriteJson(const char* key, const std::string& json);
+        bool WriteRawJsonObject(const char* key, const std::string& jsonObject);
 
         bool SaveToFile(const std::string& path);
 

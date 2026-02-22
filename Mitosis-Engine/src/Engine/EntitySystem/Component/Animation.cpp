@@ -41,11 +41,11 @@ namespace mts
         }
         if (jsonObj.Has("IsRunning"))
         {
-            mFrameCount = jsonObj["IsRunning"].GetInt();
+            mIsRunning = jsonObj["IsRunning"].GetInt();
         }
         if (jsonObj.Has("IsLooping"))
         {
-            mFrameCount = jsonObj["IsLooping"].GetInt();
+            mIsLooping = jsonObj["IsLooping"].GetInt();
         }
     }
 
@@ -56,6 +56,19 @@ namespace mts
 
     void Animation::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "Animation");
+        doc.BeginObject("Data");
+
+        doc.WriteInt("FrameIndex", mFrameIndex);
+        doc.WriteInt("FrameCount", mFrameCount);
+
+        doc.WriteFloat("FrameDelay", mFrameDelay);
+        doc.WriteFloat("FrameDuration", mFrameDuration);
+
+        doc.WriteInt("IsRunning", mIsRunning ? 1 : 0);
+        doc.WriteInt("IsLooping", mIsLooping ? 1 : 0);
+
+        doc.EndObject();
     }
 
     void Animation::LateUpdate(float dt)

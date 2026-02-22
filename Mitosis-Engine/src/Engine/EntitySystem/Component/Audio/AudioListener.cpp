@@ -7,7 +7,6 @@
  *
  */
 
-
 #include "pch.h"
 #include "AudioListener.h"
 #include "Engine/Audio/AudioManager.h"
@@ -39,7 +38,6 @@ namespace mts
 
             // Initialize listener
             AudioManager::Get().SetListener2D(mPrevPos, glm::vec2{0.f, 0.f});
-            
         }
     }
 
@@ -55,12 +53,12 @@ namespace mts
 
     void AudioListener::LateUpdate(float dt)
     {
-        //no op comment 
+        // no op comment
     }
 
     void AudioListener::Render()
     {
-        //no op comment 
+        // no op comment
     }
 
     void AudioListener::Update(float dt)
@@ -68,8 +66,8 @@ namespace mts
         auto* t = GetTransform();
         if (!t)
             return;
-        //TODO: Potentially change this to get world position depending on if we want to change things
-        //Changing from 3d to 2d, can modify this in the future to do 3d 
+        // TODO: Potentially change this to get world position depending on if we want to change
+        // things Changing from 3d to 2d, can modify this in the future to do 3d
         glm::vec3 worldPos3 = t->GetPosition();
         glm::vec2 worldPos2{worldPos3.x, worldPos3.y};
         glm::vec2 currentPos = worldPos2;
@@ -77,10 +75,10 @@ namespace mts
         glm::vec2 vel{0.f, 0.f};
         if (!mFirstFrame && dt > 0.f)
         {
-            vel = (currentPos - mPrevPos) /  glm::clamp(dt, 0.0001f, dt);
+            vel = (currentPos - mPrevPos) / glm::clamp(dt, 0.0001f, dt);
         }
 
-         AudioManager::Get().SetListener2D(currentPos, vel);
+        AudioManager::Get().SetListener2D(currentPos, vel);
 
         mPrevPos = currentPos;
         mFirstFrame = false;

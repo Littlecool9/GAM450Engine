@@ -20,27 +20,42 @@
 
 namespace mts
 {
-    class Collider2D;
-    // forward declarations
-    class JsonValue;
-    class Deserializable;
 
     // Tag is a lightweight identifier
-    // This class is not hashable in this implementation
     struct Tag
     {
         uint32_t id;
         bool operator==(const Tag&) const = default;
     };
+
     class TagRegistry
     {
        public:
         static Tag GetOrCreate(const std::string& name);
+        static bool TryGet(const std::string& name, Tag& out);
+        static const std::string& GetName(Tag tag);
+        static bool Rename(Tag tag, const std::string& newName);
 
        private:
         static std::unordered_map<std::string, Tag> nameToTag;
+        static std::vector<std::string> tagToName;
         static uint32_t nextId;
     };
+}  // namespace mts
+
+namespace std
+{
+    template <>
+    struct hash<mts::Tag>
+    {
+        size_t operator()(const mts::Tag& t) const noexcept { return std::hash<uint32_t>{}(t.id); }
+    };
+}  // namespace std
+
+namespace mts
+{
+    class Collider2D;
+    class JsonValue;
 
     class GameObject : public Deserializable, public Entity
     {
@@ -123,6 +138,7 @@ namespace mts
         inline void AddChild(GameObject* child) { children.emplace_back(child); }
         bool HasTag(const std::string& tagName) const;
         void AddTag(const std::string& tagName);
+        void RemoveTag(const std::string& tagName);
 
        protected:
         // @brief: GameObject constructor is protected to enforce usage of GameObjectFactory
@@ -151,7 +167,7 @@ namespace mts
         // @brief: One GameObject can only be in one layer at a time
         LayerMasks objectLayer = LayerMasks::Default;
         // @brief: One GameObject can have multiple tags
-        std::vector<Tag> tags;
+        std::unordered_set<Tag> tags;
     };
 
 }  // namespace mts

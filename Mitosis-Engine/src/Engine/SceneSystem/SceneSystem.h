@@ -28,6 +28,11 @@ namespace mts
         static void DebugRender();
         static void Shutdown();
 
+        // temporary scene saving functions
+        // TODO: change this
+        static void SaveScene(Scene* scene, const std::string& fileName);
+        static void LoadScene(Scene* scene, const std::string& fileName);
+
         static void SceneCleanUp();
         static void SetNextScene(Scene* newScene);
         static Scene* GetCurrentScene() { return currentScene; }

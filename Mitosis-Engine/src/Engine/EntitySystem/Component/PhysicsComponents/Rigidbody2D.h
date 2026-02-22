@@ -32,8 +32,6 @@ namespace mts
        public:
         ~RigidBody2D() override;
         void Deserialize(JsonValue const& jsonObj) override;
-
-        // TODO: serialize data
         void Serialize(JsonDocument& doc) const override;
 
         void AddForce(glm::vec2 force);

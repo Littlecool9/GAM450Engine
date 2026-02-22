@@ -37,17 +37,16 @@ namespace mts
             {"Button", []() -> Component* { return new Button(); }},
             {"RigidBody2D", []() -> Component* { return new RigidBody2D(); }},
             {"BoxCollider2D", []() -> Component* { return new BoxCollider2D(); }},
-            {"CameraComponent", []() -> Component* { return new CameraComponent(); }},
+            {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }},
+            {"Camera", []() -> Component* { return new CameraComponent(); }},
             {"CameraFollow", []() -> Component* { return new CameraFollow(); }},
             {"AudioListener", []() -> Component* { return new AudioListener(); }},
             {"AudioEmitter", []() -> Component* { return new AudioEmitter(); }},
             {"Animation", []() -> Component* { return new Animation(); }},
-            {"CircleCollider2D", []() -> Component* { return new CircleCollider2D(); }},
             {"ParticleEmitter", []() -> Component* { return new ParticleEmitter(); }},
             {"NativeScript", []() -> Component* { return new NativeScriptComponent(); }},
             {"AnimationSystem", []() -> Component* { return new AnimationSystem(); }},
-            {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }}
-    };
+            {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }}};
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,
                                              ComponentCreator creator)

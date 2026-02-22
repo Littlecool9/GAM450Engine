@@ -9,10 +9,10 @@
 
 #include "pch.h"
 #include "BoxCollider2D.h"
-
 #include "Engine/Debug/DebugDraw.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include <glm/vec4.hpp>
 
 namespace mts
 {
@@ -51,6 +51,16 @@ namespace mts
 
     void BoxCollider2D::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "BoxCollider2D");
+        doc.BeginObject("Data");
+
+        doc.WriteFloat("Width", mWidth);
+        doc.WriteFloat("Height", mHeight);
+        doc.WriteVec2("Offset", mOffset);
+
+        doc.WriteInt("IsTrigger", IsTrigger() ? 1 : 0);
+
+        doc.EndObject();
     }
 
     void BoxCollider2D::SetWidth(float width)

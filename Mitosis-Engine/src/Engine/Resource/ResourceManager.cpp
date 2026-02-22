@@ -1,7 +1,8 @@
 /**
  * @file ResourceManager.cpp
  * @author josh.siegel
- * @brief // Loads all texture, shader, and mesh resources and handles giving them to game objects and freeing them at the end of the program
+ * @brief // Loads all texture, shader, and mesh resources and handles giving them to game objects
+ * and freeing them at the end of the program
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -23,9 +24,12 @@
 
 namespace mts
 {
-    const std::string defaultTextureSource = "../Mitosis-Engine/src/Resources/DefaultTextureResource.json";
-    const std::string defaultShaderSource = "../Mitosis-Engine/src/Resources/DefaultShaderResource.json";
-    const std::string defaultMeshSource = "../Mitosis-Engine/src/Resources/DefaultMeshResource.json";
+    const std::string defaultTextureSource =
+        "../Mitosis-Engine/src/Resources/DefaultTextureResource.json";
+    const std::string defaultShaderSource =
+        "../Mitosis-Engine/src/Resources/DefaultShaderResource.json";
+    const std::string defaultMeshSource =
+        "../Mitosis-Engine/src/Resources/DefaultMeshResource.json";
 
     std::unordered_map<std::string, Texture*> ResourceManager::mTextureSources;
     std::unordered_map<std::string, Shader*> ResourceManager::mShaderSources;
@@ -124,6 +128,7 @@ namespace mts
 
         Texture* texture = new Texture();
         texture->GenerateTexture(imageFile);
+        texture->SetPath(textureSourcePath);
 
         mTextureSources.insert(std::pair(textureSourcePath, texture));
         return texture;
@@ -165,6 +170,7 @@ namespace mts
         auto vertSrc = LoadTextFile(vertFile);
         auto fragSrc = LoadTextFile(fragFile);
         shader->CreateProgram(vertSrc.c_str(), fragSrc.c_str());
+        shader->SetPath(shaderSourcePath);
 
         mShaderSources.insert(std::pair(shaderSourcePath, shader));
         return shader;
@@ -202,11 +208,12 @@ namespace mts
         // Build mesh
         Mesh* mesh = new Mesh();
         mesh->BuildQuad(numCols, numRows);
+        mesh->SetPath(meshSourcePath);
 
         mMeshSources.insert(std::pair(meshSourcePath, mesh));
         return mesh;
     }
-    
+
     std::string ResourceManager::LoadTextFile(const char* path)
     {
         std::string out;

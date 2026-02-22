@@ -14,6 +14,7 @@
 
 namespace mts
 {
+    class Scene;
     // Forward declaration
     class GameObject;
 
@@ -32,6 +33,7 @@ namespace mts
         // @return: pointer to created GameObject, nullptr if failed
         static GameObject* CreateGameObject(const std::string& type);
         static GameObject* CreateGameObject();
+        static GameObject* CreateGameObject(Scene* scene);
 
         // @brief: Create GameObject by enum type
         // @param type: enum type of the GameObject

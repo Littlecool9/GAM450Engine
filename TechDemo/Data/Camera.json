@@ -18,7 +18,7 @@
       }
     },
     {
-        "Type": "CameraComponent",
+        "Type": "Camera",
         "Data": {
             "NearPlane": -1.0,
             "FarPlane": 1.0,

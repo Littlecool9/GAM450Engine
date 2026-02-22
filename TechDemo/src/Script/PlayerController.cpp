@@ -69,7 +69,8 @@ void PlayerController::OnUpdate(float dt)
             mts::Transform* particleTransform = particle->GetComponent<mts::Transform>();
             if (particleTransform)
             {
-                particleTransform->SetPosition(transform->GetPosition() - glm::vec3(0.0f, 0.8f, 0.0f));
+                particleTransform->SetPosition(transform->GetPosition() -
+                                               glm::vec3(0.0f, 0.8f, 0.0f));
             }
             walkParticleTimer = walkParticleTimerLength;
         }
@@ -78,7 +79,7 @@ void PlayerController::OnUpdate(float dt)
     {
         anim->ChangeState(mts::AnimationSystem::States::Dance);
     }
-    else 
+    else
         anim->ChangeState(mts::AnimationSystem::States::Idle);
 
     walkParticleTimer -= dt;
@@ -92,6 +93,13 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         jumpSpeed = fields["jumpSpeed"].GetFloat(jumpSpeed);
     if (fields.Has("walkParticleCooldown"))
         walkParticleTimerLength = fields["walkParticleCooldown"].GetFloat(walkParticleTimerLength);
+}
+
+void PlayerController::SerializeFields(mts::JsonDocument& out) const
+{
+    out.WriteFloat("moveSpeed", moveSpeed);
+    out.WriteFloat("jumpSpeed", jumpSpeed);
+    out.WriteFloat("walkParticleCooldown", walkParticleTimerLength);
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::GameObject* gameObject)

@@ -17,19 +17,14 @@ namespace mts
 {
     static boost::uuids::random_generator s_Generator;
 
-    UUID::UUID(const std::string& uuidStr)
-    {
-        *this = FromString(uuidStr);
-    }
-
     bool UUID::IsValid() const
     {
-        return m_High != 0 || m_Low != 0;
+        return mHigh != 0 || mLow != 0;
     }
 
     bool UUID::operator==(const UUID& other) const noexcept
     {
-        return m_High == other.m_High && m_Low == other.m_Low;
+        return mHigh == other.mHigh && mLow == other.mLow;
     }
 
     bool UUID::operator!=(const UUID& other) const noexcept
@@ -43,16 +38,16 @@ namespace mts
         boost::uuids::uuid u = gen(str);
 
         UUID id;
-        std::memcpy(&id.m_High, u.data, 8);
-        std::memcpy(&id.m_Low, u.data + 8, 8);
+        std::memcpy(&id.mHigh, u.data, 8);
+        std::memcpy(&id.mLow, u.data + 8, 8);
         return id;
     }
 
     std::string UUID::ToString() const
     {
         boost::uuids::uuid u{};
-        std::memcpy(u.data, &m_High, 8);
-        std::memcpy(u.data + 8, &m_Low, 8);
+        std::memcpy(u.data, &mHigh, 8);
+        std::memcpy(u.data + 8, &mLow, 8);
         return boost::uuids::to_string(u);
     }
 
@@ -60,8 +55,8 @@ namespace mts
     {
         UUID result;
         boost::uuids::uuid u = s_Generator();
-        std::memcpy(&result.m_High, u.data, 8);
-        std::memcpy(&result.m_Low, u.data + 8, 8);
+        std::memcpy(&result.mHigh, u.data, 8);
+        std::memcpy(&result.mLow, u.data + 8, 8);
         return result;
     }
 

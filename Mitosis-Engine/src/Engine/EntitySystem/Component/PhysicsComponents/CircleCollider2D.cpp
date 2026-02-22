@@ -43,6 +43,16 @@ namespace mts
 
     void CircleCollider2D::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "CircleCollider2D");
+        doc.BeginObject("Data");
+
+        doc.WriteFloat("Radius", mRadius);
+
+        doc.WriteVec2("Offset", mOffset);
+
+        doc.WriteInt("IsTrigger", IsTrigger() ? 1 : 0);
+
+        doc.EndObject();
     }
 
     glm::vec2 CircleCollider2D::GetCenter() const

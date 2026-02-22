@@ -125,5 +125,22 @@ namespace mts
 
     void RigidBody2D::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "RigidBody2D");
+        doc.BeginObject("Data");
+
+        doc.WriteFloat("Mass", mMass);
+        doc.WriteFloat("Inertia", mInertia);
+        doc.WriteVec2("LinearVelocity", mLinearVelocity);
+
+        doc.WriteFloat("AngularVelocity", mAngularVelocity);
+
+        doc.WriteFloat("LinearDamping", mLinearDamping);
+        doc.WriteFloat("AngularDamping", mAngularDamping);
+
+        doc.WriteFloat("GravityScale", mGravityScale);
+
+        doc.WriteInt("BodyType", static_cast<int>(mBodyType));
+
+        doc.EndObject();
     }
 }  // namespace mts

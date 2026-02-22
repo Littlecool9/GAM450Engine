@@ -28,17 +28,23 @@ namespace mts
     class Mesh : public Entity
     {
         MTS_CLASS_NEW_DELETE();
+
        public:
         void BuildQuad(int numCols, int numRows);
         void Draw() const;
         int GetNumRows() const { return mNumRows; }
         int GetNumCols() const { return mNumCols; }
+        const std::string& GetPath() const { return mPath; }
+        void SetPath(std::string path) { mPath = std::move(path); }
+
        private:
         GLuint mVAO = 0, mVBO = 0, mIBO = 0;
         GLsizei mIndexCount = 0;
         int mNumCols = 1;
         int mNumRows = 1;
-        
+
+        // saves resource paths
+        std::string mPath;
     };
 
 }  // namespace mts

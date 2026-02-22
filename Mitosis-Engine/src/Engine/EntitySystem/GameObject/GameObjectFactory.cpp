@@ -79,12 +79,16 @@ namespace mts
     // Return Empty GameObject
     GameObject* GameObjectFactory::CreateGameObject()
     {
+        return CreateGameObject(SceneSystem::GetCurrentScene());
+    }
+
+    GameObject* GameObjectFactory::CreateGameObject(Scene* scene)
+    {
         GameObject* obj = new GameObject();
-        Scene* currentScene = SceneSystem::GetCurrentScene();
-        if (currentScene)
+        if (scene)
         {
             LOG_INFO("Created GameObject {} and added to current scene", obj->GetName());
-            currentScene->AddGameObject(obj);
+            scene->AddGameObject(obj);
         }
         return obj;
     }

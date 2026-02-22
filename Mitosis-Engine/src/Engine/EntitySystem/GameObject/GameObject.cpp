@@ -19,6 +19,7 @@
 namespace mts
 {
     std::unordered_map<std::string, Tag> TagRegistry::nameToTag;
+    std::vector<std::string> TagRegistry::tagToName;
     uint32_t TagRegistry::nextId = 0;
 
     GameObject::GameObject() : dontDestroy(false)
@@ -46,6 +47,10 @@ namespace mts
 
     void GameObject::Deserialize(JsonValue const& jsonObj)
     {
+        if (jsonObj.Has("UUID"))
+        {
+            _id = UUID::FromString(jsonObj["UUID"].GetString());
+        }
         if (jsonObj.Has("Name"))
         {
             SetName(jsonObj["Name"].GetString(""));
@@ -54,6 +59,23 @@ namespace mts
         {
             SetLayer(static_cast<LayerMasks>(jsonObj["Layer"].GetInt()));
         }
+
+        if (jsonObj.Has("Tags"))
+        {
+            JsonValue arr = jsonObj["Tags"];
+            if (arr.IsArray())
+            {
+                tags.clear();
+                for (size_t i = 0; i < arr.Size(); ++i)
+                {
+                    const char* name = arr[i].GetString("");
+                    if (!name || name[0] == '\0')
+                        continue;
+                    tags.insert(TagRegistry::GetOrCreate(name));
+                }
+            }
+        }
+
         if (!jsonObj.Has("Components"))
         {
             return;
@@ -95,9 +117,15 @@ namespace mts
 
     void GameObject::Serialize(JsonDocument& json) const
     {
-        // If you have name/id/etc
-        // doc.WriteString("Name", name.c_str()); //or use writeint/writefloat if it's an id, or use
-        // string and do logic to read later
+        json.WriteString("UUID", _id.ToString().c_str());
+        json.WriteString("Name", name.c_str());
+        json.WriteInt("Layer", static_cast<int>(objectLayer));
+
+        json.BeginArray("Tags");
+        for (const Tag& t : tags)
+            json.WriteString(TagRegistry::GetName(t).c_str());
+        json.EndArray();
+
         json.BeginArray("Components");  // "Components": [ ... ]
         for (auto c : components)
         {
@@ -185,13 +213,23 @@ namespace mts
     void GameObject::AddTag(const std::string& tagName)
     {
         Tag tag = TagRegistry::GetOrCreate(tagName);
-        tags.emplace_back(tag);
+        tags.insert(tag);
+    }
+
+    void GameObject::RemoveTag(const std::string& tagName)
+    {
+        Tag tag;
+        if (!TagRegistry::TryGet(tagName, tag))
+            return;
+        tags.erase(tag);
     }
 
     bool GameObject::HasTag(const std::string& tagName) const
     {
-        Tag tag = TagRegistry::GetOrCreate(tagName);
-        return std::find(tags.begin(), tags.end(), tag) != tags.end();
+        Tag tag;
+        if (!TagRegistry::TryGet(tagName, tag))
+            return false;
+        return tags.find(tag) != tags.end();
     }
 
     Tag TagRegistry::GetOrCreate(const std::string& name)
@@ -202,7 +240,39 @@ namespace mts
 
         Tag tag{nextId++};
         nameToTag.emplace(name, tag);
+        tagToName.push_back(name);
         return tag;
     }
 
+    bool TagRegistry::TryGet(const std::string& name, Tag& out)
+    {
+        auto it = nameToTag.find(name);
+        if (it == nameToTag.end())
+            return false;
+        out = it->second;
+        return true;
+    }
+
+    const std::string& TagRegistry::GetName(Tag tag)
+    {
+        return tagToName[tag.id];
+    }
+
+    bool TagRegistry::Rename(Tag tag, const std::string& newName)
+    {
+        auto taken = nameToTag.find(newName);
+        if (taken != nameToTag.end())
+        {
+            return taken->second == tag;
+        }
+
+        auto oldName = tagToName[tag.id];
+        auto itOld = nameToTag.find(oldName);
+        if (itOld != nameToTag.end())
+            nameToTag.erase(itOld);
+
+        tagToName[tag.id] = newName;
+        nameToTag.emplace(newName, tag);
+        return true;
+    }
 }  // namespace mts

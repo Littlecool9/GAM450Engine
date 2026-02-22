@@ -68,34 +68,34 @@ namespace mts
 
         if (jsonObj.Has("PositionOffset"))
         {
-            positionOffset = jsonObj["PositionOffset"].GetVec2();
+            mPositionOffset = jsonObj["PositionOffset"].GetVec2();
         }
 
         if (jsonObj.Has("StartVolume"))
         {
-            startVolume = jsonObj["StartVolume"].GetFloat(startVolume);
+            mStartVolume = jsonObj["StartVolume"].GetFloat(mStartVolume);
         }
 
         if (jsonObj.Has("StartPitch"))
         {
-            startPitch = jsonObj["StartPitch"].GetFloat(startPitch);
+            mStartPitch = jsonObj["StartPitch"].GetFloat(mStartPitch);
         }
 
         if (jsonObj.Has("MaxAudibleDistance"))
         {
-            maxAudibleDistance = jsonObj["MaxAudibleDistance"].GetFloat(maxAudibleDistance);
+            mMaxAudibleDistance = jsonObj["MaxAudibleDistance"].GetFloat(mMaxAudibleDistance);
         }
         if (jsonObj.Has("PlayOnStart"))
         {
-            playOnStart = jsonObj["PlayOnStart"].GetInt();
+            mPlayOnStart = jsonObj["PlayOnStart"].GetInt();
         }
         if (jsonObj.Has("Spatialized2D"))
         {
-            spatialized2D = jsonObj["Spatialized2D"].GetInt();
+            mSpatialized2D = jsonObj["Spatialized2D"].GetInt();
         }
         if (jsonObj.Has("IsOneShot"))
         {
-            isOneShot = jsonObj["IsOneShot"].GetInt();
+            mIsOneShot = jsonObj["IsOneShot"].GetInt();
         }
     }
 
@@ -106,17 +106,14 @@ namespace mts
 
         json.WriteString("EventId", eventId.c_str());
 
-        json.BeginArray("PositionOffset");
-        json.WriteFloat(positionOffset.x);
-        json.WriteFloat(positionOffset.y);
-        json.EndArray();
+        json.WriteVec2("PositionOffset", mPositionOffset);
 
-        json.WriteFloat("MaxAudibleDistance", maxAudibleDistance);
-        json.WriteFloat("StartVolume", startVolume);
-        json.WriteFloat("StartPitch", startPitch);
-        json.WriteInt("PlayOnStart", playOnStart);
-        json.WriteInt("Spatialized2D", spatialized2D);
-        json.WriteInt("IsOneShot", isOneShot);
+        json.WriteFloat("MaxAudibleDistance", mMaxAudibleDistance);
+        json.WriteFloat("StartVolume", mStartVolume);
+        json.WriteFloat("StartPitch", mStartPitch);
+        json.WriteInt("PlayOnStart", mPlayOnStart);
+        json.WriteInt("Spatialized2D", mSpatialized2D);
+        json.WriteInt("IsOneShot", mIsOneShot);
         json.EndObject();  // end Data
     }
 
@@ -128,14 +125,14 @@ namespace mts
             // change from 3d to 2d
             glm::vec3 p3 = t->GetPosition();
             glm::vec2 p2{p3.x, p3.y};
-            return p2 + positionOffset;
+            return p2 + mPositionOffset;
         }
-        return positionOffset;
+        return mPositionOffset;
     }
 
     void AudioEmitter::Init()
     {
-        if (playOnStart && !eventId.empty())
+        if (mPlayOnStart && !eventId.empty())
         {
             Play();
         }
@@ -148,7 +145,7 @@ namespace mts
     }
     void AudioEmitter::Update(float dt)
     {
-        if (!spatialized2D || !isPlaying || !handle)
+        if (!mSpatialized2D || !isPlaying || !handle)
             return;
 
         glm::vec2 currentPos = Get2DPosition();
@@ -161,7 +158,7 @@ namespace mts
         glm::vec2 listenerPos = AudioManager::Get().GetListener2D();
         float dist = glm::length(currentPos - listenerPos);
 
-        float t = maxAudibleDistance > 1e-4f ? dist / maxAudibleDistance : 1;
+        float t = mMaxAudibleDistance > 1e-4f ? dist / mMaxAudibleDistance : 1;
         AudioManager::Get().SetInstance2D(handle, currentPos, vel);
         AudioManager::Get().SetParameter(handle, "Distance", t);
 
@@ -174,7 +171,7 @@ namespace mts
         if (eventId.empty())
             return;
 
-        if (spatialized2D)
+        if (mSpatialized2D)
         {
             glm::vec2 pos = Get2DPosition();
             handle = AudioManager::Get().Play2D(eventId, pos);
@@ -189,7 +186,7 @@ namespace mts
         // Apply initial params
         if (isPlaying && handle)
         {
-            AudioManager::Get().SetParameter(handle, "Volume", startVolume);
+            AudioManager::Get().SetParameter(handle, "Volume", mStartVolume);
         }
 
         // Reset motion state
@@ -197,10 +194,9 @@ namespace mts
         mFirstFrame = true;
 
         // if oneshot, call play oneshot and dont bother updating position
-        if (isOneShot)
+        if (mIsOneShot)
         {
             AudioManager::Get().PlayOneShot2D(eventId, Get2DPosition());
-            
         }
     }
     void AudioEmitter::Stop(StopMode mode)
@@ -209,8 +205,8 @@ namespace mts
             return;
 
         AudioManager::Get().Stop(handle, mode);
-        
-        if (isOneShot)
+
+        if (mIsOneShot)
         {
             AudioManager::Get().Release(handle);
             handle = {};
@@ -220,7 +216,7 @@ namespace mts
     }
     void AudioEmitter::SetVolume(float value)
     {
-        startVolume = value;
+        mStartVolume = value;
         if (isPlaying && handle)
         {
             AudioManager::Get().SetParameter(handle, "Volume", value);
@@ -228,7 +224,7 @@ namespace mts
     }
     void AudioEmitter::SetPitch(float value)
     {
-        startPitch = value;
+        mStartPitch = value;
         if (isPlaying && handle)
         {
             AudioManager::Get().SetParameter(handle, "Pitch", value);

@@ -108,9 +108,33 @@ namespace mts
         mNumRows = r;
     }
 
-    // TODO: serialize spriteRenderer data
     void SpriteRenderer::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "SpriteRenderer");
+        doc.BeginObject("Data");
+
+        doc.WriteVec3("TintColor", mTintColor);
+
+        doc.WriteFloat("Alpha", mAlpha);
+
+        doc.WriteInt("FrameIndex", mFrameIndex);
+
+        if (mTexture)
+            doc.WriteString("TextureResource", mTexture->GetPath().c_str());
+        else
+            doc.WriteString("TextureResource", "");
+
+        if (mMesh)
+            doc.WriteString("MeshResource", mMesh->GetPath().c_str());
+        else
+            doc.WriteString("MeshResource", "");
+
+        if (mShader)
+            doc.WriteString("ShaderResource", mShader->GetPath().c_str());
+        else
+            doc.WriteString("ShaderResource", "");
+
+        doc.EndObject();
     }
 
     // Sprites don't render themselves, done through Renderer calling DrawSprite

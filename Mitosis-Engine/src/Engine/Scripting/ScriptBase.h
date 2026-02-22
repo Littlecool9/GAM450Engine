@@ -31,6 +31,7 @@ namespace mts
 
         // Data-driven script fields
         virtual void DeserializeFields(JsonValue const& /*fields*/) {}
+        virtual void SerializeFields(mts::JsonDocument& out) const {}
 
         // Collision hooks (matches the GameObject collision callbacks)
         virtual void OnCollisionEnter2D(const GameObject* /*other*/) {}

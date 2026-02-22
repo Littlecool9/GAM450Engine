@@ -2,11 +2,10 @@
  * @file CameraFollow.cpp
  * @author Dong Ta
  * @brief Functionality for Camera follow component
- *        
+ *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
  */
-
 
 #include "pch.h"
 #include "CameraFollow.h"
@@ -55,6 +54,7 @@ namespace mts
         doc.BeginObject("Data");
         doc.WriteFloat("MaxAcceleration", MaxAccel);
         doc.WriteFloat("Interpolant", Interpolant);
+        doc.WriteVec3("CameraOffset", CameraOffset);
 
         doc.EndObject();
     }
@@ -98,9 +98,7 @@ namespace mts
         if (dist < 0.0001f)
             return;
 
-
         glm::vec2 step = toTarget * (Interpolant * dt);
-
 
         float maxStep = SpeedLimit * dt;
         float stepLen = glm::length(step);
@@ -119,4 +117,4 @@ namespace mts
         float vel = moved / dt;
         SpeedLimit = vel + (MaxAccel * dt);
     }
-}
+}  // namespace mts

@@ -18,7 +18,7 @@ namespace mts
 {
     Scene::~Scene()
     {
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             // Skip dontDestroy objects
             if (g->GetDontDestroy())
@@ -31,9 +31,9 @@ namespace mts
 
     void Scene::Init()
     {
-        gameObjects.reserve(250);
+        mGameObjects.reserve(250);
         OnInit();
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             g->Init();
         }
@@ -42,7 +42,7 @@ namespace mts
     void Scene::Update(float dt)
     {
         OnUpdate();
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             g->Update(dt);
         }
@@ -50,7 +50,7 @@ namespace mts
 
     void Scene::LateUpdate(float dt)
     {
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             g->LateUpdate(dt);
         }
@@ -58,7 +58,7 @@ namespace mts
 
     void Scene::Render()
     {
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             g->Render();
         }
@@ -66,7 +66,7 @@ namespace mts
 
     void Scene::DebugRender()
     {
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             g->DebugRender();
         }
@@ -81,7 +81,7 @@ namespace mts
 
     GameObject* Scene::FindGameObjectUUID(const UUID& uuid)
     {
-        for (auto g : gameObjects)
+        for (auto g : mGameObjects)
         {
             if (!g->IsDead() && g->GetId() == uuid)
                 return g;
@@ -89,14 +89,24 @@ namespace mts
         return nullptr;
     }
 
+    GameObject* Scene::FindGameObjectByName(const std::string& name)
+    {
+        for (auto g : mGameObjects)
+        {
+            if (!g->IsDead() && g->GetName() == name)
+                return g;
+        }
+        return nullptr;
+    }
+
     void Scene::DestroyGameObjects()
     {
-        for (auto it = gameObjects.begin(); it != gameObjects.end(); /* no increment here */)
+        for (auto it = mGameObjects.begin(); it != mGameObjects.end(); /* no increment here */)
         {
             if ((*it)->IsDead())
             {
                 GameObject* g = *it;
-                it = gameObjects.erase(it);
+                it = mGameObjects.erase(it);
                 delete g;
             }
             else
@@ -104,5 +114,32 @@ namespace mts
                 ++it;  // only increment if no element was erased
             }
         }
+    }
+
+    void Scene::Deserialize(JsonValue const& jsonObj)
+    {
+        JsonValue gameObjects = jsonObj["GameObjects"];
+        assert(gameObjects.IsArray());
+        size_t s = gameObjects.Size();
+        mGameObjects.reserve(s * 2);
+        for (size_t i = 0; i < s; ++i)
+        {
+            auto gv = gameObjects[i];
+            assert(gv.IsObject());
+            auto go = GameObjectFactory::CreateGameObject(this);
+            go->Deserialize(gv);
+        }
+    }
+
+    void Scene::Serialize(JsonDocument& doc) const
+    {
+        doc.BeginArray("GameObjects");
+        for (auto g : mGameObjects)
+        {
+            doc.BeginObject();
+            g->Serialize(doc);
+            doc.EndObject();
+        }
+        doc.EndArray();
     }
 }  // namespace mts

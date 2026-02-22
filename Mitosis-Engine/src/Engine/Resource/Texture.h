@@ -17,6 +17,7 @@ namespace mts
     class Texture : public Entity
     {
         MTS_CLASS_NEW_DELETE();
+
        public:
         Texture();
         Texture(GLint internal_format,
@@ -30,15 +31,18 @@ namespace mts
 
         // Generates texture from image file
         void GenerateTexture(const std::string& filepath);
-        
+
         // Binds object's ID as current texture
         void BindTexture() const;
         void UnbindTexture() const;
 
         GLuint GetID() const { return mID; }
-        
+
         // Returns true if texture has an alpha channel
         bool HasTextureAlpha() const { return mHasTextureAlpha; }
+
+        const std::string& GetPath() const { return mPath; }
+        void SetPath(std::string path) { mPath = std::move(path); }
 
        private:
         // texture internal opengl id
@@ -61,6 +65,9 @@ namespace mts
         GLint mWrap_r;
 
         bool mHasTextureAlpha = true;
+
+        // saves resource paths
+        std::string mPath;
     };
 
 }  // namespace mts

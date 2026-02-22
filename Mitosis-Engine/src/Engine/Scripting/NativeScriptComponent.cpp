@@ -55,6 +55,15 @@ namespace mts
         jsonDoc.BeginObject("Data");
         jsonDoc.WriteString("Class", m_className.c_str());
 
+        if (m_hasFields & !m_fieldsJson.empty())
+        {
+            const bool ok = jsonDoc.WriteRawJsonObject("Fields", m_fieldsJson);
+            if (!ok)
+            {
+                jsonDoc.WriteString("FieldsJson", m_fieldsJson.c_str());
+            }
+        }
+
         jsonDoc.EndObject();
     }
 

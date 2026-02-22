@@ -53,7 +53,8 @@ namespace mts
         if (!FileManager::ReadAllText(filepath, json))
             return false;
 
-        impl_->doc.Parse<pf::kParseCommentsFlag | pf::kParseTrailingCommasFlag | pf::kParseEscapedApostropheFlag>(json.c_str());
+        impl_->doc.Parse<pf::kParseCommentsFlag | pf::kParseTrailingCommasFlag |
+                         pf::kParseEscapedApostropheFlag>(json.c_str());
 
         return !impl_->doc.HasParseError();
     }
@@ -162,6 +163,16 @@ namespace mts
         obj->AddMember(k.Move(), value, alloc);
     }
 
+    void JsonDocument::WriteBool(const char* key, bool value)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+        assert(obj && obj->IsObject());
+        rapidjson::Value k;
+        k.SetString(key, alloc);
+        obj->AddMember(k.Move(), value, alloc);
+    }
+
     void JsonDocument::WriteInt(int value)
     {
         impl_->stack.back()->PushBack(value, impl_->doc.GetAllocator());
@@ -179,12 +190,62 @@ namespace mts
         obj->AddMember(k.Move(), v.Move(), alloc);
     }
 
+    void JsonDocument::WriteVec2(const char* key, const glm::vec2 value)
+    {
+        BeginArray(key);
+        WriteFloat(value.x);
+        WriteFloat(value.y);
+        EndArray();
+    }
+
+    void JsonDocument::WriteVec3(const char* key, const glm::vec3 value)
+    {
+        BeginArray(key);
+        WriteFloat(value.x);
+        WriteFloat(value.y);
+        WriteFloat(value.z);
+        EndArray();
+    }
+
     void JsonDocument::WriteString(const char* value)
     {
         auto& alloc = impl_->doc.GetAllocator();
         RjValue v;
         v.SetString(value, alloc);
         impl_->stack.back()->PushBack(v.Move(), alloc);
+    }
+
+    bool JsonDocument::WriteJson(const char* key, const std::string& json)
+    {
+        auto* obj = impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+        assert(obj && obj->IsObject());
+
+        // Parse into a temporary Document so RapidJSON owns its own memory
+        rapidjson::Document tmp;
+        tmp.Parse(json.c_str());
+        if (tmp.HasParseError())
+            return false;
+
+        rapidjson::Value k;
+        k.SetString(key, alloc);
+
+        // Deep-copy parsed value into this document's allocator
+        rapidjson::Value v;
+        v.CopyFrom(tmp, alloc);
+
+        obj->AddMember(k.Move(), v.Move(), alloc);
+        return true;
+    }
+
+    bool JsonDocument::WriteRawJsonObject(const char* key, const std::string& jsonObject)
+    {
+        rapidjson::Document tmp;
+        tmp.Parse(jsonObject.c_str());
+        if (tmp.HasParseError() || !tmp.IsObject())
+            return false;
+
+        return WriteJson(key, jsonObject);
     }
 
     bool JsonDocument::SaveToFile(const std::string& path)

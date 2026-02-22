@@ -42,9 +42,9 @@ namespace mts
         static bool CompareUUID(const UUID& lhs, const UUID& rhs) noexcept
         {
             // Lexicographic compare on (high, low)
-            if (lhs.m_High != rhs.m_High)
-                return lhs.m_High < rhs.m_High;
-            return lhs.m_Low < rhs.m_Low;
+            if (lhs.mHigh != rhs.mHigh)
+                return lhs.mHigh < rhs.mHigh;
+            return lhs.mLow < rhs.mLow;
         }
     };
 

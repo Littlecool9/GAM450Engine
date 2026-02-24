@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\Conductor\ConductorSystem.h" />
     <ClInclude Include="src\Engine\Audio\AudioManager.h" />
     <ClInclude Include="src\Engine\Audio\AudioTypes.h" />
     <ClInclude Include="src\Engine\Audio\Backends\FMODBackend.h" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\FMODBackend.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\NullAudioBackend.cpp" />

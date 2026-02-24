@@ -106,6 +106,8 @@ namespace mts
         int GetBeatIndex() const { return mBeatIndex; }
         float GetBeatPhase01() const { return mBeatPhase; }
         bool IsInBeatWindow(float earlySec, float lateSec) const;
+        int  GetBeatsPerBar() const { return mCurrentTrack.beatsPerBar; }
+        bool IsMusicPlaying() const { return mMusicPlaying; }
 
        private:
         // Helper methods

@@ -9,6 +9,7 @@
 #pragma once
 #include "Windows/Window.h"
 #include "Audio/AudioManager.h"
+#include "Conductor/ConductorSystem.h"
 #include <memory>
 
 namespace mts::physics
@@ -41,6 +42,7 @@ namespace mts
        private:
         std::unique_ptr<Window> mWindow;
         std::unique_ptr<AudioManager> mAudio;
+        std::unique_ptr<ConductorSystem> mConductor;
         bool mIsRunning = false;
         bool mInDebugView = false;
     };

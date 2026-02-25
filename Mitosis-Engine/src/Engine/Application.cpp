@@ -110,6 +110,11 @@ namespace mts
         mAudio->LoadBankGroup(BankGroup::Core);
         mAudio->LoadBankGroup(BankGroup::Music);
         mAudio->LoadBankGroup(BankGroup::Level);
+
+        mConductor = std::make_unique<ConductorSystem>();
+        ConductorSystem::SetInstance(mConductor.get());
+        mConductor->Init();
+
         mIsRunning = true;
 
         ResourceManager::Init();
@@ -145,6 +150,7 @@ namespace mts
             SceneSystem::Update(dt);
             SceneSystem::LateUpdate(dt);
             mAudio->Update(dt);
+            mConductor->Update(dt);
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), dt);
 
             Renderer::DrawSprites(SceneSystem::GetCurrentScene());
@@ -186,6 +192,7 @@ namespace mts
         mIsRunning = false;
 
         // Important to shutdown the opposite way from initializing
+        mConductor->Shutdown();
         debug::DebugDraw::Shutdown();
         SceneSystem::Shutdown();
         GameObjectFactory::ShutdownFactory();

@@ -84,6 +84,7 @@ namespace mts
         bool WriteRawJsonObject(const char* key, const std::string& jsonObject);
 
         bool SaveToFile(const std::string& path);
+        bool SaveToString(std::string& outStr);
 
        private:
         struct Impl;                  // opaque (defined in .cpp)

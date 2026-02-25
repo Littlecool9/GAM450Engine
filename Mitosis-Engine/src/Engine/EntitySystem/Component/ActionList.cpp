@@ -42,9 +42,6 @@ namespace mts
     void ActionList::LateUpdate(float dt)
     {
     }
-    void ActionList::Render()
-    {
-    }
     void ActionList::Deserialize(JsonValue const& jsonObj)
     {
     }

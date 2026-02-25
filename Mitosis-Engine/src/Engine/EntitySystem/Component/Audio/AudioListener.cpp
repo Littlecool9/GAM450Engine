@@ -9,6 +9,9 @@
 
 #include "pch.h"
 #include "AudioListener.h"
+
+#include <glm/common.hpp>
+
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
@@ -49,16 +52,6 @@ namespace mts
     void AudioListener::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "AudioListener");
-    }
-
-    void AudioListener::LateUpdate(float dt)
-    {
-        // no op comment
-    }
-
-    void AudioListener::Render()
-    {
-        // no op comment
     }
 
     void AudioListener::Update(float dt)

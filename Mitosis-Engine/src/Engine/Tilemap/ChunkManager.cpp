@@ -14,7 +14,8 @@
 #include "ChunkManager.h"
 #include "Tilemap.h"
 #include <math.h>
-#include "Engine/Debug/DebugDraw.h"
+
+#include "Engine/Core/Editor/DebugDraw.h"
 
 #define CHUNK_LOAD_ADDITIONAL_RADIUS 3    // in chunks
 #define CHUNK_UNLOAD_ADDITIONAL_RADIUS 5  // in chunks

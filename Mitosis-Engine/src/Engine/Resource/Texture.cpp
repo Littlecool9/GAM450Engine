@@ -47,7 +47,7 @@ namespace mts
     {
         glGenTextures(1, &mID);
     }
-    
+
     void Texture::GenerateTexture(const std::string& filepath)
     {
         int channels;

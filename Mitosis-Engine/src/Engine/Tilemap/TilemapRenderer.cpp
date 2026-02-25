@@ -12,11 +12,11 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <Engine/Resource/Texture.h>
 #include <Engine/Resource/Shader.h>
-#include <Engine/Debug/DebugDraw.h>
 
 #include "Chunk.h"
 #include "TilemapRenderer.h"
 #include "Tilemap.h"
+#include "Engine/Core/Editor/DebugDraw.h"
 
 namespace mts::Tilemap
 {
@@ -24,7 +24,7 @@ namespace mts::Tilemap
     {
         ChunkPos pos = chunk.GetPos();
         glm::vec3 worldPos = mOwner->ChunkPosToWorldPos(pos);
-        
+
         // worldPos is bottom-left corner, so add half chunk size to get center for debug box
         glm::vec3 debugCenter =
             worldPos + glm::vec3(Chunk::CHUNK_UNIT_WIDTH / 2, Chunk::CHUNK_UNIT_HEIGHT / 2, 0.0f);
@@ -52,8 +52,6 @@ namespace mts::Tilemap
         {
             mOwner->GetChunkRenderData().shader->SetMatrix4("model", model);
         }
-
-
 
         // 3. Draw Call
         glBindVertexArray(chunk.GetVAO());

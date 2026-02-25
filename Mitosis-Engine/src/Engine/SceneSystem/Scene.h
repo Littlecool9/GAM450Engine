@@ -31,7 +31,8 @@ namespace mts
 
         std::vector<GameObject*>& GetGameObjects() { return mGameObjects; }
 
-        GameObject* FindGameObjectUUID(const UUID& uuid);
+        GameObject* CreateGameObject();
+        GameObject* FindGameObjectByUUID(const UUID& uuid);
         GameObject* FindGameObjectByName(const std::string& name);
 
         // TODO: REMOVE, TEMPORARY SETTER FOR TESTING

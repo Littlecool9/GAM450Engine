@@ -23,7 +23,7 @@
 namespace mts
 {
     std::unordered_map<std::string, GameObject*> GameObjectFactory::archetypes;
-    
+
     void GameObjectFactory::InitFactory()
     {
         JsonDocument doc = JsonDocument();
@@ -83,16 +83,18 @@ namespace mts
     GameObject* GameObjectFactory::CreateGameObject(Scene* scene)
     {
         GameObject* obj = new GameObject();
-        scene->AddGameObject(obj);
+        if (scene)
+        {
+            scene->AddGameObject(obj);
+        }
         return obj;
     }
 
     GameObject* GameObjectFactory::InstantiateFromJSON(const std::string& filename)
     {
-        //auto crate1 = new GameObject();
-        GameObject* crate1 = CreateGameObject();
-        mts::SerializationUtility::DeserializeFromFile(crate1, filename);
-        return crate1;
+        GameObject* gameObject = CreateGameObject();
+        mts::SerializationUtility::DeserializeFromFile(gameObject, filename);
+        return gameObject;
     }
 
     GameObject* GameObjectFactory::BuildArchetypeFromJSON(const std::string& filename)
@@ -131,7 +133,7 @@ namespace mts
         }
         if (newObj == nullptr)
         {
-            newObj = new GameObject();  
+            newObj = new GameObject();
             LOG_WARN("GameObject {} not found in archetypes or JSON, creating empty GameObject",
                      gameObjectName);
         }

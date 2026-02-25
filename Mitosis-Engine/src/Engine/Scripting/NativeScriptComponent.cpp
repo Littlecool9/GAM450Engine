@@ -154,11 +154,6 @@ namespace mts
             m_script->OnLateUpdate(dt);
     }
 
-    void NativeScriptComponent::Render()
-    {
-        // no-op
-    }
-
     void NativeScriptComponent::DebugRender()
     {
         // no-op

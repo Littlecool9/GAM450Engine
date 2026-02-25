@@ -16,24 +16,106 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/SceneSystem/Scene.h"
-#include "Engine/UUID/UUIDPairKey.h"
 
 namespace mts::physics
 {
-    struct ContactInfo
+#pragma region data structures
+    struct AABB
     {
-        RigidBody2D* a;
-        RigidBody2D* b;
-        glm::vec2 contactNormal;
-        float penetration;
-        bool isAnyTrigger;
+        glm::vec2 min;
+        glm::vec2 max;
     };
 
+    inline bool AABBOverlap(const AABB& a, const AABB& b)
+    {
+        return (a.min.x <= b.max.x && a.max.x >= b.min.x && a.min.y <= b.max.y &&
+                a.max.y >= b.min.y);
+    }
+
+    struct OBB
+    {
+        glm::vec2 c;  // center
+        glm::vec2 r;  // right (unit)
+        glm::vec2 u;  // up (unit)
+        glm::vec2 h;  // half extents
+    };
+
+    struct PhysicsBody
+    {
+        RigidBody2D* rb = nullptr;
+        GameObject* go = nullptr;
+        Transform* tr = nullptr;
+        Collider2D* col = nullptr;
+
+        Collider2D::ColliderType type{};
+        bool isTrigger = false;
+        bool isDynamic = false;
+
+        AABB aabb{};
+        OBB obb{};
+        glm::vec2 circleC{};
+        float circleR = 0.0f;
+    };
+
+    struct Pair
+    {
+        uint32_t i, j;
+    };
+
+    inline uint64_t PackPair(uint32_t i, uint32_t j)
+    {
+        if (i > j)
+            std::swap(i, j);
+        return (uint64_t(i) << 32) | uint64_t(j);
+    }
+
+    struct ContactInfo
+    {
+        uint32_t i, j;
+        glm::vec2 normal;  // A->B
+        float penetration;
+        bool isTrigger;
+    };
+
+    constexpr float cellSize = 10.0f;
+
+    struct GOPairKey
+    {
+        GameObject* a;
+        GameObject* b;
+    };
+
+    inline bool operator==(const GOPairKey& x, const GOPairKey& y)
+    {
+        return x.a == y.a && x.b == y.b;
+    }
+
+    struct GOPairHash
+    {
+        size_t operator()(const GOPairKey& k) const noexcept
+        {
+            // pointer hashing
+            size_t ha = std::hash<void*>{}(k.a);
+            size_t hb = std::hash<void*>{}(k.b);
+            return ha ^ (hb + 0x9e3779b97f4a7c15ull + (ha << 6) + (ha >> 2));
+        }
+    };
+
+    inline GOPairKey MakeOrderedPair(GameObject* a, GameObject* b)
+    {
+        if (a > b)
+            std::swap(a, b);  // consistent ordering
+        return {a, b};
+    }
+#pragma endregion
+
     static std::vector<PhysicsCommand2D> cmdQueue = std::vector<PhysicsCommand2D>();
-    static std::vector<RigidBody2D*> rigidBodies = std::vector<RigidBody2D*>();
+    static std::vector<PhysicsBody> physicsBodies = std::vector<PhysicsBody>();
+
     static std::vector<ContactInfo> contactInfos = std::vector<ContactInfo>();
-    static std::unordered_set<UUIDPairKey> prevPairs = std::unordered_set<UUIDPairKey>();
-    static std::unordered_set<UUIDPairKey> currPairs = std::unordered_set<UUIDPairKey>();
+    static std::unordered_set<GOPairKey, GOPairHash> prevPairs;
+    static std::unordered_set<GOPairKey, GOPairHash> currPairs;
+
     static Scene* currentScene = nullptr;
 
     static const glm::vec2 gravity = {0, -9.8};
@@ -47,21 +129,24 @@ namespace mts::physics
     void PhysicsSystem2D::FixedUpdate(Scene* scene, float dt)
     {
         currentScene = scene;
+
         ProcessCommandQueue();
-        IntegrateBodies(dt);
+
+        // Gather and integrate
+        physicsBodies.clear();
+        physicsBodies.reserve(scene->GetGameObjects().size());
+        GatherAndIntegrateBodies(dt);
 
         for (int i = 0; i < collisionResolveNum; i++)
         {
             contactInfos.clear();
-            CheckCollision(false);
+            CheckCollision(false, contactInfos);
             ResolveCollision();
+            RefreshBodyCacheForMoved();
         }
         contactInfos.clear();
-        CheckCollision(true);
-
+        CheckCollision(true, contactInfos);
         FireEvents();
-
-        rigidBodies.clear();
     }
 
     void PhysicsSystem2D::ProcessCommandQueue()
@@ -72,7 +157,7 @@ namespace mts::physics
         cmdQueue.clear();
     }
 
-    void PhysicsSystem2D::IntegrateBodies(float dt)
+    void PhysicsSystem2D::GatherAndIntegrateBodies(float dt)
     {
         auto gameObjects = currentScene->GetGameObjects();
 
@@ -82,161 +167,192 @@ namespace mts::physics
                 continue;
 
             auto rb = gameObject->GetComponent<RigidBody2D>();
-            if (rb == nullptr)
+            auto col = gameObject->GetComponent<Collider2D>();
+            auto tr = gameObject->GetComponent<Transform>();
+
+            if (!rb || !tr)
                 continue;
 
-            rigidBodies.push_back(rb);
+            PhysicsBody p{};
+            p.rb = rb;
+            p.col = col;
+            p.tr = tr;
+            p.go = gameObject;
 
-            if (rb->mBodyType == RigidBody2D::BodyType::Static)
+            p.isDynamic = (rb->mBodyType == RigidBody2D::BodyType::Dynamic);
+
+            if (col)
             {
+                p.type = col->GetColliderType();
+                p.isTrigger = col->IsTrigger();
+            }
+            if (p.isDynamic)
+            {
+                glm::vec2 accel = gravity * rb->mGravityScale;
+                if (rb->mInvMass > 0.0f)
+                    accel += rb->mForceAccumulation * rb->mInvMass;
+
+                rb->mLinearVelocity += accel * dt;
+                rb->mLinearVelocity *= 1.0f / (1.0f + rb->mLinearDamping * dt);
+
+                glm::vec2 position = math::ToVec2(tr->GetPosition());
+                position += rb->mLinearVelocity * dt;
+                tr->SetPosition(math::ToVec3(position));
+
+                // angular body
+                if (rb->mInvInertia > 0.0f)
+                {
+                    rb->mAngularVelocity += rb->mTorqueAccumulation * rb->mInvInertia * dt;
+                    rb->mAngularVelocity *= 1.0f / (1.0f + rb->mAngularDamping * dt);
+
+                    float rotation = tr->GetRotation();
+                    rotation += rb->mAngularVelocity * dt;
+                    tr->SetRotation(rotation);
+                }
+
                 rb->mForceAccumulation = {};
                 rb->mTorqueAccumulation = 0.0f;
-                continue;
             }
 
-            if (rb->mBodyType == RigidBody2D::BodyType::Kinematic)
-            {
-                continue;
-            }
+            if (p.col)
+                CacheColliderData(p);
 
-            // linear body
-            Transform* tr = gameObject->GetComponent<Transform>();
-
-            glm::vec2 accel = gravity * rb->mGravityScale;
-            if (rb->mInvMass > 0.0f)
-                accel += rb->mForceAccumulation * rb->mInvMass;
-
-            rb->mLinearVelocity += accel * dt;
-            rb->mLinearVelocity *= 1.0f / (1.0f + rb->mLinearDamping * dt);
-
-            glm::vec2 position = math::ToVec2(tr->GetPosition());
-            position += rb->mLinearVelocity * dt;
-            tr->SetPosition(math::ToVec3(position));
-
-            // angular body
-            if (rb->mInvInertia > 0.0f)
-            {
-                rb->mAngularVelocity += rb->mTorqueAccumulation * rb->mInvInertia * dt;
-                rb->mAngularVelocity *= 1.0f / (1.0f + rb->mAngularDamping * dt);
-
-                float rotation = tr->GetRotation();
-                rotation += rb->mAngularVelocity * dt;
-                tr->SetRotation(rotation);
-            }
-
-            rb->mForceAccumulation = {};
-            rb->mTorqueAccumulation = 0.0f;
+            physicsBodies.push_back(p);
         }
     }
 
-    void PhysicsSystem2D::CheckCollision(bool includeTriggers)
+    void PhysicsSystem2D::CacheColliderData(PhysicsBody& p)
     {
-        for (size_t i = 0; i < rigidBodies.size(); i++)
+        if (p.type == Collider2D::ColliderType::Circle)
         {
-            auto rbA = rigidBodies[i];
-            auto colA = rbA->GetGameObject()->GetComponent<Collider2D>();
-            if (colA == nullptr)
-                continue;
-            if (!includeTriggers && colA->IsTrigger())
-                continue;
+            auto* c = static_cast<CircleCollider2D*>(p.col);
+            p.circleC = c->GetCenter();
+            p.circleR = c->GetRadius();
 
-            for (size_t j = i + 1; j < rigidBodies.size(); j++)
+            glm::vec2 e(p.circleR);
+            p.aabb.min = p.circleC - e;
+            p.aabb.max = p.circleC + e;
+            return;
+        }
+
+        if (p.type == Collider2D::ColliderType::Box)
+        {
+            auto* b = static_cast<BoxCollider2D*>(p.col);
+
+            p.obb.c = b->GetCenter();
+            p.obb.r = b->GetRight();
+            p.obb.u = b->GetUp();
+            p.obb.h = b->GetHalfExtents();
+
+            glm::vec2 aabbHalf =
+                math::AbsVec2(p.obb.r) * p.obb.h.x + math::AbsVec2(p.obb.u) * p.obb.h.y;
+            p.aabb.min = p.obb.c - aabbHalf;
+            p.aabb.max = p.obb.c + aabbHalf;
+
+            MTS_ASSERT(std::abs(glm::length(p.obb.r) - 1.0f) < 1e-3f);
+            MTS_ASSERT(std::abs(glm::length(p.obb.u) - 1.0f) < 1e-3f);
+            return;
+        }
+    }
+
+    void PhysicsSystem2D::CheckCollision(bool includeTriggers,
+                                         std::vector<ContactInfo>& outContacts)
+    {
+        for (int i = 0; i < physicsBodies.size(); ++i)
+            for (int j = i + 1; j < physicsBodies.size(); ++j)
             {
-                auto rbB = rigidBodies[j];
-                auto colB = rbB->GetGameObject()->GetComponent<Collider2D>();
-                if (colB == nullptr)
-                    continue;
-                if (!includeTriggers && colB->IsTrigger())
+                const PhysicsBody& A = physicsBodies[i];
+                const PhysicsBody& B = physicsBodies[j];
+
+                if (!A.col || !B.col)
                     continue;
 
-                if (rbA->mBodyType == RigidBody2D::BodyType::Static &&
-                    rbB->mBodyType == RigidBody2D::BodyType::Static)
+                if (!includeTriggers && (A.isTrigger || B.isTrigger))
+                    continue;
+
+                if (!AABBOverlap(A.aabb, B.aabb))
                     continue;
 
                 ContactInfo c{};
-                c.a = rbA;
-                c.b = rbB;
-                c.isAnyTrigger = colA->IsTrigger() || colB->IsTrigger();
+                c.i = i;
+                c.j = j;
+                c.isTrigger = A.isTrigger || B.isTrigger;
 
                 bool hit = false;
-                if (colA->GetColliderType() == Collider2D::ColliderType::Circle &&
-                    colB->GetColliderType() == Collider2D::ColliderType::Circle)
+                if (A.type == Collider2D::ColliderType::Circle &&
+                    B.type == Collider2D::ColliderType::Circle)
                 {
-                    hit = CircleVsCircle(static_cast<CircleCollider2D*>(colA),
-                                         static_cast<CircleCollider2D*>(colB),
-                                         c.contactNormal,
-                                         c.penetration);
+                    hit = CircleVsCircle(A, B, c.normal, c.penetration);
                 }
-                else if (colA->GetColliderType() == Collider2D::ColliderType::Box &&
-                         colB->GetColliderType() == Collider2D::ColliderType::Box)
+                else if (A.type == Collider2D::ColliderType::Box &&
+                         B.type == Collider2D::ColliderType::Box)
                 {
-                    hit = OBBvsOBB(static_cast<BoxCollider2D*>(colA),
-                                   static_cast<BoxCollider2D*>(colB),
-                                   c.contactNormal,
-                                   c.penetration);
+                    hit = OBBvsOBB(A, B, c.normal, c.penetration);
                 }
-                else if (colA->GetColliderType() == Collider2D::ColliderType::Circle &&
-                         colB->GetColliderType() == Collider2D::ColliderType::Box)
+                else if (A.type == Collider2D::ColliderType::Circle &&
+                         B.type == Collider2D::ColliderType::Box)
                 {
-                    hit = CircleVsOBB(static_cast<CircleCollider2D*>(colA),
-                                      static_cast<BoxCollider2D*>(colB),
-                                      c.contactNormal,
-                                      c.penetration);
+                    hit = CircleVsOBB(A, B, c.normal, c.penetration);
                 }
-                else if (colA->GetColliderType() == Collider2D::ColliderType::Box &&
-                         colB->GetColliderType() == Collider2D::ColliderType::Circle)
+                else if (A.type == Collider2D::ColliderType::Box &&
+                         B.type == Collider2D::ColliderType::Circle)
                 {
-                    hit = CircleVsOBB(static_cast<CircleCollider2D*>(colB),
-                                      static_cast<BoxCollider2D*>(colA),
-                                      c.contactNormal,
-                                      c.penetration);
-                    c.contactNormal *= -1;
+                    hit = CircleVsOBB(B, A, c.normal, c.penetration);
+                    c.normal *= -1.0f;
                 }
 
-                if (!hit)
-                    continue;
-
-                contactInfos.push_back(c);
+                if (hit)
+                    outContacts.push_back(c);
             }
-        }
     }
 
     void PhysicsSystem2D::ResolveCollision()
     {
         const float penetrationSlop = 0.01f;   // allowed penetration
         const float correctionPercent = 0.8f;  // aggressiveness of correction
+
         for (auto& c : contactInfos)
         {
-            if (c.isAnyTrigger)
+            if (c.isTrigger)
                 continue;
-            float invMassSum = c.a->mInvMass + c.b->mInvMass;
+
+            PhysicsBody& A = physicsBodies[c.i];
+            PhysicsBody& B = physicsBodies[c.j];
+
+            RigidBody2D* rbA = A.rb;
+            RigidBody2D* rbB = B.rb;
+            Transform* trA = A.tr;
+            Transform* trB = B.tr;
+
+            if (!rbA || !rbB || !trA || !trB)
+                continue;
+
+            float invMassSum = rbA->mInvMass + rbB->mInvMass;
             if (invMassSum <= 0)
                 continue;
 
-            Transform* trA = c.a->GetGameObject()->GetComponent<Transform>();
-            Transform* trB = c.b->GetGameObject()->GetComponent<Transform>();
-
-            float correctionMag =
+            const float correctionMag =
                 std::max(c.penetration - penetrationSlop, 0.0f) * correctionPercent;
+
             if (correctionMag > 0.0f)
             {
-                glm::vec2 correction = (correctionMag / invMassSum) * c.contactNormal;
+                const glm::vec2 correction = (correctionMag / invMassSum) * c.normal;
 
-                glm::vec2 posA = trA->GetPosition();
-                glm::vec2 posB = trB->GetPosition();
+                glm::vec2 posA = math::ToVec2(trA->GetPosition());
+                glm::vec2 posB = math::ToVec2(trB->GetPosition());
 
-                posA -= correction * c.a->mInvMass;
-                posB += correction * c.b->mInvMass;
+                if (rbA->mBodyType == RigidBody2D::BodyType::Dynamic)
+                    posA -= correction * rbA->mInvMass;
+                if (rbB->mBodyType == RigidBody2D::BodyType::Dynamic)
+                    posB += correction * rbB->mInvMass;
 
-                if (c.a->mBodyType == RigidBody2D::BodyType::Dynamic)
-                    trA->SetPosition(posA);
-                if (c.b->mBodyType == RigidBody2D::BodyType::Dynamic)
-                    trB->SetPosition(posB);
+                trA->SetPosition(math::ToVec3(posA));
+                trB->SetPosition(math::ToVec3(posB));
             }
 
             // Relative velocity from A -> B
-            const glm::vec2 rv = c.b->mLinearVelocity - c.a->mLinearVelocity;
-            const float velAlongNormal = glm::dot(rv, c.contactNormal);
+            const glm::vec2 rv = rbB->mLinearVelocity - rbA->mLinearVelocity;
+            const float velAlongNormal = glm::dot(rv, c.normal);
 
             // If velAlongNormal > 0, bodies are separating along the normal already
             if (velAlongNormal > 0.0f)
@@ -245,12 +361,24 @@ namespace mts::physics
             // canceling inward normal component
             // if we want to add bounce, bounce impulse goes here
             const float j = (-velAlongNormal) / invMassSum;
-            const glm::vec2 impulse = j * c.contactNormal;
+            const glm::vec2 impulse = j * c.normal;
 
-            if (c.a->mBodyType == RigidBody2D::BodyType::Dynamic)
-                c.a->mLinearVelocity -= impulse * c.a->mInvMass;
-            if (c.b->mBodyType == RigidBody2D::BodyType::Dynamic)
-                c.b->mLinearVelocity += impulse * c.b->mInvMass;
+            if (rbA->mBodyType == RigidBody2D::BodyType::Dynamic)
+                rbA->mLinearVelocity -= impulse * rbA->mInvMass;
+            if (rbB->mBodyType == RigidBody2D::BodyType::Dynamic)
+                rbB->mLinearVelocity += impulse * rbB->mInvMass;
+        }
+    }
+
+    void PhysicsSystem2D::RefreshBodyCacheForMoved()
+    {
+        for (auto& b : physicsBodies)
+        {
+            if (!b.isDynamic)
+                continue;
+            if (!b.col)
+                continue;
+            CacheColliderData(b);
         }
     }
 
@@ -258,56 +386,68 @@ namespace mts::physics
     {
         // save collision pairs
         currPairs.clear();
-        currPairs.reserve(contactInfos.size());
-        for (auto& c : contactInfos)
-        {
-            const UUID& idA = c.a->GetGameObject()->GetId();
-            const UUID& idB = c.b->GetGameObject()->GetId();
+        const size_t desired = contactInfos.size() * 2;
+        if (currPairs.max_load_factor() * (float) currPairs.bucket_count() < (float) desired)
+            currPairs.reserve(desired);
 
-            currPairs.insert(UUIDPairKey(idA, idB));
+        for (const ContactInfo& c : contactInfos)
+        {
+            GameObject* goA = physicsBodies[c.i].go;
+            GameObject* goB = physicsBodies[c.j].go;
+
+            if (!goA || !goB)
+                continue;
+            if (goA->IsDead() || goB->IsDead())
+                continue;
+
+            currPairs.insert(MakeOrderedPair(goA, goB));
         }
 
-        for (const UUIDPairKey& k : currPairs)
+        for (const auto& k : currPairs)
         {
-            bool wasColliding = prevPairs.find(k) != prevPairs.end();
-            GameObject* gH = currentScene->FindGameObjectUUID(k.hi);
-            GameObject* gL = currentScene->FindGameObjectUUID(k.lo);
+            const bool wasColliding = (prevPairs.find(k) != prevPairs.end());
 
-            // dead objects shouldn't be on currPairs in the first place
-            // todo : find bug later
-            // MTS_ASSERT(gH && gL && !gH->IsDead() && !gL->IsDead());
+            GameObject* a = k.a;
+            GameObject* b = k.b;
 
-            if (gH && gL && !gH->IsDead() && !gL->IsDead())
+            // Safety: objects may have died since building set
+            if (!a || !b)
+                continue;
+            if (a->IsDead() || b->IsDead())
+                continue;
+
+            if (!wasColliding)
             {
-                if (!wasColliding)
-                {
-                    gH->OnCollisionEnter2D(gL);
-                    gL->OnCollisionEnter2D(gH);
-                }
-                else
-                {
-                    gH->OnCollisionStay2D(gL);
-                    gL->OnCollisionStay2D(gH);
-                }
+                a->OnCollisionEnter2D(b);
+                b->OnCollisionEnter2D(a);
+            }
+            else
+            {
+                a->OnCollisionStay2D(b);
+                b->OnCollisionStay2D(a);
             }
         }
-
-        for (const UUIDPairKey& k : prevPairs)
+        // Exit for pairs that disappeared
+        for (const auto& k : prevPairs)
         {
             if (currPairs.find(k) != currPairs.end())
                 continue;
 
-            GameObject* gH = currentScene->FindGameObjectUUID(k.hi);
-            GameObject* gL = currentScene->FindGameObjectUUID(k.lo);
+            GameObject* a = k.a;
+            GameObject* b = k.b;
 
-            if (!gH || !gL)
+            if (!a || !b)
+                continue;
+            if (a->IsDead() || b->IsDead())
                 continue;
 
-            gH->OnCollisionExit2D(gL);
-            gL->OnCollisionExit2D(gH);
+            a->OnCollisionExit2D(b);
+            b->OnCollisionExit2D(a);
         }
 
-        prevPairs = currPairs;
+        // Swap sets (avoid copying)
+        prevPairs.swap(currPairs);
+        currPairs.clear();
     }
 
     void PhysicsSystem2D::ProcessCommand(const PhysicsCommand2D& cmd)
@@ -410,16 +550,16 @@ namespace mts::physics
     }
 
     // compare center distance against combined radius.
-    bool PhysicsSystem2D::CircleVsCircle(const CircleCollider2D* a,
-                                         const CircleCollider2D* b,
+    bool PhysicsSystem2D::CircleVsCircle(const PhysicsBody& A,
+                                         const PhysicsBody& B,
                                          glm::vec2& outNormalAtoB,
                                          float& outPenetration)
     {
-        glm::vec2 ca = a->GetCenter();
-        glm::vec2 cb = b->GetCenter();
+        glm::vec2 ca = A.circleC;
+        glm::vec2 cb = B.circleC;
 
-        float ra = a->GetRadius();
-        float rb = b->GetRadius();
+        float ra = A.circleR;
+        float rb = B.circleR;
 
         glm::vec2 d = cb - ca;
         float distSqr = glm::dot(d, d);
@@ -446,31 +586,33 @@ namespace mts::physics
 
     // test a set of box axis
     // if all overlap = collision
-    bool PhysicsSystem2D::OBBvsOBB(const BoxCollider2D* a,
-                                   const BoxCollider2D* b,
+    bool PhysicsSystem2D::OBBvsOBB(const PhysicsBody& A,
+                                   const PhysicsBody& B,
                                    glm::vec2& outNormalAtoB,
                                    float& outPenetration)
     {
+        const OBB& a = A.obb;
+        const OBB& b = B.obb;
+
         float minOverlap = FLT_MAX;
-        glm::vec2 bestAxis(0.0f, 0.0f);
+        glm::vec2 bestAxis(0.0f);
 
-        if (!TestSATOverlap(a, b, a->GetUp(), minOverlap, bestAxis))
+        // These MUST be unit axes. Ensure GetRight/GetUp produce normalized axes.
+        if (!TestSATOverlap(a, b, a.u, minOverlap, bestAxis))
             return false;
-        if (!TestSATOverlap(a, b, a->GetRight(), minOverlap, bestAxis))
+        if (!TestSATOverlap(a, b, a.r, minOverlap, bestAxis))
             return false;
-        if (!TestSATOverlap(a, b, b->GetUp(), minOverlap, bestAxis))
+        if (!TestSATOverlap(a, b, b.u, minOverlap, bestAxis))
             return false;
-        if (!TestSATOverlap(a, b, b->GetRight(), minOverlap, bestAxis))
+        if (!TestSATOverlap(a, b, b.r, minOverlap, bestAxis))
             return false;
 
-        // ensure the chosen axis points from A -> B
-        glm::vec2 dir = b->GetCenter() - a->GetCenter();
-        if (glm::dot(dir, bestAxis) < 0.0f)
+        // Point bestAxis from A->B
+        if (glm::dot(b.c - a.c, bestAxis) < 0.0f)
             bestAxis = -bestAxis;
 
         outNormalAtoB = bestAxis;
         outPenetration = minOverlap;
-
         return true;
     }
 
@@ -478,32 +620,29 @@ namespace mts::physics
     // clamp that local point to the box extents to get the closest point on box.
     // if center is inside the box = collision
     // choose the closest box face direction for contact normal
-    bool PhysicsSystem2D::CircleVsOBB(const CircleCollider2D* a,
-                                      const BoxCollider2D* b,
+    bool PhysicsSystem2D::CircleVsOBB(const PhysicsBody& circle,
+                                      const PhysicsBody& box,
                                       glm::vec2& outNormalAtoB,
                                       float& outPenetration)
     {
-        const glm::vec2 cA = a->GetCenter();
-        const float rA = a->GetRadius();
+        const glm::vec2 cA = circle.circleC;
+        const float rA = circle.circleR;
 
-        const glm::vec2 cB = b->GetCenter();
-        const glm::vec2 rightB = b->GetRight();
-        const glm::vec2 upB = b->GetUp();
-        const glm::vec2 hB = b->GetHalfExtents();
+        const OBB& B = box.obb;
 
         // Circle center relative to box center
-        const glm::vec2 d = cA - cB;
+        const glm::vec2 d = cA - B.c;
 
         // Circle center in box local coordinates
-        const float localX = glm::dot(d, rightB);
-        const float localY = glm::dot(d, upB);
+        const float localX = glm::dot(d, B.r);
+        const float localY = glm::dot(d, B.u);
 
         // Closest point on box to circle center (in box local coords)
-        const float clampedX = std::clamp(localX, -hB.x, hB.x);
-        const float clampedY = std::clamp(localY, -hB.y, hB.y);
+        const float clampedX = std::clamp(localX, -B.h.x, B.h.x);
+        const float clampedY = std::clamp(localY, -B.h.y, B.h.y);
 
         // Closest point in world space
-        const glm::vec2 closest = cB + rightB * clampedX + upB * clampedY;
+        const glm::vec2 closest = B.c + B.r * clampedX + B.u * clampedY;
 
         // Vector from circle center to closest point on box
         glm::vec2 v = closest - cA;
@@ -524,58 +663,53 @@ namespace mts::physics
 
         // Inside-box case: circle center is inside (or exactly on) the box.
         // Choose the nearest face and push outward.
-        const float dx = hB.x - std::abs(localX);
-        const float dy = hB.y - std::abs(localY);
+        const float dx = B.h.x - std::abs(localX);
+        const float dy = B.h.y - std::abs(localY);
 
         if (dx < dy)
         {
             const float sign = (localX >= 0.0f) ? 1.0f : -1.0f;
-            outNormalAtoB = rightB * sign;
+            outNormalAtoB = B.r * sign;
             outPenetration = rA + dx;
         }
         else
         {
             const float sign = (localY >= 0.0f) ? 1.0f : -1.0f;
-            outNormalAtoB = upB * sign;
+            outNormalAtoB = B.u * sign;
             outPenetration = rA + dy;
         }
 
         return true;
     }
 
-    float PhysicsSystem2D::ProjectOBBOnAxis(const BoxCollider2D* col, const glm::vec2& axis)
+    float PhysicsSystem2D::ProjectAxis(const OBB& obb, const glm::vec2& axisUnit)
     {
-        glm::vec2 half = col->GetHalfExtents();
-        float ax = glm::abs(glm::dot(col->GetRight(), axis)) * half.x;
-        float ay = glm::abs(glm::dot(col->GetUp(), axis)) * half.y;
+        // axisUnit must be unit
+        const float ax = std::abs(glm::dot(obb.r, axisUnit)) * obb.h.x;
+        const float ay = std::abs(glm::dot(obb.u, axisUnit)) * obb.h.y;
         return ax + ay;
     }
 
-    bool PhysicsSystem2D::TestSATOverlap(const BoxCollider2D* a,
-                                         const BoxCollider2D* b,
-                                         const glm::vec2& axisCandidate,
+    bool PhysicsSystem2D::TestSATOverlap(const OBB& A,
+                                         const OBB& B,
+                                         const glm::vec2& axisUnit,
                                          float& inOutMinOverlap,
                                          glm::vec2& inOutBestAxis)
     {
-        float len = glm::length(axisCandidate);
-        MTS_ASSERT(len > 1e-12f && "axis not valid");
+        const glm::vec2 d = B.c - A.c;
+        const float dist = std::abs(glm::dot(d, axisUnit));
 
-        glm::vec2 n = glm::normalize(axisCandidate);
-        glm::vec2 d = b->GetCenter() - a->GetCenter();
-        float dist = glm::abs(glm::dot(d, n));
+        const float ra = ProjectAxis(A, axisUnit);
+        const float rb = ProjectAxis(B, axisUnit);
 
-        float pA = ProjectOBBOnAxis(a, n);
-        float pB = ProjectOBBOnAxis(b, n);
-
-        // separating axis found
-        float overlap = (pA + pB) - dist;
+        const float overlap = (ra + rb) - dist;
         if (overlap <= 0.0f)
             return false;
 
         if (overlap < inOutMinOverlap)
         {
             inOutMinOverlap = overlap;
-            inOutBestAxis = n;
+            inOutBestAxis = axisUnit;
         }
         return true;
     }

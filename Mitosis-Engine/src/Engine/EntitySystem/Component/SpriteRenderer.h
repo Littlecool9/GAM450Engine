@@ -28,7 +28,6 @@ namespace mts
         void Init() override;
         void Update(float dt) override;
         void LateUpdate(float dt) override;
-        void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
         void DrawSprite();

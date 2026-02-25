@@ -10,15 +10,13 @@ mts::Application* mts::CreateApplication()
 
 TechDemo::TechDemo()
 {
-    exampleScene = new TechDemoScene();
 }
 
 TechDemo::~TechDemo()
 {
-    delete exampleScene;
 }
 
 mts::Scene* TechDemo::GetInitialScene()
 {
-    return exampleScene;
+    return new TechDemoScene();
 }

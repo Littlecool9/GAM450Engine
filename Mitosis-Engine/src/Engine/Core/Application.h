@@ -7,9 +7,8 @@
  *
  */
 #pragma once
-#include "Windows/Window.h"
-#include "Audio/AudioManager.h"
-#include "Conductor/ConductorSystem.h"
+#include "../Windows/Window.h"
+#include "LayerStack.h"
 #include <memory>
 
 namespace mts::physics
@@ -27,24 +26,28 @@ namespace mts
         virtual ~Application() = default;
 
         void Init();
-        void Run() const;
+        void Run();
         void Shutdown();
 
         void OnEvent(Event& e);
+        void PushLayer(std::unique_ptr<Layer> layer) { mLayerStack.PushLayer(std::move(layer)); }
+        void PushOverlay(std::unique_ptr<Layer> layer)
+        {
+            mLayerStack.PushOverlay(std::move(layer));
+        }
 
        protected:
         virtual Scene* GetInitialScene() = 0;
 
        private:
         bool OnWindowClose(class WindowCloseEvent& e);
-        static bool OnWindowResize(const class WindowResizeEvent& e);
 
        private:
         std::unique_ptr<Window> mWindow;
-        std::unique_ptr<AudioManager> mAudio;
-        std::unique_ptr<ConductorSystem> mConductor;
+        LayerStack mLayerStack;
+
         bool mIsRunning = false;
-        bool mInDebugView = false;
+        bool mInDebugView = true;
     };
 
     Application* CreateApplication();

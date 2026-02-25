@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "Transform.h"
 
-#include "Engine/Debug/DebugDraw.h"
+#include "Engine/Core/Editor/DebugDraw.h"
 
 namespace mts
 {

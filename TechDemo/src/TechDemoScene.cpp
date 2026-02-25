@@ -10,7 +10,7 @@
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
 
-//#define TestLoad
+#define TestLoad 1
 
 TechDemoScene::~TechDemoScene() = default;
 
@@ -38,8 +38,8 @@ void TechDemoScene::OnInit()
     mts::ScriptFactory::RegisterScript("CollectableController",
                                        []() { return new CollectableController(); });
 
-#ifdef TestLoad
-    mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/TechDemo.json");
+#if TestLoad 1
+    mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 
     auto player = FindGameObjectByName("Player");
     camera = FindGameObjectByName("CameraObject");
@@ -54,7 +54,7 @@ void TechDemoScene::OnInit()
     auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.json");
     player->AddTag("Player");
 
-    auto enemy = mts::GameObjectFactory::InstantiateFromJSON("Data/Enemy.json");
+    mts::GameObjectFactory::CreateGameObject("Data/Ground.json");
 
     camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.json");
     camera->SetName("CameraObject");
@@ -146,6 +146,6 @@ void TechDemoScene::OnInit()
     // if this is not created last it crashes
     auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
 
-    mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/TechDemo.json");
+    // mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/TechDemo.json");
 #endif
 }

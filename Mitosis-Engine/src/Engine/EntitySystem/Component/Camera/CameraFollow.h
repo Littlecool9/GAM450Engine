@@ -1,7 +1,7 @@
 ﻿/**
  * @file CameraFollow.h
  * @author Dong Ta
- * @brief Component to attach to camera in conjunction with camera component to allow 
+ * @brief Component to attach to camera in conjunction with camera component to allow
  *        the component to follow its designated target
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -11,13 +11,11 @@
 #include "Engine/EntitySystem/Component/Component.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 
-
 namespace mts
 {
-    class CameraFollow : public Component   
+    class CameraFollow : public Component
     {
        public:
-
         CameraFollow();
         CameraFollow(GameObject* owner);
         ~CameraFollow() override = default;
@@ -27,13 +25,12 @@ namespace mts
         void Init() override;
         void Update(float dt) override;
         void LateUpdate(float dt) override;
-        void Render() override;
         void SetObjectToFollow(Transform* target);
         void SetMaxAcceleration(float accel);
         void SetInterpolant(float interpolant);
         void FollowTarget(float dt);
 
-    private:
+       private:
         Transform* ObjectToFollow;
         // Maximum acceleration rate of the camera
         float MaxAccel;
@@ -44,4 +41,4 @@ namespace mts
         glm::vec3 CameraOffset;
     };
 
-}
+}  // namespace mts

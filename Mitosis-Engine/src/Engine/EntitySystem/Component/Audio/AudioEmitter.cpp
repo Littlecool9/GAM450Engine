@@ -49,11 +49,6 @@ namespace mts
         }
     }
 
-    void AudioEmitter::Render()
-    {
-        // no op comment
-    }
-
     void AudioEmitter::LateUpdate(float dt)
     {
         // no op comment

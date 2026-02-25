@@ -19,6 +19,9 @@ namespace mts
 
 namespace mts::physics
 {
+    struct OBB;
+    struct PhysicsBody;
+    struct ContactInfo;
     class PhysicsSystem2D
     {
        public:
@@ -28,9 +31,13 @@ namespace mts::physics
        private:
         static void ProcessCommandQueue();
         // integrates and caches colliders at the same time;
-        static void IntegrateBodies(float dt);
-        static void CheckCollision(bool includeTriggers);
+        static void GatherAndIntegrateBodies(float dt);
+        static void CacheColliderData(PhysicsBody& p);
+
+        static void CheckCollision(bool includeTriggers, std::vector<ContactInfo>& outContacts);
         static void ResolveCollision();
+        static void RefreshBodyCacheForMoved();
+
         static void FireEvents();
 
         static void ProcessCommand(const PhysicsCommand2D& cmd);
@@ -42,28 +49,27 @@ namespace mts::physics
         static void ApplySetAngularVelocity(RigidBody2D* rb, float angularVelocity);
         static void ApplyTeleport(RigidBody2D* rb, const glm::vec2 position, float rotation);
 
-        static bool CircleVsCircle(const CircleCollider2D* a,
-                                   const CircleCollider2D* b,
+        static bool CircleVsCircle(const PhysicsBody& A,
+                                   const PhysicsBody& B,
                                    glm::vec2& outNormalAtoB,
                                    float& outPenetration);
 
-        static bool OBBvsOBB(const BoxCollider2D* a,
-                             const BoxCollider2D* b,
+        static bool OBBvsOBB(const PhysicsBody& A,
+                             const PhysicsBody& B,
                              glm::vec2& outNormalAtoB,
                              float& outPenetration);
 
-        static bool CircleVsOBB(const CircleCollider2D* a,
-                                const BoxCollider2D* b,
+        static bool CircleVsOBB(const PhysicsBody& circle,
+                                const PhysicsBody& box,
                                 glm::vec2& outNormalAtoB,
                                 float& outPenetration);
 
-        static float ProjectOBBOnAxis(const BoxCollider2D* col, const glm::vec2& axis);
-
+        static float ProjectAxis(const OBB& obb, const glm::vec2& axisUnit);
         // return true if no separating axis => could be overlapping
         // return false if separating axis => no overlap;
-        static bool TestSATOverlap(const BoxCollider2D* a,
-                                   const BoxCollider2D* b,
-                                   const glm::vec2& axisCandidate,
+        static bool TestSATOverlap(const OBB& A,
+                                   const OBB& B,
+                                   const glm::vec2& axisUnit,
                                    float& inOutMinOverlap,
                                    glm::vec2& inOutBestAxis);
     };

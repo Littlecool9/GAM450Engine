@@ -68,9 +68,6 @@ namespace mts
     void CameraFollow::LateUpdate(float dt)
     {
     }
-    void CameraFollow::Render()
-    {
-    }
     void CameraFollow::SetObjectToFollow(Transform* target)
     {
         ObjectToFollow = target;

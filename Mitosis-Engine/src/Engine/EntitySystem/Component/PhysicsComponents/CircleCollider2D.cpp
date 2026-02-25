@@ -9,7 +9,7 @@
 
 #include "pch.h"
 #include "CircleCollider2D.h"
-#include "Engine/Debug/DebugDraw.h"
+#include "Engine/Core/Editor/DebugDraw.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 

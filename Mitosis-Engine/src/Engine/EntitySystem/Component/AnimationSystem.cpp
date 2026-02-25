@@ -76,10 +76,6 @@ namespace mts
     {
     }
 
-    void AnimationSystem::Render()
-    {
-    }
-
     void AnimationSystem::Deserialize(JsonValue const& jsonObj)
     {
         // "States" must exist and be an array

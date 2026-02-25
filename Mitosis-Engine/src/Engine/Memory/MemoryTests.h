@@ -20,13 +20,13 @@ void Test_BasicAllocFree()
 {
     mts::MemoryManager::Init();
 
-    const auto startCount = mts::MemoryManager::ActiveAllocationCount();
+    const auto startCount = mts::MemoryManager::AllocationCount();
     const auto startBytes = mts::MemoryManager::ActiveBytes();
 
     void* p = MTS_ALLOC_BYTES(128, 16);
     MTS_FREE(p);
 
-    const auto endCount = mts::MemoryManager::ActiveAllocationCount();
+    const auto endCount = mts::MemoryManager::AllocationCount();
     const auto endBytes = mts::MemoryManager::ActiveBytes();
 
     // EXPECT: no change
@@ -45,7 +45,7 @@ void Test_LeakDetection()
     void* leak = MTS_ALLOC_BYTES(256, 32);
     (void) leak;
 
-    MTS_ASSERT(mts::MemoryManager::ActiveAllocationCount() >= 1);
+    MTS_ASSERT(mts::MemoryManager::AllocationCount() >= 1);
     
     mts::MemoryManager::Shutdown();
 }
@@ -99,7 +99,7 @@ void Test_NewDelete()
     MTS_DELETE(p);
     MTS_ASSERT(Probe::alive == 0);
 
-    MTS_ASSERT(mts::MemoryManager::ActiveAllocationCount() == 0);
+    MTS_ASSERT(mts::MemoryManager::AllocationCount() == 0);
 
     mts::MemoryManager::Shutdown();
 }
@@ -128,7 +128,7 @@ void Test_ArrayNewDelete()
     MTS_DELETE_ARRAY(arr, N);
     MTS_ASSERT(ProbeArr::alive == 0);
 
-    MTS_ASSERT(mts::MemoryManager::ActiveAllocationCount() == 0);
+    MTS_ASSERT(mts::MemoryManager::AllocationCount() == 0);
 
     mts::MemoryManager::Shutdown();
 }

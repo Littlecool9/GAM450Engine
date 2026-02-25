@@ -56,9 +56,6 @@ namespace mts
     void CameraComponent::Init()
     {
     }
-    void CameraComponent::Render()
-    {
-    }
     glm::mat4 CameraComponent::BuildView2D()
     {
         Transform* trans = GetGameObject()->GetComponent<Transform>();

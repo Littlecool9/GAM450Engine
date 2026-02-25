@@ -12,7 +12,6 @@
 #include "Button.h"
 
 #include "Transform.h"
-#include "Engine/Application.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Events/EventButton.h"
 #include "Engine/Input/Input.h"
@@ -59,12 +58,6 @@ namespace mts
             OnClickEvent = jsonObj["OnClickEvent"].GetString("");
         }
     }
-    void Button::LateUpdate(float dt)
-    {
-    }
-    void Button::Render()
-    {
-    }
     void Button::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "Button");
@@ -100,7 +93,7 @@ namespace mts
             {
                 // Execute OnClickAction
 
-                //Delegate<>
+                // Delegate<>
 
                 LOG_INFO("Button Clicked! action={}", OnClickEvent.c_str());
             }

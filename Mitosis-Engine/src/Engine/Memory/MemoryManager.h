@@ -22,21 +22,25 @@ namespace mts
         std::uint_least32_t line;
     };
 
-	class MemoryManager
-	{
-	public:
+    class MemoryManager
+    {
+       public:
         static void Init();
         static void Shutdown();
         static void* Alloc(std::size_t sizeBytes,
-                          std::size_t align,
-                          std::source_location location = std::source_location::current());
+                           std::size_t align,
+                           std::source_location location = std::source_location::current());
         static void Free(void* ptr);
-        static void MemorymaDrawProfilerWindow(float dt);
         static void BeginFrame();
-        static std::size_t ActiveAllocationCount();
-        static std::size_t ActiveBytes();
-	};
-} // mts namespace
+
+        static std::size_t CurrentAllocationCount();
+        static std::size_t CurrentAllocatedBytes();
+        static std::size_t MaxAllocationCount();
+        static std::size_t MaxAllocatedBytes();
+        static std::size_t FrameFreeBytes();
+        static std::size_t FrameFreeCount();
+    };
+}  // namespace mts
 
 #define MTS_ALLOC_BYTES(sizeBytes, alignBytes) \
     ::mts::MemoryManager::Alloc((sizeBytes), (alignBytes), std::source_location::current())
@@ -87,4 +91,4 @@ namespace mts
                                                                                           \
    private:                                                                               \
     /* making sure it's a complete declaration so we can add a semicolon at the end*/     \
-    static_assert(true, "MTS_CLASS_NEW_DELETE") 
+    static_assert(true, "MTS_CLASS_NEW_DELETE")

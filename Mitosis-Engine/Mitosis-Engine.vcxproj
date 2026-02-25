@@ -95,14 +95,62 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\Core\Application.h" />
+    <ClInclude Include="src\Engine\Core\Layer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\LayerStack.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Conductor\ConductorSystem.h" />
     <ClInclude Include="src\Engine\Audio\AudioManager.h" />
     <ClInclude Include="src\Engine\Audio\AudioTypes.h" />
     <ClInclude Include="src\Engine\Audio\Backends\FMODBackend.h" />
     <ClInclude Include="src\Engine\Audio\Backends\NullAudioBackend.h" />
     <ClInclude Include="src\Engine\Audio\IAudioBackend.h" />
-    <ClInclude Include="src\Engine\Debug\DebugDraw.h" />
+    <ClInclude Include="src\Engine\Core\Layer\AudioLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\DebugRenderLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\EditorLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\ImGuiLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\InputLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\MemoryManageLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\PhysicsLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\RenderingLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\ResourceLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Layer\SceneLayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\DebugDraw.h" />
     <ClInclude Include="src\Engine\Delegate\Delegate.h" />
     <ClInclude Include="src\Engine\Entity\Entity.h" />
     <ClInclude Include="src\Engine\EntitySystem\Component\ActionList.h" />
@@ -180,12 +228,53 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\Core\Application.cpp" />
+    <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
     <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\FMODBackend.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\NullAudioBackend.cpp" />
-    <ClCompile Include="src\Engine\Debug\DebugDraw.cpp" />
+    <ClCompile Include="src\Engine\Core\Layer\AudioLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\DebugRenderLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\EditorLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\ImGuiLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\InputLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\MemoryManageLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\PhysicsLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\RenderingLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\ResourceLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Layer\SceneLayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\DebugDraw.cpp" />
     <ClCompile Include="src\Engine\Entity\Entity.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\ActionList.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\Actions\BaseAction.cpp" />

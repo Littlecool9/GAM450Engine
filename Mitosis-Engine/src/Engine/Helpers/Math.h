@@ -22,4 +22,9 @@ namespace mts::math
     {
         return {v.x, v.y};
     }
+
+    static inline glm::vec2 AbsVec2(glm::vec2 v)
+    {
+        return {std::abs(v.x), std::abs(v.y)};
+    }
 }  // namespace mts::math

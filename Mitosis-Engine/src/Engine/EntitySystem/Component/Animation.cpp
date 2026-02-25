@@ -48,12 +48,6 @@ namespace mts
             mIsLooping = jsonObj["IsLooping"].GetInt();
         }
     }
-
-    void Animation::Render()
-    {
-        // no op
-    }
-
     void Animation::Serialize(JsonDocument& doc) const
     {
         doc.WriteString("Type", "Animation");

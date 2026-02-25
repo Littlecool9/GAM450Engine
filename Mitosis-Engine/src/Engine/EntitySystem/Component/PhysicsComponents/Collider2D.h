@@ -17,7 +17,8 @@ namespace mts
         enum class ColliderType : unsigned char
         {
             Circle,
-            Box
+            Box,
+            None
         };
 
        public:

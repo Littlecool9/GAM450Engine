@@ -80,16 +80,6 @@ namespace mts
         }
     }
 
-    void ParticleEmitter::LateUpdate(float dt)
-    {
-        // no-op
-    }
-
-    void ParticleEmitter::Render()
-    {
-        // no-op
-    }
-
     void ParticleEmitter::DrawParticles()
     {
         if (!mMesh || !mShader || !mTexture)

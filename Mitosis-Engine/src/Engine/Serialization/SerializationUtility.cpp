@@ -48,5 +48,23 @@ namespace mts
 
             return doc.SaveToFile(path);
         }
-    } 
-}  
+
+        std::string SerializeToString(Deserializable* item)
+        {
+            JsonDocument doc;
+
+            // Build JSON document from object
+            item->Serialize(doc);
+
+            // Convert document to string
+            std::string result;
+            if (!doc.SaveToString(result))
+            {
+                LOG_INFO("String serialization error occurred\n");
+                return {};
+            }
+
+            return result;
+        }
+    }  // namespace SerializationUtility
+}  // namespace mts

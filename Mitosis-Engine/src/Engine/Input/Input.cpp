@@ -43,14 +43,12 @@ namespace mts
         auto& s = GetState();
         s = State{};
         s.initialized = true;
-        LOG_INFO("Input initialized.");
     }
 
     void Input::Shutdown()
     {
         auto& s = GetState();
         s = State{};
-        LOG_INFO("Input shutdown.");
     }
 
     void Input::BeginFrame()

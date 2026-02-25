@@ -21,6 +21,7 @@ namespace mts
     class ActionList : public Component
     {
         MTS_CLASS_NEW_DELETE();
+
        public:
         ActionList() {};
         ActionList(GameObject* owner);
@@ -28,7 +29,6 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
         void LateUpdate(float dt) override;
-        void Render() override;
         void Init() override;
         void SlowDown();
         void FastForward();
@@ -58,6 +58,7 @@ namespace mts
         void AddAction(BaseAction* action);
         void Update(float dt) override;
         void Clear();
+
        private:
         std::vector<BaseAction*> Actions;
         std::bitset<8> Groups;

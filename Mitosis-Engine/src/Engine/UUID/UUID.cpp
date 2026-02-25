@@ -16,6 +16,7 @@
 namespace mts
 {
     static boost::uuids::random_generator s_Generator;
+    UUID UUID::InvalidID = UUID::GenerateNil();
 
     bool UUID::IsValid() const
     {

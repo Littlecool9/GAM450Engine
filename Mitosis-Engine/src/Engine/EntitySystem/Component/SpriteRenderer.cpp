@@ -137,12 +137,6 @@ namespace mts
         doc.EndObject();
     }
 
-    // Sprites don't render themselves, done through Renderer calling DrawSprite
-    void SpriteRenderer::Render()
-    {
-        // no-op
-    }
-
     void SpriteRenderer::DrawSprite()
     {
         if (!mMesh || !mShader || !mTexture)

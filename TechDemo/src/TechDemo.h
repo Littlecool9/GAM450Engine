@@ -11,7 +11,4 @@ class TechDemo : public mts::Application
 
    private:
     mts::Scene* GetInitialScene() override;
-
-   private:
-    TechDemoScene* exampleScene;
 };

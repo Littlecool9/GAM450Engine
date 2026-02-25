@@ -72,7 +72,14 @@ namespace mts
         }
     }
 
-    GameObject* Scene::FindGameObjectUUID(const UUID& uuid)
+    // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
+    GameObject* Scene::CreateGameObject()
+    {
+        GameObject* newGameObject = GameObjectFactory::CreateGameObject();
+        return newGameObject;
+    }
+
+    GameObject* Scene::FindGameObjectByUUID(const UUID& uuid)
     {
         for (auto g : mGameObjects)
         {

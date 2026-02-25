@@ -2,14 +2,13 @@
  * @file AudioEmitter.h
  * @author Dong Ta
  * @brief Component to allow a gameobject to emit audio
- *        
+ *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
  */
 #pragma once
 #include "Engine/Audio/AudioTypes.h"
 #include "Engine/EntitySystem/Component/Component.h"
-
 
 namespace mts
 {
@@ -19,8 +18,7 @@ namespace mts
     class AudioEmitter : public Component
     {
        public:
-
-        AudioEventId eventId{};    
+        AudioEventId eventId{};
         AudioHandle handle{};
         // Optional offset from the GameObject’s position
         glm::vec2 mPositionOffset{0.f, 0.f};
@@ -38,11 +36,9 @@ namespace mts
 
         void Init() override;
         void Update(float dt) override;
-        void Render() override;
         void LateUpdate(float dt) override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
-        
 
         // Manual control (from gameplay)
         void Play();
@@ -57,4 +53,4 @@ namespace mts
         Transform* GetTransform() const;
         bool mFirstFrame = true;
     };
-}
+}  // namespace mts

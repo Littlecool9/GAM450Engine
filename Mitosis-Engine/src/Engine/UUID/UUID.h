@@ -24,8 +24,13 @@ namespace mts
         UUID(UUID&&) noexcept = default;
         UUID& operator=(UUID&&) noexcept = default;
 
+        bool operator==(const UUID& other) const noexcept;
+        bool operator!=(const UUID& other) const noexcept;
+
         bool IsValid() const;
         std::string ToString() const;
+        uint64_t High() const { return mHigh; }
+        uint64_t Low() const { return mLow; }
 
         static UUID FromString(const std::string& uuidStr);
 
@@ -34,8 +39,7 @@ namespace mts
         // useful for default or placeholder initialization
         static UUID GenerateNil();
 
-        bool operator==(const UUID& other) const noexcept;
-        bool operator!=(const UUID& other) const noexcept;
+        static UUID InvalidID;
 
        private:
         friend struct std::hash<UUID>;

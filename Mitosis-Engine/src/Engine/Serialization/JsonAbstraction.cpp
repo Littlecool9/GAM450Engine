@@ -283,6 +283,18 @@ namespace mts
         return FileManager::WriteAllText(path, buffer.GetString(), true);
     }
 
+    bool JsonDocument::SaveToString(std::string& outStr)
+    {
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
+        if (!impl_->doc.Accept(writer))
+            return false;
+
+        outStr = buffer.GetString();
+        return true;
+    }
+
     bool JsonValue::IsObject() const
     {
         return impl && static_cast<const RjValue*>(impl)->IsObject();

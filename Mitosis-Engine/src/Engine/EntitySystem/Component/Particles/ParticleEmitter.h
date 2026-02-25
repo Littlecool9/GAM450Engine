@@ -24,6 +24,7 @@ namespace mts
     class ParticleEmitter : public Component
     {
         MTS_CLASS_NEW_DELETE();
+
        public:
         ParticleEmitter(GameObject* owner);
         ParticleEmitter() = default;
@@ -31,8 +32,6 @@ namespace mts
 
         void Init() override;
         void Update(float dt) override;
-        void LateUpdate(float dt) override;
-        void Render() override;
         void DrawParticles();
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;

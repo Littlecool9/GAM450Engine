@@ -11,6 +11,7 @@
 #pragma once
 #include <functional>
 #include <string>
+#include <unordered_map>
 
 namespace mts
 {
@@ -28,30 +29,35 @@ namespace mts
     class GameObjectFactory
     {
        public:
-        // @brief: Create GameObject by string type
-        // @param type: name of the GameObject
-        // @return: pointer to created GameObject, nullptr if failed
-        static GameObject* CreateGameObject(const std::string& type);
+        // Load all the archetypes from json files
+        // This function can be later changed to scene-specific to satisfy deserializing scene json
+        static void InitFactory();
+        static void ShutdownFactory();
+
+        // Instantiate from archetype/prefabs, if not a archetype/prefab, it will create a new one
+        // from json file
+        static GameObject* Instantiate(const std::string& gameObjectName);
+        // Return Empty GameObject
         static GameObject* CreateGameObject();
         static GameObject* CreateGameObject(Scene* scene);
 
-        // @brief: Create GameObject by enum type
-        // @param type: enum type of the GameObject
-        // @return: pointer to created GameObject, nullptr if failed
-        // static GameObject* CreateGameObject(const mts::GameObjectType type);
+        // Temporary set to be public for testing, will be removed after the scene is cleared
+        // Build GameObject from json file and return
+        static GameObject* InstantiateFromJSON(const std::string& filename);
 
        private:
-        // @brief: Actual creator functions
-        // @brief: Template function to create GameObject from given map and key
-        // @param key: key to find in the map (string or enum(not implemented))
-        // @param typeString: string representation of the type for deserialization file lookup
-        static GameObject* CreateGameObjectFromArchetype(const std::string& typeString);
+        // Load GameObject from archetype
+        static GameObject* InstantiateFromArchetype(const std::string& archetypeName);
+        // Build Archetype from json file and add it to the archetype list, return the archetype
+        static GameObject* BuildArchetypeFromJSON(const std::string& filename);
+        static GameObject* FindArchetypeByName(const std::string& archetypeName);
 
-        static std::unordered_map<std::string, std::function<GameObject*()>> stringToTypeMap;
-        // static std::unordered_map<mts::GameObjectType, std::function<GameObject*()>>
-        // typeToCreatorMap;
 
-        static std::vector<GameObject*> archetypes;
+       private:
+        // Holds archetypes that will never be used in runtime
+        // The key is the name of the archetype, and the value is the GameObject pointer of the
+        // archetype
+        static std::unordered_map<std::string, GameObject*> archetypes;
         static std::string const deserializePath;
     };
 

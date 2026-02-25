@@ -20,10 +20,6 @@
 
 namespace mts::Tilemap
 {
-    const std::string Tilemap::defaultTextureSource =
-        "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.json";
-    const std::string Tilemap::defaultShaderSource =
-        "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.json";
 
     void Tilemap::LoadRenderData(const std::string& texturePath, const std::string& shaderPath)
     {
@@ -43,9 +39,11 @@ namespace mts::Tilemap
     void Tilemap::Init()
     {
         // Init the camera related chunk loading
-        Tileset::LoadAllTileset(1);
-
         mChunkLoader.Start();
+        if (!mChunkRenderData.isValid())
+        {
+            LoadRenderData(defaultTextureSource, defaultShaderSource);
+        }
     }
 
     void Tilemap::Update(float dt)
@@ -53,10 +51,6 @@ namespace mts::Tilemap
         // TODO: gameplay logic update via layers system
 
         // Render related update
-        if (!mChunkRenderData.isValid())
-        {
-            LoadRenderData();
-        }
         mChunkManager.UpdateChunks(Renderer::GetActiveCamera());
         visibleChunks = mChunkManager.GetVisibleChunks();
     }
@@ -68,7 +62,7 @@ namespace mts::Tilemap
         int count = 0;
 
         if (!mChunkRenderData.isValid())
-            LoadRenderData();
+            LoadRenderData(defaultTextureSource, defaultShaderSource);
 
         for (auto& chunk : visibleChunks)
         {
@@ -158,12 +152,30 @@ namespace mts::Tilemap
         if (jsonObj.Has("LeftBottomTileTransformPosition"))
         {
             JsonValue startPos = jsonObj["LeftBottomTileTransformPosition"];
-            mLeftBottomWorldPos.x = static_cast<float>(startPos[0].GetInt());
-            mLeftBottomWorldPos.y = static_cast<float>(startPos[1].GetInt());
+            mLeftBottomWorldPos.x = startPos[0].GetFloat();
+            mLeftBottomWorldPos.y = startPos[1].GetFloat();
         }
-        if (jsonObj.Has("TextureAtlas"))
+        if (jsonObj.Has("TextureSourcePath"))
         {
-            mLoadedTexturesPath = jsonObj["TextureAtlas"].GetString();
+            defaultTextureSource = jsonObj["TextureSourcePath"].GetString();
+        }
+        if (jsonObj.Has("ShaderPath"))
+        {
+            defaultShaderSource = jsonObj["ShaderPath"].GetString();
+        }
+
+        if (jsonObj.Has("TilesetsPath"))
+        {
+            JsonValue paths = jsonObj["TilesetsPath"];
+            if (paths.IsArray())
+            {
+                for (size_t i = 0; i < paths.Size(); ++i)
+                {
+                    std::string path = paths[i].GetString();
+                    tilesetSources.emplace_back(path);
+                    Tileset::LoadTilesetFromFile(path);
+                }
+            }
         }
 
         // Deseiralization of grid data
@@ -248,11 +260,62 @@ namespace mts::Tilemap
             }
         }
 
-        LoadRenderData();
+        LoadRenderData(defaultTextureSource, defaultShaderSource);
     }
 
     void Tilemap::Serialize(JsonDocument& doc) const
     {
+        doc.WriteString("Type", "Tilemap");
+        doc.BeginObject("Data");
+        doc.WriteString("Name", mTilemapName.c_str());
+
+        doc.WriteString("TextureSourcePath", defaultTextureSource.c_str());
+        doc.WriteString("ShaderPath", defaultShaderSource.c_str());
+
+        // Serialize Tilesets Data:
+        doc.BeginArray("TilesetsPath");
+        for (const auto& source : tilesetSources)
+        {
+            doc.WriteString(source.c_str());
+        }
+        doc.EndArray();
+
+        // Serialize used tilesets
+        doc.BeginArray("UsedTilesets");
+        for (const auto& [tilesetIndex, tileIDSet] : tilesetTileIDMap)
+        {
+            doc.BeginObject();
+            doc.WriteInt("TilesetIndex", tilesetIndex);
+            doc.BeginArray("TileIDs");
+            for (TileID id : tileIDSet)
+            {
+                doc.WriteInt(id);
+            }
+            doc.EndArray();
+            doc.EndObject();
+        }
+        doc.EndArray();
+
+        // Serialize grid data
+        doc.BeginArray("LeftBottomTileTransformPosition");
+        doc.WriteFloat(mLeftBottomWorldPos.x);
+        doc.WriteFloat(mLeftBottomWorldPos.y);
+        doc.EndArray();
+
+        doc.BeginArray("TilemapCellGrid");
+        for (int rowNumber = tileGrid.size() - 1; rowNumber >= 0; rowNumber--)
+        {
+            const auto& row = tileGrid[rowNumber];
+            doc.BeginArray();
+            for (TileID id : row)
+            {
+                doc.WriteInt(id);
+            }
+            doc.EndArray();
+        }
+        doc.EndArray();
+        // TODO: Serialize segment-based tilemap attributes if applicable
+        doc.EndObject();
     }
 
     void Tilemap::OperateTile(int x, int y, TileOperation op)
@@ -319,7 +382,6 @@ namespace mts::Tilemap
 
     ChunkPos Tilemap::WorldToChunkPos(float worldX, float worldY)
     {
-        // Convert world position to chunk position, considering the tilemap's bottom-left offset
         int32_t chunkX = static_cast<int32_t>(
             glm::floor(worldX / (Chunk::CHUNK_PIXEL_WIDTH / mts::PixelsPerUnit)));
         int32_t chunkY = static_cast<int32_t>(
@@ -335,8 +397,10 @@ namespace mts::Tilemap
     glm::vec3 Tilemap::ChunkPosToWorldPos(const ChunkPos& chunkPos) const
     {
         glm::vec3 res = glm::vec3(
-            static_cast<float>(chunkPos.x * Chunk::CHUNK_PIXEL_WIDTH / mts::PixelsPerUnit),
-            static_cast<float>(chunkPos.y * Chunk::CHUNK_PIXEL_HEIGHT / mts::PixelsPerUnit),
+            mLeftBottomWorldPos.x +
+                static_cast<float>(chunkPos.x * Chunk::CHUNK_PIXEL_WIDTH / mts::PixelsPerUnit),
+            mLeftBottomWorldPos.y +
+                static_cast<float>(chunkPos.y * Chunk::CHUNK_PIXEL_HEIGHT / mts::PixelsPerUnit),
             0.0f);
         return res;
     }

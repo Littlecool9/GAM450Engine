@@ -18,6 +18,8 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
 
 #define TILE_PAD 0.003f  // Padding to prevent texture bleeding
 
@@ -377,7 +379,7 @@ namespace mts::Tilemap
     {
         for (auto* obj : mColliderObjects)
         {
-            delete obj;
+            obj->Destroy();
         }
         mColliderObjects.clear();
     }

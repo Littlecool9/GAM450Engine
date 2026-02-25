@@ -13,8 +13,6 @@
 #include <filesystem>
 #include "Engine/Tilemap/Chunk.h"
 
-#define TILESET_PATH "Data/Tilemap/"
-
 namespace mts::Tilemap
 {
     // TODO: For some reason the data in json file can't be larger than the one defined here, or it
@@ -36,25 +34,35 @@ namespace mts::Tilemap
         return nullptr;
     }
 
-    void Tileset::LoadAllTileset(int number)
+    void Tileset::LoadTilesetFromFile(const std::string& filepath)
     {
-        for (int i = 0; i < number; ++i)
+        mts::JsonDocument doc;
+        if (!doc.LoadFromFile(filepath))
         {
-            std::string filepath =
-                std::string(TILESET_PATH) + "Tileset_" + std::to_string(i) + ".json";
-            mts::JsonDocument doc;
-            if (!doc.LoadFromFile(filepath))
-            {
-                std::filesystem::path currentPath = std::filesystem::current_path();
-                LOG_INFO("Current Path: {}", currentPath.string());
-                LOG_WARN("Failed to load tileset file: {}", filepath.c_str());
-                continue;
-            }
-            Tileset* newTileset = new Tileset();
-            newTileset->Deserialize(doc.Root());
-            loadedTilesets.push_back(newTileset);
-            LOG_INFO("Loaded tileset: {}", filepath.c_str());
+            std::filesystem::path currentPath = std::filesystem::current_path();
+            LOG_INFO("Current Path: {}", currentPath.string());
+            LOG_WARN("Failed to load tileset file: {}", filepath.c_str());
+            return;
         }
+        Tileset* newTileset = new Tileset();
+        newTileset->Deserialize(doc.Root());
+
+        Tileset* existingTileset = GetTilesetById(static_cast<int>(newTileset->id));
+        if (existingTileset != nullptr)
+        {
+            LOG_WARN("Tileset with ID {} is already loaded. Skipping duplicate load from file: {}",
+                     newTileset->id,
+                     filepath.c_str());
+            delete newTileset;
+            return;
+        }
+        loadedTilesets.push_back(newTileset);
+        LOG_INFO("Loaded tileset: {}", filepath.c_str());
+
+        // Update Chunk size
+        // Under this implementation, the size of each tile and chunk depends on the last loaded
+        // tileset. It could only be solved after figuring out the relation between tilesets and
+        // tilemaps
         Chunk::CHUNK_PIXEL_WIDTH = Chunk::CHUNK_WIDTH * Tileset::TILE_PIXEL_WIDTH;
         Chunk::CHUNK_PIXEL_HEIGHT = Chunk::CHUNK_HEIGHT * Tileset::TILE_PIXEL_HEIGHT;
         Chunk::CHUNK_UNIT_WIDTH = Chunk::CHUNK_PIXEL_WIDTH / static_cast<float>(mts::PixelsPerUnit);
@@ -68,6 +76,7 @@ namespace mts::Tilemap
         {
             delete tileset;
         }
+        loadedTilesets.clear();
     }
 
     const TileProperties& Tileset::Get(TileID id) const
@@ -142,10 +151,6 @@ namespace mts::Tilemap
         if (jsonObj.Has("TilesetId"))
         {
             id = jsonObj["TilesetId"].GetInt();
-        }
-        if (jsonObj.Has("TextureAtlas"))
-        {
-            texturePath = jsonObj["TextureAtlas"].GetString();
         }
         if (jsonObj.Has("TileDefinitions"))
         {

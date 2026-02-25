@@ -1,0 +1,18 @@
+{
+    "ArchetypesPaths":
+    [
+        {"Name" : "Player", "Path" : "Data/Player.json"},
+        {"Name" : "Enemy", "Path" : "Data/Enemy.json"},
+        {"Name" : "Camera", "Path" : "Data/Camera.json"},
+        {"Name" : "Crate", "Path" : "Data/Crate.json"},
+        {"Name" : "GrassPatch", "Path" : "Data/GrassPatch.json"},
+        {"Name" : "BackgroundFence", "Path" : "Data/BackgroundFence.json"},
+        {"Name" : "StaticBlock", "Path" : "Data/StaticBlock.json"},
+        {"Name" : "WoodPlatform", "Path" : "Data/WoodPlatform.json"},
+        {"Name" : "Gem", "Path" : "Data/Gem.json"},
+        {"Name" : "Sky", "Path" : "Data/Sky.json"},
+        {"Name" : "BGM", "Path" : "Data/BGM.json"},
+        {"Name" : "DemoTilemapEntity", "Path" : "Data/DemoTilemapEntity.json"},
+        {"Name" : "JumpParticle", "Path" : "Data/JumpParticle.json"}
+    ]
+}

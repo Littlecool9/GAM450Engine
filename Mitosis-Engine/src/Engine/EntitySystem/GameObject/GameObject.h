@@ -115,10 +115,9 @@ namespace mts
         template <typename T>
         T* GetComponent()
         {
-            for (auto c : components)
+            for (auto* c : components)
             {
-                T* target = dynamic_cast<T*>(c);
-                if (target != nullptr)
+                if (auto* target = dynamic_cast<T*>(c))
                     return target;
             }
             return nullptr;

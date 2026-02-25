@@ -45,9 +45,6 @@ namespace mts::Tilemap
     // Currently assuming there will only be one tile map component for the whole game scene
     class Tilemap : public Component
     {
-        static const std::string defaultTextureSource;
-        static const std::string defaultShaderSource;
-
        public:
         Tilemap()
             : mChunkLoader(),
@@ -83,14 +80,12 @@ namespace mts::Tilemap
         // @return: pair of (min, max) (unit in pixel) in world space
         std::pair<int, int> GetGridPixelWidthRangeInWorldSpace() const;
         std::pair<int, int> GetGridPixelHeightRangeInWorldSpace() const;
-        // Convert world position to chunk position, NOT considering the tilemap's bottom-left
-        // offset
         ChunkPos WorldToChunkPos(float worldX, float worldY);
         ChunkPos WorldToChunkPos(const glm::vec3& worldPos);
         glm::vec3 ChunkPosToWorldPos(const ChunkPos& chunkPos) const;
         bool IsValidChunkPos(const ChunkPos& chunkPos) const;
-        void LoadRenderData(const std::string& texturePath = defaultTextureSource,
-                            const std::string& shaderPath = defaultShaderSource);
+        void LoadRenderData(const std::string& texturePath,
+                            const std::string& shaderPath);
         ChunkRenderData& GetChunkRenderData() { return mChunkRenderData; }
         bool IsValidTilePosition(int x, int y) const;
         glm::vec2 GetLeftBottomWorldPos() const { return mLeftBottomWorldPos; }
@@ -109,6 +104,8 @@ namespace mts::Tilemap
         ChunkLoader mChunkLoader;
 
         std::vector<std::vector<TileID>> tileGrid;  // 2D grid representing tile IDs
+        std::vector<std::string>
+            tilesetSources;  // List of tileset texture sources used in the tilemap
         std::unordered_map<int, std::set<TileID>>
             tilesetTileIDMap;  // Map of tileset index to set of TileIDs
 
@@ -117,16 +114,17 @@ namespace mts::Tilemap
         // std::vector<std::shared_ptr<Chunk>> visibleChunks;
         std::unordered_set<Chunk*> visibleChunks;
 
+        bool mIsChunkDirty = false;
         std::vector<ChunkPos> dirtyChunks;
 
         std::string mTilemapName;
         bool mIsSegmentBased = false;
 
-        bool mIsChunkDirty = false;
         // World position of the left-bottom corner of the tilemap
         glm::vec2 mLeftBottomWorldPos = glm::vec2(0.0f, 0.0f);
 
-        std::string mLoadedTexturesPath = "";
+        std::string defaultTextureSource;
+        std::string defaultShaderSource;
         ChunkRenderData mChunkRenderData;
     };
 

@@ -17,63 +17,61 @@
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Serialization/SerializationUtility.h"
 
+#define ARCHETYPEPATH "Data/GameObjectFactoryArchetypes.json"
+#define DEFAULTDESERIALIZEPATH "Data/"
+
 namespace mts
 {
-    // std::string const GameObjectFactory::deserializePath = "Assets/Serialization/GameObjects/";
-
-    // Maps for string and enum to creator functions
-    // Require manual registration of new GameObject types here
-    std::unordered_map<std::string, std::function<GameObject*()>>
-        GameObjectFactory::stringToTypeMap = {
-            {"GameObject", []() -> GameObject* { return new GameObject(); }},
-    };
-
-    // Maps for string and enum to creator functions
-    // Require manual registration of new GameObject types here
-    // std::unordered_map<mts::GameObjectType, std::function<GameObject*()>>
-    //    GameObjectFactory::typeToCreatorMap = {
-    //        {mts::GameObjectType::GameObject, []() -> GameObject* { return new GameObject(); }},
-    //        {mts::GameObjectType::TestGameObjects, []() -> GameObject* { return new
-    //        TestGameObjects(); }},
-    //};
-
-    std::vector<GameObject*> GameObjectFactory::archetypes;
-
-    GameObject* GameObjectFactory::CreateGameObjectFromArchetype(const std::string& gameObjectName)
+    std::unordered_map<std::string, GameObject*> GameObjectFactory::archetypes;
+    
+    void GameObjectFactory::InitFactory()
     {
-        GameObject* archetype = nullptr;
-        for (auto GameObject : archetypes)
+        JsonDocument doc = JsonDocument();
+        doc.LoadFromFile(ARCHETYPEPATH);
+        if (!doc.LoadFromFile(ARCHETYPEPATH))
         {
-            if (GameObject->GetName() == gameObjectName)
+            LOG_WARN("GameObjectFactory: Failed to load archetypes file '{}'", ARCHETYPEPATH);
+            return;
+        }
+
+        JsonValue root = doc.Root();
+        if (!root.Has("ArchetypesPaths"))
+        {
+            LOG_WARN(
+                "GameObjectFactory: JSON root does not contain 'ArchetypesPaths', no archetypes "
+                "will be loaded");
+            return;
+        }
+
+        JsonValue archetypeArray = root["ArchetypesPaths"];
+        if (archetypeArray.IsArray())
+        {
+            for (int i = 0; i < archetypeArray.Size(); ++i)
             {
-                archetype = GameObject;
+                JsonValue archetype = archetypeArray[i];
+                if (!archetype.Has("Name") || !archetype.Has("Path"))
+                {
+                    LOG_WARN("Archetype entry missing Name or Path, skipping");
+                    continue;
+                }
+                std::string name = archetype["Name"].GetString("");
+                std::string archetypePath = archetype["Path"].GetString("");
+                if (!archetypePath.empty())
+                {
+                    archetypes[name] = BuildArchetypeFromJSON(archetypePath);
+                    LOG_INFO("Loaded archetype {} from path {}", name, archetypePath);
+                }
             }
         }
+    }
 
-        if (archetype != nullptr)
+    void GameObjectFactory::ShutdownFactory()
+    {
+        for (auto& [name, archetype] : archetypes)
         {
-            // Return a copy of the archetype
-            return new GameObject(*archetype);
+            delete archetype;
         }
-        else
-        {
-            // Failed to find in archetypes, create new one
-            GameObject* obj = new GameObject();  // stringToTypeMap[gameObjectName]();
-
-            // Deserialize from file
-            JsonDocument doc = JsonDocument();
-            std::string filepath = gameObjectName;
-            bool res = doc.LoadFromFile(filepath);
-            if (!res)
-            {
-                LOG_ERROR("Failed to load GameObject deserialization file: {}", filepath);
-                return nullptr;
-            }
-            obj->Deserialize(doc.Root());
-
-            return obj;
-        }
-        return nullptr;
+        archetypes.clear();
     }
 
     // Return Empty GameObject
@@ -85,19 +83,60 @@ namespace mts
     GameObject* GameObjectFactory::CreateGameObject(Scene* scene)
     {
         GameObject* obj = new GameObject();
-        if (scene)
-        {
-            LOG_INFO("Created GameObject {} and added to current scene", obj->GetName());
-            scene->AddGameObject(obj);
-        }
+        scene->AddGameObject(obj);
         return obj;
     }
 
-    GameObject* GameObjectFactory::CreateGameObject(const std::string& file)
+    GameObject* GameObjectFactory::InstantiateFromJSON(const std::string& filename)
     {
-        auto crate1 = CreateGameObject();
-        mts::SerializationUtility::DeserializeFromFile(crate1, file);
+        //auto crate1 = new GameObject();
+        GameObject* crate1 = CreateGameObject();
+        mts::SerializationUtility::DeserializeFromFile(crate1, filename);
         return crate1;
+    }
+
+    GameObject* GameObjectFactory::BuildArchetypeFromJSON(const std::string& filename)
+    {
+        auto go = new GameObject();
+        mts::SerializationUtility::DeserializeFromFile(go, filename);
+        return go;
+    }
+
+    GameObject* GameObjectFactory::FindArchetypeByName(const std::string& archetypeName)
+    {
+        auto res = archetypes.find(archetypeName);
+        return res != archetypes.end() ? res->second : nullptr;
+    }
+
+    GameObject* GameObjectFactory::InstantiateFromArchetype(const std::string& archetypeName)
+    {
+        GameObject* go = FindArchetypeByName(archetypeName);
+        if (go)
+        {
+            GameObject* newObj = new GameObject(*go);
+            SceneSystem::GetCurrentScene()->AddGameObject(newObj);
+            return newObj;
+        }
+        LOG_WARN("Archetype {} not found, trying to load from JSON", archetypeName);
+        return nullptr;
+    }
+
+    GameObject* GameObjectFactory::Instantiate(const std::string& gameObjectName)
+    {
+        GameObject* newObj = InstantiateFromArchetype(gameObjectName);
+        if (newObj == nullptr)
+        {
+            std::string jsonPath = DEFAULTDESERIALIZEPATH + gameObjectName + ".json";
+            newObj = InstantiateFromJSON(jsonPath);
+        }
+        if (newObj == nullptr)
+        {
+            newObj = new GameObject();  
+            LOG_WARN("GameObject {} not found in archetypes or JSON, creating empty GameObject",
+                     gameObjectName);
+        }
+
+        return newObj;
     }
 
 }  // namespace mts

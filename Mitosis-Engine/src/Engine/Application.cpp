@@ -26,6 +26,7 @@
 #include "Time/Time.h"
 #include "Physics2D/PhysicsSystem2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/Resource/ResourceManager.h"
 #include "Audio/AudioManager.h"
 #include "Renderer.h"
@@ -112,6 +113,7 @@ namespace mts
         mIsRunning = true;
 
         ResourceManager::Init();
+        GameObjectFactory::InitFactory();
         SceneSystem::Init(GetInitialScene());
         debug::DebugDraw::Init();
 
@@ -186,6 +188,7 @@ namespace mts
         // Important to shutdown the opposite way from initializing
         debug::DebugDraw::Shutdown();
         SceneSystem::Shutdown();
+        GameObjectFactory::ShutdownFactory();
         ResourceManager::Shutdown();
         Input::Shutdown();
 

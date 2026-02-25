@@ -66,6 +66,7 @@ namespace mts
         void EndObject();
 
         void BeginArray(const char* key);
+        void BeginArray();
         void EndArray();
 
         void WriteFloat(const char* key, float value);

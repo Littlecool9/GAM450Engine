@@ -67,6 +67,11 @@ namespace mts
 
     void SceneSystem::Shutdown()
     {
+        for (auto obj : dontDestroyObjects)
+        {
+            delete obj;
+        }
+        dontDestroyObjects.clear();
     }
 
     void SceneSystem::SaveScene(Scene* scene, const std::string& fileName)
@@ -91,7 +96,14 @@ namespace mts
     {
         if (nextScene != nullptr)
         {
-            currentScene = std::move(nextScene);
+            // Delete the old scene before switching to the new one
+            if (currentScene != nullptr)
+            {
+                delete currentScene;
+            }
+
+            currentScene = nextScene;
+            nextScene = nullptr;
             currentScene->Init();
             onChangeSceneDelegate.Invoke();
 
@@ -101,8 +113,7 @@ namespace mts
             // add dont destroy objects to the new scene
             for (auto obj : dontDestroyObjects)
             {
-                currentScene->CreateGameObject();  // Jackey TODO: Replace this part with a
-                                                   // gameobject factory implementation
+                currentScene->AddGameObject(obj);
             }
         }
     }
@@ -122,6 +133,7 @@ namespace mts
         }
     }
 
+    // Transfer the ownership of the object to the scene system
     void SceneSystem::AddDontDestroyObject(GameObject* obj)
     {
         obj->SetDontDestroy(true);

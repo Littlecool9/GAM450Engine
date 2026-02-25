@@ -75,10 +75,6 @@ namespace mts::Tilemap
 
         ChunkPos visibleChunkLB = mOwner->WorldToChunkPos(glm::vec3(overlapWorldLB, 0));
         ChunkPos visibleChunkRT = mOwner->WorldToChunkPos(glm::vec3(overlapWorldRT, 0));
-        visibleChunkLB.x -= 1;
-        visibleChunkLB.y -= 1;
-        visibleChunkRT.x += 1;
-        visibleChunkRT.y += 1;
 
         if (visibleChunkLB.x > visibleChunkRT.x)
             std::swap(visibleChunkLB.x, visibleChunkRT.x);

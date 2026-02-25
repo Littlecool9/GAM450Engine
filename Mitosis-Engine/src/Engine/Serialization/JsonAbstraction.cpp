@@ -130,6 +130,29 @@ namespace mts
         impl_->stack.push_back(&it->value);
     }
 
+    void JsonDocument::BeginArray()
+    {
+        auto* parent = impl_->stack.empty() ? nullptr : impl_->stack.back();
+        auto& alloc = impl_->doc.GetAllocator();
+        // Case A: first array in the document (root)
+        if (!parent)
+        {
+            impl_->doc.SetArray();
+            impl_->stack.push_back(&impl_->doc);
+            return;
+        }
+        // Case B: we are inside an array -> append a new array element
+        if (parent->IsArray())
+        {
+            parent->PushBack(RjValue(rapidjson::kArrayType), alloc);
+            RjValue& child = (*parent)[parent->Size() - 1];
+            impl_->stack.push_back(&child);
+            return;
+        }
+        // Case C: parent is an object -> you must use BeginArray(key)
+        assert(false && "BeginArray() called with object parent. Use BeginArray(key).");
+    }
+
     void JsonDocument::EndArray()
     {
         impl_->stack.pop_back();

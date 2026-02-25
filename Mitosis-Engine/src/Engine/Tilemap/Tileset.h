@@ -46,7 +46,7 @@ namespace mts::Tilemap
 
        public:
         static Tileset* GetTilesetById(int id);
-        static void LoadAllTileset(int number);
+        static void LoadTilesetFromFile(const std::string& filepath);
         static void UnloadAllTileset();
 
         // A tileset may be newed by MTS_ALLOC_T
@@ -57,7 +57,6 @@ namespace mts::Tilemap
         Tileset() = default;
 
         const TileProperties& Get(TileID id) const;
-        const std::string GetTexturePath() const { return texturePath; }
 
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
@@ -70,7 +69,6 @@ namespace mts::Tilemap
         uint32_t id;
         std::unordered_map<TileID, TileProperties>
             tileDefinitions;      // Map of tile ID to Tile definitions
-        std::string texturePath;  // path to the tile texture
     };
 
 }  // namespace mts::Tilemap

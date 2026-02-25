@@ -7,7 +7,14 @@
             "Data":
             {
                 "Name": "Demo Tilemap",
+                
+                "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.json",
+                "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.json",
 
+                "TilesetsPath":[
+                  "Data/Tilemap/Tileset_0.json"
+                ],
+                
                 "UsedTilesets": [
                   {
                     "TileIDs": [ 1, 2, 3 ],
@@ -15,7 +22,7 @@
                   }
                 ],
 
-                "LeftBottomTileTransformPosition": [ 0, 0 ],
+                "LeftBottomTileTransformPosition": [ 0.0, 0.0 ],
               "TilemapCellGrid": [
                 [ 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 ],
                 [ 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 ],

@@ -10,7 +10,7 @@
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
 
-#define TestLoad
+//#define TestLoad
 
 TechDemoScene::~TechDemoScene() = default;
 
@@ -51,30 +51,28 @@ void TechDemoScene::OnInit()
     background = FindGameObjectByName("Sky");
 #else
 
-    auto player = mts::GameObjectFactory::CreateGameObject("Data/Player.json");
+    auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.json");
     player->AddTag("Player");
 
-    mts::GameObjectFactory::CreateGameObject("Data/Ground.json");
+    auto enemy = mts::GameObjectFactory::InstantiateFromJSON("Data/Enemy.json");
 
-    auto enemy = mts::GameObjectFactory::CreateGameObject("Data/Enemy.json");
-
-    camera = mts::GameObjectFactory::CreateGameObject("Data/Camera.json");
+    camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.json");
     camera->SetName("CameraObject");
     camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
         player->GetComponent<mts::Transform>());
 
-    auto crate1 = mts::GameObjectFactory::CreateGameObject("Data/Crate.json");
+    auto crate1 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
     crate1->SetName("Crate1");
     mts::Transform* crate1Transform = crate1->GetComponent<mts::Transform>();
     crate1Transform->SetPosition(glm::vec2(5, 10));
 
-    auto crate2 = mts::GameObjectFactory::CreateGameObject("Data/Crate.json");
-    crate1->SetName("Crate2");
+    auto crate2 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
+    crate2->SetName("Crate2");
     mts::Transform* crate2Transform = crate2->GetComponent<mts::Transform>();
     crate2Transform->SetPosition(glm::vec2(13, 9));
 
-    auto crate3 = mts::GameObjectFactory::CreateGameObject("Data/Crate.json");
-    crate1->SetName("Crate3");
+    auto crate3 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
+    crate3->SetName("Crate3");
     mts::Transform* crate3Transform = crate3->GetComponent<mts::Transform>();
     crate3Transform->SetPosition(glm::vec2(13, 10));
 
@@ -86,7 +84,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : grassPos)
     {
-        auto grass = mts::GameObjectFactory::CreateGameObject("Data/GrassPatch.json");
+        auto grass = mts::GameObjectFactory::InstantiateFromJSON("Data/GrassPatch.json");
         mts::Transform* grassTransform = grass->GetComponent<mts::Transform>();
         grassTransform->SetPosition(pos);
     }
@@ -108,7 +106,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : fencePos)
     {
-        auto fence = mts::GameObjectFactory::CreateGameObject("Data/BackgroundFence.json");
+        auto fence = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundFence.json");
         mts::Transform* fenceTransform = fence->GetComponent<mts::Transform>();
         fenceTransform->SetPosition(pos);
     }
@@ -117,7 +115,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : blockPos)
     {
-        auto block = mts::GameObjectFactory::CreateGameObject("Data/StaticBlock.json");
+        auto block = mts::GameObjectFactory::InstantiateFromJSON("Data/StaticBlock.json");
         mts::Transform* blockTransform = block->GetComponent<mts::Transform>();
         blockTransform->SetPosition(pos);
     }
@@ -126,7 +124,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : platformPos)
     {
-        auto platform = mts::GameObjectFactory::CreateGameObject("Data/WoodPlatform.json");
+        auto platform = mts::GameObjectFactory::InstantiateFromJSON("Data/WoodPlatform.json");
         mts::Transform* platformTransform = platform->GetComponent<mts::Transform>();
         platformTransform->SetPosition(pos);
     }
@@ -136,17 +134,17 @@ void TechDemoScene::OnInit()
 
     for (auto pos : gemPos)
     {
-        auto gem = mts::GameObjectFactory::CreateGameObject("Data/Gem.json");
+        auto gem = mts::GameObjectFactory::InstantiateFromJSON("Data/Gem.json");
         mts::Transform* gemTransform = gem->GetComponent<mts::Transform>();
         gemTransform->SetPosition(pos);
     }
 
-    background = mts::GameObjectFactory::CreateGameObject("Data/Sky.json");
+    background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.json");
 
-    auto bgm = mts::GameObjectFactory::CreateGameObject("Data/BGM.json");
+    auto bgm = mts::GameObjectFactory::InstantiateFromJSON("Data/BGM.json");
 
     // if this is not created last it crashes
-    auto tilemap = mts::GameObjectFactory::CreateGameObject("Data/DemoTilemapEntity.json");
+    auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
 
     mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/TechDemo.json");
 #endif

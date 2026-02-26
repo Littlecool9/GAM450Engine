@@ -15,10 +15,12 @@
 #include "Engine/Resource/Mesh.h"
 #include "Engine/Resource/Shader.h"
 #include "Engine/Resource/Texture.h"
+#include "Engine/Interfaces/ISubmitRenderCommand.h"
 
 namespace mts
 {
-    class SpriteRenderer : public Component
+    struct RenderCommand;
+    class SpriteRenderer : public Component, public ISubmitRenderCommand
     {
        public:
         SpriteRenderer(GameObject* owner);
@@ -28,9 +30,10 @@ namespace mts
         void Init() override;
         void Update(float dt) override;
         void LateUpdate(float dt) override;
+        void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
-        void DrawSprite();
+        void SubmitRenderCommand() const override;
 
         void SetMesh(Mesh* newMesh) { mMesh = newMesh; }
         void SetShader(Shader* newShader) { mShader = newShader; }
@@ -46,6 +49,7 @@ namespace mts
         void SetCols(int c);
         glm::vec3 GetTintColor() const { return mTintColor; }
 
+
        private:
         Mesh* mMesh = nullptr;
         Shader* mShader = nullptr;
@@ -59,6 +63,11 @@ namespace mts
         bool mFlipY = false;
         glm::vec3 mTintColor = {1.0f, 1.0f, 1.0f};
         glm::vec2 mUvOffset = {0.0f, 0.0f};
+
+        // Parallax factor for horizontal movement:
+        // 0 locks the sprite to the camera (HUD-style, ignores camera movement),
+        // 1 makes the sprite move normally in world space (no parallax effect).
+        float parallaxFactorX = 1.0f; 
     };
 
 }  // namespace mts

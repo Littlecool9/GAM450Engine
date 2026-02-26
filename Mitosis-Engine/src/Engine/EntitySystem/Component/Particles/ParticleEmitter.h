@@ -9,6 +9,7 @@
 
 #pragma once
 #include "Engine/EntitySystem/Component/Component.h"
+#include "Engine/Interfaces/ISubmitRenderCommand.h"
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
@@ -21,7 +22,7 @@ namespace mts
     class Texture;
     class Shader;
 
-    class ParticleEmitter : public Component
+    class ParticleEmitter : public Component, public ISubmitRenderCommand
     {
         MTS_CLASS_NEW_DELETE();
 
@@ -32,9 +33,13 @@ namespace mts
 
         void Init() override;
         void Update(float dt) override;
-        void DrawParticles();
+        void LateUpdate(float dt) override;
+        void Render() override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
+
+        void SubmitRenderCommand() const override;
+        
 
         void SetFrame(int frameIndex);
         void EmitParticle();

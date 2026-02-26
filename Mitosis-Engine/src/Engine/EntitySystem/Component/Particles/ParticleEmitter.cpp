@@ -80,50 +80,56 @@ namespace mts
         }
     }
 
-    void ParticleEmitter::DrawParticles()
+    void ParticleEmitter::LateUpdate(float dt)
+    {
+        // no-op
+    }
+
+    void ParticleEmitter::Render()
+    {
+        SubmitRenderCommand();
+    }
+
+    void ParticleEmitter::SubmitRenderCommand() const
     {
         if (!mMesh || !mShader || !mTexture)
             return;
-
-        mShader->UseProgram();
 
         auto transform = GetGameObject()->GetComponent<Transform>();
         MTS_ASSERT(transform != nullptr);
 
         float emitterZ = transform->GetPosition().z;
 
-        const auto& cam = Renderer::GetActiveCamera();
-        glm::mat4 viewProj;
-        if (cam.valid)
+        auto submitLambda = [this, emitterZ](const Particle& particle)
         {
-            viewProj = cam.viewProj;
-        }
-        // set shader uniforms
-        mShader->SetMatrix4("viewProj", viewProj);
-        mShader->SetVector2f("uvOffset", mUvOffset);
-        mShader->SetVector3f("tintColor", mTintColor);
+            if (particle.lifetime <= 0)
+                return;
 
-        auto lambda = [this, emitterZ](const Particle& particle)
-        {
-            if (particle.lifetime > 0)
-            {
-                glm::mat4 S = glm::scale(glm::mat4(1.0f),
-                                         glm::vec3(particle.scale.x, particle.scale.y, 1.0f));
-                glm::mat4 R =
-                    glm::rotate(glm::mat4(1.0f), particle.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
-                glm::mat4 T =
-                    glm::translate(glm::mat4(1.0f),
-                                   glm::vec3(particle.position.x, particle.position.y, emitterZ));
-                glm::mat4 model = T * R * S;
-                mShader->SetMatrix4("model", model);
-                mShader->SetFloat("alpha", mAlpha * particle.lifetime / mLifetimeMin);
-                this->mMesh->Draw();
-            }
+            glm::mat4 S =
+                glm::scale(glm::mat4(1.0f), glm::vec3(particle.scale.x, particle.scale.y, 1.0f));
+            glm::mat4 R =
+                glm::rotate(glm::mat4(1.0f), particle.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+            glm::mat4 T =
+                glm::translate(glm::mat4(1.0f),
+                               glm::vec3(particle.position.x, particle.position.y, emitterZ));
+
+            RenderCommand cmd;
+            cmd.shader = mShader;
+            cmd.texture = mTexture;
+            cmd.mesh = mMesh;
+            cmd.model = T * R * S;
+            cmd.uvOffset = mUvOffset;
+            cmd.tintColor = mTintColor;
+            cmd.alpha = mAlpha * (particle.lifetime / mLifetimeMin); 
+            cmd.sortKey = emitterZ;
+            cmd.hasAlpha = true;         
+            cmd.parallaxFactorX = 1.0f;  
+
+            Renderer::Submit(cmd);
         };
 
-        mTexture->BindTexture();
-        mContainer->Render(lambda);
-        mTexture->UnbindTexture();
+        mContainer->Render(submitLambda);
+
     }
 
     void ParticleEmitter::Deserialize(JsonValue const& jsonObj)

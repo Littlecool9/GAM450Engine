@@ -18,6 +18,8 @@ namespace mts
 {
     class Shader;
     class Texture;
+    class ISubmitRenderCommand;
+    struct RenderCommand;
 
 }  // namespace mts
 
@@ -33,7 +35,6 @@ namespace mts::Tilemap
         TilemapRenderer(Tilemap* owner) : mOwner(owner) {}
 
         void DebugDraw(const Chunk& chunk) const;
-        void RenderChunk(const Chunk& chunk) const;
 
        private:
         Tilemap* mOwner;

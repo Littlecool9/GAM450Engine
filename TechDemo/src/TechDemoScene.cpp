@@ -14,21 +14,6 @@
 
 TechDemoScene::~TechDemoScene() = default;
 
-void TechDemoScene::OnUpdate()
-{
-    // sync the background to the camera
-    mts::Transform* camTransform = camera->GetComponent<mts::Transform>();
-    if (camTransform)
-    {
-        mts::Transform* backgroundTransform = background->GetComponent<mts::Transform>();
-        if (backgroundTransform)
-        {
-            backgroundTransform->SetPosition(
-                glm::vec2(camTransform->GetPosition().x, camTransform->GetPosition().y));
-        }
-    }
-}
-
 void TechDemoScene::OnInit()
 {
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
@@ -54,7 +39,7 @@ void TechDemoScene::OnInit()
     auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.json");
     player->AddTag("Player");
 
-    mts::GameObjectFactory::CreateGameObject("Data/Ground.json");
+    mts::GameObjectFactory::InstantiateFromJSON("Data/Ground.json");
 
     camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.json");
     camera->SetName("CameraObject");
@@ -140,12 +125,13 @@ void TechDemoScene::OnInit()
     }
 
     background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.json");
+    background2 = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundTest.json");
 
     auto bgm = mts::GameObjectFactory::InstantiateFromJSON("Data/BGM.json");
 
     // if this is not created last it crashes
     auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
 
-    // mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/TechDemo.json");
+     mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 #endif
 }

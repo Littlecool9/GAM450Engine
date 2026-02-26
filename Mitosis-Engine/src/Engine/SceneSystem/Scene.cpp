@@ -136,6 +136,15 @@ namespace mts
         doc.BeginArray("GameObjects");
         for (auto g : mGameObjects)
         {
+            // Skip serialization for TilemapCollider whose ownership isnt belong to the scene
+            // Loading and Unloading tilemap colliders should be managed by Tilemap ResourceManager
+            // which is not implemented yet,
+            // This is a temp solution to skip serializing tilemap colliders until we implemented
+            // the tilemap ResourceManager
+            if (g->HasTag("TilemapCollider"))
+            {
+                continue;  // Skip serialization for tilemap collider objects
+            }
             doc.BeginObject();
             g->Serialize(doc);
             doc.EndObject();

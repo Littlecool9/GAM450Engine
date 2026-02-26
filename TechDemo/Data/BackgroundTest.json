@@ -1,12 +1,12 @@
 {
-  "Name": "Sky",
+  "Name": "BackgroundTest",
   "Components": [
     {
       "Type": "Transform",
       "Data": {
         "Position": [
           1,
-          1,
+          10,
           -1
         ],
         "Scale": [
@@ -30,7 +30,7 @@
         "FrameIndex": 0,
         "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
 
-        "ParallaxFactorX": 0.9
+        "ParallaxFactorX": 0.5
       }
     }
   ]

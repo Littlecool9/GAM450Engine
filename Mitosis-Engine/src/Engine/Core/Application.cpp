@@ -106,11 +106,15 @@ namespace mts
                     }
                 });
 
+            // OnRender is a stage for all layers to submit render commands
+            Renderer::BeginFrame();
             for (auto& layer : mLayerStack)
             {
                 if (layer->IsEnabled())
                     layer->OnRender();
             }
+            Renderer::Flush();  // Execute Render commands
+            Renderer::EndFrame();
 
             if (mInDebugView)
             {

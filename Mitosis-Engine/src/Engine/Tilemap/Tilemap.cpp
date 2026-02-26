@@ -15,6 +15,7 @@
 #include "Tileset.h"
 #include "Chunk.h"
 #include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 #define DEFAULT_TILE_ID 0
 
@@ -57,49 +58,43 @@ namespace mts::Tilemap
 
     void Tilemap::Render()
     {
-        bool outputFlag = false;
         // Render all visible chunks
-        int count = 0;
-
         if (!mChunkRenderData.isValid())
             LoadRenderData(defaultTextureSource, defaultShaderSource);
 
+        SubmitRenderCommand();
+    }
+
+    void Tilemap::SubmitRenderCommand() const
+    {
+        // submit RenderCommand for each chunks
         for (auto& chunk : visibleChunks)
         {
             if (!chunk->IsLoaded())
                 continue;
-            bool renderChunk = false;
 
-            const auto& cam = mts::Renderer::GetActiveCamera();
-            mChunkRenderData.shader->UseProgram();
-            glm::mat4 viewProj;
-            if (cam.valid)
-            {
-                viewProj = cam.viewProj;
-            }
-            else
-            {
-                // Fallback (so nothing breaks if no camera exists yet)
-                glm::ivec4 viewportSize;
-                glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-                glm::mat4 viewProj = glm::ortho(0.0f,
-                                                static_cast<float>(viewportSize.z),
-                                                static_cast<float>(viewportSize.w),
-                                                0.0f,
-                                                -1.0f,
-                                                1.0f);
-            }
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            RenderCommand cmd;
+            cmd.shader = mChunkRenderData.shader;
+            cmd.texture = mChunkRenderData.texture;
+            // Tilemap is using its own custom VAO and EBO
+            // we set vao and indexCount instead of mesh
+            cmd.vao = chunk->GetVAO();
+            cmd.indexCount = chunk->GetIndexCount();
 
-            mChunkRenderData.shader->SetMatrix4("viewProj", viewProj);
-            mChunkRenderData.shader->SetVector2f("uvOffset", glm::vec2(0.0f, 0.0f));
-            mChunkRenderData.shader->SetVector3f("tintColor", glm::vec3(1.0f, 1.0f, 1.0f));
-            mChunkRenderData.shader->SetFloat("alpha", 1.0f);
+            glm::vec3 worldPos = ChunkPosToWorldPos(chunk->GetPos());
+            cmd.model = glm::translate(glm::mat4(1.0f), worldPos);
 
-            mChunkRenderData.texture->BindTexture();
-            mRenderer.RenderChunk(*chunk);
-            mChunkRenderData.texture->UnbindTexture();
+            // default UV and tint for now
+            // possible extension for per-chunk or even per-tile variation if needed
+            cmd.uvOffset = glm::vec2(0.0f, 0.0f);
+            cmd.tintColor = glm::vec3(1.0f, 1.0f, 1.0f);
+            cmd.alpha = 1.0f;
+
+            // sort the render command based on the world z position of the chunk
+            cmd.sortKey = worldPos.z; 
+            cmd.hasAlpha = true;       
+
+            Renderer::Submit(cmd);
         }
     }
 
@@ -278,7 +273,7 @@ namespace mts::Tilemap
         {
             doc.WriteString(source.c_str());
         }
-        doc.EndArray();
+        doc.EndArray();  // End of TilesetsPath array
 
         // Serialize used tilesets
         doc.BeginArray("UsedTilesets");
@@ -291,16 +286,16 @@ namespace mts::Tilemap
             {
                 doc.WriteInt(id);
             }
-            doc.EndArray();
-            doc.EndObject();
+            doc.EndArray();  // End of TileIDs array
+            doc.EndObject();  // End of this tileset object
         }
-        doc.EndArray();
+        doc.EndArray();  // End of UsedTilesets array
 
         // Serialize grid data
         doc.BeginArray("LeftBottomTileTransformPosition");
         doc.WriteFloat(mLeftBottomWorldPos.x);
         doc.WriteFloat(mLeftBottomWorldPos.y);
-        doc.EndArray();
+        doc.EndArray();  // End of LeftBottomTileTransformPosition array
 
         doc.BeginArray("TilemapCellGrid");
         for (int rowNumber = tileGrid.size() - 1; rowNumber >= 0; rowNumber--)
@@ -311,11 +306,11 @@ namespace mts::Tilemap
             {
                 doc.WriteInt(id);
             }
-            doc.EndArray();
+            doc.EndArray();  // End of this row
         }
-        doc.EndArray();
+        doc.EndArray();  // End of TilemapCellGrid array
         // TODO: Serialize segment-based tilemap attributes if applicable
-        doc.EndObject();
+        doc.EndObject();  // End of Data object
     }
 
     void Tilemap::OperateTile(int x, int y, TileOperation op)

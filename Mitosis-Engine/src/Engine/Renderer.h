@@ -1,11 +1,15 @@
-﻿
-#pragma once
+﻿#pragma once
 #include "SceneSystem/Scene.h"
+#include <glad/glad.h>
 #include <glm/mat4x4.hpp>
 
 namespace mts
 {
     inline constexpr float PixelsPerUnit = 80.0f;
+
+    class Mesh;
+    class Texture;
+    class Shader;
 
     struct RenderCamera
     {
@@ -14,6 +18,34 @@ namespace mts
         glm::mat4 proj{1.0f};
         glm::mat4 viewProj{1.0f};
         bool valid = false;  // so SpriteRenderer can fallback if no camera exists
+    };
+
+    struct RenderCommand
+    {
+        // The RenderCommand struct encapsulates all the information needed to render a single
+        // sprite or tile. Set if applicable:
+
+        // === Asset ref ===
+        Shader* shader = nullptr;
+        Texture* texture = nullptr;
+
+        // === Geometry Data ===
+        Mesh* mesh = nullptr;    // for SpriteRenderer
+        GLuint vao = 0;          // custom VAO
+        GLsizei indexCount = 0;  // custom EBO
+
+        // === Transformation ===
+        glm::mat4 model{1.0f};
+
+        // === Texture ===
+        glm::vec2 uvOffset{0.0f};
+        glm::vec3 tintColor{1.0f};
+        float alpha = 1.0f;
+
+        // === Render Control ===
+        float sortKey = 0.0f;          // Key for sorting render commands (e.g., based on depth)
+        bool hasAlpha = false;         // turn on blending if true
+        float parallaxFactorX = 1.0f;  // optional parallax factor
     };
 
     class Renderer
@@ -34,10 +66,29 @@ namespace mts
         static void SetActiveCamera(const RenderCamera& cam) { ActiveCamera = cam; }
         static const RenderCamera& GetActiveCamera() { return ActiveCamera; }
 
-        // Sort sprites with SpriteRenderer components and draw them to screen
-        static void DrawSprites(Scene* scene);
+        // Frame-based rendering API: collect, sort, and draw render commands
+        static void BeginFrame();
+
+        static void Submit(const RenderCommand& cmd);
+
+        // Execute all render commands and clear the command queue
+        static void Flush();
+
+        static void EndFrame();
 
        private:
         static RenderCamera ActiveCamera;
+
+        // Render Command queue
+        static std::vector<RenderCommand> OpaqueCommands;
+        static std::vector<RenderCommand> TransparentCommands;
+
+        static GLboolean blendEnabled;
+        static GLboolean depthTestEnabled;
+        static GLboolean depthMaskEnabled;
+
+        // Internal rendering functions
+        static void ExecuteCommand(const RenderCommand& cmd);
+        static glm::mat4 ComputeViewProjWithParallax(float parallaxFactorX);
     };
-}  // namespace mts
+}  // namespace mts     

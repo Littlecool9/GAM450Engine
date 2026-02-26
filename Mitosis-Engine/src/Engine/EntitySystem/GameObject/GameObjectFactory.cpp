@@ -27,7 +27,6 @@ namespace mts
     void GameObjectFactory::InitFactory()
     {
         JsonDocument doc = JsonDocument();
-        doc.LoadFromFile(ARCHETYPEPATH);
         if (!doc.LoadFromFile(ARCHETYPEPATH))
         {
             LOG_WARN("GameObjectFactory: Failed to load archetypes file '{}'", ARCHETYPEPATH);

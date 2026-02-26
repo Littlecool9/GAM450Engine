@@ -8,9 +8,9 @@ class TechDemoScene : public mts::Scene
 
    protected:
     void OnInit() override;
-    void OnUpdate() override;
 
    private:
     mts::GameObject* camera;
     mts::GameObject* background;
+    mts::GameObject* background2;
 };

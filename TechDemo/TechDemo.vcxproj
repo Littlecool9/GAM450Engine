@@ -72,7 +72,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;user32.lib;gdi32.lib;shell32.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(FMOD_SDK)\api\studio\lib\x64;$(FMOD_SDK)\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>

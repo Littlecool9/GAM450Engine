@@ -67,6 +67,11 @@ namespace mts
             frameIndex = jsonObj["FrameIndex"].GetInt(frameIndex);
         }
 
+        if (jsonObj.Has("ParallaxFactorX"))
+        {
+            parallaxFactorX = jsonObj["ParallaxFactorX"].GetFloat(parallaxFactorX);
+        }
+
         // Read in texture resource
         auto textureResourcePath = "";
         if (jsonObj.Has("TextureResource"))
@@ -119,6 +124,8 @@ namespace mts
 
         doc.WriteInt("FrameIndex", mFrameIndex);
 
+        doc.WriteFloat("ParallaxFactorX", parallaxFactorX);
+
         if (mTexture)
             doc.WriteString("TextureResource", mTexture->GetPath().c_str());
         else
@@ -137,50 +144,38 @@ namespace mts
         doc.EndObject();
     }
 
-    void SpriteRenderer::DrawSprite()
+    // Sprites don't render themselves, done through Renderer calling DrawSprite
+    void SpriteRenderer::Render()
+    {
+        SubmitRenderCommand();
+    }
+
+    void SpriteRenderer::SubmitRenderCommand() const
     {
         if (!mMesh || !mShader || !mTexture)
             return;
 
-        mShader->UseProgram();
-
         auto transform = GetGameObject()->GetComponent<Transform>();
-        MTS_ASSERT(transform != nullptr);
 
-        glm::mat4 model = transform->GetLocalMatrix();
+        RenderCommand cmd;
+        cmd.shader = mShader;
+        cmd.texture = mTexture;
+        cmd.mesh = mMesh;
+
+        cmd.model = transform->GetLocalMatrix();
         if (mFlipX)
-            model *= glm::scale(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, 1.0f));
+            cmd.model *= glm::scale(glm::mat4(1.0f), {-1, 1, 1});
         if (mFlipY)
-            model *= glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, -1.0f, 1.0f));
+            cmd.model *= glm::scale(glm::mat4(1.0f), {1, -1, 1});
 
-        const auto& cam = Renderer::GetActiveCamera();
-        glm::mat4 viewProj;
-        if (cam.valid)
-        {
-            viewProj = cam.viewProj;
-        }
-        else
-        {
-            // Fallback (so nothing breaks if no camera exists yet)
-            glm::ivec4 viewportSize;
-            glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
-            viewProj = glm::ortho(0.0f,
-                                  static_cast<float>(viewportSize.z),
-                                  static_cast<float>(viewportSize.w),
-                                  0.0f,
-                                  -1.0f,
-                                  1.0f);
-        }
-        // set shader uniforms
-        mShader->SetMatrix4("model", model);
-        mShader->SetMatrix4("viewProj", viewProj);
-        mShader->SetVector2f("uvOffset", mUvOffset);
-        mShader->SetVector3f("tintColor", mTintColor);
-        mShader->SetFloat("alpha", mAlpha);
+        cmd.uvOffset = mUvOffset;
+        cmd.tintColor = mTintColor;
+        cmd.alpha = mAlpha;
+        cmd.sortKey = transform->GetPosition().z;
+        cmd.hasAlpha = mHasTextureAlpha;
+        cmd.parallaxFactorX = parallaxFactorX;
 
-        mTexture->BindTexture();
-        mMesh->Draw();
-        mTexture->UnbindTexture();
+        Renderer::Submit(cmd);
     }
 
     void SpriteRenderer::SetFrame(int frameIndex)

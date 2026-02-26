@@ -30,4 +30,4 @@ namespace mts
 
         virtual void Serialize(JsonDocument& doc) const = 0;
     };
-}  
+}  // namespace mts

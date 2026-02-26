@@ -43,7 +43,6 @@ namespace mts
 
     void RenderingLayer::OnRender()
     {
-        Renderer::DrawSprites(SceneSystem::GetCurrentScene());
     }
 
     void RenderingLayer::OnEvent(Event& e)

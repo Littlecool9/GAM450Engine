@@ -15,6 +15,7 @@
 #include "ChunkLoader.h"
 #include "Tile.h"
 #include "Engine/EntitySystem/Component/Component.h"
+#include "Engine/Interfaces/ISubmitRenderCommand.h"
 #include "Engine/Renderer.h"
 #include <functional>
 #include <unordered_set>
@@ -43,7 +44,7 @@ namespace mts::Tilemap
     using TileOperation = std::function<void(TileID)>;
 
     // Currently assuming there will only be one tile map component for the whole game scene
-    class Tilemap : public Component
+    class Tilemap : public Component, public ISubmitRenderCommand
     {
        public:
         Tilemap()
@@ -61,6 +62,7 @@ namespace mts::Tilemap
         virtual void Update(float dt) override;
 
         virtual void Render() override;
+        void SubmitRenderCommand() const override;
 
         virtual void DebugRender() override;
 

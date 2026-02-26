@@ -352,6 +352,7 @@ namespace mts::Tilemap
             // Step A: Create a child object/temporary object with a collider
             // Its position should be the Chunk's world position + rectangle's center offset
             GameObject* colObj = GameObjectFactory::CreateGameObject();
+            colObj->AddTag("TilemapCollider");
 
             // Step B: Calculate the world position center point
             // rect.x/y is the top-left corner, we need the center point for BoxCollider2D

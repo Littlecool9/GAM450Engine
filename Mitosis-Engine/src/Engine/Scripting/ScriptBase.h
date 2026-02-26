@@ -11,6 +11,7 @@
 
 namespace mts
 {
+    class JsonDocument;
     class GameObject;
     class JsonValue;
 

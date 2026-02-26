@@ -11,6 +11,11 @@
 #include "PlayerController.h"
 
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
+#include "Engine/EntitySystem/Component/AnimationSystem.h"
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
+#include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Input/Input.h"
 #include "Engine/Serialization/SerializationUtility.h"
 

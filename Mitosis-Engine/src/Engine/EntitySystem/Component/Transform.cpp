@@ -105,7 +105,7 @@ namespace mts
         json.EndArray();
 
         json.WriteFloat("Rotation", mRotation);
-        json.EndObject();  // end Data
+
     }
 
     glm::mat4 Transform::GetLocalMatrix()

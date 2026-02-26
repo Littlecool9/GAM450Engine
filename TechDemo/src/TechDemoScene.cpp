@@ -3,6 +3,7 @@
 
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Camera/CameraFollow.h"
+#include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -109,6 +110,8 @@ void TechDemoScene::OnInit()
 
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new EnemyController(); });
 
+    //mts::ScriptFactory::RegisterScript("EnemyBehavior", []() { return new mts::EnemyAgent(); });
+
     mts::ScriptFactory::RegisterScript("CollectableController",
                                        []() { return new CollectableController(); });
 
@@ -116,6 +119,8 @@ void TechDemoScene::OnInit()
     mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 
     auto player = FindGameObjectByName("Player");
+
+
     camera = FindGameObjectByName("CameraObject");
     assert(camera != nullptr);
 

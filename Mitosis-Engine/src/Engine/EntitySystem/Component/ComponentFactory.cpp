@@ -24,6 +24,7 @@
 #include "Audio/AudioListener.h"
 #include "Animation.h"
 #include "AnimationSystem.h"
+#include "EnemyBehavior/EnemyAgent.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
 #include "Engine/Tilemap/Tilemap.h"
 
@@ -46,6 +47,7 @@ namespace mts
             {"ParticleEmitter", []() -> Component* { return new ParticleEmitter(); }},
             {"NativeScript", []() -> Component* { return new NativeScriptComponent(); }},
             {"AnimationSystem", []() -> Component* { return new AnimationSystem(); }},
+            {"EnemyAgent", []() -> Component* { return new EnemyAgent(); }},
             {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }}};
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,

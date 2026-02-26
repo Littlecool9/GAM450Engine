@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -152,6 +152,39 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\DebugDraw.h" />
     <ClInclude Include="src\Engine\Delegate\Delegate.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\AIPlan.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\AIPlanner.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyActionList.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyActions\BaseEnemyAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyAgent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyGoals.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyPreference.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyState.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyStep.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Entity\Entity.h" />
     <ClInclude Include="src\Engine\EntitySystem\Component\ActionList.h" />
     <ClInclude Include="src\Engine\EntitySystem\Component\Actions\BaseAction.h" />
@@ -238,6 +271,31 @@
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\FMODBackend.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\NullAudioBackend.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\AIPlan.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\AIPlanner.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyActionList.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyActions\BaseEnemyAction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyAgent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyPreference.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyState.cpp" />
     <ClCompile Include="src\Engine\Core\Layer\AudioLayer.cpp">
       <SubType>
       </SubType>

@@ -79,7 +79,7 @@ namespace mts
         // Parallax factor for horizontal movement:
         // 0 locks the sprite to the camera (HUD-style, ignores camera movement),
         // 1 makes the sprite move normally in world space (no parallax effect).
-        float parallaxFactorX = 1.0f; 
+        float mParallaxFactorX = 1.0f; 
     };
 
 }  // namespace mts

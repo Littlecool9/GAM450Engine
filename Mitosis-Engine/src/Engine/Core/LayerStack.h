@@ -8,7 +8,7 @@
  */
 
 #pragma once
-#include "Layer.h";
+#include "Layer.h"
 namespace mts
 {
     class LayerStack

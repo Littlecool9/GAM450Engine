@@ -113,7 +113,7 @@ void TechDemoScene::OnInit()
 
     mts::ScriptFactory::RegisterScript(CollectableController::StaticClassName(), []() { return new CollectableController(); });
 
-#if TestLoad 1
+#if TestLoad
     mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 
     auto player = FindGameObjectByName("Player");

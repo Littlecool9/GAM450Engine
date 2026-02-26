@@ -69,7 +69,7 @@ namespace mts
 
         if (jsonObj.Has("ParallaxFactorX"))
         {
-            parallaxFactorX = jsonObj["ParallaxFactorX"].GetFloat(parallaxFactorX);
+            mParallaxFactorX = jsonObj["ParallaxFactorX"].GetFloat(mParallaxFactorX);
         }
 
         if (jsonObj.Has("RenderLayer"))
@@ -129,7 +129,8 @@ namespace mts
 
         doc.WriteInt("FrameIndex", mFrameIndex);
 
-        doc.WriteFloat("ParallaxFactorX", parallaxFactorX);
+        doc.WriteFloat("ParallaxFactorX", mParallaxFactorX);
+
         doc.WriteInt("RenderLayer", mRenderLayer);
 
         if (mTexture)
@@ -163,6 +164,19 @@ namespace mts
 
         auto transform = GetGameObject()->GetComponent<Transform>();
 
+        const auto& cam = Renderer::GetActiveCamera();
+
+        glm::mat4 viewProj;
+        glm::mat4 view = cam.view;
+        glm::mat4 proj = cam.proj;
+
+        // Apply parallax effect by offsetting the sprite's position based on the camera's position
+        // and the parallax factor
+        float offsetFactorX = 1.0f - mParallaxFactorX;
+        glm::vec3 parallaxOffset = cam.position * glm::vec3(offsetFactorX, 0.0f, 0.0f);
+        glm::mat4 parallaxView = glm::translate(view, parallaxOffset);
+
+        glm::mat4 model = transform->GetLocalMatrix();
         RenderCommand cmd;
         cmd.shader = mShader;
         cmd.texture = mTexture;
@@ -174,12 +188,35 @@ namespace mts
         if (mFlipY)
             cmd.model *= glm::scale(glm::mat4(1.0f), {1, -1, 1});
 
+        if (cam.valid)
+        {
+            viewProj = proj * parallaxView;
+        }
+        else
+        {
+            // Fallback (so nothing breaks if no camera exists yet)
+            glm::ivec4 viewportSize;
+            glGetIntegerv(GL_VIEWPORT, &viewportSize[0]);
+            viewProj = glm::ortho(0.0f,
+                                  static_cast<float>(viewportSize.z),
+                                  static_cast<float>(viewportSize.w),
+                                  0.0f,
+                                  -1.0f,
+                                  1.0f);
+        }
+        // set shader uniforms
+        mShader->SetMatrix4("model", model);
+        mShader->SetMatrix4("viewProj", viewProj);
+        mShader->SetVector2f("uvOffset", mUvOffset);
+        mShader->SetVector3f("tintColor", mTintColor);
+        mShader->SetFloat("alpha", mAlpha);
+
         cmd.uvOffset = mUvOffset;
         cmd.tintColor = mTintColor;
         cmd.alpha = mAlpha;
         cmd.sortKey = static_cast<float>(mRenderLayer);
         cmd.hasAlpha = mHasTextureAlpha;
-        cmd.parallaxFactorX = parallaxFactorX;
+        cmd.mParallaxFactorX = mParallaxFactorX;
 
         Renderer::Submit(cmd);
     }

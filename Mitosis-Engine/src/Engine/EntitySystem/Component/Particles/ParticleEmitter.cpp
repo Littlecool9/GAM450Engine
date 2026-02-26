@@ -120,16 +120,15 @@ namespace mts
             cmd.model = T * R * S;
             cmd.uvOffset = mUvOffset;
             cmd.tintColor = mTintColor;
-            cmd.alpha = mAlpha * (particle.lifetime / mLifetimeMin); 
+            cmd.alpha = mAlpha * (particle.lifetime / mLifetimeMin);
             cmd.sortKey = emitterZ;
-            cmd.hasAlpha = true;         
-            cmd.parallaxFactorX = 1.0f;  
+            cmd.hasAlpha = true;
+            cmd.mParallaxFactorX = 1.0f;
 
             Renderer::Submit(cmd);
         };
 
         mContainer->Render(submitLambda);
-
     }
 
     void ParticleEmitter::Deserialize(JsonValue const& jsonObj)

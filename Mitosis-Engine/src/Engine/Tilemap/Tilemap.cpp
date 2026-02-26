@@ -298,7 +298,7 @@ namespace mts::Tilemap
         doc.EndArray();  // End of LeftBottomTileTransformPosition array
 
         doc.BeginArray("TilemapCellGrid");
-        for (int rowNumber = tileGrid.size() - 1; rowNumber >= 0; rowNumber--)
+        for (int rowNumber = static_cast<int>(tileGrid.size()) - 1; rowNumber >= 0; rowNumber--)
         {
             const auto& row = tileGrid[rowNumber];
             doc.BeginArray();

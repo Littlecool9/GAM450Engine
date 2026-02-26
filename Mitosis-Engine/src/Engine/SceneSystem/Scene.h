@@ -45,7 +45,7 @@ namespace mts
 
        protected:
         virtual void OnInit() = 0;
-        virtual void OnUpdate() {};  // testing purposes
+        virtual void OnUpdate() {}
 
        protected:
         std::vector<GameObject*> mGameObjects;

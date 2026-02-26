@@ -10,6 +10,12 @@
 #pragma once
 #include "Log.h"
 
+#undef LOG_BASE
+#undef LOG_INFO
+#undef LOG_WARN
+#undef LOG_ERROR
+#undef LOG_CRITICAL
+
 #define LOG_BASE(loggerId, level, fmt, ...)                             \
     ::mts::Log::Submit((loggerId),                                      \
                        (level),                                         \

@@ -1,0 +1,43 @@
+{
+  "Name": "DemoTileset",
+  "TilesetId": 1,
+  "AtlasTileCountPerRow": 14.0,
+  "AtlasTileCountPerCol": 7.0,
+  "TilePixelWidth": 80,
+  "TilePixelHeight": 80,
+  "Comment": "32ppu is the default, so the tile size is 1x1 in world space",
+
+  "TileDefinitions": [
+    {
+      "TileID": 1,
+      "Name": "Demo_Tile_1",
+      "IndexX": 3,
+      "IndexY": 0,
+
+      "Tag": "Dirt",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 2,
+      "Name": "Demo_Tile_2",
+      "IndexX": 0,
+      "IndexY": 0,
+
+      "Tag": "Grass",
+      "IsCollidable": true,
+
+      "IsFullTile": true
+    },
+    {
+      "TileID": 3,
+      "Name": "Demo_Tile_3",
+      "IndexX": 3,
+      "IndexY": 4,
+
+      "Tag": "StoneBrick",
+      "IsCollidable": true,
+
+      "IsFullTile": true
+    }
+  ]
+}

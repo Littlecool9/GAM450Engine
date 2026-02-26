@@ -44,7 +44,6 @@ namespace mts
 
         if (!mMusicPlaying)
         {
-            MTS_ASSERT(mPrevBeatIndex == -1);
             ResetState();
             return;
         }

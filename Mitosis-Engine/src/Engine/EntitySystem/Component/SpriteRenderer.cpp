@@ -72,6 +72,11 @@ namespace mts
             parallaxFactorX = jsonObj["ParallaxFactorX"].GetFloat(parallaxFactorX);
         }
 
+        if (jsonObj.Has("RenderLayer"))
+        {
+            mRenderLayer = jsonObj["RenderLayer"].GetInt();
+        }
+
         // Read in texture resource
         auto textureResourcePath = "";
         if (jsonObj.Has("TextureResource"))
@@ -125,6 +130,7 @@ namespace mts
         doc.WriteInt("FrameIndex", mFrameIndex);
 
         doc.WriteFloat("ParallaxFactorX", parallaxFactorX);
+        doc.WriteInt("RenderLayer", mRenderLayer);
 
         if (mTexture)
             doc.WriteString("TextureResource", mTexture->GetPath().c_str());
@@ -171,7 +177,7 @@ namespace mts
         cmd.uvOffset = mUvOffset;
         cmd.tintColor = mTintColor;
         cmd.alpha = mAlpha;
-        cmd.sortKey = transform->GetPosition().z;
+        cmd.sortKey = static_cast<float>(mRenderLayer);
         cmd.hasAlpha = mHasTextureAlpha;
         cmd.parallaxFactorX = parallaxFactorX;
 

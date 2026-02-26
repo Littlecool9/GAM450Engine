@@ -17,6 +17,9 @@ namespace mts
        public:
         virtual ~ISubmitRenderCommand() = default;
         virtual void SubmitRenderCommand() const = 0;
+
+       public:
+        int mRenderLayer = 0;  // Default render layer is 0
     };
 
 }  // namespace mts

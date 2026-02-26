@@ -177,6 +177,29 @@ namespace mts
         return ok;
     }
 
+    bool AudioManager::LoadBankFile(const std::string& bankPath)
+    {
+        if (!EnsureInitOrWarn("LoadBankFile"))
+            return false;
+
+        if (!mBackend->LoadBank(bankPath))
+        {
+            LOG_ERROR("[AudioManager] LoadBankFile failed for '{}'.", bankPath);
+            return false;
+        }
+
+        LOG_INFO("[AudioManager] LoadBankFile succeeded for '{}'.", bankPath);
+        return true;
+    }
+
+    bool AudioManager::UnloadBankFile(const std::string& bankPath)
+    {
+        if (!EnsureInitOrWarn("UnloadBankFile"))
+            return false;
+
+        return mBackend->UnloadBank(bankPath);
+    }
+
     bool AudioManager::UnloadBankGroup(BankGroup group)
     {
         if (!EnsureInitOrWarn("UnloadBankGroup"))

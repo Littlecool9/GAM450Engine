@@ -1,21 +1,110 @@
 #include "pch.h"
 #include "TechDemoScene.h"
 
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Camera/CameraFollow.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Serialization/SerializationUtility.h"
+#include "Script/BeatBarController.h"
 #include "Script/CollectableController.h"
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
+#include "Engine/Input/Input.h"
 
-#define TestLoad 1
+#define TestLoad 0
 
-TechDemoScene::~TechDemoScene() = default;
+TechDemoScene::~TechDemoScene()
+{
+    mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
+    conductor.onBeat.Unsubscribe(mBeatSubId);
+    conductor.onBar.Unsubscribe(mBarSubId);
+}
+
+void TechDemoScene::OnUpdate()
+{
+    // sync the background to the camera
+    mts::Transform* camTransform = camera->GetComponent<mts::Transform>();
+    if (camTransform)
+    {
+        mts::Transform* backgroundTransform = background->GetComponent<mts::Transform>();
+        if (backgroundTransform)
+        {
+            backgroundTransform->SetPosition(
+                glm::vec2(camTransform->GetPosition().x, camTransform->GetPosition().y));
+        }
+    }
+
+    // Hit-window validation: press F to test IsInBeatWindow() on/off beat.
+    if (mts::Input::IsKeyPressed(mts::Key::A))
+    {
+        mts::AudioManager& audio = mts::AudioManager::Get();
+        bool inWindow = audio.IsInBeatWindow(0.100f, 0.100f);
+        float phase = audio.GetBeatPhase01();
+        int beatIdx = audio.GetBeatIndex();
+
+        if (inWindow)
+            LOG_INFO("[HIT] A -> ON-BEAT  | beat={} phase={:.3f}", beatIdx, phase);
+        else
+            LOG_WARN("[HIT] A -> OFF-BEAT | beat={} phase={:.3f}", beatIdx, phase);
+    }
+}
+
+void TechDemoScene::OnBeat(mts::BeatInfo info)
+{
+    ++mBeatCount;
+    if (info.isHalfBeat)
+    {
+        LOG_INFO("[BEAT] half  | halfBeatIdx={} beatIdx={} barIdx={} beatInBar={} phase={:.3f}",
+                 info.halfBeatIndex,
+                 info.beatIndex,
+                 info.barIndex,
+                 info.beatInBar,
+                 info.beatPhase);
+    }
+    else
+    {
+        LOG_INFO("[BEAT] full  | beatIdx={}  barIdx={}  beatInBar={}  phase={:.3f}  (total={})",
+                 info.beatIndex,
+                 info.barIndex,
+                 info.beatInBar,
+                 info.beatPhase,
+                 mBeatCount);
+    }
+}
+
+void TechDemoScene::OnBar(mts::BeatInfo info)
+{
+    ++mBarCount;
+    LOG_INFO("[BAR ] new bar | barIdx={}  started at beatIdx={}  (total bars={})",
+             info.barIndex,
+             info.beatIndex,
+             mBarCount);
+}
+
+static const mts::MusicTrack kMausoleumMash = {"MausoleumMash",
+                                               "event:/MausoleumMash",
+                                               140.f,
+                                               4,
+                                               0.f};
 
 void TechDemoScene::OnInit()
 {
+    // Banks are loaded by Application (MausoleumMash Core + Music groups).
+    mts::AudioManager& audio = mts::AudioManager::Get();
+    if (!audio.StartMusic(kMausoleumMash))
+        LOG_ERROR("[TechDemoScene] StartMusic failed – check event path 'event:/MausoleumMash'.");
+    else
+        LOG_INFO("[TechDemoScene] MausoleumMash music started.");
+
+    mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
+    mBeatSubId = conductor.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
+    mBarSubId = conductor.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
+
+    mts::ScriptFactory::RegisterScript("BeatBarController",
+                                       []() { return new BeatBarController(); });
+
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
 
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new EnemyController(); });
@@ -127,11 +216,11 @@ void TechDemoScene::OnInit()
     background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.json");
     background2 = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundTest.json");
 
-    auto bgm = mts::GameObjectFactory::InstantiateFromJSON("Data/BGM.json");
+    mBeatLine = mts::GameObjectFactory::InstantiateFromJSON("Data/BeatLine.json");
 
     // if this is not created last it crashes
     auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
 
-     mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
+    mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 #endif
 }

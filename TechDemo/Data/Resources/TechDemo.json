@@ -1,7 +1,7 @@
 {
     "GameObjects": [
         {
-            "UUID": "90c7e2f2-0809-48a7-afdc-6a0c1ae9067b",
+            "UUID": "07d4edde-bc90-4592-85e8-d422bc198879",
             "Name": "Player",
             "Layer": 0,
             "Tags": [
@@ -165,7 +165,7 @@
             ]
         },
         {
-            "UUID": "f2277082-5310-487f-a948-1f8a4dff155b",
+            "UUID": "b2b6d1ec-16a0-4d18-b3c3-ed792be0cfc6",
             "Name": "Enemy",
             "Layer": 0,
             "Tags": [],
@@ -242,7 +242,7 @@
             ]
         },
         {
-            "UUID": "b179ed00-1b01-4c02-b94c-2aa8c3c55a82",
+            "UUID": "5f2e3e87-b8a2-4b52-ad7c-623612c63edf",
             "Name": "CameraObject",
             "Layer": 0,
             "Tags": [],
@@ -289,7 +289,7 @@
             ]
         },
         {
-            "UUID": "9a0dcb3b-112b-4b2b-8860-3db2190dc017",
+            "UUID": "42d480ed-e064-47bc-bc9e-fef419b93da0",
             "Name": "Crate1",
             "Layer": 1,
             "Tags": [],
@@ -357,7 +357,7 @@
             ]
         },
         {
-            "UUID": "6ffae7c2-aaca-4d03-955f-4296343a93f9",
+            "UUID": "0d4614ca-fb31-492b-ba0b-ebecfd5e5e55",
             "Name": "Crate2",
             "Layer": 1,
             "Tags": [],
@@ -425,7 +425,7 @@
             ]
         },
         {
-            "UUID": "8f2e55f2-6c01-4e05-b2e6-f7b28637b7bb",
+            "UUID": "2a7a9928-1d76-4d5e-beae-ca6d8b73b6ef",
             "Name": "Crate3",
             "Layer": 1,
             "Tags": [],
@@ -493,7 +493,7 @@
             ]
         },
         {
-            "UUID": "89bf58ef-c67a-46dc-af95-a051bb5e1d9b",
+            "UUID": "ba7c66aa-2833-4cf9-917c-8d2bbe3953c9",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -533,7 +533,7 @@
             ]
         },
         {
-            "UUID": "b07d8756-fca6-4ecb-8276-4a744c0ddf01",
+            "UUID": "fc873644-0aee-4329-8d50-ec2ed0af48d2",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -573,7 +573,7 @@
             ]
         },
         {
-            "UUID": "08f36e32-f4b1-401e-b90d-56194b957f32",
+            "UUID": "32039bd3-57d2-4c81-8baf-94d80ba17463",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -613,7 +613,7 @@
             ]
         },
         {
-            "UUID": "160b94f2-8256-47be-b31c-116a294777b0",
+            "UUID": "3d246f5b-db37-4b85-9ea4-5c577bd7b737",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -653,7 +653,7 @@
             ]
         },
         {
-            "UUID": "e44d922c-b004-4e82-8b2f-a52cf729507e",
+            "UUID": "18c871c3-7309-4693-8055-d2d94eae1b98",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -693,7 +693,7 @@
             ]
         },
         {
-            "UUID": "211bfbb1-1254-4984-ae69-60f9b0a15574",
+            "UUID": "ed0c08a6-44e7-418c-a014-ad3fe486f1c6",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -733,7 +733,7 @@
             ]
         },
         {
-            "UUID": "0b42f3d5-3d05-4b6e-b14c-e256a9f1b4b4",
+            "UUID": "776361d3-69f2-4af4-b2f9-9d9eddc08289",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -773,7 +773,7 @@
             ]
         },
         {
-            "UUID": "d6217a99-bb17-4f9c-ac2f-dfd45b038be3",
+            "UUID": "22efec89-cd06-4e34-ac18-0518a3a25233",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -813,7 +813,7 @@
             ]
         },
         {
-            "UUID": "1d1fb68b-1978-4dbf-b41c-32197a762b13",
+            "UUID": "2435d45b-6b4f-44e2-856d-7222d63a3a0c",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -853,7 +853,7 @@
             ]
         },
         {
-            "UUID": "f2903c0e-c33f-4255-a952-5a471110cfe9",
+            "UUID": "28ba1f30-8695-4700-83c2-21c329e53555",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -893,7 +893,7 @@
             ]
         },
         {
-            "UUID": "dd59e52e-9a83-479e-948d-319ceb01b7cc",
+            "UUID": "aa0cc567-0a46-4518-9e86-199e1b09cacb",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -933,7 +933,7 @@
             ]
         },
         {
-            "UUID": "72b062a9-4103-4a72-9cfc-aed4856b5a1e",
+            "UUID": "857ccc32-e200-4057-90a7-0685b7ccb244",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -973,7 +973,7 @@
             ]
         },
         {
-            "UUID": "13ce49a5-5c76-4c7f-a923-bcff0ea2f823",
+            "UUID": "0e072258-d2f3-4b84-9314-6aca895e70e1",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1013,7 +1013,7 @@
             ]
         },
         {
-            "UUID": "a760b188-522b-4bb0-b52f-5e0b268233b9",
+            "UUID": "28767ccc-997a-4e25-8672-163f980e5347",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1053,7 +1053,7 @@
             ]
         },
         {
-            "UUID": "4eb2fbca-740a-4d65-8b68-a45147ac1968",
+            "UUID": "3517d90b-8534-441e-a8e1-bac587d47c5f",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1093,7 +1093,7 @@
             ]
         },
         {
-            "UUID": "8dd91d56-2e11-4ab6-940e-045fd6d14644",
+            "UUID": "fa49ef97-cadb-466a-9b2a-376969b2871f",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1133,7 +1133,7 @@
             ]
         },
         {
-            "UUID": "e92244a8-cce0-42b4-9cd5-499909d4832f",
+            "UUID": "c72382ec-84d7-43ea-9f71-2e461bca54b2",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1173,7 +1173,7 @@
             ]
         },
         {
-            "UUID": "8735cf5d-bc57-4afe-a163-9c60ad331d09",
+            "UUID": "d48cf4ac-2526-41ec-8084-e86bd6923b29",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1213,7 +1213,7 @@
             ]
         },
         {
-            "UUID": "6bdc63b5-a2a1-437d-a610-6fba20fe977b",
+            "UUID": "a3b76c07-4b76-47f2-a15e-933af757ae98",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1253,7 +1253,7 @@
             ]
         },
         {
-            "UUID": "c6e955a3-7904-4917-8c04-10e8d2367b0b",
+            "UUID": "971fd5b8-36ec-4dca-811e-d689d51479c7",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1321,7 +1321,7 @@
             ]
         },
         {
-            "UUID": "b02f95a0-3453-4242-bc98-fe6e0fc8657c",
+            "UUID": "5004149a-7dd2-4d1d-b9c2-d2bd55509761",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1389,7 +1389,7 @@
             ]
         },
         {
-            "UUID": "3572005a-760d-45b4-8904-4ce4fb158a9b",
+            "UUID": "fcea4470-f146-41c9-bcbf-1d88c61bef9d",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1457,7 +1457,7 @@
             ]
         },
         {
-            "UUID": "2c395f9d-37e7-425f-828b-ab13465a9290",
+            "UUID": "c3d17656-b660-489f-baa7-e2c86ad1855d",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1525,7 +1525,7 @@
             ]
         },
         {
-            "UUID": "011b6350-6125-4bfd-9c31-5478301ecff5",
+            "UUID": "78f35b6d-6f19-410c-92d9-1c7160c51ddb",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1593,7 +1593,7 @@
             ]
         },
         {
-            "UUID": "39bbc17f-5c1c-493d-90b0-96788df5580f",
+            "UUID": "a91308ac-8f07-4507-9ac6-878c6688826d",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1729,7 +1729,7 @@
             ]
         },
         {
-            "UUID": "cb2c0ebc-8eeb-4bb6-8822-e5a0c3879e84",
+            "UUID": "1911bf17-6b7c-46c8-bf4b-d99ef2779e68",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1865,7 +1865,7 @@
             ]
         },
         {
-            "UUID": "77c3b617-52b6-49e9-b29b-bc86be29a8a2",
+            "UUID": "bf3b3777-ef7b-4cce-95f8-da0ea8a413b0",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2001,7 +2001,7 @@
             ]
         },
         {
-            "UUID": "01641d09-73bd-4f02-8b7a-0818f39d46a6",
+            "UUID": "9a23eb60-8a2b-4fb2-adc7-5e6d95bddf1e",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2137,7 +2137,7 @@
             ]
         },
         {
-            "UUID": "104614ac-f7d8-47da-bebf-d99dd0647cc5",
+            "UUID": "13ab827b-292b-4c33-8567-bf03968bc88c",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2273,7 +2273,7 @@
             ]
         },
         {
-            "UUID": "7dd4fa09-3899-4f17-8d21-6275e7fe2670",
+            "UUID": "600f6da3-a214-4304-a78f-7fecce9c3fca",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2409,7 +2409,7 @@
             ]
         },
         {
-            "UUID": "bc577b44-3817-4257-a9d5-04eb5df9f60e",
+            "UUID": "c3683b66-1642-497c-b4c9-2d17b77270e7",
             "Name": "Sky",
             "Layer": 0,
             "Tags": [],
@@ -2449,8 +2449,8 @@
             ]
         },
         {
-            "UUID": "2444b67a-efdf-4913-86d0-dfb4121f844d",
-            "Name": "BackgroundTest",
+            "UUID": "3f1acb45-8bf4-4d5a-9bc3-dc87c736e495",
+            "Name": "BeatLine",
             "Layer": 0,
             "Tags": [],
             "Components": [
@@ -2458,13 +2458,13 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            1.0,
-                            10.0,
-                            -1.0
+                            0.0,
+                            0.0,
+                            1.0
                         ],
                         "Scale": [
-                            10.0,
-                            15.0,
+                            20.0,
+                            11.25,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -2475,61 +2475,27 @@
                     "Data": {
                         "TintColor": [
                             1.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.5,
-                        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
-                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "9b20b8c5-f933-4768-acee-00ef08fa8eb7",
-            "Name": "BGM",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
                             1.0,
                             1.0
                         ],
-                        "Rotation": 0.0
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.json",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
                     }
                 },
                 {
-                    "Type": "AudioEmitter",
+                    "Type": "NativeScript",
                     "Data": {
-                        "EventId": "event:/Made In Taiwan",
-                        "PositionOffset": [
-                            0.0,
-                            0.0
-                        ],
-                        "MaxAudibleDistance": 0.0,
-                        "StartVolume": 1.0,
-                        "StartPitch": 1.0,
-                        "PlayOnStart": 1,
-                        "Spatialized2D": 0,
-                        "IsOneShot": 0
+                        "Class": "BeatBarController",
+                        "Fields": {}
                     }
                 }
             ]
         },
         {
-            "UUID": "7d9d2947-0e92-4f3c-9ffa-74309db230d4",
+            "UUID": "3599219e-b1cb-4642-af65-04931a44b6f1",
             "Name": "DemoTilemapEntity",
             "Layer": 1,
             "Tags": [],

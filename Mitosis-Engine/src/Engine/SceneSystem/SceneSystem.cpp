@@ -98,10 +98,7 @@ namespace mts
         if (nextScene != nullptr)
         {
             // Delete the old scene before switching to the new one
-            if (currentScene != nullptr)
-            {
-                delete currentScene;
-            }
+            delete currentScene;
 
             currentScene = nextScene;
             nextScene = nullptr;

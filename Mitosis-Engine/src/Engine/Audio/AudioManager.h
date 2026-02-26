@@ -74,6 +74,11 @@ namespace mts
         void AddBankToGroup(BankGroup group, const std::string& bankPath);
         bool LoadBankGroup(BankGroup group);
         bool UnloadBankGroup(BankGroup group);
+        // Load/unload a single bank directly by file path (bypasses group/FileManager path).
+        // Use when LoadBankGroup fails for a specific bank (e.g. a Master.bank that
+        // loadBankMemory rejects but loadBankFile accepts).
+        bool LoadBankFile(const std::string& bankPath);
+        bool UnloadBankFile(const std::string& bankPath);
 
         // --- Playback ---
         AudioHandle Play(const AudioEventId& eventId) const;                   // Non-spatial

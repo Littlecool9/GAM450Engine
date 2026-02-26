@@ -91,8 +91,8 @@ namespace mts::Tilemap
             cmd.alpha = 1.0f;
 
             // sort the render command based on the world z position of the chunk
-            cmd.sortKey = worldPos.z; 
-            cmd.hasAlpha = true;       
+            cmd.sortKey = static_cast<float>(mRenderLayer);
+            cmd.hasAlpha = true;
 
             Renderer::Submit(cmd);
         }
@@ -286,7 +286,7 @@ namespace mts::Tilemap
             {
                 doc.WriteInt(id);
             }
-            doc.EndArray();  // End of TileIDs array
+            doc.EndArray();   // End of TileIDs array
             doc.EndObject();  // End of this tileset object
         }
         doc.EndArray();  // End of UsedTilesets array

@@ -56,7 +56,8 @@
         ],
         "FrameIndex": 1,
         "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json"
+        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+        "RenderLayer":1
       }
     },
     {

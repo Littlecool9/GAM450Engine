@@ -1,7 +1,7 @@
 {
     "GameObjects": [
         {
-            "UUID": "2d4f82e0-8aab-4ff2-bf00-c285606624b4",
+            "UUID": "1174530a-f022-4bc1-b2d0-ee4ba61f9233",
             "Name": "Player",
             "Layer": 0,
             "Tags": [
@@ -63,6 +63,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 1,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
                         "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
                         "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -165,7 +166,7 @@
             ]
         },
         {
-            "UUID": "d3675282-9732-4f37-ad45-a091496d8b1a",
+            "UUID": "5c3f622a-2931-4b5b-85c2-6f5edd187a3a",
             "Name": "Ground",
             "Layer": 1,
             "Tags": [],
@@ -217,7 +218,7 @@
             ]
         },
         {
-            "UUID": "47b0499e-1b66-45c5-aa20-33c9b0c9be81",
+            "UUID": "99285bd6-0c33-4377-9f63-fd0b2060153f",
             "Name": "CameraObject",
             "Layer": 0,
             "Tags": [],
@@ -264,7 +265,7 @@
             ]
         },
         {
-            "UUID": "777b33bc-e553-41ed-889a-41eaf0a00650",
+            "UUID": "c30d3020-6fa3-4855-b24c-869207b15e1f",
             "Name": "Crate1",
             "Layer": 1,
             "Tags": [],
@@ -296,6 +297,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -332,7 +334,7 @@
             ]
         },
         {
-            "UUID": "f9bce789-2651-43d7-913d-6a45e47f5ccc",
+            "UUID": "7a271c63-a8cd-4cc9-8ff5-bd1bac9ed55f",
             "Name": "Crate2",
             "Layer": 1,
             "Tags": [],
@@ -364,6 +366,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -400,7 +403,7 @@
             ]
         },
         {
-            "UUID": "743250a5-8f82-495d-b417-58349ff566c1",
+            "UUID": "d18d0140-3804-4c19-a977-1c2004c45914",
             "Name": "Crate3",
             "Layer": 1,
             "Tags": [],
@@ -432,6 +435,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -468,7 +472,7 @@
             ]
         },
         {
-            "UUID": "710aa51b-5644-4998-a116-c525032c498c",
+            "UUID": "d4f33fa2-c4aa-4f3b-8a8b-994428f8313e",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -500,6 +504,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -508,7 +513,7 @@
             ]
         },
         {
-            "UUID": "c11fe565-4861-43df-87ff-5e16304fd72c",
+            "UUID": "0264b2f7-dfb2-4a6c-8fda-7923b9923b00",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -540,6 +545,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -548,7 +554,7 @@
             ]
         },
         {
-            "UUID": "fc2b16fe-2f5e-46c6-adc3-bd2c8c1d46bf",
+            "UUID": "edecb924-2a32-40cb-beef-f27232e1e068",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -580,6 +586,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -588,7 +595,7 @@
             ]
         },
         {
-            "UUID": "32ce687f-e763-4a83-9e4a-385cfcaeb5e5",
+            "UUID": "1b2bb642-76e7-4671-89d2-d9b1c2434bd6",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -620,6 +627,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -628,7 +636,7 @@
             ]
         },
         {
-            "UUID": "e9e6de02-a481-4934-8402-c48e37840dd1",
+            "UUID": "f75dcfe0-8e39-477f-bde2-5342185344d5",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -660,6 +668,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -668,7 +677,7 @@
             ]
         },
         {
-            "UUID": "dae0b0c7-2aa0-4dbb-9aa8-26fa06312c1f",
+            "UUID": "adac9667-24cd-4db3-9960-9b4019411dea",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -700,6 +709,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -708,7 +718,7 @@
             ]
         },
         {
-            "UUID": "bd3053ff-0b11-4fd1-a99e-050989d23799",
+            "UUID": "31ff15cb-a3a0-45f9-9aeb-9435b4ab6ae0",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -740,6 +750,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -748,7 +759,7 @@
             ]
         },
         {
-            "UUID": "57ffb519-5f5e-476b-b0bb-1e9b53f2aa6d",
+            "UUID": "63aa004e-9f29-4af4-8da0-956763f5101f",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -780,6 +791,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -788,7 +800,7 @@
             ]
         },
         {
-            "UUID": "f1cdede1-07b4-4cde-85d4-9ac6a4787a2c",
+            "UUID": "ce3ff933-8335-4b23-8046-a49e79158704",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -820,6 +832,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -828,7 +841,7 @@
             ]
         },
         {
-            "UUID": "68b98a9e-7abc-4d99-94ed-15488152efae",
+            "UUID": "32dc6fdf-505d-4bb7-972c-be05f5559100",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -860,6 +873,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -868,7 +882,7 @@
             ]
         },
         {
-            "UUID": "aa9b5d76-7cf2-4cdc-87e4-d979217f44ab",
+            "UUID": "0fa34388-c4b8-4877-892f-02d78d372f5c",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -900,6 +914,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -908,7 +923,7 @@
             ]
         },
         {
-            "UUID": "95b70be1-cba5-4484-91f4-26432f75431c",
+            "UUID": "ffe5525a-e241-4244-9daf-2f041b57ce44",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -940,6 +955,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -948,7 +964,7 @@
             ]
         },
         {
-            "UUID": "9a3f8808-46be-46bc-880e-ee8b34a97686",
+            "UUID": "cebb83ff-f9b8-401d-b620-f25dd63c0884",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -980,6 +996,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -988,7 +1005,7 @@
             ]
         },
         {
-            "UUID": "68ded85a-afda-473f-9a47-e955bf8efd6b",
+            "UUID": "5a9dc92d-640c-43e0-90dc-0081c1f9ad4e",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1020,6 +1037,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1028,7 +1046,7 @@
             ]
         },
         {
-            "UUID": "dc62a0d7-a9e6-4e69-90da-e1a82ceeb7a3",
+            "UUID": "403e180d-286e-4f51-87a1-991f2587b3f4",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1060,6 +1078,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1068,7 +1087,7 @@
             ]
         },
         {
-            "UUID": "040f7a24-514c-4b03-8905-fe94efd8fc45",
+            "UUID": "9a81d026-1c97-42e2-95a8-e1da5fa7ef42",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1100,6 +1119,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1108,7 +1128,7 @@
             ]
         },
         {
-            "UUID": "e77b591e-afcb-477e-b581-99f188190444",
+            "UUID": "4af2cb80-945e-4e76-8c02-885f5b430ad9",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1140,6 +1160,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1148,7 +1169,7 @@
             ]
         },
         {
-            "UUID": "77b80000-e484-4795-ab07-421073da470b",
+            "UUID": "36a9a690-dfda-49c4-862c-5dd678a01af2",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1180,6 +1201,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1188,7 +1210,7 @@
             ]
         },
         {
-            "UUID": "655d72b7-3db0-4588-8d8c-dc81578450b1",
+            "UUID": "29592c63-1c8e-4dc7-920b-c7c214caefd3",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1220,6 +1242,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1228,7 +1251,7 @@
             ]
         },
         {
-            "UUID": "e979f337-df84-4996-9d77-30a17192205f",
+            "UUID": "66824ef4-8ff9-4686-a46a-3bd01788525c",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1260,6 +1283,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1296,7 +1320,7 @@
             ]
         },
         {
-            "UUID": "a9599567-8c50-4aa5-b5c0-6ffd95b1e535",
+            "UUID": "92c03c88-4e60-45e7-bfd8-1e5027f2732c",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1328,6 +1352,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1364,7 +1389,7 @@
             ]
         },
         {
-            "UUID": "c4599274-50c0-43a5-aa3e-6bc345633341",
+            "UUID": "4e0a35de-fe54-433b-a552-3571e380e1a0",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1396,6 +1421,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1432,7 +1458,7 @@
             ]
         },
         {
-            "UUID": "a76cae97-ab4a-4b34-9606-f41aac3883fe",
+            "UUID": "bd063911-bb93-4bb3-9443-e561196c3c5a",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1464,6 +1490,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 58,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1500,7 +1527,7 @@
             ]
         },
         {
-            "UUID": "30182ddb-9f7f-4ec5-83e0-98b6c112f9c2",
+            "UUID": "e9085c82-819a-42b9-a549-39361f6d33f7",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1532,6 +1559,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 58,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1568,7 +1596,7 @@
             ]
         },
         {
-            "UUID": "2cf95898-d53a-483a-a988-48061909f8b0",
+            "UUID": "84295717-c802-484a-9270-aec13cc3b7a3",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1600,6 +1628,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1704,7 +1733,7 @@
             ]
         },
         {
-            "UUID": "5068c2aa-77c2-4c3e-95a2-359bf35aeab9",
+            "UUID": "3e0d57e1-c033-422d-ac48-6545b332590f",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1736,6 +1765,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1840,7 +1870,7 @@
             ]
         },
         {
-            "UUID": "e9203d4f-3d59-4b07-86b6-ac8ea847982b",
+            "UUID": "24748469-1e86-4686-8b09-06086bbe7ddb",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1872,6 +1902,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -1976,7 +2007,7 @@
             ]
         },
         {
-            "UUID": "ac06475a-5253-4a22-899e-c6bbe2441e88",
+            "UUID": "f56b5da5-62f3-4101-bd06-9a4eac5431bf",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2008,6 +2039,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -2112,7 +2144,7 @@
             ]
         },
         {
-            "UUID": "6d8b1eeb-0c30-4034-9069-3bb977084c3f",
+            "UUID": "7800b4d3-dcc1-4d32-9159-74ac5df3af3d",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2144,6 +2176,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -2248,7 +2281,7 @@
             ]
         },
         {
-            "UUID": "ac0dd615-547a-45f2-b32a-e059980385ac",
+            "UUID": "7d63d859-c242-43b5-b429-7b25b2f1e659",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2280,6 +2313,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
                         "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
                         "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -2384,7 +2418,7 @@
             ]
         },
         {
-            "UUID": "a55b49cd-41c1-4ef8-aa5f-28f943e4225d",
+            "UUID": "c7c9416b-a94d-4065-8faf-b66f97488f4a",
             "Name": "Sky",
             "Layer": 0,
             "Tags": [],
@@ -2416,6 +2450,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.8999999761581421,
+                        "RenderLayer": -1,
                         "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
                         "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -2424,7 +2459,7 @@
             ]
         },
         {
-            "UUID": "c2877cb2-7d8f-4130-8068-f5296073d928",
+            "UUID": "567c3825-5488-4294-9f0d-018f5d12c531",
             "Name": "BackgroundTest",
             "Layer": 0,
             "Tags": [],
@@ -2456,6 +2491,7 @@
                         "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.5,
+                        "RenderLayer": -1,
                         "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
                         "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
                         "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
@@ -2464,8 +2500,8 @@
             ]
         },
         {
-            "UUID": "ac2b404b-808b-4f2a-a718-b375d67c3a49",
-            "Name": "BGM",
+            "UUID": "f4bbcc24-ee14-4d5c-afdf-0cdcbe0d31da",
+            "Name": "BeatLine",
             "Layer": 0,
             "Tags": [],
             "Components": [
@@ -2475,36 +2511,44 @@
                         "Position": [
                             0.0,
                             0.0,
-                            0.0
+                            1.0
                         ],
                         "Scale": [
-                            1.0,
-                            1.0,
+                            20.0,
+                            11.25,
                             1.0
                         ],
                         "Rotation": 0.0
                     }
                 },
                 {
-                    "Type": "AudioEmitter",
+                    "Type": "SpriteRenderer",
                     "Data": {
-                        "EventId": "event:/Made In Taiwan",
-                        "PositionOffset": [
-                            0.0,
-                            0.0
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
                         ],
-                        "MaxAudibleDistance": 0.0,
-                        "StartVolume": 1.0,
-                        "StartPitch": 1.0,
-                        "PlayOnStart": 1,
-                        "Spatialized2D": 0,
-                        "IsOneShot": 0
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.json",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "BeatBarController",
+                        "Fields": {}
                     }
                 }
             ]
         },
         {
-            "UUID": "b69fa444-6ce5-4d31-a496-a3e759a5ee04",
+            "UUID": "acceaea1-9786-4999-9948-2685247118ae",
             "Name": "DemoTilemapEntity",
             "Layer": 1,
             "Tags": [],

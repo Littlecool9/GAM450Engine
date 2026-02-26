@@ -35,6 +35,19 @@ namespace mts
         void Serialize(JsonDocument& doc) const override;
         void SubmitRenderCommand() const override;
 
+        Mesh* GetMesh() const { return mMesh; }
+        Shader* GetShader() const { return mShader; }
+        Texture* GetTexture() const { return mTexture; }
+        float GetAlpha() const { return mAlpha; }
+        bool HasTextureAlpha() const { return mHasTextureAlpha; }
+
+        int GetRows() const { return mNumRows; }
+        int GetCols() const { return mNumCols; }
+        int GetFrame() const { return mFrameIndex; }
+
+        bool GetFlipX() const { return mFlipX; }
+        bool GetFlipY() const { return mFlipY; }
+
         void SetMesh(Mesh* newMesh) { mMesh = newMesh; }
         void SetShader(Shader* newShader) { mShader = newShader; }
         void SetTexture(Texture* newTexture) { mTexture = newTexture; }
@@ -42,8 +55,7 @@ namespace mts
         void SetAlpha(float alpha) { mAlpha = alpha; }
         void SetFlipX(bool flip) { mFlipX = flip; }
         void SetFlipY(bool flip) { mFlipY = flip; }
-        float GetAlpha() const { return mAlpha; }
-        bool HasTextureAlpha() const { return mHasTextureAlpha; }
+        void SetHasTextureAlpha(bool v) { mHasTextureAlpha = v; }
         void SetTintColor(glm::vec3 tintColor) { mTintColor = tintColor; }
         void SetRows(int r);
         void SetCols(int c);

@@ -15,6 +15,7 @@ class BeatBarController : public mts::ScriptBase
     void DeserializeFields(mts::JsonValue const& /*fields*/) override {}
     void SerializeFields(mts::JsonDocument& /*out*/) const override {}
 
+    SCRIPT_CLASS(BeatBarController)
    private:
     // Half the viewport width in world units: 1600px / 80 PPU / 2
     static constexpr float kHalfViewWidth = 10.0f;
@@ -23,6 +24,6 @@ class BeatBarController : public mts::ScriptBase
     //   bottom = -5.625 units, circle Y = -5.625 + (130/80) = -4.0 units
     static constexpr float kBeatCircleOffsetY = -4.0f;
 
-    mts::Transform* mLeftMarkerTransform  = nullptr;
+    mts::Transform* mLeftMarkerTransform = nullptr;
     mts::Transform* mRightMarkerTransform = nullptr;
 };

@@ -23,6 +23,8 @@ class CollectableController : public mts::ScriptBase
 
     void OnCollisionEnter2D(const mts::GameObject*) override;
 
+    SCRIPT_CLASS(CollectableController)
+
    private:
     bool collected = false;
     mts::AudioEmitter* emitter;

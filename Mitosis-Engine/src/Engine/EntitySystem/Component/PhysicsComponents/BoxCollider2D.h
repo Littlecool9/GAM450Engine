@@ -26,14 +26,17 @@ namespace mts
         void Deserialize(const JsonValue& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-        void SetWidth(float width);
-        void SetHeight(float height);
+        void SetLocalWidth(float width);
+        void SetLocalHeight(float height);
 
         glm::vec2 GetCenter() const;
         glm::vec2 GetHalfExtents() const;
-        glm::vec2 GetSize() const;
+        glm::vec2 GetLocalSize() const;
         glm::vec2 GetUp() const;
         glm::vec2 GetRight() const;
+
+        glm::vec2 GetOffset() const { return mOffset; }
+        void SetOffset(glm::vec2 o) { mOffset = o; }
 
        private:
         float mWidth = 1.0f;

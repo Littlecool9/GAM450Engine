@@ -40,9 +40,9 @@ namespace mts
     void BoxCollider2D::Deserialize(const JsonValue& jsonObj)
     {
         if (jsonObj.Has("Width"))
-            SetWidth(jsonObj["Width"].GetFloat());
+            SetLocalWidth(jsonObj["Width"].GetFloat());
         if (jsonObj.Has("Height"))
-            SetHeight(jsonObj["Height"].GetFloat());
+            SetLocalHeight(jsonObj["Height"].GetFloat());
         if (jsonObj.Has("Offset"))
             mOffset = jsonObj["Offset"].GetVec2();
         if (jsonObj.Has("IsTrigger"))
@@ -63,13 +63,13 @@ namespace mts
         doc.EndObject();
     }
 
-    void BoxCollider2D::SetWidth(float width)
+    void BoxCollider2D::SetLocalWidth(float width)
     {
         mWidth = width;
         mHalfWidth = width * 0.5f;
     }
 
-    void BoxCollider2D::SetHeight(float height)
+    void BoxCollider2D::SetLocalHeight(float height)
     {
         mHeight = height;
         mHalfHeight = height * 0.5f;
@@ -87,7 +87,7 @@ namespace mts
         return {tr->GetScale().x * mHalfWidth, tr->GetScale().y * mHalfHeight};
     }
 
-    glm::vec2 BoxCollider2D::GetSize() const
+    glm::vec2 BoxCollider2D::GetLocalSize() const
     {
         return {mWidth, mHeight};
     }

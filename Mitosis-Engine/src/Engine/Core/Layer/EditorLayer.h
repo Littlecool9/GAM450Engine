@@ -9,29 +9,25 @@
 
 #pragma once
 #include "Engine/Core/Layer.h"
-#include "Engine/UUID/UUID.h"
+#include "Engine/Core/Editor/EditorContext.h"
+#include "Engine/Core/Editor/Panels/HierarchyPanel.h"
+#include "Engine/Core/Editor/Panels/InspectorPanel.h"
 
 namespace mts
 {
-    struct EditorContext
-    {
-        UUID selected = UUID::InvalidID;
-        bool showEditorUI = true;
-    };
     class EditorLayer : public Layer
     {
        public:
-        explicit EditorLayer(EditorContext ctx);
+        explicit EditorLayer(EditorContext& ctx);
 
         void OnImGuiRender(float dt) override;
 
        private:
-        void DrawHierarchy();
-        void DrawInspector();
-        void DrawDockspace();
 
        private:
-        EditorContext mCtx;
+        EditorContext& mCtx;
+        InspectorPanel mInspector;
+        HierarchyPanel mHierarchy;
     };
 
 }  // namespace mts

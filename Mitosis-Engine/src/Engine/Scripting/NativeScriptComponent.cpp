@@ -90,7 +90,6 @@ namespace mts
             m_delegateWired = true;
         }
     }
-
     void NativeScriptComponent::EnsureCreated()
     {
         if (m_created)
@@ -186,6 +185,21 @@ namespace mts
 
         if (m_script)
             m_script->OnCollisionExit2D(other);
+    }
+
+    const std::string& NativeScriptComponent::GetClassName() const
+    {
+        return m_className;
+    }
+
+    void NativeScriptComponent::SyncFieldsToJson()
+    {
+        if (!m_script)
+            return;
+        JsonDocument out;
+        m_script->SerializeFields(out);
+        out.SaveToString(m_fieldsJson);
+        m_hasFields = !m_fieldsJson.empty();
     }
 
 }  // namespace mts

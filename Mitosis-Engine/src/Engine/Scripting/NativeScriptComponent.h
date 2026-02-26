@@ -34,6 +34,12 @@ namespace mts
         void OnCollisionStay2D(const GameObject* other) override;
         void OnCollisionExit2D(const GameObject* other) override;
 
+        const std::string& GetClassName() const;
+        bool HasScript() const { return m_script != nullptr; }
+        ScriptBase* GetScript() const { return m_script.get(); }
+
+        void SyncFieldsToJson();
+
        private:
         void EnsureCreated();
 

@@ -96,6 +96,50 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Core\Application.h" />
+    <ClInclude Include="src\Engine\Core\Editor\EditorContext.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\ComponentDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\BoxCollider2DDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\CircleCollider2DDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\RigidBody2DDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\SpriteRendererDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\TransformDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\NativeScriptDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\InspectorRegistry.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Panels\HierarchyPanel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Panels\InspectorPanel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Layer.h">
       <SubType>
       </SubType>
@@ -266,6 +310,42 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Core\Application.cpp" />
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\BoxCollider2DDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\CircleCollider2DDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\RigidBody2DDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\SpriteRendererDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\TransformDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\NativeScriptDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\InspectorRegistry.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Panels\HierarchyPanel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Panels\InspectorPanel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
     <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />

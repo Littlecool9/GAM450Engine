@@ -45,6 +45,8 @@ class PlayerController : public mts::ScriptBase
                    : val_from + glm::sign(val_to - val_from) * delta;
     }
 
+    SCRIPT_CLASS(PlayerController)
+
    private:
     mts::RigidBody2D* rb = nullptr;
     mts::AnimationSystem* anim = nullptr;

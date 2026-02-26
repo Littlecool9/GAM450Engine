@@ -10,6 +10,7 @@
 #pragma once
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
+#include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Scripting/ScriptBase.h"
 
 class PlayerController : public mts::ScriptBase
@@ -20,8 +21,11 @@ class PlayerController : public mts::ScriptBase
 
     void DeserializeFields(mts::JsonValue const& fields) override;
     void SerializeFields(mts::JsonDocument& out) const override;
+    void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
 
     void OnCollisionEnter2D(const mts::GameObject*) override;
+
+    SCRIPT_CLASS(PlayerController)
 
    private:
     mts::RigidBody2D* rb = nullptr;

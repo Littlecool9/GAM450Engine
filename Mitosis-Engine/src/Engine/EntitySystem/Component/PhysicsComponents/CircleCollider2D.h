@@ -25,11 +25,14 @@ namespace mts
         void Deserialize(const JsonValue& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-        void SetRadius(float radius) { mRadius = radius; }
+        void SetLocalRadius(float radius) { mRadius = radius; }
 
         glm::vec2 GetCenter() const;
-        float GetSize() { return mRadius; }
+        float GetLocalRadius() { return mRadius; }
         float GetRadius() const;
+
+        glm::vec2 GetOffset() const { return mOffset; }
+        void SetOffset(glm::vec2 o) { mOffset = o; }
 
        private:
         float mRadius = 1.0f;

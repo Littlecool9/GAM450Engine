@@ -107,6 +107,13 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("walkParticleCooldown", walkParticleTimerLength);
 }
 
+void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
+{
+    fields.push_back({"moveSpeed",              mts::ScriptField::Type::Float, {.f = &moveSpeed},              0.1f});
+    fields.push_back({"jumpSpeed",              mts::ScriptField::Type::Float, {.f = &jumpSpeed},              0.1f});
+    fields.push_back({"walkParticleCooldown",   mts::ScriptField::Type::Float, {.f = &walkParticleTimerLength}, 0.05f});
+}
+
 void PlayerController::OnCollisionEnter2D(const mts::GameObject* gameObject)
 {
     if (gameObject->GetLayer() == mts::GameObject::Ground)

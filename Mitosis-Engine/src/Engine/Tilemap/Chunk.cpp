@@ -361,13 +361,13 @@ namespace mts::Tilemap
 
             auto* transform = colObj->AddComponent<Transform>();
             transform->SetPosition(glm::vec3(worldX, worldY, 0.0f));
-            
+
             RigidBody2D* rb = colObj->AddComponent<RigidBody2D>();
             rb->SetBody(RigidBody2D::BodyType::Static);
 
             auto* box = colObj->AddComponent<BoxCollider2D>();
-            box->SetWidth(rect.w);
-            box->SetHeight(rect.h);
+            box->SetLocalWidth(rect.w);
+            box->SetLocalHeight(rect.h);
 
             colObj->SetLayer(GameObject::Ground);
 

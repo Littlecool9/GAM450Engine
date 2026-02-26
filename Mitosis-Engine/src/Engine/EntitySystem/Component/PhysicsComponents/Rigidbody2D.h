@@ -39,13 +39,26 @@ namespace mts
         void AddTorque(float radTorque);
         void AddAngularImpulse(float radImpulse);
         void SetVelocity(glm::vec2 velocity);
-        glm::vec2 GetVelocity() const { return mLinearVelocity; }
         void SetAngularVelocity(float radAngularVelocity);
         void Teleport(glm::vec2 newPos, float newRot);
 
         void SetMass(float mass);
         void SetInertia(float inertia);
         void SetBody(BodyType type) { mBodyType = type; }
+
+        glm::vec2 GetVelocity() const { return mLinearVelocity; }
+        float GetAngularVelocity() const { return mAngularVelocity; }
+        float GetMass() const { return mMass; }
+        float GetInertia() const { return mInertia; }
+
+        BodyType GetBodyType() const { return mBodyType; }
+
+        float GetLinearDamping() const { return mLinearDamping; }
+        void SetLinearDamping(float d) { mLinearDamping = d; }
+        float GetAngularDamping() const { return mAngularDamping; }
+        void SetAngularDamping(float d) { mAngularDamping = d; }
+        float GetGravityScale() const { return mGravityScale; }
+        void SetGravityScale(float s) { mGravityScale = s; }
 
        private:
         // invMass = 0 for static objects

@@ -9,11 +9,22 @@
 
 #pragma once
 
+#include <vector>
+
 namespace mts
 {
     class JsonDocument;
     class GameObject;
     class JsonValue;
+
+    struct ScriptField
+    {
+        enum class Type { Float, Int, Bool };
+        const char* name = nullptr;
+        Type        type = Type::Float;
+        union { float* f; int* i; bool* b; } ptr{};
+        float step = 0.05f;
+    };
 
     class ScriptBase
     {
@@ -34,13 +45,29 @@ namespace mts
         virtual void DeserializeFields(JsonValue const& /*fields*/) {}
         virtual void SerializeFields(mts::JsonDocument& out) const {}
 
+        // Inspector field exposure
+        virtual void GetInspectorFields(std::vector<ScriptField>& /*fields*/) {}
+
         // Collision hooks (matches the GameObject collision callbacks)
         virtual void OnCollisionEnter2D(const GameObject* /*other*/) {}
         virtual void OnCollisionStay2D(const GameObject* /*other*/) {}
         virtual void OnCollisionExit2D(const GameObject* /*other*/) {}
+
+        virtual const std::string& GetClassName() const = 0;
 
        private:
         GameObject* owner = nullptr;
     };
 
 }  // namespace mts
+
+// Injects GetClassName() override and StaticClassName() accessor into a script class.
+// Usage: place SCRIPT_CLASS(MyScriptName) in the public section of the class body.
+#define SCRIPT_CLASS(ClassName)                                                \
+   public:                                                                     \
+    static const std::string& StaticClassName()                                \
+    {                                                                          \
+        static const std::string kName = #ClassName;                          \
+        return kName;                                                          \
+    }                                                                          \
+    const std::string& GetClassName() const override { return StaticClassName(); }

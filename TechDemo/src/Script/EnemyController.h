@@ -21,6 +21,8 @@ class EnemyController : public mts::ScriptBase
 
     void OnCollisionEnter2D(const mts::GameObject*) override;
 
+    SCRIPT_CLASS(EnemyController)
+
    private:
     void QueueLoop();
 

@@ -11,6 +11,8 @@
 #include "LayerStack.h"
 #include <memory>
 
+#include "Editor/EditorContext.h"
+
 namespace mts::physics
 {
     class PhysicsSystem2D;
@@ -45,6 +47,8 @@ namespace mts
        private:
         std::unique_ptr<Window> mWindow;
         LayerStack mLayerStack;
+
+        EditorContext mCtx;
 
         bool mIsRunning = false;
         bool mInDebugView = true;

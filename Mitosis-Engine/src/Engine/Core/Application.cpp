@@ -9,9 +9,6 @@
 
 #include "pch.h"
 #include "Application.h"
-
-#include <glad/glad.h>
-
 #include "Engine/Windows/WinGLFWWindow.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Events/WindowEvent.h"
@@ -47,8 +44,8 @@ namespace mts
 
         mIsRunning = true;
 
-        EditorContext editCtx;
-        editCtx.showEditorUI = true;
+        mCtx.showEditorUI = true;
+        mCtx.selected = UUID::InvalidID;
 
         // push in order of calling
         mLayerStack.PushLayer(std::make_unique<MemoryManageLayer>());
@@ -60,7 +57,7 @@ namespace mts
         mLayerStack.PushLayer(std::make_unique<PhysicsLayer>());
         mLayerStack.PushLayer(std::make_unique<DebugRenderLayer>());
         mLayerStack.PushOverlay(std::make_unique<ImGuiLayer>(mWindow.get()));
-        mLayerStack.PushOverlay(std::make_unique<EditorLayer>(editCtx));
+        mLayerStack.PushOverlay(std::make_unique<EditorLayer>(mCtx));
     }
 
     void Application::Run()

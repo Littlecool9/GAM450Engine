@@ -216,7 +216,7 @@ namespace mts
         cmd.alpha = mAlpha;
         cmd.sortKey = static_cast<float>(mRenderLayer);
         cmd.hasAlpha = mHasTextureAlpha;
-        cmd.mParallaxFactorX = mParallaxFactorX;
+        cmd.parallaxFactorX = mParallaxFactorX;
 
         Renderer::Submit(cmd);
     }

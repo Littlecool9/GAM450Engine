@@ -91,4 +91,4 @@ namespace mts
         static void ExecuteCommand(const RenderCommand& cmd);
         static glm::mat4 ComputeViewProjWithParallax(float parallaxFactorX);
     };
-}  // namespace mts     
+}  // namespace mts

@@ -109,15 +109,15 @@ void TechDemoScene::OnInit()
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new EnemyController(); });
 
-    //mts::ScriptFactory::RegisterScript("EnemyBehavior", []() { return new mts::EnemyAgent(); });
+    // mts::ScriptFactory::RegisterScript("EnemyBehavior", []() { return new mts::EnemyAgent(); });
 
-    mts::ScriptFactory::RegisterScript(CollectableController::StaticClassName(), []() { return new CollectableController(); });
+    mts::ScriptFactory::RegisterScript(CollectableController::StaticClassName(),
+                                       []() { return new CollectableController(); });
 
 #if TestLoad
     mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 
     auto player = FindGameObjectByName("Player");
-
 
     camera = FindGameObjectByName("CameraObject");
     assert(camera != nullptr);

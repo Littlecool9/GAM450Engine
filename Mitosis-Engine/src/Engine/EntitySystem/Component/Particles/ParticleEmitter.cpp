@@ -123,7 +123,7 @@ namespace mts
             cmd.alpha = mAlpha * (particle.lifetime / mLifetimeMin);
             cmd.sortKey = emitterZ;
             cmd.hasAlpha = true;
-            cmd.mParallaxFactorX = 1.0f;
+            cmd.parallaxFactorX = 1.0f;
 
             Renderer::Submit(cmd);
         };

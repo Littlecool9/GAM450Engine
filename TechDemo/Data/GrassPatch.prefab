@@ -1,13 +1,13 @@
 {
-  "Name": "Fence",
+  "Name": "GrassPatch",
   "Components": [
     {
       "Type": "Transform",
       "Data": {
         "Position": [
-          1,
+          7,
           7.4,
-          -0.9
+          -0.5
         ],
         "Scale": [
           1,
@@ -27,9 +27,9 @@
           1.0,
           1.0
         ],
-        "FrameIndex": 56,
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+        "FrameIndex": 72,
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh"
       }
     }
   ]

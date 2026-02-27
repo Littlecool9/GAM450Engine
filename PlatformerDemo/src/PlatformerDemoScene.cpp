@@ -16,17 +16,17 @@ void PlatformerDemoScene::OnInit()
 {
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
 
-    auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.json");
+    auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");
 
-    camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.json");
+    camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.prefab");
     camera->SetName("CameraObject");
     camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
         player->GetComponent<mts::Transform>());
 
-    background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.json");
+    background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.prefab");
 
-    auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
+    auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.prefab");
 }
 
 void PlatformerDemoScene::OnUpdate()

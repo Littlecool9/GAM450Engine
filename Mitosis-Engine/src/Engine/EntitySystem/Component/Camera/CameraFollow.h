@@ -10,6 +10,7 @@
 #pragma once
 #include "Engine/EntitySystem/Component/Component.h"
 #include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/UUID/UUID.h"
 
 namespace mts
 {
@@ -29,9 +30,20 @@ namespace mts
         void SetMaxAcceleration(float accel);
         void SetInterpolant(float interpolant);
         void FollowTarget(float dt);
+        Component* Clone(GameObject* newOwner) const override;
+
+        UUID      GetTargetId()         const { return mTargetId; }
+        void      SetTargetId(UUID id)        { mTargetId = id; }
+        float     GetMaxAcceleration()  const { return MaxAccel; }
+        float     GetInterpolant()      const { return Interpolant; }
+        float     GetSpeedLimit()       const { return SpeedLimit; }
+        glm::vec3 GetCameraOffset()     const { return CameraOffset; }
+        void      SetSpeedLimit(float v)       { SpeedLimit = v; }
+        void      SetCameraOffset(glm::vec3 v) { CameraOffset = v; }
 
        private:
         Transform* ObjectToFollow;
+        UUID mTargetId = UUID::GenerateNil();
         // Maximum acceleration rate of the camera
         float MaxAccel;
         // Percentage of distance to interpolate over one second

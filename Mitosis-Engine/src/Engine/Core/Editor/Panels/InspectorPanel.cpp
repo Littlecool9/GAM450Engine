@@ -13,6 +13,7 @@
 #include <imgui.h>
 
 #include "Engine/Core/Editor/Inspector/Drawers/BoxCollider2DDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/CameraFollowDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/CircleCollider2DDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/NativeScriptDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/RigidBody2DDrawer.h"
@@ -37,6 +38,7 @@ namespace mts
     void InspectorPanel::Draw(Scene* scene, EditorContext& ctx)
     {
         ImGui::Begin("Inspector");
+        ImGui::SetWindowFontScale(mFontScale);
 
         if (!scene)
         {
@@ -52,7 +54,12 @@ namespace mts
             return;
         }
 
-        auto go = scene->FindGameObjectByUUID(ctx.selected);
+        if (ctx.selected != mCachedId || (mCachedGO && mCachedGO->IsDead()))
+        {
+            mCachedId = ctx.selected;
+            mCachedGO = scene->FindGameObjectByUUID(ctx.selected);
+        }
+        auto go = mCachedGO;
         if (!go)
         {
             ImGui::TextUnformatted("Selection invalid.");
@@ -65,6 +72,38 @@ namespace mts
         snprintf(nameBuf, sizeof(nameBuf), "%s", go->GetName().c_str());
         if (ImGui::InputText("Name", nameBuf, sizeof(nameBuf)))
             go->SetName(nameBuf);
+
+        // Layer
+        const char* layerNames[] = { "Default", "Ground", "UI" };
+        int layerIdx = static_cast<int>(go->GetLayer());
+        if (ImGui::Combo("Layer", &layerIdx, layerNames, IM_ARRAYSIZE(layerNames)))
+            go->SetLayer(static_cast<GameObject::LayerMasks>(layerIdx));
+
+        // Tags
+        std::vector<std::string> currentTags;
+        for (const Tag& t : go->GetTags())
+            currentTags.push_back(TagRegistry::GetName(t));
+
+        ImGui::Text("Tags:");
+        for (const auto& tagName : currentTags)
+        {
+            ImGui::SameLine();
+            ImGui::TextUnformatted(tagName.c_str());
+            ImGui::SameLine();
+            ImGui::PushID(tagName.c_str());
+            if (ImGui::SmallButton("x"))
+                go->RemoveTag(tagName);
+            ImGui::PopID();
+        }
+        static char sTagInput[64] = {};
+        ImGui::InputText("##newtag", sTagInput, sizeof(sTagInput));
+        ImGui::SameLine();
+        if (ImGui::SmallButton("+ Tag") && sTagInput[0] != '\0')
+        {
+            go->AddTag(sTagInput);
+            sTagInput[0] = '\0';
+        }
+
         ImGui::Separator();
 
         // Modular drawers
@@ -121,5 +160,6 @@ namespace mts
         mRegistry.Add<BoxCollider2DDrawer>();
         mRegistry.Add<CircleCollider2DDrawer>();
         mRegistry.Add<NativeScriptDrawer>();
+        mRegistry.Add<CameraFollowDrawer>();
     }
 }  // namespace mts

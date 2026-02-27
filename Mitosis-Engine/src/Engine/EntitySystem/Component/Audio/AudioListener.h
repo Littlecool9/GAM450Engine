@@ -22,6 +22,7 @@ namespace mts
         void Update(float dt) override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         bool mFirstFrame = true;

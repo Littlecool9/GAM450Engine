@@ -51,7 +51,7 @@ void PlayerController::OnUpdate(float dt)
         rb->AddImpulse({0, jumpSpeed});
 
         mts::GameObject* particle = mts::GameObjectFactory::CreateGameObject();
-        mts::SerializationUtility::DeserializeFromFile(particle, "Data/JumpParticle.json");
+        mts::SerializationUtility::DeserializeFromFile(particle, "Data/JumpParticle.prefab");
         mts::Transform* particleTransform = particle->GetComponent<mts::Transform>();
         if (particleTransform)
         {
@@ -70,7 +70,7 @@ void PlayerController::OnUpdate(float dt)
         if (walkParticleTimer < 0.0f)
         {
             mts::GameObject* particle = mts::GameObjectFactory::CreateGameObject();
-            mts::SerializationUtility::DeserializeFromFile(particle, "Data/WalkParticle.json");
+            mts::SerializationUtility::DeserializeFromFile(particle, "Data/WalkParticle.prefab");
             mts::Transform* particleTransform = particle->GetComponent<mts::Transform>();
             if (particleTransform)
             {

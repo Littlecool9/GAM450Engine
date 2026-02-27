@@ -27,6 +27,9 @@ namespace mts
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
+        ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
         GLFWwindow* glfwWindow = static_cast<GLFWwindow*>(mWindow->NativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
         ImGui_ImplOpenGL3_Init(mGlslVersion);

@@ -18,6 +18,7 @@ namespace mts
        public:
         Entity();
         UUID GetId() const;
+        void RegenerateId() { _id = UUID::GenerateRandom(); }
 
        protected:
         //@brief: Unique identifier for the entity

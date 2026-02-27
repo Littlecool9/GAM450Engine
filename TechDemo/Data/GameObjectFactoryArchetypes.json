@@ -1,18 +1,18 @@
 {
     "ArchetypesPaths":
     [
-        {"Name" : "Player", "Path" : "Data/Player.json"},
-        {"Name" : "Enemy", "Path" : "Data/Enemy.json"},
-        {"Name" : "Camera", "Path" : "Data/Camera.json"},
-        {"Name" : "Crate", "Path" : "Data/Crate.json"},
-        {"Name" : "GrassPatch", "Path" : "Data/GrassPatch.json"},
-        {"Name" : "BackgroundFence", "Path" : "Data/BackgroundFence.json"},
-        {"Name" : "StaticBlock", "Path" : "Data/StaticBlock.json"},
-        {"Name" : "WoodPlatform", "Path" : "Data/WoodPlatform.json"},
-        {"Name" : "Gem", "Path" : "Data/Gem.json"},
-        {"Name" : "Sky", "Path" : "Data/Sky.json"},
-        {"Name" : "BGM", "Path" : "Data/BGM.json"},
-        {"Name" : "DemoTilemapEntity", "Path" : "Data/DemoTilemapEntity.json"},
-        {"Name" : "JumpParticle", "Path" : "Data/JumpParticle.json"}
+        {"Name" : "Player", "Path" : "Data/Player.prefab"},
+        {"Name" : "Enemy", "Path" : "Data/Enemy.prefab"},
+        {"Name" : "Camera", "Path" : "Data/Camera.prefab"},
+        {"Name" : "Crate", "Path" : "Data/Crate.prefab"},
+        {"Name" : "GrassPatch", "Path" : "Data/GrassPatch.prefab"},
+        {"Name" : "BackgroundFence", "Path" : "Data/BackgroundFence.prefab"},
+        {"Name" : "StaticBlock", "Path" : "Data/StaticBlock.prefab"},
+        {"Name" : "WoodPlatform", "Path" : "Data/WoodPlatform.prefab"},
+        {"Name" : "Gem", "Path" : "Data/Gem.prefab"},
+        {"Name" : "Sky", "Path" : "Data/Sky.prefab"},
+        {"Name" : "BGM", "Path" : "Data/BGM.prefab"},
+        {"Name" : "DemoTilemapEntity", "Path" : "Data/DemoTilemapEntity.prefab"},
+        {"Name" : "JumpParticle", "Path" : "Data/JumpParticle.prefab"}
     ]
 }

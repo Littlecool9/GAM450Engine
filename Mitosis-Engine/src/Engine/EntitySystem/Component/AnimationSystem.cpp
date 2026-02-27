@@ -74,6 +74,8 @@ namespace mts
 
     void AnimationSystem::Update(float dt)
     {
+        if (!animPtr) animPtr = GetGameObject()->GetComponent<Animation>();
+        if (!sPtr)    sPtr    = GetGameObject()->GetComponent<SpriteRenderer>();
     }
 
     void AnimationSystem::Deserialize(JsonValue const& jsonObj)
@@ -212,5 +214,13 @@ namespace mts
             return true;
         }
         return animPtr->IsDone;
+    }
+    Component* AnimationSystem::Clone(GameObject* newOwner) const
+    {
+        AnimationSystem* c = new AnimationSystem(*this);
+        c->InitFromClone(newOwner);
+        c->animPtr = nullptr;   // re-fetched lazily on first Update
+        c->sPtr    = nullptr;
+        return c;
     }
 }  // namespace mts

@@ -16,7 +16,7 @@
         "NumCols": 1,
         "TintColor": [1.0, 1.0, 1.0],
         "FrameIndex": 0,
-        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.json",
+        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.tex",
         "RenderLayer": 10
       }
     },

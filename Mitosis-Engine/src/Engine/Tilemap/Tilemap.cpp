@@ -456,4 +456,19 @@ namespace mts::Tilemap
                 static_cast<int>(mLeftBottomWorldPos.y) +
                     static_cast<int>(tileGrid.size()) * Tileset::TILE_PIXEL_HEIGHT};
     }
+    Component* Tilemap::Clone(GameObject* newOwner) const
+    {
+        Tilemap* c = new Tilemap();             // fresh construction — back-pointers correct
+        c->mTilemapName         = mTilemapName;
+        c->mIsSegmentBased      = mIsSegmentBased;
+        c->mLeftBottomWorldPos  = mLeftBottomWorldPos;
+        c->defaultTextureSource = defaultTextureSource;
+        c->defaultShaderSource  = defaultShaderSource;
+        c->tileGrid             = tileGrid;
+        c->tilesetSources       = tilesetSources;
+        c->tilesetTileIDMap     = tilesetTileIDMap;
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts::Tilemap

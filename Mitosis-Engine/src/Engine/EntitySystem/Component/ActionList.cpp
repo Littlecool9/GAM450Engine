@@ -21,6 +21,19 @@ namespace mts
     {
     }
 
+    ActionList::ActionList(const ActionList& other)
+        : Component(other),
+          Groups(other.Groups),
+          SpeedUp(other.SpeedUp),
+          SpeedDown(other.SpeedDown),
+          Paused(other.Paused),
+          Slow(other.Slow),
+          FastForwardSpeed(other.FastForwardSpeed),
+          SpeedModifier(other.SpeedModifier)
+          // Actions intentionally omitted — runtime-populated
+    {
+    }
+
     void ActionList::Clear()
     {
         for (BaseAction* a : Actions)
@@ -182,4 +195,11 @@ namespace mts
             }
         }
     }
+    Component* ActionList::Clone(GameObject* newOwner) const
+    {
+        ActionList* c = new ActionList(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts

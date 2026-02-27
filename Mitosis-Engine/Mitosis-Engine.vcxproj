@@ -124,6 +124,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\CameraFollowDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\NativeScriptDrawer.h">
       <SubType>
       </SubType>
@@ -136,10 +140,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Panels\AssetPanel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Panels\LogPanel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Panels\InspectorPanel.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Panels\ProfilerPanel.h" />
     <ClInclude Include="src\Engine\Core\Layer.h">
       <SubType>
       </SubType>
@@ -330,6 +343,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\CameraFollowDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\NativeScriptDrawer.cpp">
       <SubType>
       </SubType>
@@ -342,10 +359,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Panels\AssetPanel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Panels\LogPanel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Panels\InspectorPanel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Panels\ProfilerPanel.cpp" />
     <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
     <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />

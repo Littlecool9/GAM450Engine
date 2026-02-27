@@ -12,6 +12,9 @@
 #include "Engine/Core/Editor/EditorContext.h"
 #include "Engine/Core/Editor/Panels/HierarchyPanel.h"
 #include "Engine/Core/Editor/Panels/InspectorPanel.h"
+#include "Engine/Core/Editor/Panels/AssetPanel.h"
+#include "Engine/Core/Editor/Panels/LogPanel.h"
+#include "Engine/Core/Editor/Panels/ProfilerPanel.h"
 
 namespace mts
 {
@@ -28,6 +31,9 @@ namespace mts
         EditorContext& mCtx;
         InspectorPanel mInspector;
         HierarchyPanel mHierarchy;
+        AssetPanel     mAssets;
+        LogPanel       mLog;
+        ProfilerPanel  mProfiler;
     };
 
 }  // namespace mts

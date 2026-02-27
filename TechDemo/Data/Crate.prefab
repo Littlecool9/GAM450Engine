@@ -1,13 +1,13 @@
 {
-  "Name": "Block",
+  "Name": "Crate",
   "Layer": 1,
   "Components": [
     {
       "Type": "Transform",
       "Data": {
         "Position": [
-          15.5,
-          5.5,
+          5,
+          12,
           0
         ],
         "Scale": [
@@ -28,9 +28,9 @@
           1.0,
           1.0
         ],
-        "FrameIndex": 7,
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+        "FrameIndex": 74,
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh"
       }
     },
     {
@@ -46,7 +46,7 @@
         "LinearDamping": 5.0,
         "AngularDamping": 0,
         "GravityScale": 5.0,
-        "BodyType": 0
+        "BodyType": 1
       }
     },
     {

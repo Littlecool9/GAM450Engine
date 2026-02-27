@@ -57,9 +57,9 @@
                 ],
                 "Alpha": 1.0,
                 "FrameIndex": 1,
-                "TextureResource": "../TechDemo/Data/Resources/EnemyTextureResource.json",
-                "MeshResource": "../TechDemo/Data/Resources/1x1MeshResource.json",
-                "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                "TextureResource": "../TechDemo/Data/Resources/EnemyTextureResource.tex",
+                "MeshResource": "../TechDemo/Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
             }
         },
         {

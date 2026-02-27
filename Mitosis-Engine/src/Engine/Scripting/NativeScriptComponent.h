@@ -27,6 +27,7 @@ namespace mts
         void LateUpdate(float dt) override;
         void DebugRender() override;
 
+        Component* Clone(GameObject* newOwner) const override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& jsonDoc) const override;
 

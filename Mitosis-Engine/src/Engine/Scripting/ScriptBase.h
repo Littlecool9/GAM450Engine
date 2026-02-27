@@ -19,10 +19,10 @@ namespace mts
 
     struct ScriptField
     {
-        enum class Type { Float, Int, Bool };
+        enum class Type { Float, Int, Bool, GameObject };
         const char* name = nullptr;
         Type        type = Type::Float;
-        union { float* f; int* i; bool* b; } ptr{};
+        union { float* f; int* i; bool* b; GameObject** go; } ptr{};
         float step = 0.05f;
     };
 

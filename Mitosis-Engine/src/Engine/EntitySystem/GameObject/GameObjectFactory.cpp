@@ -89,11 +89,17 @@ namespace mts
         return obj;
     }
 
-    GameObject* GameObjectFactory::InstantiateFromJSON(const std::string& filename)
+    GameObject* GameObjectFactory::InstantiateFromJSON(const std::string& path)
     {
-        GameObject* gameObject = CreateGameObject();
-        mts::SerializationUtility::DeserializeFromFile(gameObject, filename);
-        return gameObject;
+        auto it = archetypes.find(path);
+        if (it == archetypes.end())
+            it = archetypes.emplace(path, BuildArchetypeFromJSON(path)).first;
+
+        GameObject* newObj = new GameObject(*it->second);
+        newObj->RegenerateId();
+        if (Scene* scene = SceneSystem::GetCurrentScene())
+            scene->AddGameObject(newObj);
+        return newObj;
     }
 
     GameObject* GameObjectFactory::BuildArchetypeFromJSON(const std::string& filename)
@@ -124,20 +130,27 @@ namespace mts
 
     GameObject* GameObjectFactory::Instantiate(const std::string& gameObjectName)
     {
-        GameObject* newObj = InstantiateFromArchetype(gameObjectName);
-        if (newObj == nullptr)
+        auto it = archetypes.find(gameObjectName);
+        if (it == archetypes.end())
         {
-            std::string jsonPath = DEFAULTDESERIALIZEPATH + gameObjectName + ".json";
-            newObj = InstantiateFromJSON(jsonPath);
-        }
-        if (newObj == nullptr)
-        {
-            newObj = new GameObject();
-            LOG_WARN("GameObject {} not found in archetypes or JSON, creating empty GameObject",
-                     gameObjectName);
+            std::string jsonPath = DEFAULTDESERIALIZEPATH + gameObjectName + ".prefab";
+            GameObject* archetype = BuildArchetypeFromJSON(jsonPath);
+            if (archetype)
+                it = archetypes.emplace(gameObjectName, archetype).first;
         }
 
-        return newObj;
+        if (it != archetypes.end())
+        {
+            GameObject* newObj = new GameObject(*it->second);
+            newObj->RegenerateId();
+            if (Scene* scene = SceneSystem::GetCurrentScene())
+                scene->AddGameObject(newObj);
+            return newObj;
+        }
+
+        LOG_WARN("GameObject {} not found in archetypes or JSON, creating empty GameObject",
+                 gameObjectName);
+        return new GameObject();
     }
 
 }  // namespace mts

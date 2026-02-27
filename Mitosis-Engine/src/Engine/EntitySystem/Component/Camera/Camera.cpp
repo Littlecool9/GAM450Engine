@@ -106,4 +106,11 @@ namespace mts
         Renderer::SetActiveCamera(cam);
     }
 
+    Component* CameraComponent::Clone(GameObject* newOwner) const
+    {
+        CameraComponent* c = new CameraComponent(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts

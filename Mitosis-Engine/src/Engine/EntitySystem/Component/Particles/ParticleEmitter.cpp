@@ -342,4 +342,13 @@ namespace mts
         mContainer->Update(lambda, dt);
     }
 
+    Component* ParticleEmitter::Clone(GameObject* newOwner) const
+    {
+        ParticleEmitter* c = new ParticleEmitter(*this);
+        c->InitFromClone(newOwner);
+        // Re-allocate owned container; prototype's live particles are not copied
+        c->mContainer = (mEmitMax > 0) ? new ParticleContainer(mEmitMax, mOneShot) : nullptr;
+        return c;
+    }
+
 }  // namespace mts

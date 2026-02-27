@@ -68,6 +68,7 @@ namespace mts::Tilemap
 
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
+        Component* Clone(GameObject* newOwner) const override;
 
         // TODO: some functions to operate the tile in the map
 

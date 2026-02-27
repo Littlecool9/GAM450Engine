@@ -146,4 +146,10 @@ namespace mts
     {
         return IsDone;
     }
+    Component* Animation::Clone(GameObject* newOwner) const
+    {
+        Animation* c = new Animation(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

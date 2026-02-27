@@ -24,6 +24,7 @@ namespace mts
         ~Transform() override = default;
 
        public:
+        Component* Clone(GameObject* newOwner) const override;
         void DebugRender() override;
 
         const glm::vec3& GetPosition() const;

@@ -202,4 +202,14 @@ namespace mts
         m_hasFields = !m_fieldsJson.empty();
     }
 
+
+    Component* NativeScriptComponent::Clone(GameObject* newOwner) const
+    {
+        NativeScriptComponent* c = new NativeScriptComponent();
+        c->InitFromClone(newOwner);
+        c->m_className  = m_className;
+        c->m_fieldsJson = m_fieldsJson;
+        c->m_hasFields  = m_hasFields;
+        return c;
+    }
 }  // namespace mts

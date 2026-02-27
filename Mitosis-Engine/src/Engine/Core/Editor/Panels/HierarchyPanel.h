@@ -19,6 +19,9 @@ namespace mts
        public:
         HierarchyPanel();
         void Draw(Scene* scene, EditorContext& ctx);
+
+       private:
+        float mFontScale = 1.3f;
     };
 
 }  // namespace mts

@@ -29,8 +29,8 @@
           1.0
         ],
         "FrameIndex": 58,
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh"
       }
     },
     {

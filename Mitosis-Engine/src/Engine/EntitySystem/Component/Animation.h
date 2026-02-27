@@ -25,6 +25,7 @@ namespace mts
         void AnimationPlay(int startFrame, int frameCount, float frameDuration, bool isLooping);
         bool AnimationIsDone() const;
         void AnimationStop();
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         // The current frame being displayed.

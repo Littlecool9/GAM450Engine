@@ -231,4 +231,11 @@ namespace mts
             (1.0f / static_cast<float>(mNumCols)) * static_cast<float>(mFrameIndex % mNumCols),
             (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(mFrameIndex / mNumCols)};
     }
+
+    Component* SpriteRenderer::Clone(GameObject* newOwner) const
+    {
+        SpriteRenderer* c = new SpriteRenderer(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

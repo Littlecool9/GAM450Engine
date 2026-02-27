@@ -38,7 +38,7 @@ namespace mts::debug
         initialized = true;
 
         shader =
-            ResourceManager::GetShader("../Mitosis-Engine/src/Resources/DebugShaderResource.json");
+            ResourceManager::GetShader("../Mitosis-Engine/src/Resources/DebugShaderResource.shader");
 
         glGenVertexArrays(1, &vao);
         glGenBuffers(1, &vbo);

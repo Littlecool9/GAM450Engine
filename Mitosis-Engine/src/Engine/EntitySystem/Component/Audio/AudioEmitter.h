@@ -46,6 +46,7 @@ namespace mts
         void SetVolume(float value);
         void SetPitch(float value);
         bool IsPlaying() const;
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         glm::vec2 mPrevPos{0.f, 0.f};

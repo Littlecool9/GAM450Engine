@@ -28,15 +28,15 @@
           1.0
         ],
         "FrameIndex": 50,
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json"
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh"
       }
     },
     {
       "Type": "ParticleEmitter",
       "Data": {
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
         "FrameIndex": 36,
         "TintColor": [ 1.0, 1.0, 0.0, 1.0 ],
         "Scale": [ 0, 0 ],

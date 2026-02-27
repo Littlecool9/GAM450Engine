@@ -18,6 +18,7 @@ namespace mts
     {
        public:
         ~CircleCollider2D() override;
+        Component* Clone(GameObject* newOwner) const override;
 
         void DebugRender() override;
         ColliderType GetColliderType() const override { return ColliderType::Circle; }

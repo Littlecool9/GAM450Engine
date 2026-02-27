@@ -76,4 +76,10 @@ namespace mts
         mPrevPos = currentPos;
         mFirstFrame = false;
     }
+    Component* AudioListener::Clone(GameObject* newOwner) const
+    {
+        AudioListener* c = new AudioListener(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

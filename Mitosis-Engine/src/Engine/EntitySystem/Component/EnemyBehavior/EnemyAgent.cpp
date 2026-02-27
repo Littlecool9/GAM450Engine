@@ -279,4 +279,11 @@ namespace mts
         //mstate.parameter....
     }
 
+    Component* EnemyAgent::Clone(GameObject* newOwner) const
+    {
+        EnemyAgent* c = new EnemyAgent(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts

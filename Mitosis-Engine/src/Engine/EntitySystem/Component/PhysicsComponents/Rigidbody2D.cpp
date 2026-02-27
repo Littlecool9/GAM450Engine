@@ -143,4 +143,11 @@ namespace mts
 
         doc.EndObject();
     }
+
+    Component* RigidBody2D::Clone(GameObject* newOwner) const
+    {
+        RigidBody2D* c = new RigidBody2D(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

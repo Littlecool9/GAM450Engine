@@ -28,7 +28,7 @@
           0.0
         ],
         "FrameIndex": 0,
-        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
+        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.tex",
         "RenderLayer": -1,
         "ParallaxFactorX": 0.5
       }

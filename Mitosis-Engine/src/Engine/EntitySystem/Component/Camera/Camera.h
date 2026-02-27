@@ -26,6 +26,7 @@ namespace mts
 
         void Init() override;
         void Update(float dt) override;
+        Component* Clone(GameObject* newOwner) const override;
 
         bool isActive;
 

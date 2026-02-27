@@ -25,11 +25,11 @@
 namespace mts
 {
     const std::string defaultTextureSource =
-        "../Mitosis-Engine/src/Resources/DefaultTextureResource.json";
+        "../Mitosis-Engine/src/Resources/DefaultTextureResource.tex";
     const std::string defaultShaderSource =
-        "../Mitosis-Engine/src/Resources/DefaultShaderResource.json";
+        "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader";
     const std::string defaultMeshSource =
-        "../Mitosis-Engine/src/Resources/DefaultMeshResource.json";
+        "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh";
 
     std::unordered_map<std::string, Texture*> ResourceManager::mTextureSources;
     std::unordered_map<std::string, Shader*> ResourceManager::mShaderSources;

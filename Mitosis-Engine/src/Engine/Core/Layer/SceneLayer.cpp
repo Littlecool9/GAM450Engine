@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "SceneLayer.h"
 
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 
 namespace mts
@@ -20,6 +21,7 @@ namespace mts
 
     void SceneLayer::OnAttach()
     {
+        GameObjectFactory::InitFactory();
         SceneSystem::Init(mInitialScene);
         Layer::OnAttach();
     }
@@ -27,6 +29,7 @@ namespace mts
     void SceneLayer::OnDetach()
     {
         SceneSystem::Shutdown();
+        GameObjectFactory::ShutdownFactory();
         Layer::OnDetach();
     }
 

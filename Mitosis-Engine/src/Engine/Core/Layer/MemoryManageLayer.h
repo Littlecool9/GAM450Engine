@@ -22,8 +22,6 @@ namespace mts
 
         void OnBeginFrame() override;
 
-        void OnImGuiRender(float dt) override;
-
        private:
     };
 

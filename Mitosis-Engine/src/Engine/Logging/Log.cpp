@@ -11,17 +11,14 @@
 #include "Engine/Helpers/Format.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/sinks/rotating_file_sink.h>
 #include <array>
 
-constexpr auto LOG_MAX_FILE_SIZE_BYTES = (5 * 1024 * 1024);
-constexpr auto LOG_MAX_ROTATION_FILES = 3;
 constexpr auto LOG_PATTERN = "%^[%H:%M:%S] [%n] [%l] %v%$";
-constexpr auto LOG_PATH = "../log/app.log";
 
 namespace mts
 {
     static std::array<std::shared_ptr<spdlog::logger>, 2> loggers;
+    static std::vector<LogEntry> s_logEntries;
 
     static spdlog::level::level_enum ToSpdLvl(LogLevel level)
     {
@@ -51,14 +48,9 @@ namespace mts
     void Log::Init()
     {
         auto console = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        auto file = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(LOG_PATH,
-                                                                           LOG_MAX_FILE_SIZE_BYTES,
-                                                                           LOG_MAX_ROTATION_FILES);
-
         console->set_pattern(LOG_PATTERN);
-        spdlog::flush_on(spdlog::level::err);
 
-        std::vector<spdlog::sink_ptr> sinks{console, file};
+        std::vector<spdlog::sink_ptr> sinks{console};
 
         loggers[static_cast<size_t>(LoggerId::Engine)] =
             std::make_shared<spdlog::logger>("ENGINE", sinks.begin(), sinks.end());
@@ -81,6 +73,11 @@ namespace mts
         assert(targetLogger);
         auto fileName = string_format::ShortFile(where.file_name());
         // auto functionName = string_format::ShortFunc(where.function_name());
-        targetLogger->log(ToSpdLvl(level), "[{}: line {}] {}", fileName, where.line(), message);
+        std::string entryText = std::format("[{}: line {}] {}", fileName, where.line(), message);
+        s_logEntries.push_back({ level, entryText });
+        targetLogger->log(ToSpdLvl(level), "{}", entryText);
     }
+
+    const std::vector<LogEntry>& Log::GetEntries() { return s_logEntries; }
+    void Log::ClearEntries()                        { s_logEntries.clear(); }
 }  // namespace mts

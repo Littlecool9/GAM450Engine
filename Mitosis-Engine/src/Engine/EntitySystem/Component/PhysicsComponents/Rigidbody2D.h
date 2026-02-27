@@ -31,6 +31,7 @@ namespace mts
 
        public:
         ~RigidBody2D() override;
+        Component* Clone(GameObject* newOwner) const override;
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 

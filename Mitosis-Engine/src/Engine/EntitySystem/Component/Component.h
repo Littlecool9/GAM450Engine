@@ -39,6 +39,8 @@ namespace mts
         virtual void OnCollisionStay2D(const GameObject* /*other*/) {}
         virtual void OnCollisionExit2D(const GameObject* /*other*/) {}
 
+        virtual Component* Clone(GameObject* newOwner) const = 0;
+
         void Deserialize(JsonValue const& jsonObj) override;
 
         GameObject* GetGameObject() const { return owner; }
@@ -54,6 +56,13 @@ namespace mts
         Component();
         Component(GameObject* owner);
         Component(const Component& other) = default;
+
+        void InitFromClone(GameObject* newOwner)
+        {
+            owner     = newOwner;
+            onEnable  = {};
+            onDisable = {};
+        }
 
        private:
         friend class ComponentFactory;

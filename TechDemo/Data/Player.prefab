@@ -55,8 +55,8 @@
           1.0
         ],
         "FrameIndex": 1,
-        "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+        "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
         "RenderLayer":1
       }
     },
@@ -77,8 +77,8 @@
         "States": [
             {
               "State": 0,
-              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 1,
               "FrameIndex": 0,
               "FrameCount": 1,
@@ -89,8 +89,8 @@
             },
             {
               "State": 1,
-              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 1,
               "FrameIndex": 2,
               "FrameCount": 2,
@@ -101,8 +101,8 @@
             },
             {
               "State": 2,
-              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 1,
               "FrameIndex": 1,
               "FrameCount": 1,
@@ -113,8 +113,8 @@
             },
             {
               "State": 3,
-              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 1,
               "FrameIndex": 2,
               "FrameCount": 1,
@@ -125,8 +125,8 @@
             },
             {
               "State": 4,
-              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 1,
               "FrameIndex": 4,
               "FrameCount": 4,

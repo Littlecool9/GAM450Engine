@@ -112,9 +112,7 @@ void TechDemoScene::OnInit()
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new EnemyController(); });
 
-    // mts::ScriptFactory::RegisterScript("EnemyBehavior", []() { return new mts::EnemyAgent(); });
-
-    mts::ScriptFactory::RegisterScript(CollectableController::StaticClassName(),
+    mts::ScriptFactory::RegisterScript("CollectableController",
                                        []() { return new CollectableController(); });
 
 #if TestLoad
@@ -131,27 +129,27 @@ void TechDemoScene::OnInit()
     background = FindGameObjectByName("Sky");
 #else
 
-    auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.json");
+    auto player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");
 
-    mts::GameObjectFactory::InstantiateFromJSON("Data/Ground.json");
+    mts::GameObjectFactory::InstantiateFromJSON("Data/Ground.prefab");
 
-    camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.json");
+    camera = mts::GameObjectFactory::InstantiateFromJSON("Data/Camera.prefab");
     camera->SetName("CameraObject");
     camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
         player->GetComponent<mts::Transform>());
 
-    auto crate1 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
+    auto crate1 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.prefab");
     crate1->SetName("Crate1");
     mts::Transform* crate1Transform = crate1->GetComponent<mts::Transform>();
     crate1Transform->SetPosition(glm::vec2(5, 10));
 
-    auto crate2 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
+    auto crate2 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.prefab");
     crate2->SetName("Crate2");
     mts::Transform* crate2Transform = crate2->GetComponent<mts::Transform>();
     crate2Transform->SetPosition(glm::vec2(13, 9));
 
-    auto crate3 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.json");
+    auto crate3 = mts::GameObjectFactory::InstantiateFromJSON("Data/Crate.prefab");
     crate3->SetName("Crate3");
     mts::Transform* crate3Transform = crate3->GetComponent<mts::Transform>();
     crate3Transform->SetPosition(glm::vec2(13, 10));
@@ -164,7 +162,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : grassPos)
     {
-        auto grass = mts::GameObjectFactory::InstantiateFromJSON("Data/GrassPatch.json");
+        auto grass = mts::GameObjectFactory::InstantiateFromJSON("Data/GrassPatch.prefab");
         mts::Transform* grassTransform = grass->GetComponent<mts::Transform>();
         grassTransform->SetPosition(pos);
     }
@@ -186,7 +184,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : fencePos)
     {
-        auto fence = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundFence.json");
+        auto fence = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundFence.prefab");
         mts::Transform* fenceTransform = fence->GetComponent<mts::Transform>();
         fenceTransform->SetPosition(pos);
     }
@@ -195,7 +193,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : blockPos)
     {
-        auto block = mts::GameObjectFactory::InstantiateFromJSON("Data/StaticBlock.json");
+        auto block = mts::GameObjectFactory::InstantiateFromJSON("Data/StaticBlock.prefab");
         mts::Transform* blockTransform = block->GetComponent<mts::Transform>();
         blockTransform->SetPosition(pos);
     }
@@ -204,7 +202,7 @@ void TechDemoScene::OnInit()
 
     for (auto pos : platformPos)
     {
-        auto platform = mts::GameObjectFactory::InstantiateFromJSON("Data/WoodPlatform.json");
+        auto platform = mts::GameObjectFactory::InstantiateFromJSON("Data/WoodPlatform.prefab");
         mts::Transform* platformTransform = platform->GetComponent<mts::Transform>();
         platformTransform->SetPosition(pos);
     }
@@ -214,18 +212,18 @@ void TechDemoScene::OnInit()
 
     for (auto pos : gemPos)
     {
-        auto gem = mts::GameObjectFactory::InstantiateFromJSON("Data/Gem.json");
+        auto gem = mts::GameObjectFactory::InstantiateFromJSON("Data/Gem.prefab");
         mts::Transform* gemTransform = gem->GetComponent<mts::Transform>();
         gemTransform->SetPosition(pos);
     }
 
-    background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.json");
-    background2 = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundTest.json");
+    background = mts::GameObjectFactory::InstantiateFromJSON("Data/Sky.prefab");
+    background2 = mts::GameObjectFactory::InstantiateFromJSON("Data/BackgroundTest.prefab");
 
-    mBeatLine = mts::GameObjectFactory::InstantiateFromJSON("Data/BeatLine.json");
+    mBeatLine = mts::GameObjectFactory::InstantiateFromJSON("Data/BeatLine.prefab");
 
     // if this is not created last it crashes
-    auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.json");
+    auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.prefab");
 
     mts::SceneSystem::SaveScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 #endif

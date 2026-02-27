@@ -35,7 +35,7 @@
             {
               "State": 0,
               "TextureResource": "../TechDemo/Data/Resources/TestCharacterTextureResource.json",
-              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+              "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
               "HasAnimation": 0,
               "FrameIndex": 0,
               "FrameCount": 0,
@@ -47,7 +47,7 @@
           {
             "State": 1,
             "TextureResource": "../TechDemo/Data/Resources/TestCharacterTextureResource.json",
-            "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+            "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
             "HasAnimation": 1,
             "FrameIndex": 3,
             "FrameCount": 4,
@@ -71,7 +71,7 @@
         ],
         "FrameIndex": 1,
         "TextureResource": "../TechDemo/Data/Resources/TestCharacterTextureResource.json",
-        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json"
+        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh"
       }
     },
     {

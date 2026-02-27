@@ -138,6 +138,7 @@ namespace mts
         bool HasTag(const std::string& tagName) const;
         void AddTag(const std::string& tagName);
         void RemoveTag(const std::string& tagName);
+        const std::unordered_set<Tag>& GetTags() const { return tags; }
 
        protected:
         // @brief: GameObject constructor is protected to enforce usage of GameObjectFactory

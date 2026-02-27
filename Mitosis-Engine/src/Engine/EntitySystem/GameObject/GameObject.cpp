@@ -33,6 +33,9 @@ namespace mts
           objectLayer(other.objectLayer),
           tags(other.tags)
     {
+        components.reserve(other.components.size());
+        for (Component* c : other.components)
+            components.push_back(c->Clone(this));
     }
 
     GameObject::GameObject(const std::string& name) : name(name), dontDestroy(false), isActive(true)

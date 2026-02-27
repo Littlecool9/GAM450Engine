@@ -14,16 +14,10 @@
 
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Resource/ResourceManager.h"
 
 namespace mts
 {
-    static const char* PtrLabel(const void* p)
-    {
-        static char buf[64];
-        snprintf(buf, sizeof(buf), "%p", p);
-        return buf;
-    }
-
     void SpriteRendererDrawer::Draw(mts::GameObject* go)
     {
         auto* sr = go->GetComponent<SpriteRenderer>();
@@ -34,11 +28,51 @@ namespace mts
 
         if (ImGui::CollapsingHeader("SpriteRenderer", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            // display pointers for now
-            // will replace with asset pickers.
-            ImGui::Text("Mesh   : %s", PtrLabel(sr->GetMesh()));
-            ImGui::Text("Shader : %s", PtrLabel(sr->GetShader()));
-            ImGui::Text("Texture: %s", PtrLabel(sr->GetTexture()));
+            // Texture
+            {
+                const std::string& cur =
+                    sr->GetTexture() ? sr->GetTexture()->GetPath() : std::string{};
+                char buf[256];
+                snprintf(buf, sizeof(buf), "%s", cur.c_str());
+                ImGui::InputText("Texture##path", buf, sizeof(buf), ImGuiInputTextFlags_ReadOnly);
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (auto* p = ImGui::AcceptDragDropPayload("ASSET_PATH"))
+                        sr->SetTexture(
+                            ResourceManager::GetTexture(static_cast<const char*>(p->Data)));
+                    ImGui::EndDragDropTarget();
+                }
+            }
+
+            // Mesh
+            {
+                const std::string& cur = sr->GetMesh() ? sr->GetMesh()->GetPath() : std::string{};
+                char buf[256];
+                snprintf(buf, sizeof(buf), "%s", cur.c_str());
+                ImGui::InputText("Mesh##path", buf, sizeof(buf), ImGuiInputTextFlags_ReadOnly);
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (auto* p = ImGui::AcceptDragDropPayload("ASSET_PATH"))
+                        sr->SetMesh(ResourceManager::GetMesh(static_cast<const char*>(p->Data)));
+                    ImGui::EndDragDropTarget();
+                }
+            }
+
+            // Shader
+            {
+                const std::string& cur =
+                    sr->GetShader() ? sr->GetShader()->GetPath() : std::string{};
+                char buf[256];
+                snprintf(buf, sizeof(buf), "%s", cur.c_str());
+                ImGui::InputText("Shader##path", buf, sizeof(buf), ImGuiInputTextFlags_ReadOnly);
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (auto* p = ImGui::AcceptDragDropPayload("ASSET_PATH"))
+                        sr->SetShader(
+                            ResourceManager::GetShader(static_cast<const char*>(p->Data)));
+                    ImGui::EndDragDropTarget();
+                }
+            }
 
             ImGui::Separator();
 

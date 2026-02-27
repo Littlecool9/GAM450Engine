@@ -26,6 +26,7 @@ namespace mts
         void Init() override;
         void TransformCheck();
         void MeshCheck();
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         glm::vec3 ButtonBoundary{0.f};

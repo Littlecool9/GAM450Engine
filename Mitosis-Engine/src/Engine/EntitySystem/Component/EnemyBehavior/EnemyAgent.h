@@ -36,6 +36,7 @@ namespace mts
 
         void Deserialize(mts::JsonValue const& fields) override;
         void Serialize(mts::JsonDocument& out) const override;
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         //private functions

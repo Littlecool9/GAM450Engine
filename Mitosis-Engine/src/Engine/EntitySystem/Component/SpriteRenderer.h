@@ -27,6 +27,7 @@ namespace mts
         SpriteRenderer() = default;
         ~SpriteRenderer() override = default;
 
+        Component* Clone(GameObject* newOwner) const override;
         void Init() override;
         void Update(float dt) override;
         void LateUpdate(float dt) override;

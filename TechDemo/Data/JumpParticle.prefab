@@ -1,5 +1,5 @@
 {
-  "Name": "WalkParticle",
+  "Name": "JumpParticle",
   "Components": [
     {
       "Type": "Transform",
@@ -20,21 +20,22 @@
     {
       "Type": "ParticleEmitter",
       "Data": {
-        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-        "FrameIndex": 72,
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "Alpha": 0.2,
+        "FrameIndex": 71,
         "TintColor": [ 1.0, 1.0, 1.0, 1.0 ],
         "Scale": [ 1.0, 0 ],
-        "ParticleScaleMin": [ 0.2, 0.2 ],
+        "ParticleScaleMin": [ 0.1, 0.1 ],
         "ParticleScaleMax": [ 0.5, 0.5 ],
-        "EmitRate": 20.0,
-        "EmitMax": 5,
-        "LifetimeMin": 0.1,
-        "LifetimeMax": 0.3,
+        "EmitRate": 500.0,
+        "EmitMax": 50,
+        "LifetimeMin": 0.05,
+        "LifetimeMax": 0.15,
         "SpeedMin": 2.0,
-        "SpeedMax": 4.0,
-        "RotationSpeedMin": 0.2,
-        "RotationSpeedMax": 0.5,
+        "SpeedMax": 3.0,
+        "RotationSpeedMin": 0.0,
+        "RotationSpeedMax": 0.1,
         "OneShot": 1
       }
     }

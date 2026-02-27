@@ -67,4 +67,11 @@ namespace mts
         return tr->GetScale().x * mRadius;
     }
 
+
+    Component* CircleCollider2D::Clone(GameObject* newOwner) const
+    {
+        CircleCollider2D* c = new CircleCollider2D(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

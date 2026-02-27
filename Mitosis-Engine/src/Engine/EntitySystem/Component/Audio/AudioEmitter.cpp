@@ -226,4 +226,11 @@ namespace mts
         }
     }
 
+    Component* AudioEmitter::Clone(GameObject* newOwner) const
+    {
+        AudioEmitter* c = new AudioEmitter(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts

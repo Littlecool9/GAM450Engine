@@ -75,8 +75,12 @@
       <AdditionalLibraryDirectories>$(FMOD_SDK)\api\studio\lib\x64;$(FMOD_SDK)\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(SolutionDir)TechDemo\Data"               "$(OutDir)Data\"                              /E /I /Y /Q
+xcopy "$(SolutionDir)TechDemo\Assets"             "$(OutDir)Assets\"                            /E /I /Y /Q
+xcopy "$(SolutionDir)Mitosis-Engine\src\Shaders"  "$(OutDir)..\Mitosis-Engine\src\Shaders\"    /E /I /Y /Q
+xcopy "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)..\Mitosis-Engine\src\Resources\" /E /I /Y /Q
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll" "$(OutDir)fmodL.dll"
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "$(OutDir)fmodstudioL.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -108,7 +112,11 @@
     <PostBuildEvent>
       <Command>IF NOT EXIST "..\bin\Release-windows-x86_64\TechDemo" (mkdir "..\bin\Release-windows-x86_64\TechDemo")
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmod.dll" "..\bin\Release-windows-x86_64\TechDemo\fmod.dll"
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "..\bin\Release-windows-x86_64\TechDemo\fmodstudio.dll"</Command>
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "..\bin\Release-windows-x86_64\TechDemo\fmodstudio.dll"
+xcopy "$(SolutionDir)TechDemo\Data"               "$(OutDir)Data\"                              /E /I /Y /Q
+xcopy "$(SolutionDir)TechDemo\Assets"             "$(OutDir)Assets\"                            /E /I /Y /Q
+xcopy "$(SolutionDir)Mitosis-Engine\src\Shaders"  "$(OutDir)..\Mitosis-Engine\src\Shaders\"    /E /I /Y /Q
+xcopy "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)..\Mitosis-Engine\src\Resources\" /E /I /Y /Q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

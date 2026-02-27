@@ -105,4 +105,11 @@ namespace mts
         Transform* tr = GetGameObject()->GetComponent<Transform>();
         return tr->GetRight();
     }
+
+    Component* BoxCollider2D::Clone(GameObject* newOwner) const
+    {
+        BoxCollider2D* c = new BoxCollider2D(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

@@ -131,4 +131,11 @@ namespace mts
         glm::mat4 m = GetLocalMatrix();
         return glm::normalize(glm::vec3(m[1]));
     }
+
+    Component* Transform::Clone(GameObject* newOwner) const
+    {
+        Transform* c = new Transform(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
 }  // namespace mts

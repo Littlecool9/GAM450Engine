@@ -16,7 +16,7 @@
         "NumCols": 1,
         "TintColor": [1.0, 1.0, 1.0],
         "FrameIndex": 0,
-        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.json",
+        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
         "RenderLayer": 10
       }
     }

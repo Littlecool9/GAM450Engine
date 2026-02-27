@@ -24,6 +24,7 @@ namespace mts
 
        public:
         ActionList() {};
+        ActionList(const ActionList& other);   // custom: copies config, skips Actions
         ActionList(GameObject* owner);
         ~ActionList() override;
         void Deserialize(JsonValue const& jsonObj) override;
@@ -58,6 +59,7 @@ namespace mts
         void AddAction(BaseAction* action);
         void Update(float dt) override;
         void Clear();
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         std::vector<BaseAction*> Actions;

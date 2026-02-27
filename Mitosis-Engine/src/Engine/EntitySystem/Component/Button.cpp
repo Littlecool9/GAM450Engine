@@ -100,4 +100,11 @@ namespace mts
         }
     }
 
+    Component* Button::Clone(GameObject* newOwner) const
+    {
+        Button* c = new Button(*this);
+        c->InitFromClone(newOwner);
+        return c;
+    }
+
 }  // namespace mts

@@ -49,6 +49,7 @@ namespace mts
         glm::vec2 GetAcceleration() const { return mAcceleration; }
 
         void ToggleEmitter() { mIsRunning ^= true; }
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         Mesh* mMesh{nullptr};

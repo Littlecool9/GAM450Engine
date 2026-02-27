@@ -74,6 +74,7 @@ namespace mts
         void ChangeState(States NewState);
         bool IsDone();
         States GetCurrentState() { return curStates; }
+        Component* Clone(GameObject* newOwner) const override;
 
        private:
         States curStates = States::Idle;

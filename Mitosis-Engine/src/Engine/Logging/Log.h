@@ -11,6 +11,7 @@
 #include <format>
 #include <source_location>
 #include <string>
+#include <vector>
 
 namespace mts
 {
@@ -29,6 +30,12 @@ namespace mts
         App
     };
 
+    struct LogEntry
+    {
+        LogLevel    level;
+        std::string text;
+    };
+
     class Log
     {
        public:
@@ -38,6 +45,9 @@ namespace mts
                            LogLevel level,
                            std::string_view message,
                            std::source_location where = std::source_location::current());
+
+        static const std::vector<LogEntry>& GetEntries();
+        static void ClearEntries();
 
        private:
     };

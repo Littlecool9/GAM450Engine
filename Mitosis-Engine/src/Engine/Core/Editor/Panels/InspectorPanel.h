@@ -14,6 +14,7 @@
 namespace mts
 {
     class Scene;
+    class GameObject;
 
     class InspectorPanel
     {
@@ -27,6 +28,9 @@ namespace mts
 
        private:
         InspectorRegistry mRegistry;
+        UUID         mCachedId = UUID::InvalidID;
+        GameObject*  mCachedGO = nullptr;
+        float        mFontScale = 1.3f;
     };
 
 }  // namespace mts

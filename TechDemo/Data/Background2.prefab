@@ -11,7 +11,7 @@
         ],
         "Scale": [
           10,
-          10,
+          15,
           1
         ],
         "Rotation": 0.0
@@ -24,12 +24,12 @@
         "NumCols": 1,
         "TintColor": [
           1.0,
-          1.0,
-          1.0
+          0.0,
+          0.0
         ],
         "FrameIndex": 0,
-        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
-        "RenderLayer": -1,
+        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.tex",
+
         "ParallaxFactorX": 0.9
       }
     }

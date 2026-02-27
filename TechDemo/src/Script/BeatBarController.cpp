@@ -23,12 +23,12 @@ void BeatBarController::OnCreate()
 {
     // Spawn the left beat marker
     mts::GameObject* leftMarker = mts::GameObjectFactory::CreateGameObject();
-    mts::SerializationUtility::DeserializeFromFile(leftMarker, "Data/BeatMarker.json");
+    mts::SerializationUtility::DeserializeFromFile(leftMarker, "Data/BeatMarker.prefab");
     mLeftMarkerTransform = leftMarker->GetComponent<mts::Transform>();
 
     // Spawn the right beat marker
     mts::GameObject* rightMarker = mts::GameObjectFactory::CreateGameObject();
-    mts::SerializationUtility::DeserializeFromFile(rightMarker, "Data/BeatMarker.json");
+    mts::SerializationUtility::DeserializeFromFile(rightMarker, "Data/BeatMarker.prefab");
     mRightMarkerTransform = rightMarker->GetComponent<mts::Transform>();
 }
 

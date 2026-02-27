@@ -8,8 +8,8 @@
             {
                 "Name": "Demo Tilemap",
                 
-                "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.json",
-                "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.json",
+                "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.tex",
+                "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.shader",
 
                 "TilesetsPath":[
                   "Data/Tilemap/Tileset_0.json"

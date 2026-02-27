@@ -11,6 +11,8 @@
 #include "CameraFollow.h"
 
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
 
 namespace mts
 {
@@ -46,6 +48,10 @@ namespace mts
         {
             CameraOffset = jsonObj["CameraOffset"].GetVec3();
         }
+        if (jsonObj.Has("TargetUUID"))
+        {
+            mTargetId = UUID::FromString(jsonObj["TargetUUID"].GetString());
+        }
     }
     void CameraFollow::Serialize(JsonDocument& doc) const
     {
@@ -55,11 +61,20 @@ namespace mts
         doc.WriteFloat("MaxAcceleration", MaxAccel);
         doc.WriteFloat("Interpolant", Interpolant);
         doc.WriteVec3("CameraOffset", CameraOffset);
+        doc.WriteString("TargetUUID", mTargetId.ToString().c_str());
 
         doc.EndObject();
     }
     void CameraFollow::Init()
     {
+        if (mTargetId.IsValid())
+        {
+            if (Scene* scene = SceneSystem::GetCurrentScene())
+            {
+                if (GameObject* tgt = scene->FindGameObjectByUUID(mTargetId))
+                    ObjectToFollow = tgt->GetComponent<Transform>();
+            }
+        }
     }
     void CameraFollow::Update(float dt)
     {
@@ -113,5 +128,12 @@ namespace mts
         float moved = glm::length(transform->GetPosition() - oldPos);
         float vel = moved / dt;
         SpeedLimit = vel + (MaxAccel * dt);
+    }
+    Component* CameraFollow::Clone(GameObject* newOwner) const
+    {
+        CameraFollow* c = new CameraFollow(*this);
+        c->InitFromClone(newOwner);
+        c->ObjectToFollow = nullptr;
+        return c;
     }
 }  // namespace mts

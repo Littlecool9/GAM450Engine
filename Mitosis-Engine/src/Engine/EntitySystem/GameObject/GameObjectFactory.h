@@ -52,7 +52,6 @@ namespace mts
         static GameObject* BuildArchetypeFromJSON(const std::string& filename);
         static GameObject* FindArchetypeByName(const std::string& archetypeName);
 
-
        private:
         // Holds archetypes that will never be used in runtime
         // The key is the name of the archetype, and the value is the GameObject pointer of the

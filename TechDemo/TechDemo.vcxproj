@@ -114,6 +114,7 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
   <ItemGroup>
     <ClInclude Include="src\Script\BeatBarController.h" />
     <ClInclude Include="src\Script\CollectableController.h" />
+    <ClInclude Include="src\Script\ConductorScript.h" />
     <ClInclude Include="src\Script\EnemyController.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
     <ClInclude Include="src\TechDemo.h" />
@@ -123,6 +124,7 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
   <ItemGroup>
     <ClCompile Include="src\Script\BeatBarController.cpp" />
     <ClCompile Include="src\Script\CollectableController.cpp" />
+    <ClCompile Include="src\Script\ConductorScript.cpp" />
     <ClCompile Include="src\Script\EnemyController.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
     <ClCompile Include="src\TechDemo.cpp" />

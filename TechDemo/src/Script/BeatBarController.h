@@ -12,8 +12,8 @@ class BeatBarController : public mts::ScriptBase
     void OnCreate() override;
     void OnUpdate(float dt) override;
 
-    void DeserializeFields(mts::JsonValue const& /*fields*/) override {}
-    void SerializeFields(mts::JsonDocument& /*out*/) const override {}
+    void DeserializeFields(mts::JsonValue const& fields) override;
+    void SerializeFields(mts::JsonDocument& out) const override;
 
     SCRIPT_CLASS(BeatBarController)
    private:
@@ -23,6 +23,11 @@ class BeatBarController : public mts::ScriptBase
     // The circle sits 130px above the bottom of the 900px viewport:
     //   bottom = -5.625 units, circle Y = -5.625 + (130/80) = -4.0 units
     static constexpr float kBeatCircleOffsetY = -4.0f;
+
+    // Multiplier applied to bar-phase before computing marker offset.
+    // 1.0 = markers reach center exactly on the downbeat (default).
+    // 2.0 = markers travel twice as fast, reaching center at the half-bar.
+    float mSpeedMultiplier = 1.0f;
 
     mts::Transform* mLeftMarkerTransform = nullptr;
     mts::Transform* mRightMarkerTransform = nullptr;

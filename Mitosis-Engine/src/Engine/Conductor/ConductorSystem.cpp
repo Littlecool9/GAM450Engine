@@ -48,9 +48,28 @@ namespace mts
             return;
         }
 
-        const int newBeat = audio.GetBeatIndex();
-        const float newPhase = audio.GetBeatPhase01();
-        const int beatsPerBar = audio.GetBeatsPerBar();
+        // Resolve effective beatsPerBar (component override wins)
+        const int beatsPerBar =
+            (mOverrideBeatsPerBar > 0) ? mOverrideBeatsPerBar : audio.GetBeatsPerBar();
+
+        // Resolve beat position: re-derive from song time if BPM is overridden,
+        // otherwise use AudioManager's own bookkeeping directly.
+        int newBeat;
+        float newPhase;
+        if (mOverrideBPM > 0.f)
+        {
+            const float songTime = audio.GetSongTimeSeconds() - mOverrideOffsetSec;
+            const float beatDurSec = 60.f / mOverrideBPM;
+            const float rawBeats = (songTime >= 0.f) ? (songTime / beatDurSec) : 0.f;
+            newBeat = static_cast<int>(rawBeats);
+            newPhase = rawBeats - static_cast<float>(newBeat);
+        }
+        else
+        {
+            newBeat = audio.GetBeatIndex();
+            newPhase = audio.GetBeatPhase01();
+        }
+
         // Half-beat index: even = full beat position, odd = mid-beat subdivision
         const int newHalfBeat = newBeat * 2 + (newPhase >= 0.5f ? 1 : 0);
 

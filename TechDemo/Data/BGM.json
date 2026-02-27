@@ -18,6 +18,17 @@
       }
     },
     {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "ConductorScript",
+        "Fields": {
+          "BPM": 140.0,
+          "BeatsPerBar": 4,
+          "OffsetSec": 0.0
+        }
+      }
+    },
+    {
       "Type": "AudioEmitter",
       "Data": {
         "EventId": "event:/Made In Taiwan",

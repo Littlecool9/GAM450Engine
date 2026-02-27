@@ -24,7 +24,9 @@
       "Type": "NativeScript",
       "Data": {
         "Class": "BeatBarController",
-        "Fields": {}
+        "Fields": {
+          "SpeedMultiplier": 1.0
+        }
       }
     }
   ]

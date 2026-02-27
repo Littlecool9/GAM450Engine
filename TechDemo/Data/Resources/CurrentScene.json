@@ -1,7 +1,7 @@
 {
     "GameObjects": [
         {
-            "UUID": "6c2984b0-c682-4e05-9b62-12fc6e1ff2c8",
+            "UUID": "b701f2a7-93af-452b-a98d-f97a96b1f9f9",
             "Name": "Player",
             "Layer": 0,
             "Tags": [
@@ -166,7 +166,7 @@
             ]
         },
         {
-            "UUID": "1a7f88eb-6c6b-4a14-8950-a2733ad20617",
+            "UUID": "c65acb28-651e-4584-9b08-29ba4096f6ec",
             "Name": "Ground",
             "Layer": 1,
             "Tags": [],
@@ -218,7 +218,7 @@
             ]
         },
         {
-            "UUID": "18072b46-a171-4123-856c-77379e58e942",
+            "UUID": "f48c12cd-5100-49f8-ac71-404eefbd9d57",
             "Name": "CameraObject",
             "Layer": 0,
             "Tags": [],
@@ -265,7 +265,7 @@
             ]
         },
         {
-            "UUID": "7bd7d698-01bd-4487-9a2b-2b3541dd32ca",
+            "UUID": "ca234957-5dec-4443-9d0d-af11d66da3bd",
             "Name": "Crate1",
             "Layer": 1,
             "Tags": [],
@@ -334,7 +334,7 @@
             ]
         },
         {
-            "UUID": "c725e0f2-1f66-499b-84c4-15163cb9b7f7",
+            "UUID": "61204ebd-782e-4f6b-a954-bde3d780ba66",
             "Name": "Crate2",
             "Layer": 1,
             "Tags": [],
@@ -403,7 +403,7 @@
             ]
         },
         {
-            "UUID": "9c4cb9b6-b70d-42c9-91d5-46f159844486",
+            "UUID": "424bbff8-56c7-4b83-bc07-abc3e3220eca",
             "Name": "Crate3",
             "Layer": 1,
             "Tags": [],
@@ -472,7 +472,7 @@
             ]
         },
         {
-            "UUID": "a26d696f-65fb-44cb-8f37-9a23d7ecdde6",
+            "UUID": "f5f9b9ef-7bb3-4301-bb27-99fc1dcbf33f",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -513,7 +513,7 @@
             ]
         },
         {
-            "UUID": "f8958f32-6e2e-47c3-92dd-63ccd1ec1428",
+            "UUID": "931623db-10b3-4374-a15d-43c66272a834",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -554,7 +554,7 @@
             ]
         },
         {
-            "UUID": "e4ce0d68-fb54-4686-8936-b7679a861156",
+            "UUID": "bf70dac0-fe3f-41e5-bca5-0b4fae3826f8",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -595,7 +595,7 @@
             ]
         },
         {
-            "UUID": "51c193db-0d4f-4296-adb5-250839dd387c",
+            "UUID": "8535d360-dffd-49e3-aab0-53759c538d5b",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -636,7 +636,7 @@
             ]
         },
         {
-            "UUID": "6110b6ac-1bcb-42e2-9b1e-b06cd19b66c6",
+            "UUID": "c76c203e-3805-4e03-8233-985d8d0428ce",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -677,7 +677,7 @@
             ]
         },
         {
-            "UUID": "9adc4b2e-4768-4096-a1bd-b31f171abd4c",
+            "UUID": "d41dbc46-974c-4514-abd3-7789f831630b",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -718,7 +718,7 @@
             ]
         },
         {
-            "UUID": "575248da-4fdc-4e1d-900f-2757a20e8831",
+            "UUID": "234f6f86-29cd-4e19-98ca-5836ba675de3",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -759,7 +759,7 @@
             ]
         },
         {
-            "UUID": "a7596fe8-7f45-4326-89c9-912f500c0b9f",
+            "UUID": "1c4cf08a-2d2e-4d44-91b8-a562c74154d1",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -800,7 +800,7 @@
             ]
         },
         {
-            "UUID": "96de572a-abe2-4405-99c1-cc8f34803a6f",
+            "UUID": "60bd6722-e547-423e-b0c7-048c6e8f69a2",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -841,7 +841,7 @@
             ]
         },
         {
-            "UUID": "6c88d5e6-159c-48a1-a0fa-1b042dcde577",
+            "UUID": "a0fa824b-add0-422c-a9f5-7a9fbca6e982",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -882,7 +882,7 @@
             ]
         },
         {
-            "UUID": "5a5fbe61-1e6b-45e8-b804-6d03e74e737d",
+            "UUID": "dad038cd-e3c6-4711-be22-793f0ea027f8",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -923,7 +923,7 @@
             ]
         },
         {
-            "UUID": "e4a75c68-55f7-4b4d-b90f-34bdacc59e76",
+            "UUID": "23ba7143-70a2-4c23-9562-68abedc49faa",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -964,7 +964,7 @@
             ]
         },
         {
-            "UUID": "e0dc4333-990d-4fa1-9d51-0ea474fa786a",
+            "UUID": "94cd65e3-44b2-497a-99a1-e5ee04a6e1ea",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1005,7 +1005,7 @@
             ]
         },
         {
-            "UUID": "5d4c2d0c-dda7-4aae-ba93-55ceb4480f76",
+            "UUID": "961fb6e5-d513-445e-8b48-089d1c07fca7",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1046,7 +1046,7 @@
             ]
         },
         {
-            "UUID": "6e2ce4f1-5426-4123-9f02-6733de725535",
+            "UUID": "2a259e97-001a-45e4-8b10-8b41aa449932",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1087,7 +1087,7 @@
             ]
         },
         {
-            "UUID": "0897bf6c-6304-4688-adc3-c962cf5c0c6a",
+            "UUID": "1d8b48ab-94ec-4877-a912-a31ad8fb4e21",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1128,7 +1128,7 @@
             ]
         },
         {
-            "UUID": "15dd7157-cc4a-4123-8631-e3f875e32599",
+            "UUID": "d21a03b5-b403-4584-8eac-eb5c7ecf379b",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1169,7 +1169,7 @@
             ]
         },
         {
-            "UUID": "99b5c397-22e5-4cd5-b115-8d5a39e8b801",
+            "UUID": "34254953-4d66-4c08-8aef-6a631b8a2f6a",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1210,7 +1210,7 @@
             ]
         },
         {
-            "UUID": "f0afedd5-b9ad-4260-a0ef-3106470d8db9",
+            "UUID": "f4f967f2-bf0b-4010-a805-3f46f42df06f",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1251,7 +1251,7 @@
             ]
         },
         {
-            "UUID": "f28583c5-6d28-4ed1-95a4-bb19198211d7",
+            "UUID": "ffb40f0f-dfaa-4ad9-b1f7-d794b2d767a5",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1320,7 +1320,7 @@
             ]
         },
         {
-            "UUID": "4c7b6f57-aa41-4038-879d-6f7536a47ff2",
+            "UUID": "227d7f3e-093a-40b8-8b13-b9e2a2b93f83",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1389,7 +1389,7 @@
             ]
         },
         {
-            "UUID": "f9eda05c-445f-41a3-bf44-9e14f3b8a947",
+            "UUID": "0601a962-90a3-4129-89f8-3faf2f4b178b",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1458,7 +1458,7 @@
             ]
         },
         {
-            "UUID": "0992a8e8-8fbd-476f-af48-2f25ad523eaa",
+            "UUID": "141dbddd-4cc8-402e-b64e-184b71ce3759",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1527,7 +1527,7 @@
             ]
         },
         {
-            "UUID": "d023987c-0d6a-40b9-9f14-5edf21cc45d9",
+            "UUID": "5493dc94-3438-45f3-89d4-052f8be3cbcd",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1596,7 +1596,7 @@
             ]
         },
         {
-            "UUID": "88ac4290-cf50-4eb4-ad97-89a228873dde",
+            "UUID": "53ab38b3-aeae-40d2-8436-736c448b31ef",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1733,7 +1733,7 @@
             ]
         },
         {
-            "UUID": "e295ba5f-50e2-46e7-baed-a56d07e0b72d",
+            "UUID": "31452920-b79f-480d-b21a-6599329c5dc3",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1870,7 +1870,7 @@
             ]
         },
         {
-            "UUID": "984dd492-3e47-4a66-8ff4-a6f0c2316ebd",
+            "UUID": "17216733-ac76-4a55-9b9f-f45b7a524969",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2007,7 +2007,7 @@
             ]
         },
         {
-            "UUID": "21b25dd1-2dbf-4e61-b71b-d875372f70ab",
+            "UUID": "2c61e852-86d5-490a-b1a5-830f82c3be8f",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2144,7 +2144,7 @@
             ]
         },
         {
-            "UUID": "a7086049-6447-45bc-9fc2-c132d2fcff3b",
+            "UUID": "9906dac2-5e34-4971-a86d-684cdab1b1f8",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2281,7 +2281,7 @@
             ]
         },
         {
-            "UUID": "f599200c-64cb-4fac-b845-8e5c3b69575f",
+            "UUID": "14fe4cf2-4468-4df1-9153-90613fe034f5",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2418,7 +2418,7 @@
             ]
         },
         {
-            "UUID": "8bc568d3-6d43-4696-a929-e039810ba49e",
+            "UUID": "cc1a0012-2b90-4704-a96c-8ea752436bbc",
             "Name": "Sky",
             "Layer": 0,
             "Tags": [],
@@ -2459,7 +2459,7 @@
             ]
         },
         {
-            "UUID": "9b37e868-9eb5-44d4-821f-ad7044fe68b7",
+            "UUID": "baf7a624-dbea-43a5-83d5-ab3d2a990a33",
             "Name": "BackgroundTest",
             "Layer": 0,
             "Tags": [],
@@ -2500,7 +2500,7 @@
             ]
         },
         {
-            "UUID": "db0a6c54-4954-4d9f-8cd0-11799e1e7dc6",
+            "UUID": "9db7553d-6237-4ede-a868-c657eff6a47e",
             "Name": "BeatLine",
             "Layer": 0,
             "Tags": [],
@@ -2542,13 +2542,15 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "BeatBarController",
-                        "Fields": {}
+                        "Fields": {
+                            "SpeedMultiplier": 1.0
+                        }
                     }
                 }
             ]
         },
         {
-            "UUID": "0677285b-ff7b-41c0-b1c8-d2a232395d73",
+            "UUID": "171b0da6-7f6c-440b-9e0b-5eda8f357544",
             "Name": "DemoTilemapEntity",
             "Layer": 1,
             "Tags": [],

@@ -12,6 +12,7 @@
 #pragma once
 #include "Engine/Serialization/Deserializable.h"
 #include "Engine/Delegate/Delegate.h"
+#include "Engine/Memory/MemoryManager.h"
 
 namespace mts
 {
@@ -25,7 +26,6 @@ namespace mts
 
         Component& operator=(const Component& other) = default;
 
-        // May need to add #include here
         MTS_CLASS_NEW_DELETE();
 
        public:

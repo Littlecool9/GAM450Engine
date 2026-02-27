@@ -8,6 +8,17 @@
 #include "Engine/Renderer.h"
 #include "Engine/Serialization/SerializationUtility.h"
 
+void BeatBarController::DeserializeFields(mts::JsonValue const& fields)
+{
+    if (fields.Has("SpeedMultiplier"))
+        mSpeedMultiplier = fields["SpeedMultiplier"].GetFloat(mSpeedMultiplier);
+}
+
+void BeatBarController::SerializeFields(mts::JsonDocument& out) const
+{
+    out.WriteFloat("SpeedMultiplier", mSpeedMultiplier);
+}
+
 void BeatBarController::OnCreate()
 {
     // Spawn the left beat marker
@@ -41,6 +52,7 @@ void BeatBarController::OnUpdate(float /*dt*/)
     const int beatsPerBar = mts::AudioManager::Get().GetBeatsPerBar();
     float phase = (conductor.GetBeatInBar() + conductor.GetBeatPhase()) /
                   static_cast<float>(beatsPerBar);
+    phase = std::fmod(phase * mSpeedMultiplier, 1.0f);
     float offsetX = kHalfViewWidth * (1.0f - phase);
     float markerY = camY + kBeatCircleOffsetY;
 

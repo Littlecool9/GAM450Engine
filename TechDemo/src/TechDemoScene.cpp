@@ -10,6 +10,7 @@
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Script/BeatBarController.h"
 #include "Script/CollectableController.h"
+#include "Script/ConductorScript.h"
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
 #include "Engine/Input/Input.h"
@@ -103,6 +104,8 @@ void TechDemoScene::OnInit()
     mBeatSubId = conductor.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
     mBarSubId = conductor.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
 
+    mts::ScriptFactory::RegisterScript(ConductorScript::StaticClassName(),
+                                       []() { return new ConductorScript(); });
     mts::ScriptFactory::RegisterScript("BeatBarController",
                                        []() { return new BeatBarController(); });
 

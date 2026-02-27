@@ -1,0 +1,16 @@
+#pragma once
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+#include <gtest/gtest.h>
+#include "Engine/Logging/EngineLog.h"
+#include "Engine/Logging/Assert.h"
+#include "Engine/Memory/MemoryManager.h"
+#include "Engine/Helpers/Math.h"

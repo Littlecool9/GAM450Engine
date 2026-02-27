@@ -161,6 +161,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Conductor\BeatMath.h" />
     <ClInclude Include="src\Engine\Conductor\ConductorSystem.h" />
     <ClInclude Include="src\Engine\Audio\AudioManager.h" />
     <ClInclude Include="src\Engine\Audio\AudioTypes.h" />

@@ -9,6 +9,7 @@
     "stb",
     "glfw3",
     "glad",
+    "gtest",
     {
     "name":"imgui",
     "features":[

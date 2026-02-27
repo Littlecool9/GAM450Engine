@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlatformerDemo", "Platforme
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnemyPrototype", "EnemyPrototype\EnemyPrototype.vcxproj", "{65C59374-2EB9-4347-A039-0C881E17371B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mitosis-Tests", "Mitosis-Tests\Mitosis-Tests.vcxproj", "{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,10 @@ Global
 		{65C59374-2EB9-4347-A039-0C881E17371B}.Debug|x64.Build.0 = Debug|x64
 		{65C59374-2EB9-4347-A039-0C881E17371B}.Release|x64.ActiveCfg = Release|x64
 		{65C59374-2EB9-4347-A039-0C881E17371B}.Release|x64.Build.0 = Release|x64
+		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Debug|x64.ActiveCfg = Debug|x64
+		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Debug|x64.Build.0 = Debug|x64
+		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Release|x64.ActiveCfg = Release|x64
+		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 #include "BeatBarController.h"
 
 #include "Engine/Audio/AudioManager.h"
+#include "Engine/Conductor/BeatMath.h"
 #include "Engine/Conductor/ConductorSystem.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
@@ -50,9 +51,10 @@ void BeatBarController::OnUpdate(float /*dt*/)
     // full screen over one measure instead of one beat -- much easier to track.
     mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
     const int beatsPerBar = mts::AudioManager::Get().GetBeatsPerBar();
-    float phase = (conductor.GetBeatInBar() + conductor.GetBeatPhase()) /
-                  static_cast<float>(beatsPerBar);
-    phase = std::fmod(phase * mSpeedMultiplier, 1.0f);
+    float phase = mts::BeatMath::BarPhase(conductor.GetBeatInBar(),
+                                          conductor.GetBeatPhase(),
+                                          beatsPerBar,
+                                          mSpeedMultiplier);
     float offsetX = kHalfViewWidth * (1.0f - phase);
     float markerY = camY + kBeatCircleOffsetY;
 

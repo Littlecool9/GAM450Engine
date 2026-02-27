@@ -9,6 +9,7 @@
 
 #include "pch.h"
 #include "ConductorSystem.h"
+#include "BeatMath.h"
 #include "Engine/Audio/AudioManager.h"
 
 namespace mts
@@ -58,11 +59,11 @@ namespace mts
         float newPhase;
         if (mOverrideBPM > 0.f)
         {
-            const float songTime = audio.GetSongTimeSeconds() - mOverrideOffsetSec;
-            const float beatDurSec = 60.f / mOverrideBPM;
-            const float rawBeats = (songTime >= 0.f) ? (songTime / beatDurSec) : 0.f;
-            newBeat = static_cast<int>(rawBeats);
-            newPhase = rawBeats - static_cast<float>(newBeat);
+            auto [b, p] = mts::BeatMath::BeatFromTime(audio.GetSongTimeSeconds(),
+                                                      mOverrideBPM,
+                                                      mOverrideOffsetSec);
+            newBeat = b;
+            newPhase = p;
         }
         else
         {

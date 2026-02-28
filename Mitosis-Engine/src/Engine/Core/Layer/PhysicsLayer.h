@@ -9,14 +9,18 @@
 
 #pragma once
 #include "Engine/Core/Layer.h"
+#include "Engine/Core/Editor/EditorContext.h"
 
 namespace mts
 {
     class PhysicsLayer : public Layer
     {
        public:
-        explicit PhysicsLayer();
+        explicit PhysicsLayer(EditorContext& ctx);
         void OnFixedUpdate(float fixedDt) override;
+
+       private:
+        EditorContext& mCtx;
     };
 
 }  // namespace mts

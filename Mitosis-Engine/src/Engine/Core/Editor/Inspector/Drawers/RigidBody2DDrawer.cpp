@@ -33,11 +33,11 @@ namespace mts
         }
     }
 
-    void RigidBody2DDrawer::Draw(GameObject* go)
+    bool RigidBody2DDrawer::Draw(GameObject* go)
     {
         auto* rb = go->GetComponent<mts::RigidBody2D>();
         if (!rb)
-            return;
+            return false;
 
         ImGui::PushID("RigidBody2DDrawer");
 
@@ -99,5 +99,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

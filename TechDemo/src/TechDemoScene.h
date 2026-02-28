@@ -9,6 +9,8 @@ class TechDemoScene : public mts::Scene
    protected:
     void OnInit() override;
     void OnUpdate() override;
+    void OnEnterPlayMode() override;
+    void OnExitPlayMode() override;
 
    private:
     void OnBeat(mts::BeatInfo info);

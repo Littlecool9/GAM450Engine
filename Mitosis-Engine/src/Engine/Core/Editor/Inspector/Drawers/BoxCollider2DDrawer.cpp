@@ -17,11 +17,11 @@
 
 namespace mts
 {
-    void BoxCollider2DDrawer::Draw(GameObject* go)
+    bool BoxCollider2DDrawer::Draw(GameObject* go)
     {
         auto* box = go->GetComponent<BoxCollider2D>();
         if (!box)
-            return;
+            return false;
 
         ImGui::PushID("BoxCollider2DDrawer");
 
@@ -50,5 +50,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

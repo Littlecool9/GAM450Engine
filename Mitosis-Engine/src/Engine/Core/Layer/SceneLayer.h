@@ -9,6 +9,7 @@
 
 #pragma once
 #include "Engine/Core/Layer.h"
+#include "Engine/Core/Editor/EditorContext.h"
 
 namespace mts
 {
@@ -17,7 +18,7 @@ namespace mts
     class SceneLayer : public Layer
     {
        public:
-        explicit SceneLayer(Scene* initialScene);
+        explicit SceneLayer(Scene* initialScene, EditorContext& ctx);
         void OnAttach() override;
         void OnDetach() override;
 
@@ -31,6 +32,7 @@ namespace mts
 
        private:
         Scene* mInitialScene = nullptr;
+        EditorContext& mCtx;
     };
 
 }  // namespace mts

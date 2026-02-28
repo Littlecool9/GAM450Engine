@@ -17,11 +17,11 @@
 
 namespace mts
 {
-    void CircleCollider2DDrawer::Draw(GameObject* go)
+    bool CircleCollider2DDrawer::Draw(GameObject* go)
     {
         auto* c = go->GetComponent<CircleCollider2D>();
         if (!c)
-            return;
+            return false;
 
         ImGui::PushID("CircleCollider2DDrawer");
 
@@ -40,6 +40,7 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 
 }  // namespace mts

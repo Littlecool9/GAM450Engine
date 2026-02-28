@@ -18,6 +18,7 @@ namespace mts
     {
        public:
         explicit RenderingLayer(Window* window);
+        void OnBeginFrame() override;
         void OnRender() override;
 
         void OnEvent(Event& e) override;

@@ -21,11 +21,11 @@
 
 namespace mts
 {
-    void CameraFollowDrawer::Draw(GameObject* go)
+    bool CameraFollowDrawer::Draw(GameObject* go)
     {
         auto* cf = go->GetComponent<CameraFollow>();
         if (!cf)
-            return;
+            return false;
 
         ImGui::PushID("CameraFollowDrawer");
 
@@ -65,13 +65,15 @@ namespace mts
             // Popup picker
             if (ImGui::BeginPopup("##goref_pick") && scene)
             {
+                int i = 0;
                 for (GameObject* c : scene->GetGameObjects())
                 {
                     if (!c || c->IsDead())
                         continue;
-                    const std::string& nm = c->GetName();
-                    const char* label = nm.empty() ? "Unnamed" : nm.c_str();
-                    if (ImGui::Selectable(label))
+                    std::string label = c->GetName().empty() ? "Unnamed" : c->GetName();
+                    label += "##";
+                    label += std::to_string(i++);
+                    if (ImGui::Selectable(label.c_str()))
                     {
                         cf->SetTargetId(c->GetId());
                         cf->SetObjectToFollow(c->GetComponent<Transform>());
@@ -99,5 +101,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

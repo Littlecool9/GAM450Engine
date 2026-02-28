@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <functional>
 #include <vector>
 
 namespace mts
@@ -16,13 +17,17 @@ namespace mts
     class JsonDocument;
     class GameObject;
     class JsonValue;
+    class UUID;
+    class Component;
 
     struct ScriptField
     {
-        enum class Type { Float, Int, Bool, GameObject };
+        enum class Type { Float, Int, Bool, GameObject, Component };
         const char* name = nullptr;
         Type        type = Type::Float;
-        union { float* f; int* i; bool* b; GameObject** go; } ptr{};
+        union { float* f; int* i; bool* b; GameObject** go; Component** comp; } ptr{};
+        UUID*       uuid     = nullptr;   // points to script's UUID member; required to persist
+        std::function<Component*(GameObject*)> resolver;  // for Type::Component only
         float step = 0.05f;
     };
 

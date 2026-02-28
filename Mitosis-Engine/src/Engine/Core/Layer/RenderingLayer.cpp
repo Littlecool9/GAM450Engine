@@ -41,8 +41,27 @@ namespace mts
         glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
     }
 
+    void RenderingLayer::OnBeginFrame()
+    {
+        auto gv = Renderer::GetGameViewport();
+        if (gv.valid)
+            glViewport(gv.x, gv.y, gv.w, gv.h);
+        else
+            glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
+    }
+
     void RenderingLayer::OnRender()
     {
+        auto gv = Renderer::GetGameViewport();
+        if (gv.valid)
+        {
+            glEnable(GL_SCISSOR_TEST);
+            glScissor(gv.x, gv.y, gv.w, gv.h);
+        }
+        else
+        {
+            glDisable(GL_SCISSOR_TEST);
+        }
     }
 
     void RenderingLayer::OnEvent(Event& e)

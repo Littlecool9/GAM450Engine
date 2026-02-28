@@ -27,6 +27,7 @@ namespace mts::physics
        public:
         static void PushCommand(const PhysicsCommand2D& cmd);
         static void FixedUpdate(Scene* scene, float dt);
+        static void Reset();   // clears persistent collision state between play sessions
 
        private:
         static void ProcessCommandQueue();

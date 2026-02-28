@@ -15,7 +15,8 @@
 
 namespace mts
 {
-    SceneLayer::SceneLayer(Scene* initialScene) : Layer("SceneLayer"), mInitialScene(initialScene)
+    SceneLayer::SceneLayer(Scene* initialScene, EditorContext& ctx)
+        : Layer("SceneLayer"), mInitialScene(initialScene), mCtx(ctx)
     {
     }
 
@@ -35,12 +36,14 @@ namespace mts
 
     void SceneLayer::OnUpdate(float dt)
     {
-        SceneSystem::Update(dt);
+        if (mCtx.playState == PlayState::Play)
+            SceneSystem::Update(dt);
     }
 
     void SceneLayer::OnLateUpdate(float dt)
     {
-        SceneSystem::LateUpdate(dt);
+        if (mCtx.playState == PlayState::Play)
+            SceneSystem::LateUpdate(dt);
     }
 
     void SceneLayer::OnRender()

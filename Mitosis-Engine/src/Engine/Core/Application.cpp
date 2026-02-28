@@ -28,6 +28,8 @@
 #include "Layer/RenderingLayer.h"
 #include "Layer/ResourceLayer.h"
 #include "Layer/SceneLayer.h"
+#include "Engine/Serialization/SerializationUtility.h"
+#include "Engine/Physics2D/PhysicsSystem2D.h"
 
 namespace mts
 {
@@ -53,8 +55,8 @@ namespace mts
         mLayerStack.PushLayer(std::make_unique<ResourceLayer>());
         mLayerStack.PushLayer(std::make_unique<RenderingLayer>(mWindow.get()));
         mLayerStack.PushLayer(std::make_unique<AudioLayer>());
-        mLayerStack.PushLayer(std::make_unique<SceneLayer>(GetInitialScene()));
-        mLayerStack.PushLayer(std::make_unique<PhysicsLayer>());
+        mLayerStack.PushLayer(std::make_unique<SceneLayer>(GetInitialScene(), mCtx));
+        mLayerStack.PushLayer(std::make_unique<PhysicsLayer>(mCtx));
         mLayerStack.PushLayer(std::make_unique<DebugRenderLayer>());
         mLayerStack.PushOverlay(std::make_unique<ImGuiLayer>(mWindow.get()));
         mLayerStack.PushOverlay(std::make_unique<EditorLayer>(mCtx));
@@ -69,6 +71,8 @@ namespace mts
 
         while (mIsRunning)
         {
+            HandlePlayStateTransitions();
+
             Time::BeginFrame();
 
             // MUST happen BEFORE PollEvents (so callbacks set pressed/released for this frame)
@@ -172,15 +176,49 @@ namespace mts
 
         if (Input::IsKeyPressed(Key::C))
             mInDebugView = !mInDebugView;
-        if (Input::IsKeyPressed(Key::P))
-            mts::SceneSystem::SaveScene(SceneSystem::GetCurrentScene(),
-                                        "../TechDemo/Data/Resources/CurrentScene.json");
     }
 
     bool Application::OnWindowClose(class WindowCloseEvent& e)
     {
         mIsRunning = false;
         return true;
+    }
+
+    void Application::HandlePlayStateTransitions()
+    {
+        if (mCtx.requestPlay && mCtx.playState == PlayState::Edit)
+        {
+            mCtx.requestPlay = false;
+            EnterPlayMode();
+        }
+        else if (mCtx.requestStop && mCtx.playState == PlayState::Play)
+        {
+            mCtx.requestStop = false;
+            StopPlayMode();
+        }
+    }
+
+    void Application::EnterPlayMode()
+    {
+        Scene* scene = SceneSystem::GetCurrentScene();
+        // Capture current (possibly unsaved) edit state
+        std::string snapshot = SerializationUtility::SerializeToString(scene);
+        // Preserve edit GOs untouched; deserialize fresh play GOs
+        scene->StashGameObjects();
+        SerializationUtility::DeserializeFromString(scene, snapshot);
+        scene->OnEnterPlayMode();
+        mCtx.playState = PlayState::Play;
+    }
+
+    void Application::StopPlayMode()
+    {
+        mCtx.playState = PlayState::Edit;
+        mCtx.selected  = UUID::InvalidID;
+        Scene* scene = SceneSystem::GetCurrentScene();
+        scene->OnExitPlayMode();           // stop audio / custom teardown
+        scene->ClearGameObjects();         // delete play GOs
+        physics::PhysicsSystem2D::Reset();
+        scene->RestoreGameObjects();       // restore pristine edit GOs (no deserialize)
     }
 
 }  // namespace mts

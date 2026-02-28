@@ -83,6 +83,7 @@ namespace mts
     void SceneSystem::LoadScene(Scene* scene, const std::string& fileName)
     {
         SerializationUtility::DeserializeFromFile(scene, fileName);
+        scene->SetFilePath(fileName);
     }
 
     void SceneSystem::SceneCleanUp()

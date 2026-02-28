@@ -177,7 +177,8 @@ namespace mts
     void GameObject::OnCollisionEnter2D(const GameObject* other)
     {
         // go down scripts and call OnCollisionEnter for all of them.
-        GetComponent<Collider2D>()->SetIsColliding(true);
+        if (auto* col = GetComponent<Collider2D>())
+            col->SetIsColliding(true);
 
         for (auto c : components)
             if (c->IsEnabled())
@@ -196,7 +197,8 @@ namespace mts
     void GameObject::OnCollisionExit2D(const GameObject* other)
     {
         // go down scripts and call OnCollisionExit for all of them.
-        GetComponent<Collider2D>()->SetIsColliding(false);
+        if (auto* col = GetComponent<Collider2D>())
+            col->SetIsColliding(false);
 
         for (auto c : components)
             if (c->IsEnabled())

@@ -18,7 +18,7 @@ namespace mts
        public:
         virtual ~ComponentDrawer() = default;
         virtual const char* GetName() const = 0;
-        virtual void Draw(GameObject* go) = 0;
+        virtual bool Draw(GameObject* go) = 0;
     };
 
 }  // namespace mts

@@ -10,6 +10,7 @@
 namespace mts
 {
     RenderCamera Renderer::ActiveCamera{};
+    Viewport Renderer::targetViewport{};
     std::vector<RenderCommand> Renderer::OpaqueCommands;
     std::vector<RenderCommand> Renderer::TransparentCommands;
     GLboolean Renderer::blendEnabled = GL_FALSE;
@@ -76,7 +77,20 @@ namespace mts
         float y = (1.0f - ndc.y / ndc.w) * 0.5f * height;  // flip y
         return glm::vec2(x, y);
     }
-    
+
+    void Renderer::SetViewport(int x, int y, int w, int h)
+    {
+        targetViewport = {x, y, w, h, true};
+    }
+    void Renderer::ClearGameViewport()
+    {
+        targetViewport.valid = false;
+    }
+    Viewport Renderer::GetGameViewport()
+    {
+        return targetViewport;
+    }
+
     void Renderer::BeginFrame()
     {
         OpaqueCommands.clear();
@@ -97,17 +111,13 @@ namespace mts
         std::sort(OpaqueCommands.begin(),
                   OpaqueCommands.end(),
                   [](const RenderCommand& a, const RenderCommand& b)
-                  {
-                      return a.sortKey > b.sortKey;
-                  });
+                  { return a.sortKey > b.sortKey; });
         std::sort(TransparentCommands.begin(),
                   TransparentCommands.end(),
                   [](const RenderCommand& a, const RenderCommand& b)
-                  {
-                      return a.sortKey < b.sortKey; 
-                  });
+                  { return a.sortKey < b.sortKey; });
 
-        // Store GL states before rendering for for restoring 
+        // Store GL states before rendering for for restoring
         blendEnabled = glIsEnabled(GL_BLEND);
         depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
         depthMaskEnabled = GL_TRUE;
@@ -135,6 +145,7 @@ namespace mts
         blendEnabled ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
         depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
         glDepthMask(depthMaskEnabled);
+        glDisable(GL_SCISSOR_TEST);
     }
 
     void Renderer::ExecuteCommand(const RenderCommand& cmd)
@@ -147,7 +158,8 @@ namespace mts
         // Compute view projection matrix with parallax effect if needed
         glm::mat4 viewProj;
         if (cmd.parallaxFactorX != 1.0f)
-            viewProj = ComputeViewProjWithParallax(cmd.parallaxFactorX);  // FIXED: Removed duplicate declaration
+            viewProj = ComputeViewProjWithParallax(
+                cmd.parallaxFactorX);  // FIXED: Removed duplicate declaration
         else
             viewProj = ActiveCamera.viewProj;
 

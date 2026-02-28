@@ -21,11 +21,11 @@
 
 namespace mts
 {
-    void NativeScriptDrawer::Draw(GameObject* go)
+    bool NativeScriptDrawer::Draw(GameObject* go)
     {
         auto* nsc = go->GetComponent<NativeScriptComponent>();
         if (!nsc)
-            return;
+            return false;
 
         ImGui::PushID("NativeScriptDrawer");
 
@@ -63,7 +63,12 @@ namespace mts
                         case ScriptField::Type::GameObject:
                         {
                             Scene* scene = SceneSystem::GetCurrentScene();
-                            std::string goName = (*field.ptr.go) ? (*field.ptr.go)->GetName() : "None";
+                            // Lazy-resolve from UUID after a scene reload
+                            if (*field.ptr.go == nullptr && field.uuid && field.uuid->IsValid() &&
+                                scene)
+                                *field.ptr.go = scene->FindGameObjectByUUID(*field.uuid);
+                            std::string goName =
+                                (*field.ptr.go) ? (*field.ptr.go)->GetName() : "None";
                             ImGui::Text("%s:", field.name);
                             ImGui::SameLine();
                             std::string popupId = std::string("##gopick_") + field.name;
@@ -77,6 +82,8 @@ namespace mts
                                     if (scene)
                                     {
                                         *field.ptr.go = scene->FindGameObjectByUUID(id);
+                                        if (field.uuid)
+                                            *field.uuid = id;
                                         changed = true;
                                     }
                                 }
@@ -84,17 +91,68 @@ namespace mts
                             }
                             if (ImGui::BeginPopup(popupId.c_str()) && scene)
                             {
+                                int i = 0;
                                 for (GameObject* c : scene->GetGameObjects())
                                 {
                                     if (!c || c->IsDead())
                                         continue;
-                                    if (ImGui::Selectable(c->GetName().c_str()))
+
+                                    std::string label =
+                                        c->GetName().empty() ? "Unnamed" : c->GetName();
+                                    label += "##";
+                                    label += std::to_string(i++);
+
+                                    if (ImGui::Selectable(label.c_str()))
                                     {
                                         *field.ptr.go = c;
+                                        if (field.uuid)
+                                            *field.uuid = c->GetId();
                                         changed = true;
                                     }
                                 }
                                 ImGui::EndPopup();
+                            }
+                            break;
+                        }
+                        case ScriptField::Type::Component:
+                        {
+                            Scene* scene = SceneSystem::GetCurrentScene();
+                            // Lazy-resolve from UUID after a scene reload
+                            if (*field.ptr.comp == nullptr && field.uuid && field.uuid->IsValid() &&
+                                scene && field.resolver)
+                            {
+                                if (GameObject* target = scene->FindGameObjectByUUID(*field.uuid))
+                                    *field.ptr.comp = field.resolver(target);
+                            }
+                            std::string label = "None";
+                            if (field.uuid && field.uuid->IsValid() && scene)
+                            {
+                                if (GameObject* target = scene->FindGameObjectByUUID(*field.uuid))
+                                    label = target->GetName();
+                            }
+                            ImGui::Text("%s:", field.name);
+                            ImGui::SameLine();
+                            ImGui::Button(label.c_str());
+                            if (ImGui::BeginDragDropTarget())
+                            {
+                                UUID id = UUID::GenerateNil();
+                                if (auto* p = ImGui::AcceptDragDropPayload("GAMEOBJECT_UUID"))
+                                    id = UUID::FromString(static_cast<const char*>(p->Data));
+                                else if (auto* p =
+                                             ImGui::AcceptDragDropPayload("COMPONENT_GO_UUID"))
+                                    id = UUID::FromString(static_cast<const char*>(p->Data));
+                                if (id.IsValid() && scene)
+                                {
+                                    if (field.uuid)
+                                        *field.uuid = id;
+                                    if (field.resolver)
+                                    {
+                                        if (GameObject* target = scene->FindGameObjectByUUID(id))
+                                            *field.ptr.comp = field.resolver(target);
+                                    }
+                                    changed = true;
+                                }
+                                ImGui::EndDragDropTarget();
                             }
                             break;
                         }
@@ -107,5 +165,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

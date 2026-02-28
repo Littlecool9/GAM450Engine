@@ -17,11 +17,11 @@
 
 namespace mts
 {
-    void TransformDrawer::Draw(GameObject* go)
+    bool TransformDrawer::Draw(GameObject* go)
     {
         auto* tr = go->GetComponent<Transform>();
         if (!tr)
-            return;
+            return false;
 
         // Stable ID scope for this component UI
         ImGui::PushID("TransformDrawer");
@@ -42,5 +42,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

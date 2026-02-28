@@ -16,7 +16,7 @@ namespace mts
     {
        public:
         const char* GetName() const override { return "CameraFollow"; }
-        void Draw(GameObject* go) override;
+        bool Draw(GameObject* go) override;
     };
 
 }  // namespace mts

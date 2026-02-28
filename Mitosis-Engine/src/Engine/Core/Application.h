@@ -43,6 +43,9 @@ namespace mts
 
        private:
         bool OnWindowClose(class WindowCloseEvent& e);
+        void HandlePlayStateTransitions();
+        void EnterPlayMode();
+        void StopPlayMode();
 
        private:
         std::unique_ptr<Window> mWindow;

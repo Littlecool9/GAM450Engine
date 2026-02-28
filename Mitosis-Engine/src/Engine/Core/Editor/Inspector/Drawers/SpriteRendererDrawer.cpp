@@ -18,11 +18,11 @@
 
 namespace mts
 {
-    void SpriteRendererDrawer::Draw(mts::GameObject* go)
+    bool SpriteRendererDrawer::Draw(mts::GameObject* go)
     {
         auto* sr = go->GetComponent<SpriteRenderer>();
         if (!sr)
-            return;
+            return false;
 
         ImGui::PushID("SpriteRendererDrawer");
 
@@ -111,5 +111,6 @@ namespace mts
         }
 
         ImGui::PopID();
+        return true;
     }
 }  // namespace mts

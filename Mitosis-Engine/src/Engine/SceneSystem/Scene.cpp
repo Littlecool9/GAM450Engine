@@ -27,6 +27,11 @@ namespace mts
             }
             delete g;
         }
+        for (auto g : mEditGameObjects)
+        {
+            if (!g->GetDontDestroy())
+                delete g;
+        }
     }
 
     void Scene::Init()
@@ -97,6 +102,32 @@ namespace mts
                 return g;
         }
         return nullptr;
+    }
+
+    void Scene::ClearGameObjects()
+    {
+        for (auto* go : mGameObjects)
+            delete go;
+        mGameObjects.clear();
+    }
+
+    void Scene::OnEnterPlayMode()
+    {
+        for (auto* go : mGameObjects)
+            go->Init();
+    }
+
+    void Scene::StashGameObjects()
+    {
+        mEditGameObjects = std::move(mGameObjects);
+        mGameObjects.clear();
+    }
+
+    void Scene::RestoreGameObjects()
+    {
+        // Play GOs must already be cleared via ClearGameObjects()
+        mGameObjects = std::move(mEditGameObjects);
+        mEditGameObjects.clear();
     }
 
     void Scene::DestroyGameObjects()

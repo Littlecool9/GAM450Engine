@@ -121,6 +121,16 @@ namespace mts::physics
     static const glm::vec2 gravity = {0, -9.8};
     static const int collisionResolveNum = 4;
 
+    void PhysicsSystem2D::Reset()
+    {
+        cmdQueue.clear();
+        physicsBodies.clear();
+        contactInfos.clear();
+        prevPairs.clear();
+        currPairs.clear();
+        currentScene = nullptr;
+    }
+
     void PhysicsSystem2D::PushCommand(const PhysicsCommand2D& cmd)
     {
         cmdQueue.push_back(cmd);

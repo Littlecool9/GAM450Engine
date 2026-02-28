@@ -11,6 +11,12 @@ namespace mts
     class Texture;
     class Shader;
 
+    struct Viewport
+    {
+        int x = 0, y = 0, w = 0, h = 0;
+        bool valid = false;
+    };
+
     struct RenderCamera
     {
         glm::vec3 position{0.0f, 0.0f, 0.0f};
@@ -66,6 +72,10 @@ namespace mts
         static void SetActiveCamera(const RenderCamera& cam) { ActiveCamera = cam; }
         static const RenderCamera& GetActiveCamera() { return ActiveCamera; }
 
+        static void SetViewport(int x, int y, int w, int h);
+        static void ClearGameViewport();
+        static Viewport GetGameViewport();
+
         // Frame-based rendering API: collect, sort, and draw render commands
         static void BeginFrame();
 
@@ -78,6 +88,7 @@ namespace mts
 
        private:
         static RenderCamera ActiveCamera;
+        static Viewport targetViewport;
 
         // Render Command queue
         static std::vector<RenderCommand> OpaqueCommands;

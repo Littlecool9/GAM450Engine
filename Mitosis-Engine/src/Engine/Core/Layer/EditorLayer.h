@@ -18,22 +18,28 @@
 
 namespace mts
 {
+    class Scene;
+
     class EditorLayer : public Layer
     {
        public:
         explicit EditorLayer(EditorContext& ctx);
 
+        void OnUpdate(float dt) override;
         void OnImGuiRender(float dt) override;
 
        private:
+        void UpdateEditorCamera(float dt);
+        void HandleViewportInput(Scene* scene);
+        void DrawGizmo(Scene* scene);
 
        private:
         EditorContext& mCtx;
         InspectorPanel mInspector;
         HierarchyPanel mHierarchy;
-        AssetPanel     mAssets;
-        LogPanel       mLog;
-        ProfilerPanel  mProfiler;
+        AssetPanel mAssets;
+        LogPanel mLog;
+        ProfilerPanel mProfiler;
     };
 
 }  // namespace mts

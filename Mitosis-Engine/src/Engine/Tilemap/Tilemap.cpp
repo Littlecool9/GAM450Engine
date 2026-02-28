@@ -50,15 +50,14 @@ namespace mts::Tilemap
     void Tilemap::Update(float dt)
     {
         // TODO: gameplay logic update via layers system
-
-        // Render related update
-        mChunkManager.UpdateChunks(Renderer::GetActiveCamera());
-        visibleChunks = mChunkManager.GetVisibleChunks();
     }
 
     void Tilemap::Render()
     {
-        // Render all visible chunks
+        // Keep chunks up to date every frame regardless of play state
+        mChunkManager.UpdateChunks(Renderer::GetActiveCamera());
+        visibleChunks = mChunkManager.GetVisibleChunks();
+
         if (!mChunkRenderData.isValid())
             LoadRenderData(defaultTextureSource, defaultShaderSource);
 

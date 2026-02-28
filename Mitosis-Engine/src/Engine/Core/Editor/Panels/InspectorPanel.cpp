@@ -25,7 +25,6 @@
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
-#include "Engine/Scripting/NativeScriptComponent.h"
 #include "Engine/SceneSystem/Scene.h"
 
 namespace mts
@@ -139,11 +138,6 @@ namespace mts
             ImGui::BeginDisabled(go->GetComponent<CircleCollider2D>() != nullptr);
             if (ImGui::MenuItem("CircleCollider2D"))
                 go->AddComponent<CircleCollider2D>();
-            ImGui::EndDisabled();
-
-            ImGui::BeginDisabled(go->GetComponent<NativeScriptComponent>() != nullptr);
-            if (ImGui::MenuItem("NativeScriptComponent"))
-                go->AddComponent<NativeScriptComponent>();
             ImGui::EndDisabled();
 
             ImGui::EndPopup();

@@ -23,148 +23,159 @@ namespace mts
 {
     bool NativeScriptDrawer::Draw(GameObject* go)
     {
-        auto* nsc = go->GetComponent<NativeScriptComponent>();
-        if (!nsc)
+        auto nscs = go->GetComponents<NativeScriptComponent>();
+        if (nscs.empty())
             return false;
 
-        ImGui::PushID("NativeScriptDrawer");
-
-        if (ImGui::CollapsingHeader("Native Script", ImGuiTreeNodeFlags_DefaultOpen))
+        bool anyDrawn = false;
+        int idx = 0;
+        for (auto* nsc : nscs)
         {
-            ImGui::Text("Class: %s", nsc->GetClassName().c_str());
+            std::string header = "Native Script: " + nsc->GetClassName();
+            ImGui::PushID(idx++);
 
-            ScriptBase* script = nsc->GetScript();
-            if (!script)
+            if (ImGui::CollapsingHeader(header.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
             {
-                ImGui::TextDisabled("(not initialized)");
-            }
-            else
-            {
-                std::vector<ScriptField> fields;
-                script->GetInspectorFields(fields);
-
-                bool changed = false;
-                for (auto& field : fields)
+                ScriptBase* script = nsc->GetScript();
+                if (!script)
                 {
-                    switch (field.type)
+                    ImGui::TextDisabled("(not initialized)");
+                }
+                else
+                {
+                    std::vector<ScriptField> fields;
+                    script->GetInspectorFields(fields);
+
+                    bool changed = false;
+                    for (auto& field : fields)
                     {
-                        case ScriptField::Type::Float:
-                            if (ImGui::DragFloat(field.name, field.ptr.f, field.step))
-                                changed = true;
-                            break;
-                        case ScriptField::Type::Int:
-                            if (ImGui::DragInt(field.name, field.ptr.i))
-                                changed = true;
-                            break;
-                        case ScriptField::Type::Bool:
-                            if (ImGui::Checkbox(field.name, field.ptr.b))
-                                changed = true;
-                            break;
-                        case ScriptField::Type::GameObject:
+                        ImGui::PushID(field.name);
+                        switch (field.type)
                         {
-                            Scene* scene = SceneSystem::GetCurrentScene();
-                            // Lazy-resolve from UUID after a scene reload
-                            if (*field.ptr.go == nullptr && field.uuid && field.uuid->IsValid() &&
-                                scene)
-                                *field.ptr.go = scene->FindGameObjectByUUID(*field.uuid);
-                            std::string goName =
-                                (*field.ptr.go) ? (*field.ptr.go)->GetName() : "None";
-                            ImGui::Text("%s:", field.name);
-                            ImGui::SameLine();
-                            std::string popupId = std::string("##gopick_") + field.name;
-                            if (ImGui::Button(goName.c_str()))
-                                ImGui::OpenPopup(popupId.c_str());
-                            if (ImGui::BeginDragDropTarget())
+                            case ScriptField::Type::Float:
+                                if (ImGui::DragFloat(field.name, field.ptr.f, field.step))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::Int:
+                                if (ImGui::DragInt(field.name, field.ptr.i))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::Bool:
+                                if (ImGui::Checkbox(field.name, field.ptr.b))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::GameObject:
                             {
-                                if (auto* p = ImGui::AcceptDragDropPayload("GAMEOBJECT_UUID"))
+                                Scene* scene = SceneSystem::GetCurrentScene();
+                                // Lazy-resolve from UUID after a scene reload
+                                if (*field.ptr.go == nullptr && field.uuid &&
+                                    field.uuid->IsValid() && scene)
+                                    *field.ptr.go = scene->FindGameObjectByUUID(*field.uuid);
+                                std::string goName =
+                                    (*field.ptr.go) ? (*field.ptr.go)->GetName() : "None";
+                                ImGui::Text("%s:", field.name);
+                                ImGui::SameLine();
+                                std::string popupId = std::string("##gopick_") + field.name;
+                                if (ImGui::Button(goName.c_str()))
+                                    ImGui::OpenPopup(popupId.c_str());
+                                if (ImGui::BeginDragDropTarget())
                                 {
-                                    UUID id = UUID::FromString(static_cast<const char*>(p->Data));
-                                    if (scene)
+                                    if (auto* p = ImGui::AcceptDragDropPayload("GAMEOBJECT_UUID"))
                                     {
-                                        *field.ptr.go = scene->FindGameObjectByUUID(id);
+                                        UUID id =
+                                            UUID::FromString(static_cast<const char*>(p->Data));
+                                        if (scene)
+                                        {
+                                            *field.ptr.go = scene->FindGameObjectByUUID(id);
+                                            if (field.uuid)
+                                                *field.uuid = id;
+                                            changed = true;
+                                        }
+                                    }
+                                    ImGui::EndDragDropTarget();
+                                }
+                                if (ImGui::BeginPopup(popupId.c_str()) && scene)
+                                {
+                                    int i = 0;
+                                    for (GameObject* c : scene->GetGameObjects())
+                                    {
+                                        if (!c || c->IsDead())
+                                            continue;
+
+                                        std::string label =
+                                            c->GetName().empty() ? "Unnamed" : c->GetName();
+                                        label += "##";
+                                        label += std::to_string(i++);
+
+                                        if (ImGui::Selectable(label.c_str()))
+                                        {
+                                            *field.ptr.go = c;
+                                            if (field.uuid)
+                                                *field.uuid = c->GetId();
+                                            changed = true;
+                                        }
+                                    }
+                                    ImGui::EndPopup();
+                                }
+                                break;
+                            }
+                            case ScriptField::Type::Component:
+                            {
+                                Scene* scene = SceneSystem::GetCurrentScene();
+                                // Lazy-resolve from UUID after a scene reload
+                                if (*field.ptr.comp == nullptr && field.uuid &&
+                                    field.uuid->IsValid() && scene && field.resolver)
+                                {
+                                    if (GameObject* target =
+                                            scene->FindGameObjectByUUID(*field.uuid))
+                                        *field.ptr.comp = field.resolver(target);
+                                }
+                                std::string label = "None";
+                                if (field.uuid && field.uuid->IsValid() && scene)
+                                {
+                                    if (GameObject* target =
+                                            scene->FindGameObjectByUUID(*field.uuid))
+                                        label = target->GetName();
+                                }
+                                ImGui::Text("%s:", field.name);
+                                ImGui::SameLine();
+                                ImGui::Button(label.c_str());
+                                if (ImGui::BeginDragDropTarget())
+                                {
+                                    UUID id = UUID::GenerateNil();
+                                    if (auto* p = ImGui::AcceptDragDropPayload("GAMEOBJECT_UUID"))
+                                        id = UUID::FromString(static_cast<const char*>(p->Data));
+                                    else if (auto* p =
+                                                 ImGui::AcceptDragDropPayload("COMPONENT_GO_UUID"))
+                                        id = UUID::FromString(static_cast<const char*>(p->Data));
+                                    if (id.IsValid() && scene)
+                                    {
                                         if (field.uuid)
                                             *field.uuid = id;
+                                        if (field.resolver)
+                                        {
+                                            if (GameObject* target =
+                                                    scene->FindGameObjectByUUID(id))
+                                                *field.ptr.comp = field.resolver(target);
+                                        }
                                         changed = true;
                                     }
+                                    ImGui::EndDragDropTarget();
                                 }
-                                ImGui::EndDragDropTarget();
+                                break;
                             }
-                            if (ImGui::BeginPopup(popupId.c_str()) && scene)
-                            {
-                                int i = 0;
-                                for (GameObject* c : scene->GetGameObjects())
-                                {
-                                    if (!c || c->IsDead())
-                                        continue;
-
-                                    std::string label =
-                                        c->GetName().empty() ? "Unnamed" : c->GetName();
-                                    label += "##";
-                                    label += std::to_string(i++);
-
-                                    if (ImGui::Selectable(label.c_str()))
-                                    {
-                                        *field.ptr.go = c;
-                                        if (field.uuid)
-                                            *field.uuid = c->GetId();
-                                        changed = true;
-                                    }
-                                }
-                                ImGui::EndPopup();
-                            }
-                            break;
                         }
-                        case ScriptField::Type::Component:
-                        {
-                            Scene* scene = SceneSystem::GetCurrentScene();
-                            // Lazy-resolve from UUID after a scene reload
-                            if (*field.ptr.comp == nullptr && field.uuid && field.uuid->IsValid() &&
-                                scene && field.resolver)
-                            {
-                                if (GameObject* target = scene->FindGameObjectByUUID(*field.uuid))
-                                    *field.ptr.comp = field.resolver(target);
-                            }
-                            std::string label = "None";
-                            if (field.uuid && field.uuid->IsValid() && scene)
-                            {
-                                if (GameObject* target = scene->FindGameObjectByUUID(*field.uuid))
-                                    label = target->GetName();
-                            }
-                            ImGui::Text("%s:", field.name);
-                            ImGui::SameLine();
-                            ImGui::Button(label.c_str());
-                            if (ImGui::BeginDragDropTarget())
-                            {
-                                UUID id = UUID::GenerateNil();
-                                if (auto* p = ImGui::AcceptDragDropPayload("GAMEOBJECT_UUID"))
-                                    id = UUID::FromString(static_cast<const char*>(p->Data));
-                                else if (auto* p =
-                                             ImGui::AcceptDragDropPayload("COMPONENT_GO_UUID"))
-                                    id = UUID::FromString(static_cast<const char*>(p->Data));
-                                if (id.IsValid() && scene)
-                                {
-                                    if (field.uuid)
-                                        *field.uuid = id;
-                                    if (field.resolver)
-                                    {
-                                        if (GameObject* target = scene->FindGameObjectByUUID(id))
-                                            *field.ptr.comp = field.resolver(target);
-                                    }
-                                    changed = true;
-                                }
-                                ImGui::EndDragDropTarget();
-                            }
-                            break;
-                        }
+                        ImGui::PopID();
                     }
+
+                    if (changed)
+                        nsc->SyncFieldsToJson();
                 }
-
-                if (changed)
-                    nsc->SyncFieldsToJson();
             }
-        }
 
-        ImGui::PopID();
-        return true;
+            ImGui::PopID();
+            anyDrawn = true;
+        }
+        return anyDrawn;
     }
 }  // namespace mts

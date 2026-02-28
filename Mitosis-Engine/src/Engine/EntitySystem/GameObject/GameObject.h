@@ -14,6 +14,7 @@
 #include "Engine/EntitySystem/Component/ComponentFactory.h"
 #include "Engine/EntitySystem/Component/Component.h"
 #include "Engine/Entity/Entity.h"
+#include "Engine/Scripting/NativeScriptComponent.h"
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -56,6 +57,7 @@ namespace mts
 {
     class Collider2D;
     class JsonValue;
+    class ScriptBase;
 
     class GameObject : public Deserializable, public Entity
     {
@@ -122,6 +124,34 @@ namespace mts
             }
             return nullptr;
         }
+
+        // Fast script lookup by concrete type (typeid — no vtable walk)
+        template <typename T>
+        T* GetScript()
+        {
+            for (auto* nsc : m_scripts)
+            {
+                ScriptBase* s = nsc->GetScript();
+                if (s && typeid(*s) == typeid(T))
+                    return static_cast<T*>(s);
+            }
+            return nullptr;
+        }
+
+        // All components of type T (used by drawer and external code)
+        template <typename T>
+        std::vector<T*> GetComponents()
+        {
+            std::vector<T*> result;
+            for (auto* c : components)
+                if (auto* t = dynamic_cast<T*>(c))
+                    result.push_back(t);
+            return result;
+        }
+
+        // Add an additional script by class name (bypasses AddComponent duplicate guard)
+        NativeScriptComponent* AddNativeScript(const std::string& className);
+
         // Getters and Setters
         inline void SetDontDestroy(bool value) { dontDestroy = value; }
         inline bool GetDontDestroy() const { return dontDestroy; }
@@ -148,6 +178,7 @@ namespace mts
 
         std::vector<Component*> components;
         std::vector<GameObject*> children;
+        std::vector<NativeScriptComponent*> m_scripts;  // non-owning cache
 
        private:
         friend class GameObjectFactory;

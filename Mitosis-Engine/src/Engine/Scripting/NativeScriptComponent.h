@@ -36,6 +36,7 @@ namespace mts
         void OnCollisionExit2D(const GameObject* other) override;
 
         const std::string& GetClassName() const;
+        void SetClassName(const std::string& name) { m_className = name; }
         bool HasScript() const { return m_script != nullptr; }
         ScriptBase* GetScript() const { return m_script.get(); }
 

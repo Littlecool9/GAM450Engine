@@ -15,6 +15,7 @@
 #include "../Component/Transform.h"
 #include "../Component/ComponentFactory.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
+#include "Engine/Scripting/NativeScriptComponent.h"
 
 namespace mts
 {
@@ -139,14 +140,40 @@ namespace mts
         json.EndArray();  // end "Components"
     }
 
-#define FOR_CONDITION_COMPONENTS(cond, action) \
-    for (auto c : components)                  \
-        if (c->cond)                           \
-    action
+#define FOR_CONDITION_COMPONENTS(cond, action)                    \
+    for (size_t _i = 0, _n = components.size(); _i < _n; ++_i)   \
+        if (auto* c = components[_i]; c->cond)                    \
+            action
 
     void GameObject::Init()
     {
+        // Rebuild script cache before Init so scripts can query siblings
+        m_scripts.clear();
+        for (auto* c : components)
+            if (auto* nsc = dynamic_cast<NativeScriptComponent*>(c))
+                m_scripts.push_back(nsc);
+
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->Init());
+    }
+
+    NativeScriptComponent* GameObject::AddNativeScript(const std::string& className)
+    {
+        if (!className.empty())
+        {
+            for (auto* nsc : m_scripts)
+                if (nsc->GetClassName() == className)
+                {
+                    LOG_WARN("GameObject {} already has script '{}'", name, className);
+                    break;
+                }
+        }
+
+        auto* nsc = new NativeScriptComponent();
+        nsc->owner = this;
+        nsc->SetClassName(className);
+        components.emplace_back(nsc);
+        m_scripts.push_back(nsc);
+        return nsc;
     }
 
     void GameObject::Update(float dt)

@@ -13,7 +13,7 @@ EnemyPrototype::EnemyPrototype()
 
 EnemyPrototype::~EnemyPrototype()
 {
-    delete m_scene;
+    //delete m_scene;
 }
 
 mts::Scene* EnemyPrototype::GetInitialScene()

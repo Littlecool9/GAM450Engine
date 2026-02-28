@@ -1,0 +1,72 @@
+{
+    "UUID": "44134d83-9eb3-48d0-b89a-60892b66ccfd",
+    "Name": "Enemy",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    23.117582321166992,
+                    8.399999618530273,
+                    0.0
+                ],
+                "Scale": [
+                    1.4882417917251587,
+                    1.4882417917251587,
+                    1.4882417917251587
+                ],
+                "Rotation": 92.11647033691406
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 0.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 2
+            }
+        },
+        {
+            "Type": "CircleCollider2D",
+            "Data": {
+                "Radius": 1.0,
+                "Offset": [
+                    0.0,
+                    0.0
+                ],
+                "IsTrigger": 1
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 1,
+                "TextureResource": "../TechDemo/Data/Resources/EnemyTextureResource.tex",
+                "MeshResource": "../TechDemo/Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "EnemyAgent"
+        },
+        {
+            "Type": "ActionList"
+        }
+    ]
+}

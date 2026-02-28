@@ -1,0 +1,3143 @@
+{
+    "GameObjects": [
+        {
+            "UUID": "b701f2a7-93af-452b-a98d-f97a96b1f9f9",
+            "Name": "Player",
+            "Layer": 0,
+            "Tags": [
+                "Player"
+            ],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            1.0,
+                            12.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            2.0,
+                            2.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 0.75,
+                        "Height": 0.800000011920929,
+                        "Offset": [
+                            0.0,
+                            -0.20000000298023224
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 3.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 1,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 0,
+                        "FrameCount": 0,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.0,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    }
+                },
+                {
+                    "Type": "AnimationSystem",
+                    "Data": {
+                        "States": [
+                            {
+                                "State": 0,
+                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 0,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 1,
+                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 2,
+                                "FrameCount": 2,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.20000000298023224,
+                                "IsRunning": 0,
+                                "IsLooping": 1
+                            },
+                            {
+                                "State": 2,
+                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 1,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 3,
+                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 2,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 4,
+                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
+                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 4,
+                                "FrameCount": 4,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.5,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "PlayerController",
+                        "Fields": {
+                            "moveSpeed": 3.0,
+                            "jumpSpeed": 14.0,
+                            "walkParticleCooldown": 0.1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c65acb28-651e-4584-9b08-29ba4096f6ec",
+            "Name": "Ground",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            20.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f48c12cd-5100-49f8-ac71-404eefbd9d57",
+            "Name": "CameraObject",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "Camera",
+                    "Data": {
+                        "IsActive": 1,
+                        "NearPlane": -1.0,
+                        "FarPlane": 1.0
+                    }
+                },
+                {
+                    "Type": "CameraFollow",
+                    "Data": {
+                        "MaxAcceleration": 500.0,
+                        "Interpolant": 2.0,
+                        "CameraOffset": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    }
+                },
+                {
+                    "Type": "AudioListener"
+                }
+            ]
+        },
+        {
+            "UUID": "ca234957-5dec-4443-9d0d-af11d66da3bd",
+            "Name": "Crate1",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            5.0,
+                            10.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 74,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "61204ebd-782e-4f6b-a954-bde3d780ba66",
+            "Name": "Crate2",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            13.0,
+                            9.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 74,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "424bbff8-56c7-4b83-bc07-abc3e3220eca",
+            "Name": "Crate3",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            13.0,
+                            10.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 74,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f5f9b9ef-7bb3-4301-bb27-99fc1dcbf33f",
+            "Name": "GrassPatch",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            7.0,
+                            7.400000095367432,
+                            -0.5
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 72,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "931623db-10b3-4374-a15d-43c66272a834",
+            "Name": "GrassPatch",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            3.0,
+                            7.400000095367432,
+                            -0.5
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 72,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "bf70dac0-fe3f-41e5-bca5-0b4fae3826f8",
+            "Name": "GrassPatch",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            12.0,
+                            4.400000095367432,
+                            -0.5
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 72,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "8535d360-dffd-49e3-aab0-53759c538d5b",
+            "Name": "GrassPatch",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            20.0,
+                            7.400000095367432,
+                            -0.5
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 72,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c76c203e-3805-4e03-8233-985d8d0428ce",
+            "Name": "GrassPatch",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            24.0,
+                            7.400000095367432,
+                            -0.5
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 72,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d41dbc46-974c-4514-abd3-7789f831630b",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            1.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "234f6f86-29cd-4e19-98ca-5836ba675de3",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            2.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1c4cf08a-2d2e-4d44-91b8-a562c74154d1",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            3.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "60bd6722-e547-423e-b0c7-048c6e8f69a2",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            4.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a0fa824b-add0-422c-a9f5-7a9fbca6e982",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            5.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "dad038cd-e3c6-4711-be22-793f0ea027f8",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            6.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "23ba7143-70a2-4c23-9562-68abedc49faa",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            7.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "94cd65e3-44b2-497a-99a1-e5ee04a6e1ea",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            22.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "961fb6e5-d513-445e-8b48-089d1c07fca7",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            23.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "2a259e97-001a-45e4-8b10-8b41aa449932",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            24.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1d8b48ab-94ec-4877-a912-a31ad8fb4e21",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            25.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d21a03b5-b403-4584-8eac-eb5c7ecf379b",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            26.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "34254953-4d66-4c08-8aef-6a631b8a2f6a",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            27.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f4f967f2-bf0b-4010-a805-3f46f42df06f",
+            "Name": "Fence",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            28.0,
+                            7.400000095367432,
+                            -0.8999999761581421
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 56,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "ffb40f0f-dfaa-4ad9-b1f7-d794b2d767a5",
+            "Name": "Block",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            16.5,
+                            5.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 7,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "227d7f3e-093a-40b8-8b13-b9e2a2b93f83",
+            "Name": "Block",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            16.5,
+                            4.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 7,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "0601a962-90a3-4129-89f8-3faf2f4b178b",
+            "Name": "Block",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            15.5,
+                            4.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 7,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "141dbddd-4cc8-402e-b64e-184b71ce3759",
+            "Name": "WoodPlatform",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            9.5,
+                            6.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 58,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 0.4000000059604645,
+                        "Offset": [
+                            0.0,
+                            0.30000001192092896
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "5493dc94-3438-45f3-89d4-052f8be3cbcd",
+            "Name": "WoodPlatform",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            10.5,
+                            6.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 58,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 5.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 5.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 0.4000000059604645,
+                        "Offset": [
+                            0.0,
+                            0.30000001192092896
+                        ],
+                        "IsTrigger": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "53ab38b3-aeae-40d2-8436-736c448b31ef",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            6.0,
+                            10.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "31452920-b79f-480d-b21a-6599329c5dc3",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            7.0,
+                            11.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "17216733-ac76-4a55-9b9f-f45b7a524969",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            8.0,
+                            10.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "2c61e852-86d5-490a-b1a5-830f82c3be8f",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            20.0,
+                            10.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "9906dac2-5e34-4971-a86d-684cdab1b1f8",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            21.0,
+                            11.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "14fe4cf2-4468-4df1-9153-90613fe034f5",
+            "Name": "Gem",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            22.0,
+                            10.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 50,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "ParticleEmitter",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "FrameIndex": 36,
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "Scale": [
+                            0.0,
+                            0.0
+                        ],
+                        "ParticleScaleMin": [
+                            0.20000000298023224,
+                            0.20000000298023224
+                        ],
+                        "ParticleScaleMax": [
+                            0.30000001192092896,
+                            0.30000001192092896
+                        ],
+                        "Acceleration": [
+                            0.0,
+                            0.0
+                        ],
+                        "DirectionRange": [
+                            0.0,
+                            6.28000020980835
+                        ],
+                        "EmitRate": 20.0,
+                        "EmitMax": 50,
+                        "LifetimeMin": 0.5,
+                        "LifetimeMax": 0.800000011920929,
+                        "SpeedMin": 0.4000000059604645,
+                        "SpeedMax": 1.0,
+                        "RotationSpeedMin": 0.20000000298023224,
+                        "RotationSpeedMax": 0.800000011920929,
+                        "RotationMin": 0.0,
+                        "RotationMax": 0.0,
+                        "OneShot": 0,
+                        "IsRunning": 1
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 0.5,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "cc1a0012-2b90-4704-a96c-8ea752436bbc",
+            "Name": "Sky",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            1.0,
+                            10.0,
+                            -1.0
+                        ],
+                        "Scale": [
+                            10.0,
+                            10.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.8999999761581421,
+                        "RenderLayer": -1,
+                        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "baf7a624-dbea-43a5-83d5-ab3d2a990a33",
+            "Name": "BackgroundTest",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            1.0,
+                            10.0,
+                            -1.0
+                        ],
+                        "Scale": [
+                            10.0,
+                            15.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.5,
+                        "RenderLayer": -1,
+                        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "9db7553d-6237-4ede-a868-c657eff6a47e",
+            "Name": "BeatLine",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            20.0,
+                            11.25,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.json",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "BeatBarController",
+                        "Fields": {
+                            "SpeedMultiplier": 1.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "171b0da6-7f6c-440b-9e0b-5eda8f357544",
+            "Name": "DemoTilemapEntity",
+            "Layer": 1,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Tilemap",
+                    "Data": {
+                        "Name": "Demo Tilemap",
+                        "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.json",
+                        "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.json",
+                        "TilesetsPath": [
+                            "Data/Tilemap/Tileset_0.json"
+                        ],
+                        "UsedTilesets": [
+                            {
+                                "TilesetIndex": 1,
+                                "TileIDs": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            }
+                        ],
+                        "LeftBottomTileTransformPosition": [
+                            0.0,
+                            0.0
+                        ],
+                        "TilemapCellGrid": [
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                3
+                            ],
+                            [
+                                3,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                3
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                3
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                3
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                3
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                3
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                3
+                            ],
+                            [
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3,
+                                3
+                            ]
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

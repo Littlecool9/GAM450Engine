@@ -8,12 +8,19 @@
  */
 
 #pragma once
-#define REGISTER_ENEMY_ACTION(plannerId, ActionType)                                         \
+
+// helper macros to concatenate tokens
+// token concat helpers
+#define MTS_CONCAT_IMPL(a, b) a##b
+#define MTS_CONCAT(a, b) MTS_CONCAT_IMPL(a, b)
+
+// Registration macro 
+#define REGISTER_ENEMY_ACTION(plannerId, ActionType)                                     \
 namespace                                                                                \
 {                                                                                        \
-    const bool registered_##ActionType = []()                                            \
+    const bool MTS_CONCAT(_mts_registered_action_, __COUNTER__) = []()                   \
     {                                                                                    \
-        mts::EnemyActionList::Register(plannerId,                                        \
+        mts::EnemyActionList::Register((plannerId),                                      \
                                        []() { return std::make_unique<ActionType>(); }); \
         return true;                                                                     \
     }();                                                                                 \

@@ -28,7 +28,7 @@ namespace mts
     {
        public:
         BaseEnemyAction() = default;
-        ~BaseEnemyAction() = default;
+        virtual ~BaseEnemyAction() = default;
         virtual EnemyState GetExpectedNextState(const EnemyState& state,
                                                 const EnemyPreference& preferences) const = 0;
         ;

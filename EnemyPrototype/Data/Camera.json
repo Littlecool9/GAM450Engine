@@ -1,0 +1,44 @@
+{
+  "Name": "Camera",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          0
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+        "Type": "Camera",
+        "Data": {
+            "NearPlane": -1.0,
+            "FarPlane": 1.0,
+            "IsActive": 1 
+        }
+    },
+    {
+        "Type": "CameraFollow",
+        "Data": {
+            "MaxAcceleration": 500.0,
+            "Interpolant": 2.0,
+            "CameraOffset": [
+                0,
+                0,
+                0
+            ]
+        }
+    },
+    {
+      "Type": "AudioListener"
+    }
+  ]
+}

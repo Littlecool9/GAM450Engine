@@ -16,6 +16,7 @@
 
 namespace mts
 {
+    struct Collision2D;
     class ComponentFactory;
     class GameObject;
 
@@ -35,9 +36,9 @@ namespace mts
         virtual void Render() {}
         virtual void DebugRender() {}
 
-        virtual void OnCollisionEnter2D(const GameObject* /*other*/) {}
-        virtual void OnCollisionStay2D(const GameObject* /*other*/) {}
-        virtual void OnCollisionExit2D(const GameObject* /*other*/) {}
+        virtual void OnCollisionEnter2D(const Collision2D& collision) {};
+        virtual void OnCollisionStay2D(const Collision2D& collision) {};
+        virtual void OnCollisionExit2D(const Collision2D& collision) {};
 
         virtual Component* Clone(GameObject* newOwner) const = 0;
 
@@ -59,8 +60,8 @@ namespace mts
 
         void InitFromClone(GameObject* newOwner)
         {
-            owner     = newOwner;
-            onEnable  = {};
+            owner = newOwner;
+            onEnable = {};
             onDisable = {};
         }
 

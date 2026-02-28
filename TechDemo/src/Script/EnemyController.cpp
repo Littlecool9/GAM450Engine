@@ -9,6 +9,7 @@
 
 #include "pch.h"
 #include "EnemyController.h"
+#include "Engine/Physics2D/Collision2D.h"
 
 void EnemyController::OnCreate()
 {
@@ -48,7 +49,7 @@ void EnemyController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("spinDegrees", mSpinDegrees);
 }
 
-void EnemyController::OnCollisionEnter2D(const mts::GameObject* game_object)
+void EnemyController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
 }
 

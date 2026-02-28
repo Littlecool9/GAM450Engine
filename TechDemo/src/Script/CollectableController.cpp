@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "CollectableController.h"
 
+#include "Engine/Physics2D/Collision2D.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/Component/Audio/AudioEmitter.h"
 
 void CollectableController::OnCreate()
@@ -25,9 +27,9 @@ void CollectableController::OnUpdate(float dt)
     }
 }
 
-void CollectableController::OnCollisionEnter2D(const mts::GameObject* gameObject)
+void CollectableController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
-    if (gameObject->HasTag("Player"))
+    if (collision.other->GetGameObject()->HasTag("Player"))
     {
         emitter->Play();
         collected = true;

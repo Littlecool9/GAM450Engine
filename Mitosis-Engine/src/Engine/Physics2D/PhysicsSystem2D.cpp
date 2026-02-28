@@ -9,6 +9,7 @@
 
 #include "pch.h"
 #include "PhysicsSystem2D.h"
+#include "Collision2D.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/CircleCollider2D.h"
@@ -74,6 +75,7 @@ namespace mts::physics
         uint32_t i, j;
         glm::vec2 normal;  // A->B
         float penetration;
+        glm::vec2 contactPoint;  // world-space contact point
         bool isTrigger;
     };
 
@@ -113,8 +115,8 @@ namespace mts::physics
     static std::vector<PhysicsBody> physicsBodies = std::vector<PhysicsBody>();
 
     static std::vector<ContactInfo> contactInfos = std::vector<ContactInfo>();
-    static std::unordered_set<GOPairKey, GOPairHash> prevPairs;
-    static std::unordered_set<GOPairKey, GOPairHash> currPairs;
+    static std::unordered_map<GOPairKey, ContactInfo, GOPairHash> prevContacts;
+    static std::unordered_map<GOPairKey, ContactInfo, GOPairHash> currContacts;
 
     static Scene* currentScene = nullptr;
 
@@ -126,8 +128,8 @@ namespace mts::physics
         cmdQueue.clear();
         physicsBodies.clear();
         contactInfos.clear();
-        prevPairs.clear();
-        currPairs.clear();
+        prevContacts.clear();
+        currContacts.clear();
         currentScene = nullptr;
     }
 
@@ -292,22 +294,22 @@ namespace mts::physics
                 if (A.type == Collider2D::ColliderType::Circle &&
                     B.type == Collider2D::ColliderType::Circle)
                 {
-                    hit = CircleVsCircle(A, B, c.normal, c.penetration);
+                    hit = CircleVsCircle(A, B, c.normal, c.penetration, c.contactPoint);
                 }
                 else if (A.type == Collider2D::ColliderType::Box &&
                          B.type == Collider2D::ColliderType::Box)
                 {
-                    hit = OBBvsOBB(A, B, c.normal, c.penetration);
+                    hit = OBBvsOBB(A, B, c.normal, c.penetration, c.contactPoint);
                 }
                 else if (A.type == Collider2D::ColliderType::Circle &&
                          B.type == Collider2D::ColliderType::Box)
                 {
-                    hit = CircleVsOBB(A, B, c.normal, c.penetration);
+                    hit = CircleVsOBB(A, B, c.normal, c.penetration, c.contactPoint);
                 }
                 else if (A.type == Collider2D::ColliderType::Box &&
                          B.type == Collider2D::ColliderType::Circle)
                 {
-                    hit = CircleVsOBB(B, A, c.normal, c.penetration);
+                    hit = CircleVsOBB(B, A, c.normal, c.penetration, c.contactPoint);
                     c.normal *= -1.0f;
                 }
 
@@ -394,11 +396,7 @@ namespace mts::physics
 
     void PhysicsSystem2D::FireEvents()
     {
-        // save collision pairs
-        currPairs.clear();
-        const size_t desired = contactInfos.size() * 2;
-        if (currPairs.max_load_factor() * (float) currPairs.bucket_count() < (float) desired)
-            currPairs.reserve(desired);
+        currContacts.clear();
 
         for (const ContactInfo& c : contactInfos)
         {
@@ -410,54 +408,83 @@ namespace mts::physics
             if (goA->IsDead() || goB->IsDead())
                 continue;
 
-            currPairs.insert(MakeOrderedPair(goA, goB));
+            // change i & j and normal so contact.i always belongs to key.a.
+            bool swapped = (goA > goB);
+            GOPairKey key = MakeOrderedPair(goA, goB);
+
+            ContactInfo stored = c;
+            if (swapped)
+            {
+                std::swap(stored.i, stored.j);
+                stored.normal = -c.normal;
+            }
+            currContacts.try_emplace(key, stored);
         }
 
-        for (const auto& k : currPairs)
+        for (const auto& [key, contact] : currContacts)
         {
-            const bool wasColliding = (prevPairs.find(k) != prevPairs.end());
+            GameObject* a = key.a;
+            GameObject* b = key.b;
 
-            GameObject* a = k.a;
-            GameObject* b = k.b;
-
-            // Safety: objects may have died since building set
             if (!a || !b)
                 continue;
             if (a->IsDead() || b->IsDead())
                 continue;
+
+            bool wasColliding = (prevContacts.find(key) != prevContacts.end());
+
+            Collider2D* colA = physicsBodies[contact.i].col;
+            Collider2D* colB = physicsBodies[contact.j].col;
+
+            mts::Collision2D collForA{colB,
+                                      colA,
+                                      contact.normal,
+                                      contact.contactPoint,
+                                      contact.penetration};
+            mts::Collision2D collForB{colA,
+                                      colB,
+                                      -contact.normal,
+                                      contact.contactPoint,
+                                      contact.penetration};
 
             if (!wasColliding)
             {
-                a->OnCollisionEnter2D(b);
-                b->OnCollisionEnter2D(a);
+                a->OnCollisionEnter2D(collForA);
+                b->OnCollisionEnter2D(collForB);
             }
             else
             {
-                a->OnCollisionStay2D(b);
-                b->OnCollisionStay2D(a);
+                a->OnCollisionStay2D(collForA);
+                b->OnCollisionStay2D(collForB);
             }
         }
+
         // Exit for pairs that disappeared
-        for (const auto& k : prevPairs)
+        for (const auto& [key, contact] : prevContacts)
         {
-            if (currPairs.find(k) != currPairs.end())
+            if (currContacts.find(key) != currContacts.end())
                 continue;
 
-            GameObject* a = k.a;
-            GameObject* b = k.b;
+            GameObject* a = key.a;
+            GameObject* b = key.b;
 
             if (!a || !b)
                 continue;
             if (a->IsDead() || b->IsDead())
                 continue;
 
-            a->OnCollisionExit2D(b);
-            b->OnCollisionExit2D(a);
+            Collider2D* colA = physicsBodies[contact.i].col;
+            Collider2D* colB = physicsBodies[contact.j].col;
+
+            mts::Collision2D collForA{colB, colA, -contact.normal, contact.contactPoint, 0.0f};
+            mts::Collision2D collForB{colA, colB, contact.normal, contact.contactPoint, 0.0f};
+
+            a->OnCollisionExit2D(collForA);
+            b->OnCollisionExit2D(collForB);
         }
 
-        // Swap sets (avoid copying)
-        prevPairs.swap(currPairs);
-        currPairs.clear();
+        prevContacts.swap(currContacts);
+        currContacts.clear();
     }
 
     void PhysicsSystem2D::ProcessCommand(const PhysicsCommand2D& cmd)
@@ -563,7 +590,8 @@ namespace mts::physics
     bool PhysicsSystem2D::CircleVsCircle(const PhysicsBody& A,
                                          const PhysicsBody& B,
                                          glm::vec2& outNormalAtoB,
-                                         float& outPenetration)
+                                         float& outPenetration,
+                                         glm::vec2& outContactPoint)
     {
         glm::vec2 ca = A.circleC;
         glm::vec2 cb = B.circleC;
@@ -584,12 +612,15 @@ namespace mts::physics
         {
             outNormalAtoB = glm::vec2(1.0f, 0.0f);
             outPenetration = r;
+            outContactPoint = ca + outNormalAtoB * ra;
             return true;
         }
 
         float dist = std::sqrt(distSqr);
         outNormalAtoB = d / dist;
         outPenetration = r - dist;
+        // midpoint between the two surface contact points
+        outContactPoint = (ca + outNormalAtoB * ra + cb - outNormalAtoB * rb) * 0.5f;
 
         return true;
     }
@@ -599,7 +630,8 @@ namespace mts::physics
     bool PhysicsSystem2D::OBBvsOBB(const PhysicsBody& A,
                                    const PhysicsBody& B,
                                    glm::vec2& outNormalAtoB,
-                                   float& outPenetration)
+                                   float& outPenetration,
+                                   glm::vec2& outContactPoint)
     {
         const OBB& a = A.obb;
         const OBB& b = B.obb;
@@ -623,6 +655,9 @@ namespace mts::physics
 
         outNormalAtoB = bestAxis;
         outPenetration = minOverlap;
+        // contact point: point on A's surface toward B, backed off by half penetration
+        float projA = ProjectAxis(a, bestAxis);
+        outContactPoint = a.c + bestAxis * (projA - outPenetration * 0.5f);
         return true;
     }
 
@@ -633,7 +668,8 @@ namespace mts::physics
     bool PhysicsSystem2D::CircleVsOBB(const PhysicsBody& circle,
                                       const PhysicsBody& box,
                                       glm::vec2& outNormalAtoB,
-                                      float& outPenetration)
+                                      float& outPenetration,
+                                      glm::vec2& outContactPoint)
     {
         const glm::vec2 cA = circle.circleC;
         const float rA = circle.circleR;
@@ -668,6 +704,8 @@ namespace mts::physics
 
             outNormalAtoB = v / dist;
             outPenetration = rA - dist;
+            // midpoint between circle surface point and closest point on box
+            outContactPoint = (cA + outNormalAtoB * rA + closest) * 0.5f;
             return true;
         }
 
@@ -688,6 +726,8 @@ namespace mts::physics
             outNormalAtoB = B.u * sign;
             outPenetration = rA + dy;
         }
+        // contact point on circle surface toward box
+        outContactPoint = cA + outNormalAtoB * rA;
 
         return true;
     }

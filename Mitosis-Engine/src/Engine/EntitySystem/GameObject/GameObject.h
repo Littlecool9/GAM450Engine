@@ -55,7 +55,7 @@ namespace std
 
 namespace mts
 {
-    class Collider2D;
+    struct Collision2D;
     class JsonValue;
     class ScriptBase;
 
@@ -75,9 +75,9 @@ namespace mts
         virtual void DebugRender();
         void Destroy();
 
-        void OnCollisionEnter2D(const GameObject* other);
-        void OnCollisionStay2D(const GameObject* other);
-        void OnCollisionExit2D(const GameObject* other);
+        void OnCollisionEnter2D(const Collision2D& collision);
+        void OnCollisionStay2D(const Collision2D& collision);
+        void OnCollisionExit2D(const Collision2D& collision);
 
         // One Object can only be in one layer at a time
         enum LayerMasks

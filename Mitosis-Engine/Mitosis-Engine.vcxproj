@@ -337,6 +337,7 @@
     <ClInclude Include="src\Engine\Logging\Log.h" />
     <ClInclude Include="src\Engine\Memory\MemoryManager.h" />
     <ClInclude Include="src\Engine\Memory\MemoryTests.h" />
+    <ClInclude Include="src\Engine\Physics2D\Collision2D.h" />
     <ClInclude Include="src\Engine\Physics2D\PhysicsCommand2D.h" />
     <ClInclude Include="src\Engine\Physics2D\PhysicsSystem2D.h" />
     <ClInclude Include="src\Engine\Renderer.h" />

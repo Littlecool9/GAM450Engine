@@ -12,6 +12,7 @@
 
 #include "ScriptBase.h"
 #include "ScriptFactory.h"
+#include "Engine/Physics2D/Collision2D.h"
 
 namespace mts
 {
@@ -158,7 +159,7 @@ namespace mts
         // no-op
     }
 
-    void NativeScriptComponent::OnCollisionEnter2D(const GameObject* other)
+    void NativeScriptComponent::OnCollisionEnter2D(const mts::Collision2D& collision)
     {
         if (!IsEnabled())
             return;
@@ -166,25 +167,25 @@ namespace mts
         EnsureCreated();
 
         if (m_script)
-            m_script->OnCollisionEnter2D(other);
+            m_script->OnCollisionEnter2D(collision);
     }
 
-    void NativeScriptComponent::OnCollisionStay2D(const GameObject* other)
+    void NativeScriptComponent::OnCollisionStay2D(const mts::Collision2D& collision)
     {
         if (!IsEnabled())
             return;
 
         if (m_script)
-            m_script->OnCollisionStay2D(other);
+            m_script->OnCollisionStay2D(collision);
     }
 
-    void NativeScriptComponent::OnCollisionExit2D(const GameObject* other)
+    void NativeScriptComponent::OnCollisionExit2D(const mts::Collision2D& collision)
     {
         if (!IsEnabled())
             return;
 
         if (m_script)
-            m_script->OnCollisionExit2D(other);
+            m_script->OnCollisionExit2D(collision);
     }
 
     const std::string& NativeScriptComponent::GetClassName() const
@@ -202,14 +203,13 @@ namespace mts
         m_hasFields = !m_fieldsJson.empty();
     }
 
-
     Component* NativeScriptComponent::Clone(GameObject* newOwner) const
     {
         NativeScriptComponent* c = new NativeScriptComponent();
         c->InitFromClone(newOwner);
-        c->m_className  = m_className;
+        c->m_className = m_className;
         c->m_fieldsJson = m_fieldsJson;
-        c->m_hasFields  = m_hasFields;
+        c->m_hasFields = m_hasFields;
         return c;
     }
 }  // namespace mts

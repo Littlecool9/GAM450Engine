@@ -23,7 +23,7 @@ class PlayerController : public mts::ScriptBase
     void SerializeFields(mts::JsonDocument& out) const override;
     void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
 
-    void OnCollisionEnter2D(const mts::GameObject*) override;
+    void OnCollisionEnter2D(const mts::Collision2D& collision) override;
 
     SCRIPT_CLASS(PlayerController)
 

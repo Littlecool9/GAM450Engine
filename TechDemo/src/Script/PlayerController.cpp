@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "PlayerController.h"
 
+#include "Engine/Physics2D/Collision2D.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
@@ -123,8 +125,8 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .step = 0.05f});
 }
 
-void PlayerController::OnCollisionEnter2D(const mts::GameObject* gameObject)
+void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
-    if (gameObject->GetLayer() == mts::GameObject::Ground)
+    if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
         isGrounded = true;
 }

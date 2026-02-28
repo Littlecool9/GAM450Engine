@@ -21,7 +21,7 @@ class CollectableController : public mts::ScriptBase
     void OnCreate() override;
     void OnUpdate(float dt) override;
 
-    void OnCollisionEnter2D(const mts::GameObject*) override;
+    void OnCollisionEnter2D(const mts::Collision2D& collision) override;
 
     SCRIPT_CLASS(CollectableController)
 

@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "PlayerController.h"
 
+#include "Engine/Physics2D/Collision2D.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Input/Input.h"
 #include <glm/vec2.hpp>
 
@@ -165,9 +167,9 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteInt("dashCount", dashCount);
 }
 
-void PlayerController::OnCollisionEnter2D(const mts::GameObject* gameObject)
+void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
-    if (gameObject->GetLayer() == mts::GameObject::Ground)
+    if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
         isGrounded = true;
     }

@@ -19,14 +19,29 @@ namespace mts
     class JsonValue;
     class UUID;
     class Component;
+    struct Collision2D;
 
     struct ScriptField
     {
-        enum class Type { Float, Int, Bool, GameObject, Component };
+        enum class Type
+        {
+            Float,
+            Int,
+            Bool,
+            GameObject,
+            Component
+        };
         const char* name = nullptr;
-        Type        type = Type::Float;
-        union { float* f; int* i; bool* b; GameObject** go; Component** comp; } ptr{};
-        UUID*       uuid     = nullptr;   // points to script's UUID member; required to persist
+        Type type = Type::Float;
+        union
+        {
+            float* f;
+            int* i;
+            bool* b;
+            GameObject** go;
+            Component** comp;
+        } ptr{};
+        UUID* uuid = nullptr;  // points to script's UUID member; required to persist
         std::function<Component*(GameObject*)> resolver;  // for Type::Component only
         float step = 0.05f;
     };
@@ -54,9 +69,9 @@ namespace mts
         virtual void GetInspectorFields(std::vector<ScriptField>& /*fields*/) {}
 
         // Collision hooks (matches the GameObject collision callbacks)
-        virtual void OnCollisionEnter2D(const GameObject* /*other*/) {}
-        virtual void OnCollisionStay2D(const GameObject* /*other*/) {}
-        virtual void OnCollisionExit2D(const GameObject* /*other*/) {}
+        virtual void OnCollisionEnter2D(const Collision2D& collision) {};
+        virtual void OnCollisionStay2D(const Collision2D& collision) {};
+        virtual void OnCollisionExit2D(const Collision2D& collision) {};
 
         virtual const std::string& GetClassName() const = 0;
 
@@ -68,11 +83,14 @@ namespace mts
 
 // Injects GetClassName() override and StaticClassName() accessor into a script class.
 // Usage: place SCRIPT_CLASS(MyScriptName) in the public section of the class body.
-#define SCRIPT_CLASS(ClassName)                                                \
-   public:                                                                     \
-    static const std::string& StaticClassName()                                \
-    {                                                                          \
-        static const std::string kName = #ClassName;                          \
-        return kName;                                                          \
-    }                                                                          \
-    const std::string& GetClassName() const override { return StaticClassName(); }
+#define SCRIPT_CLASS(ClassName)                      \
+   public:                                           \
+    static const std::string& StaticClassName()      \
+    {                                                \
+        static const std::string kName = #ClassName; \
+        return kName;                                \
+    }                                                \
+    const std::string& GetClassName() const override \
+    {                                                \
+        return StaticClassName();                    \
+    }

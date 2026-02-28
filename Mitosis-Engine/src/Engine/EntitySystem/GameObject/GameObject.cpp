@@ -14,6 +14,7 @@
 #include "../Component/Component.h"
 #include "../Component/Transform.h"
 #include "../Component/ComponentFactory.h"
+#include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
 
@@ -201,35 +202,33 @@ namespace mts
         isDead = true;
     }
 
-    void GameObject::OnCollisionEnter2D(const GameObject* other)
+    void GameObject::OnCollisionEnter2D(const Collision2D& collision)
     {
+        collision.self->SetIsColliding(true);
         // go down scripts and call OnCollisionEnter for all of them.
-        if (auto* col = GetComponent<Collider2D>())
-            col->SetIsColliding(true);
 
         for (auto c : components)
             if (c->IsEnabled())
-                c->OnCollisionEnter2D(other);
+                c->OnCollisionEnter2D(collision);
     }
 
-    void GameObject::OnCollisionStay2D(const GameObject* other)
+    void GameObject::OnCollisionStay2D(const Collision2D& collision)
     {
         // go down scripts and call OnCollisionStay for all of them.
 
         for (auto c : components)
             if (c->IsEnabled())
-                c->OnCollisionStay2D(other);
+                c->OnCollisionStay2D(collision);
     }
 
-    void GameObject::OnCollisionExit2D(const GameObject* other)
+    void GameObject::OnCollisionExit2D(const Collision2D& collision)
     {
+        collision.self->SetIsColliding(false);
         // go down scripts and call OnCollisionExit for all of them.
-        if (auto* col = GetComponent<Collider2D>())
-            col->SetIsColliding(false);
 
         for (auto c : components)
             if (c->IsEnabled())
-                c->OnCollisionExit2D(other);
+                c->OnCollisionExit2D(collision);
     }
 
     GameObject* GameObject::GetChildByName(const std::string& childName) const

@@ -19,7 +19,7 @@ class EnemyController : public mts::ScriptBase
     void DeserializeFields(mts::JsonValue const& fields) override;
     void SerializeFields(mts::JsonDocument& out) const override;
 
-    void OnCollisionEnter2D(const mts::GameObject*) override;
+    void OnCollisionEnter2D(const mts::Collision2D& collision) override;
 
     SCRIPT_CLASS(EnemyController)
 

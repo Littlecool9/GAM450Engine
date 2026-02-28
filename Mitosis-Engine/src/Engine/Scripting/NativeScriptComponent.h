@@ -31,9 +31,9 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& jsonDoc) const override;
 
-        void OnCollisionEnter2D(const GameObject* other) override;
-        void OnCollisionStay2D(const GameObject* other) override;
-        void OnCollisionExit2D(const GameObject* other) override;
+        virtual void OnCollisionEnter2D(const Collision2D& collision) override;
+        virtual void OnCollisionStay2D(const Collision2D& collision) override;
+        virtual void OnCollisionExit2D(const Collision2D& collision) override;
 
         const std::string& GetClassName() const;
         void SetClassName(const std::string& name) { m_className = name; }

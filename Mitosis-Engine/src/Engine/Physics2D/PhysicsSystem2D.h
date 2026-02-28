@@ -11,6 +11,7 @@
 #include "PhysicsCommand2D.h"
 namespace mts
 {
+    class Collider2D;
     class CircleCollider2D;
     class BoxCollider2D;
     class Scene;
@@ -27,7 +28,7 @@ namespace mts::physics
        public:
         static void PushCommand(const PhysicsCommand2D& cmd);
         static void FixedUpdate(Scene* scene, float dt);
-        static void Reset();   // clears persistent collision state between play sessions
+        static void Reset();  // clears persistent collision state between play sessions
 
        private:
         static void ProcessCommandQueue();
@@ -53,17 +54,20 @@ namespace mts::physics
         static bool CircleVsCircle(const PhysicsBody& A,
                                    const PhysicsBody& B,
                                    glm::vec2& outNormalAtoB,
-                                   float& outPenetration);
+                                   float& outPenetration,
+                                   glm::vec2& outContactPoint);
 
         static bool OBBvsOBB(const PhysicsBody& A,
                              const PhysicsBody& B,
                              glm::vec2& outNormalAtoB,
-                             float& outPenetration);
+                             float& outPenetration,
+                             glm::vec2& outContactPoint);
 
         static bool CircleVsOBB(const PhysicsBody& circle,
                                 const PhysicsBody& box,
                                 glm::vec2& outNormalAtoB,
-                                float& outPenetration);
+                                float& outPenetration,
+                                glm::vec2& outContactPoint);
 
         static float ProjectAxis(const OBB& obb, const glm::vec2& axisUnit);
         // return true if no separating axis => could be overlapping

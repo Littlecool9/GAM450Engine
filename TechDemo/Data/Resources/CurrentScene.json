@@ -12,13 +12,13 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            1.0,
-                            12.0,
+                            2.1500000953674316,
+                            8.75,
                             0.0
                         ],
                         "Scale": [
-                            2.0,
-                            2.0,
+                            1.5,
+                            1.5,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -27,8 +27,8 @@
                 {
                     "Type": "BoxCollider2D",
                     "Data": {
-                        "Width": 0.75,
-                        "Height": 0.800000011920929,
+                        "Width": 0.550000011920929,
+                        "Height": 0.75,
                         "Offset": [
                             0.0,
                             -0.20000000298023224
@@ -39,7 +39,7 @@
                 {
                     "Type": "RigidBody2D",
                     "Data": {
-                        "Mass": 1.0,
+                        "Mass": 0.05000000074505806,
                         "Inertia": 0.0,
                         "LinearVelocity": [
                             0.0,
@@ -157,9 +157,20 @@
                     "Data": {
                         "Class": "PlayerController",
                         "Fields": {
-                            "moveSpeed": 3.0,
-                            "jumpSpeed": 14.0,
-                            "walkParticleCooldown": 0.1
+                            "moveSpeed": 5.0,
+                            "jumpSpeed": 9.0,
+                            "dashSpeed": 8.0,
+                            "friction": 20.0,
+                            "acceleration": 40.0,
+                            "deceleration": 15.0,
+                            "turnSpeed": 100.0,
+                            "dashDampening": 0.800000011920929,
+                            "dashCooldown": 0.20000000298023224,
+                            "dashCount": 1,
+                            "dashBeatBoost": 1.399999976158142,
+                            "jumpBeatBoost": 1.399999976158142,
+                            "dashRhythmLock": false,
+                            "jumpRhythmLock": false
                         }
                     }
                 }
@@ -257,7 +268,7 @@
                             0.0,
                             0.0
                         ],
-                        "TargetUUID": "00000000-0000-0000-0000-000000000000"
+                        "TargetUUID": "65e37b6d-6416-42e7-bd17-568bd0c795e8"
                     }
                 },
                 {
@@ -3289,6 +3300,22 @@
                     }
                 },
                 {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                },
+                {
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "EnemyController",
@@ -3302,6 +3329,419 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                }
+            ]
+        },
+        {
+            "UUID": "5f320e62-23de-48ef-9932-dc9e372c7541",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1933f394-1c68-4390-aaf4-56cda89006fc",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e323d436-0245-419c-98f2-38ea85207571",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "193eedef-2afb-4c91-baa1-d66de728c0ba",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "5f424db2-98f2-486f-b9d5-854f85dff856",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "80dfe33b-f5cd-4db9-9191-8c3e94c4533a",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c15a0353-d99c-4d41-9a15-e65c2e1e61eb",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "3fe7b57d-364e-4df7-ad0a-0064cc3389a5",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c4f69c13-5d33-422d-be27-6403121ee864",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "53126fb6-604c-4951-9797-2ead2d1f2bbc",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

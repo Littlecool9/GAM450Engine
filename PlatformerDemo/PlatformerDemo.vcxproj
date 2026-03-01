@@ -179,10 +179,6 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\PlatformerDemo.h" />
     <ClInclude Include="src\PlatformerDemoScene.h" />
-    <ClInclude Include="src\Script\PlayerController.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -190,10 +186,6 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     </ClCompile>
     <ClCompile Include="src\PlatformerDemo.cpp" />
     <ClCompile Include="src\PlatformerDemoScene.cpp" />
-    <ClCompile Include="src\Script\PlayerController.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

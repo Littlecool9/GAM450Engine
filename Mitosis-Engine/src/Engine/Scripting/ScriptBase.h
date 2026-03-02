@@ -58,6 +58,7 @@ namespace mts
         virtual void OnCreate() {}
         virtual void OnUpdate(float /*dt*/) {}
         virtual void OnLateUpdate(float /*dt*/) {}
+        virtual void OnFixedUpdate(float /*dt*/) {}
         virtual void OnEnable() {}
         virtual void OnDisable() {}
 

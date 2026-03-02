@@ -154,6 +154,12 @@ namespace mts
             m_script->OnLateUpdate(dt);
     }
 
+    void NativeScriptComponent::FixedUpdate(float dt)
+    {
+        if (m_script)
+            m_script->OnFixedUpdate(dt);
+    }
+
     void NativeScriptComponent::DebugRender()
     {
         // no-op

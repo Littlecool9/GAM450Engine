@@ -46,6 +46,12 @@ namespace mts
             SceneSystem::LateUpdate(dt);
     }
 
+    void SceneLayer::OnFixedUpdate(float fixedDt)
+    {
+        if (mCtx.playState == PlayState::Play)
+            SceneSystem::FixedUpdate(fixedDt);
+    }
+
     void SceneLayer::OnRender()
     {
         SceneSystem::Render();

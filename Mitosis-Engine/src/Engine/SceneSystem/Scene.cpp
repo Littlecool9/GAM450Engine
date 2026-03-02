@@ -61,6 +61,12 @@ namespace mts
         }
     }
 
+    void Scene::FixedUpdate(float dt)
+    {
+        for (auto g : mGameObjects)
+            g->FixedUpdate(dt);
+    }
+
     void Scene::Render()
     {
         for (auto g : mGameObjects)

@@ -24,6 +24,7 @@ namespace mts
         static void Init(Scene* initialScene);
         static void Update(float dt);
         static void LateUpdate(float dt);
+        static void FixedUpdate(float dt);
         static void Render();
         static void DebugRender();
         static void Shutdown();

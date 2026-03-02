@@ -24,6 +24,7 @@ namespace mts
 
         void OnUpdate(float dt) override;
         void OnLateUpdate(float dt) override;
+        void OnFixedUpdate(float fixedDt) override;
 
         void OnRender() override;
         void OnDebugRender() override;

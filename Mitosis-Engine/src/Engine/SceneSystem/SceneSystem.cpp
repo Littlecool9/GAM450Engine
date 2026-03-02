@@ -53,6 +53,12 @@ namespace mts
         currentScene->LateUpdate(dt);
     }
 
+    void SceneSystem::FixedUpdate(float dt)
+    {
+        MTS_ASSERT(currentScene != nullptr);
+        currentScene->FixedUpdate(dt);
+    }
+
     void SceneSystem::Render()
     {
         MTS_ASSERT(currentScene != nullptr);

@@ -71,6 +71,7 @@ namespace mts
         virtual void Init();
         virtual void Update(float dt);
         virtual void LateUpdate(float dt);
+        virtual void FixedUpdate(float dt);
         virtual void Render();
         virtual void DebugRender();
         void Destroy();

@@ -141,10 +141,10 @@ namespace mts
         json.EndArray();  // end "Components"
     }
 
-#define FOR_CONDITION_COMPONENTS(cond, action)                    \
-    for (size_t _i = 0, _n = components.size(); _i < _n; ++_i)   \
-        if (auto* c = components[_i]; c->cond)                    \
-            action
+#define FOR_CONDITION_COMPONENTS(cond, action)                 \
+    for (size_t _i = 0, _n = components.size(); _i < _n; ++_i) \
+        if (auto* c = components[_i]; c->cond)                 \
+    action
 
     void GameObject::Init()
     {
@@ -185,6 +185,11 @@ namespace mts
     void GameObject::LateUpdate(float dt)
     {
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->LateUpdate(dt));
+    }
+
+    void GameObject::FixedUpdate(float dt)
+    {
+        FOR_CONDITION_COMPONENTS(IsEnabled(), c->FixedUpdate(dt));
     }
 
     void GameObject::Render()

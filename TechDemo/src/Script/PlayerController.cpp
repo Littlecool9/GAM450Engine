@@ -147,7 +147,8 @@ void PlayerController::OnUpdate(float dt)
 
             // Set velocity directly in direction of dash but don't change velocity where component
             // of dash direction is zero
-            currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
+            currVelocity =
+                (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
             --dashCount;
             dashTimer = dashCooldown;
         }
@@ -155,7 +156,6 @@ void PlayerController::OnUpdate(float dt)
         {
             LOG_INFO("Dashed off beat");
         }
-        
     }
 
     dashTimer -= dt;
@@ -177,6 +177,11 @@ void PlayerController::OnUpdate(float dt)
         sprite->SetTintColor(glm::vec3(0.7f));
     else
         sprite->SetTintColor(glm::vec3(1.0f));
+}
+
+void PlayerController::OnFixedUpdate(float x)
+{
+    LOG_INFO("Fixed :{}", x);
 }
 
 void PlayerController::DeserializeFields(mts::JsonValue const& fields)
@@ -314,7 +319,8 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision exit normal dot up: {}", glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
+        LOG_INFO("Collision exit normal dot up: {}",
+                 glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) + 1.0f) < 0.1f)
         {
             isGrounded = false;

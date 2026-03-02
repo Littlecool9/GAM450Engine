@@ -702,7 +702,8 @@
    { "name": "Transition", "from": 25, "to": 28, "direction": "forward", "color": "#000000ff" },
    { "name": "Fall", "from": 29, "to": 32, "direction": "forward", "color": "#000000ff" },
    { "name": "Land", "from": 33, "to": 38, "direction": "forward", "color": "#000000ff" },
-   { "name": "Guitar Attack", "from": 39, "to": 62, "direction": "forward", "color": "#000000ff" },
+   { "name": "Attack_1", "from": 39, "to": 48, "direction": "forward", "color": "#000000ff" },
+   { "name": "Attack_2", "from": 48, "to": 62, "direction": "forward", "color": "#000000ff" },
    { "name": "Death", "from": 63, "to": 85, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [

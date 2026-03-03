@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mitosis-Tests", "Mitosis-Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImplicitPrototype", "ImplicitPrototype\ImplicitPrototype.vcxproj", "{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Prototype_One", "Prototype_One\Prototype_One.vcxproj", "{7657C736-F5BE-4326-9705-8A5FC9E06869}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -65,6 +67,12 @@ Global
 		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.DebugOpt|x64.Build.0 = DebugOpt|x64
 		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Release|x64.ActiveCfg = Release|x64
 		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Release|x64.Build.0 = Release|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Debug|x64.ActiveCfg = Debug|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Debug|x64.Build.0 = Debug|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.DebugOpt|x64.ActiveCfg = DebugOpt|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.DebugOpt|x64.Build.0 = DebugOpt|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Release|x64.ActiveCfg = Release|x64
+		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

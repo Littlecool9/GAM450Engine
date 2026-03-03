@@ -1,0 +1,49 @@
+{
+  "Name": "Ground",
+  "Layer": 1,
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          0,
+          5,
+          0
+        ],
+        "Scale": [
+          20,
+          1,
+          1
+        ],
+        "Rotation": 0
+      }
+    },
+    {
+      "Type": "BoxCollider2D",
+      "Data": {
+        "Width": 1.0,
+        "Height": 1.0,
+        "Offset": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 0.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 0,
+        "LinearDamping": 0,
+        "AngularDamping": 0,
+        "GravityScale": 0,
+        "BodyType": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "Name": "GrassPatch",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          7,
+          7.4,
+          -0.5
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 7,
+        "NumCols": 14,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 72,
+        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh"
+      }
+    }
+  ]
+}

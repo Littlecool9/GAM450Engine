@@ -1,0 +1,37 @@
+{
+  "Name": "BackgroundTest",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          1,
+          10,
+          -1
+        ],
+        "Scale": [
+          10,
+          15,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 1,
+        "NumCols": 1,
+        "TintColor": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "FrameIndex": 0,
+        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.tex",
+        "RenderLayer": -1,
+        "ParallaxFactorX": 0.5
+      }
+    }
+  ]
+}

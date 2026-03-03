@@ -41,6 +41,12 @@ void CameraController::OnLateUpdate(float dt)
     HandleZoom(dt);   // Update mainCamera with new zoom level if needed
     HandleShake(dt);  // Update mainCamera position with shake offset if shaking
 
+    // Update the active camera in the renderer to ensure changes take effect
+    LOG_INFO("MainCamera Projection matrix after update: [{:.2f}, {:.2f}, {:.2f}, {:.2f}]",
+             mainCamera->proj[0][0],
+             mainCamera->proj[1][1],
+             mainCamera->proj[2][2],
+             mainCamera->proj[3][3]);
     mts::Renderer::SetActiveCamera(*mainCamera);
 }
 

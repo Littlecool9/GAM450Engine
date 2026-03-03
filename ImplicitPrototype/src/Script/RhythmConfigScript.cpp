@@ -91,6 +91,7 @@ void RhythmConfigScript::GetInspectorFields(std::vector<mts::ScriptField>& field
 
 bool RhythmConfigScript::IsPhaseInWindow(float phase, float windowStart, float windowEnd) const
 {
+    // 处理跨越 0/1 边界的窗口 (例如 0.9 ~ 0.1)
     if (windowStart > windowEnd)
     {
         return phase >= windowStart || phase <= windowEnd;

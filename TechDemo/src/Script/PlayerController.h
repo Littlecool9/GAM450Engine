@@ -54,6 +54,7 @@ class PlayerController : public mts::ScriptBase
 
     void Test();
     void SetCheckPoint(CheckPoint*);
+    void ReturnToCheckPoint();
 
     SCRIPT_CLASS(PlayerController)
 
@@ -99,6 +100,5 @@ class PlayerController : public mts::ScriptBase
     Direction facingDir = RIGHT;
 
     // CheckPoint Properties
-    void ReturnToCheckPoint();
     CheckPoint* actvitedCheckPoint = nullptr;
 };

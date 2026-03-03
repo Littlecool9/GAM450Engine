@@ -59,59 +59,25 @@ void PlayerController::OnUpdate(float dt)
     }
 
     // Get facing direction
-    float moveDir = 0.0f;
     if (leftHeld)
     {
-        facingDir = LEFT;
-        moveDir = -1.0f;
         sprite->SetFlipX(true);
     }
     if (rightHeld)
     {
-        facingDir = RIGHT;
-        moveDir = 1.0f;
         sprite->SetFlipX(false);
     }
-
-    auto currVelocity = rb->GetVelocity();
-    // Calculate horizontal velocity
-    if (static_cast<int>(moveDir) != 0)
-    {
-        // Turning around
-        if (currVelocity.x != 0.0f &&
-            static_cast<int>(glm::sign(currVelocity.x)) != static_cast<int>(glm::sign(moveDir)))
-            currVelocity.x = MoveToward(currVelocity.x, 0.0f, turnSpeed * dt);
-        // Accelerating
-        else if ((moveDir < 0.0f && (currVelocity.x > moveDir * moveSpeed)) ||
-                 ((moveDir > 0.0f && (currVelocity.x < moveDir * moveSpeed))))
-            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, acceleration * dt);
-        // Decelerating
-        else
-            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, deceleration * dt);
-    }
-    else
-        currVelocity.x = MoveToward(currVelocity.x, 0.0f, friction * dt);
 
     // Jump check
     if (jumpPressed && isGrounded)
     {
         if (!jumpRhythmLock || (jumpRhythmLock && inWindow))
         {
-            isGrounded = false;
-
-            // currently collider is getting stuck in ground occasionally
-            // This moves player a tiny bit up to make sure it doesn't get stuck
-            // TODO: remove if physics collider fixed
-            transform->SetPosition(
-                glm::vec2(transform->GetPosition().x, transform->GetPosition().y + 0.05f));
-
-            // multiply jump speed if hit on beat
-            float adjustedJumpSpeed = inWindow ? jumpSpeed * jumpBeatBoost : jumpSpeed;
-            currVelocity.y = adjustedJumpSpeed;
-            // Reset dash cooldown on jump
-            dashTimer = -1.0f;
-            dashCount = dashMax;
-            LOG_INFO("Jumped %sbeat", inWindow ? "on " : "off ");
+            if (!queuedJump)
+            {
+                queuedJump = [this, inWindow]() { Jump(inWindow); };
+                LOG_INFO("Jumped {} beat", inWindow ? "on" : "off");
+            }
         }
         else
         {
@@ -119,44 +85,16 @@ void PlayerController::OnUpdate(float dt)
         }
     }
 
-    // Dash calculation
+    // Dash check
     if (dashPressed && dashCount > 0)
     {
         if (!dashRhythmLock || (dashRhythmLock && inWindow))
         {
-            // currently collider is getting stuck in ground occasionally
-            // This moves player a tiny bit up to make sure it doesn't get stuck
-            // TODO: remove if physics collider fixed
-            transform->SetPosition(
-                glm::vec2(transform->GetPosition().x, transform->GetPosition().y + 0.05f));
-
-            glm::vec2 dashDir{0.0f, 0.0f};
-            // If not holding a direction, use direction character is facing (left or right)
-            if (inputDir == glm::vec2(0))
-                facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
-            else
-                dashDir = inputDir;
-            // Deceleration when above max speed affects dash distance only to left and right
-            // dashDampening is used to adjust horizontal dash distance
-            if (dashDampening > 1.0f)
+            if (!queuedDash)
             {
-                if (static_cast<int>(dashDir.y) == 0)
-                    dashDir.x *= dashDampening;
+                queuedDash = [this, inputDir, inWindow]() { Dash(inputDir, inWindow); };
+                LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
             }
-            else if (dashDampening < 1.0f)
-            {
-                if (static_cast<int>(dashDir.y) != 0)
-                    dashDir.x *= dashDampening;
-            }
-            // Multiply dash speed if hit on beat
-            float adjustedDashSpeed = inWindow ? dashSpeed * dashBeatBoost : dashSpeed;
-
-            // Set velocity directly in direction of dash but don't change velocity where component
-            // of dash direction is zero
-            currVelocity =
-                (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
-            --dashCount;
-            dashTimer = dashCooldown;
         }
         else
         {
@@ -165,8 +103,6 @@ void PlayerController::OnUpdate(float dt)
     }
 
     dashTimer -= dt;
-
-    rb->SetVelocity(currVelocity);
 
     // Set animation states based on movement
     if (!isGrounded && currVelocity.y > 0.1f)
@@ -185,9 +121,60 @@ void PlayerController::OnUpdate(float dt)
         sprite->SetTintColor(glm::vec3(1.0f));
 }
 
-void PlayerController::OnFixedUpdate(float x)
+void PlayerController::OnFixedUpdate(float dt)
 {
-    LOG_INFO("Fixed :{}", x);
+    // Check all important held keys at start of loop
+    // This cleans up the code and reduces function calls
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left);
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right);
+
+    // Get facing direction
+    float moveDir = 0.0f;
+    if (leftHeld)
+    {
+        facingDir = LEFT;
+        moveDir = -1.0f;
+    }
+    if (rightHeld)
+    {
+        facingDir = RIGHT;
+        moveDir = 1.0f;
+    }
+
+    currVelocity = rb->GetVelocity();
+    // Calculate horizontal velocity
+    if (static_cast<int>(moveDir) != 0)
+    {
+        // Turning around
+        if (currVelocity.x != 0.0f &&
+            static_cast<int>(glm::sign(currVelocity.x)) != static_cast<int>(glm::sign(moveDir)))
+            currVelocity.x = MoveToward(currVelocity.x, 0.0f, turnSpeed * dt);
+        // Accelerating
+        else if ((moveDir < 0.0f && (currVelocity.x > moveDir * moveSpeed)) ||
+                 ((moveDir > 0.0f && (currVelocity.x < moveDir * moveSpeed))))
+            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, acceleration * dt);
+        // Decelerating
+        else
+            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, deceleration * dt);
+    }
+    else
+        currVelocity.x = MoveToward(currVelocity.x, 0.0f, friction * dt);
+
+    // Call queued jump call
+    if (queuedJump)
+    {
+        queuedJump();
+        queuedJump = nullptr;
+    }
+
+    // Call queued dash call
+    if (queuedDash)
+    {
+        queuedDash();
+        queuedDash = nullptr;
+    }
+
+    rb->SetVelocity(currVelocity);
 }
 
 void PlayerController::DeserializeFields(mts::JsonValue const& fields)
@@ -306,7 +293,6 @@ void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision normal dot up: {}", glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) - 1.0f) < 0.1f)
         {
             isGrounded = true;
@@ -329,7 +315,6 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision exit normal dot up: {}", glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) + 1.0f) < 0.1f)
         {
             isGrounded = false;
@@ -337,6 +322,47 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
     }
 }
 
+void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
+{
+    glm::vec2 dashDir{0.0f, 0.0f};
+    // If not holding a direction, use direction character is facing (left or right)
+    if (inputDir == glm::vec2(0))
+        facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
+    else
+        dashDir = inputDir;
+    // Deceleration when above max speed affects dash distance only to left and right
+    // dashDampening is used to adjust horizontal dash distance
+    if (dashDampening > 1.0f)
+    {
+        if (static_cast<int>(dashDir.y) == 0)
+            dashDir.x *= dashDampening;
+    }
+    else if (dashDampening < 1.0f)
+    {
+        if (static_cast<int>(dashDir.y) != 0)
+            dashDir.x *= dashDampening;
+    }
+    // Multiply dash speed if hit on beat
+    float adjustedDashSpeed = inWindow ? dashSpeed * dashBeatBoost : dashSpeed;
+
+    // Set velocity directly in direction of dash but don't change velocity where component
+    // of dash direction is zero
+    currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
+    --dashCount;
+    dashTimer = dashCooldown;
+}
+
+void PlayerController::Jump(bool inWindow)
+{
+    isGrounded = false;
+
+    // multiply jump speed if hit on beat
+    float adjustedJumpSpeed = inWindow ? jumpSpeed * jumpBeatBoost : jumpSpeed;
+    currVelocity.y = adjustedJumpSpeed;
+    // Reset dash cooldown on jump
+    dashTimer = -1.0f;
+    dashCount = dashMax;
+}
 void PlayerController::Test()
 {
     // Generate code for testing the MovablePlatform's FirePlatformTranslate function

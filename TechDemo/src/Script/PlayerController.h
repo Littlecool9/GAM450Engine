@@ -58,6 +58,13 @@ class PlayerController : public mts::ScriptBase
     SCRIPT_CLASS(PlayerController)
 
    private:
+    void Dash(glm::vec2 inputDir, bool inWindow);
+    void Jump(bool inWindow);
+
+    glm::vec2 currVelocity{0.0f, 0.0f};
+    std::function<void()> queuedDash = nullptr;
+    std::function<void()> queuedJump = nullptr;
+
     mts::RigidBody2D* rb = nullptr;
     mts::AnimationSystem* anim = nullptr;
     mts::SpriteRenderer* sprite = nullptr;

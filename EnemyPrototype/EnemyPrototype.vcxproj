@@ -178,18 +178,38 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
   <ItemGroup>
     <ClInclude Include="src\EnemyAI\EnemyAttackAction.h">
     </ClInclude>
+    <ClInclude Include="src\EnemyAI\EnemyAttackAction2.h" />
+    <ClInclude Include="src\EnemyAI\EnemyDodgeAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\EnemyAI\EnemyMoveToPlayerAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\EnemyPrototype.h" />
     <ClInclude Include="src\EnemyPrototypeScene.h" />
+    <ClInclude Include="src\Script\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EnemyAI\EnemyAttackAction.cpp">
+    </ClCompile>
+    <ClCompile Include="src\EnemyAI\EnemyAttackAction2.cpp" />
+    <ClCompile Include="src\EnemyAI\EnemyDodgeAction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\EnemyAI\EnemyMoveToPlayerAction.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\EnemyPrototype.cpp" />
     <ClCompile Include="src\EnemyPrototypeScene.cpp" />
+    <ClCompile Include="src\Script\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

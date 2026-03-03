@@ -15,7 +15,7 @@
       "IndexY": 0,
 
       "Tag": "Dirt",
-      "IsCollidable": true
+      "IsCollidable": false
     },
     {
       "TileID": 2,

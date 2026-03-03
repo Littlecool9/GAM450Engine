@@ -133,7 +133,7 @@ namespace mts
     {
         CameraFollow* c = new CameraFollow(*this);
         c->InitFromClone(newOwner);
-        c->ObjectToFollow = nullptr;
+        c->ObjectToFollow = ObjectToFollow;
         return c;
     }
 }  // namespace mts

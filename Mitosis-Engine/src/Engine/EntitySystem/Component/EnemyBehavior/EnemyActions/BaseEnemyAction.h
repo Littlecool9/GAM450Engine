@@ -40,7 +40,7 @@ namespace mts
         // The input variable cannot be modified
         // If you need to apply changes to the agent, apply to
         // agent.GetComponent<AnyOtherComponent>()
-        virtual void OnBeginning(const EnemyAgent& agent) {}
+        virtual void OnBeginning(EnemyAgent& agent) {}
 
         virtual bool IsAvailable(const EnemyState& state,
                                  const EnemyPreference& preferences) const = 0;
@@ -59,8 +59,8 @@ namespace mts
         void AdaptiveHeuristicUpdate(const EnemyPreference& pref,
                                      const EnemyState& savedState,
                                      const EnemyState& actualFinalState);
-        virtual EnemyActionResult Update(const EnemyAgent agent, float dt, float totalTime) const = 0;
-        virtual void OnEnd(const EnemyAgent& agent, EnemyActionResult result) = 0;
+        virtual EnemyActionResult Update(EnemyAgent* agent, float dt, float totalTime) = 0;
+        virtual void OnEnd(EnemyAgent& agent, EnemyActionResult result) = 0;
 
 
 

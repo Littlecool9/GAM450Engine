@@ -9,8 +9,9 @@ class EnemyPrototypeScene : public mts::Scene
    protected:
     void OnInit() override;
     void OnUpdate() override;
-    void OnBeat(mts::BeatInfo info);
-    void OnBar(mts::BeatInfo info);
+    void OnEnterPlayMode() override;
+    void OnExitPlayMode() override;
+
 
     mts::Delegate<mts::BeatInfo>::Id mBeatSubId = 0;
     mts::Delegate<mts::BeatInfo>::Id mBarSubId = 0;
@@ -20,6 +21,7 @@ class EnemyPrototypeScene : public mts::Scene
     mts::GameObject* camera;
     mts::GameObject* background;
     mts::GameObject* background2;
+    mts::GameObject* player;
     mts::GameObject* enemy;
     mts::GameObject* mBeatLine;
 };

@@ -24,7 +24,7 @@ namespace mts
        public:
 
         EnemyAgent();
-        const EnemyState& GetState() const { return mState; }
+        EnemyState& GetState() { return mState; }
         void SetState(const EnemyState& state) { mState = state; }
         const EnemyPreference& Preference() const { return mPreference; }
         void SetPreference(const EnemyPreference& preference) { mPreference = preference; }
@@ -32,15 +32,15 @@ namespace mts
         void Initialize(AIPlanner& planner);
         void Init() override;
         void Update(float dt) override;
-
-
+        void SetPlayerReference(GameObject* player) { mPlayerRef = player; }
+        GameObject* GetPlayerReference() const { return mPlayerRef; }
         void Deserialize(mts::JsonValue const& fields) override;
         void Serialize(mts::JsonDocument& out) const override;
         Component* Clone(GameObject* newOwner) const override;
 
        private:
         //private functions
-        void UpdateStateFromWorld();
+        void UpdateStateFromWorld(float dt);
         AIPlan BuildPlan(); 
         bool PlanningAndPlanExecution(float dt);
         void StartPlan(AIPlan plan);
@@ -53,6 +53,8 @@ namespace mts
 
         EnemyState mState;
         EnemyState mSavedStateForLearning{};
+        GameObject* mPlayerRef = nullptr;  // reference to player object for state queries, can be
+                                           // set in editor or found at runtime
         AIPlanner* mPlanner = nullptr;
         AIPlan mCurrentPlan{{}, 0.0f};
         EnemyPreference mPreference{};

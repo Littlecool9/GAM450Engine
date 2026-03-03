@@ -22,15 +22,21 @@ namespace mts
                                         const EnemyPreference& preferences) const override;
         float GetEstimatedTimeCost(const EnemyState& state,
                                    const EnemyPreference& preferences) const override;
-        void OnBeginning(const EnemyAgent& agent) override;
+        void OnBeginning(EnemyAgent& agent) override;
         bool IsAvailable(const EnemyState& state,
                          const EnemyPreference& preferences) const override;
-        EnemyActionResult Update(const EnemyAgent agent, float dt, float totalTime) const override;
-        void OnEnd(const EnemyAgent& agent, EnemyActionResult result) override;
+        EnemyActionResult Update(EnemyAgent* agent, float dt, float totalTime) override;
+        void OnEnd(EnemyAgent& agent, EnemyActionResult result) override;
+
+        void FireBullet(EnemyAgent& agent);
 
        private:
         std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
             const EnemyPreference& preference) override;
+        int mMaxBullets = 4;
+        int mBulletsFired = 0;  
+        
+        uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 
 }  // namespace mts

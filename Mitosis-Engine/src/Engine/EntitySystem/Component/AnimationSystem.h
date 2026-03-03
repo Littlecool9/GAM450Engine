@@ -30,7 +30,8 @@ namespace mts
             Walking,
             Jump,
             Falling,
-            Dance
+            Attack1,
+            Attack2
         };
 
         struct Info

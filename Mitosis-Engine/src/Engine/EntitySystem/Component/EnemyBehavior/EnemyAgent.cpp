@@ -10,6 +10,9 @@
 #include "pch.h"
 #include "EnemyAgent.h"
 
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
+
 namespace mts
 {
     #define M_PI 3.14159265358979323846f
@@ -36,7 +39,7 @@ namespace mts
 
     void EnemyAgent::Update(float dt)
     {
-        UpdateStateFromWorld();
+        UpdateStateFromWorld(dt);
         bool hasPlanOrExecuting = PlanningAndPlanExecution(dt);
         // if want behavior for when agent isnt executing actions
         // if (!hasPlanOrExecuting)...
@@ -129,7 +132,7 @@ namespace mts
         mStepTimer += dt;
 
 
-        EnemyActionResult res = action->Update(*this, dt, mStepTimer);
+        EnemyActionResult res = action->Update(this, dt, mStepTimer);
 
 
         if (res == OnGoing)
@@ -150,11 +153,14 @@ namespace mts
 
         // Begin next action
         BaseEnemyAction* next = steps[mStepIndex].GetAction();
-        if (next)
-        {
-            next->OnBeginning(*this);
-        }
+        if (!next)
+            return Failed;
 
+        // revalidate with *current* state (after cooldown changes)
+        if (!next->IsAvailable(GetState(), mPreference))
+            return Failed;  // or trigger replanning instead of failing
+
+        next->OnBeginning(*this);
         return OnGoing;
     }
 
@@ -166,7 +172,7 @@ namespace mts
 
         mPlanningTimer -= dt;
 
-        if (mPlanningTimer <= 0.0f || !mExecutingPlan)
+        if (mPlanningTimer <= 0.0f && !mExecutingPlan)
         {
             mPlanningTimer += NormalDistRandom(0.2f, 1.0f);
 
@@ -271,12 +277,35 @@ namespace mts
 
     // queries the world and updates state variables accordingly, should be called at the beginning
     // of each Update()
-    void EnemyAgent::UpdateStateFromWorld()
+    void EnemyAgent::UpdateStateFromWorld(float dt)
     {
 
         // set state variables by querying the world here, e.g. distance to player, player health
         // ratio, etc
         //mstate.parameter....
+        if (mPlayerRef)
+        {
+            mState.SetDistanceToPlayer(
+                glm::distance(mPlayerRef->GetComponent<Transform>()->GetPosition(),
+                              GetGameObject()->GetComponent<Transform>()->GetPosition()));
+            mState.SetCurrentPlayerState(mPlayerRef->GetComponent<AnimationSystem>()->GetCurrentState());
+        }
+
+        if (mState.GetAttackCountdown() > 0)
+        {
+            mState.SetAttackCountdown(mState.GetAttackCountdown() - dt);  
+            //LOG_INFO("Attack Cooldown: {}", mState.GetAttackCountdown());
+        }
+        if (mState.GetAttack2Countdown() > 0)
+        {
+            mState.SetAttack2Countdown(mState.GetAttack2Countdown() - dt);
+            //LOG_INFO("Attack 2 Cooldown: {}", mState.GetAttack2Countdown());
+        }
+        if (mState.GetDodgeCountdown() > 0)
+        {
+            mState.SetDodgeCountdown(mState.GetDodgeCountdown() - dt);
+            //LOG_INFO("Dodge Cooldown: {}", mState.GetDodgeCountdown());
+        }
     }
 
     Component* EnemyAgent::Clone(GameObject* newOwner) const

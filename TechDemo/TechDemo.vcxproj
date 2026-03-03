@@ -184,20 +184,48 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Script\BeatBarController.h" />
+    <ClInclude Include="src\Script\CameraController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\CheckPoint.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Script\CollectableController.h" />
     <ClInclude Include="src\Script\ConductorScript.h" />
     <ClInclude Include="src\Script\EnemyController.h" />
+    <ClInclude Include="src\Script\MovablePlatform.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
+    <ClInclude Include="src\Script\RhythmSystem.h" />
     <ClInclude Include="src\TechDemo.h" />
     <ClInclude Include="src\TechDemoScene.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Script\BeatBarController.cpp" />
+    <ClCompile Include="src\Script\CameraController.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\CheckPoint.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Script\CollectableController.cpp" />
     <ClCompile Include="src\Script\ConductorScript.cpp" />
     <ClCompile Include="src\Script\EnemyController.cpp" />
+    <ClCompile Include="src\Script\MovablePlatform.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
+    <ClCompile Include="src\Script\RhythmSystem.cpp" />
     <ClCompile Include="src\TechDemo.cpp" />
     <ClCompile Include="src\TechDemoScene.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -211,6 +239,9 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ProjectReference Include="..\Mitosis-Engine\Mitosis-Engine.vcxproj">
       <Project>{90B97858-7C87-6C5E-651B-DD84518848C3}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

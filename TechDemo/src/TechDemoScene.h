@@ -1,6 +1,8 @@
 #pragma once
 #include <MitosisEngine.h>
 
+class RhythmSystem;
+
 class TechDemoScene : public mts::Scene
 {
    public:
@@ -22,7 +24,7 @@ class TechDemoScene : public mts::Scene
     int mBarCount = 0;
 
     mts::GameObject* camera;
-    mts::GameObject* background;
-    mts::GameObject* background2;
     mts::GameObject* mBeatLine;
+
+    RhythmSystem* mRhythmSystem;
 };

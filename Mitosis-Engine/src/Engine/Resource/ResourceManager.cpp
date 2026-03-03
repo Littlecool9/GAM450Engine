@@ -138,8 +138,8 @@ namespace mts
     {
         if (shaderSourcePath.empty())
         {
-            LOG_INFO("Path: {} invalid", shaderSourcePath);
-            LOG_INFO("No Shader Source Specified");
+            //LOG_INFO("Path: {} invalid", shaderSourcePath);
+            //LOG_INFO("No Shader Source Specified");
             return GetShader(defaultShaderSource);
         }
 

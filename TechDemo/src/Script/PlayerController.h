@@ -14,6 +14,9 @@
 
 #include <glm/common.hpp>
 
+class CheckPoint;
+
+
 class PlayerController : public mts::ScriptBase
 {
     enum Direction
@@ -49,6 +52,9 @@ class PlayerController : public mts::ScriptBase
                    : val_from + glm::sign(val_to - val_from) * delta;
     }
 
+    void Test();
+    void SetCheckPoint(CheckPoint*);
+
     SCRIPT_CLASS(PlayerController)
 
    private:
@@ -72,6 +78,9 @@ class PlayerController : public mts::ScriptBase
     float dashBeatBoost = 1.0f;
     float jumpBeatBoost = 1.0f;
 
+    float hitWindowEarlyEdge = 0.1f;
+    float hitWindowLateEdge = 0.1f;
+
     bool isGrounded = false;
     int dashCount = 1;
     float dashTimer = -1.0f;
@@ -81,4 +90,8 @@ class PlayerController : public mts::ScriptBase
     bool jumpRhythmLock = true;
 
     Direction facingDir = RIGHT;
+
+    // CheckPoint Properties
+    void ReturnToCheckPoint();
+    CheckPoint* actvitedCheckPoint = nullptr;
 };

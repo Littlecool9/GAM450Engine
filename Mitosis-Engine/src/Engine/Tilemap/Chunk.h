@@ -74,8 +74,8 @@ namespace mts::Tilemap
         // The unit here is tile count
         // Chunk size has to be dividable by the tile pixel size
         // or zigzag rendering artifacts may occur
-        static constexpr int CHUNK_WIDTH = 16;  // in tiles
-        static constexpr int CHUNK_HEIGHT = 16;  // in tiles
+        static constexpr int CHUNK_WIDTH = 8;  // in tiles
+        static constexpr int CHUNK_HEIGHT = 8;  // in tiles
         static constexpr int TOTAL_TILES = CHUNK_WIDTH * CHUNK_HEIGHT;   // CHUNK_WIDTH * CHUNK_HEIGHT
         static int CHUNK_PIXEL_WIDTH;  // in pixels
         static int CHUNK_PIXEL_HEIGHT;  // in pixels

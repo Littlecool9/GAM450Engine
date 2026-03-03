@@ -1,0 +1,33 @@
+{
+  "Name": "BeatLine",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [0, 0, 1],
+        "Scale": [20, 11.25, 1],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 1,
+        "NumCols": 1,
+        "TintColor": [1.0, 1.0, 1.0],
+        "FrameIndex": 0,
+        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.tex",
+        "RenderLayer": 10
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "BeatBarController",
+        "Fields": {
+          "SpeedMultiplier": 1.0
+        }
+      }
+    }
+  ]
+}

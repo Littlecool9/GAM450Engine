@@ -69,9 +69,13 @@ namespace mts
 
     void Scene::Render()
     {
-        for (auto g : mGameObjects)
+        //for (auto g : mGameObjects)
+        //{
+        //    g->Render();
+        //}
+        for (int i = 0; i < mGameObjects.size(); ++i)
         {
-            g->Render();
+            mGameObjects[i]->Render();
         }
     }
 

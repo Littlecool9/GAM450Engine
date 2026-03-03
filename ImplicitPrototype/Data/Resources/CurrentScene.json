@@ -1,0 +1,1801 @@
+{
+  "GameObjects": [
+    {
+      "UUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c",
+      "Name": "Player",
+      "Layer": 0,
+      "Tags": ["Player"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [5.0, 7.0, 0.0],
+            "Scale": [1.5, 1.5, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 0.550000011920929,
+            "Height": 0.75,
+            "Offset": [0.0, -0.20000000298023224],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 0.05000000074505806,
+            "Inertia": 0.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 3.0,
+            "BodyType": 1
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 1,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 1,
+            "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+            "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Animation",
+          "Data": {
+            "FrameIndex": 0,
+            "FrameCount": 0,
+            "FrameDelay": 0.0,
+            "FrameDuration": 0.0,
+            "IsRunning": 0,
+            "IsLooping": 0
+          }
+        },
+        {
+          "Type": "AnimationSystem",
+          "Data": {
+            "States": [
+              {
+                "State": 0,
+                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 0,
+                "FrameCount": 1,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.0,
+                "IsRunning": 0,
+                "IsLooping": 0
+              },
+              {
+                "State": 1,
+                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 2,
+                "FrameCount": 2,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.20000000298023224,
+                "IsRunning": 0,
+                "IsLooping": 1
+              },
+              {
+                "State": 2,
+                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 1,
+                "FrameCount": 1,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.0,
+                "IsRunning": 0,
+                "IsLooping": 0
+              },
+              {
+                "State": 3,
+                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 2,
+                "FrameCount": 1,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.0,
+                "IsRunning": 0,
+                "IsLooping": 0
+              },
+              {
+                "State": 4,
+                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
+                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 4,
+                "FrameCount": 4,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.5,
+                "IsRunning": 0,
+                "IsLooping": 0
+              }
+            ]
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "PlayerController",
+            "Fields": {
+              "moveSpeed": 3.0,
+              "jumpSpeed": 9.5,
+              "dashSpeed": 7.0,
+              "friction": 20.0,
+              "acceleration": 40.0,
+              "deceleration": 15.0,
+              "turnSpeed": 100.0,
+              "dashDampening": 0.800000011920929,
+              "dashCooldown": 0.20000000298023224,
+              "dashCount": 1,
+              "dashBeatBoost": 1.5,
+              "jumpBeatBoost": 1.5099999904632568,
+              "dashRhythmLock": false,
+              "jumpRhythmLock": false,
+              "hitWindowEarlyEdge": 0.10000000149011612,
+              "hitWindowLateEdge": 0.10000000149011612
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "891587b9-8eeb-4ee3-b871-9d5e21c3c082",
+      "Name": "CameraObject",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [0.0, 0.0, 0.0],
+            "Scale": [1.0, 1.0, 0.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "Camera",
+          "Data": {
+            "IsActive": 1,
+            "NearPlane": -1.0,
+            "FarPlane": 1.0
+          }
+        },
+        {
+          "Type": "CameraFollow",
+          "Data": {
+            "MaxAcceleration": 500.0,
+            "Interpolant": 2.0,
+            "CameraOffset": [0.0, 0.0, 0.0],
+            "TargetUUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c"
+          }
+        },
+        {
+          "Type": "AudioListener"
+        }
+      ]
+    },
+    {
+      "UUID": "8535d360-dffd-49e3-aab0-53759c538d5b",
+      "Name": "GrassPatch",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [19.0, 6.0, -0.5],
+            "Scale": [1.0, 3.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 72,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "ca787a50-1dcc-473f-aef8-a7d56e2e8d4d",
+      "Name": "GrassPatch",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [19.0, 7.0, -0.5],
+            "Scale": [1.0, 3.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 72,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "f2e60619-6e44-4a26-a615-b9f2922377de",
+      "Name": "DemoTilemapEntity",
+      "Layer": 1,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Tilemap",
+          "Data": {
+            "Name": "Demo Tilemap",
+            "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.tex",
+            "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.shader",
+            "TilesetsPath": ["Data/Tilemap/Tileset_0.json"],
+            "UsedTilesets": [
+              {
+                "TilesetIndex": 1,
+                "TileIDs": [1, 2, 3, 4, 5]
+              }
+            ],
+            "LeftBottomTileTransformPosition": [0.0, 0.0],
+            "TilemapCellGrid": [
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 3, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 3, 3, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+              [3, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
+              [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3],
+              [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 3, 3],
+              [3, 3, 3, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 3, 3],
+              [3, 3, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0, 3, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 3],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1],
+              [3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 4, 4, 1, 4, 4, 1, 4, 1, 1, 4, 4, 1, 1, 1, 4, 4, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+              [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 3, 5, 5, 3, 5, 5, 3, 5, 3, 3, 5, 5, 3, 3, 3, 5, 5, 3, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "d1c8e5b7-9c3a-4c8b-9f0c-1e5a2b6f8e9d",
+      "Name": "PlatformPuzzle1",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "PlatformPuzzleScript",
+            "Fields": {
+              "PuzzleId": 1,
+              "BeatInterval": 2,
+              "HalfBeatInterval": 0,
+              "LoopSequence": true,
+              "AutoActivate": true,
+              "Platforms": [
+                {
+                  "UUID": "6967d62c-787b-4a3c-8fc2-fa5f67afe938",
+                  "Positions": [
+                    {
+                      "Position": [10, 4, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 6, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 6, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 4, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "45100ec6-ae40-4edc-821e-8db711583a9f",
+                  "Positions": [
+                    {
+                      "Position": [10, 10, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 12, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 12, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [10, 10, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "64303246-5074-491c-9c2f-c6d1ea4af488",
+                  "Positions": [
+                    {
+                      "Position": [12.4, 7, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 7, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 9, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 9, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "5c8bbcbd-a590-4ecd-adef-0880e5554fd4",
+                  "Positions": [
+                    {
+                      "Position": [12.4, 10, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 10, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 12, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [12.4, 12, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "6967d62c-787b-4a3c-8fc2-fa5f67afe938",
+      "Name": "Platform1",
+      "Layer": 1,
+      "Tags": ["Puzzle1"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [10.0, 4.0, 0.0],
+            "Scale": [2.0, 0.4000000059604645, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": -1,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "d4fb4901-2a66-430a-a96a-c9c7d26d065a",
+      "Name": "Checkpoint1",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [6.0, 6.0, 0.0],
+            "Scale": [1.0, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 1
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "CheckPoint",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "4f2a4752-7afd-4111-969c-23242003ae8a",
+      "Name": "Hazard",
+      "Layer": 0,
+      "Tags": ["Hazard"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [13.0, 2.5, 0.0],
+            "Scale": [8.0, 1.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 1
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "HazardCollider",
+            "Fields": {}
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "64303246-5074-491c-9c2f-c6d1ea4af488",
+      "Name": "Platform1",
+      "Layer": 1,
+      "Tags": ["Puzzle1"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [12.600000381469727, 4.0, 0.0],
+            "Scale": [1.600000023841858, 0.4000000059604645, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "5c8bbcbd-a590-4ecd-adef-0880e5554fd4",
+      "Name": "Platform1",
+      "Layer": 1,
+      "Tags": ["Puzzle1"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [12.600000381469727, 7.0, 0.0],
+            "Scale": [1.600000023841858, 0.30000001192092896, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": -1,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "d7d75e77-ebb2-4c6a-bb05-779a67e97b24",
+      "Name": "Platform1",
+      "Layer": 1,
+      "Tags": ["Puzzle1"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [16.0, 8.0, 0.0],
+            "Scale": [2.0, 0.4000000059604645, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": -1,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "45100ec6-ae40-4edc-821e-8db711583a9f",
+      "Name": "Platform1",
+      "Layer": 1,
+      "Tags": ["Puzzle1"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [10.0, 4.300000190734863, 0.0],
+            "Scale": [2.0, 0.4000000059604645, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": -1,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c4bc9010-8420-4272-96ef-eff82033c765",
+      "Name": "BottomHazard",
+      "Layer": 0,
+      "Tags": ["Hazard"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [43.0, 0.5, 0.0],
+            "Scale": [22.0, 1.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "HazardCollider",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "f962a5cf-d808-4c96-9517-d64db8718bc1",
+      "Name": "Checkpoint2",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [20.0, 15.0, 0.0],
+            "Scale": [1.0, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 1
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "CheckPoint",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "45bdb339-6077-49fe-b6f1-1a51fcef0fe0",
+      "Name": "Checkpoint3",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [57.5, 7.0, 0.0],
+            "Scale": [3.0, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 1
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "CheckPoint",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a8241f11-9fa6-4bff-9ffc-5cfc64882bc3",
+      "Name": "Checkpoint4",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [57.0, 26.0, 0.0],
+            "Scale": [1.0, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 1
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "CheckPoint",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a5c2e02a-6a91-4061-b724-c53ab07fa0cb",
+      "Name": "Platform2-1",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [65.5, 27.0, 0.0],
+            "Scale": [5.0, 0.20000000298023224, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "85b5b2a0-59b0-4881-966b-f1b8ac8f0117",
+      "Name": "PlatformPuzzle2",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "PlatformPuzzleScript",
+            "Fields": {
+              "PuzzleId": 2,
+              "BeatInterval": 1,
+              "HalfBeatInterval": 0,
+              "LoopSequence": true,
+              "AutoActivate": true,
+              "Platforms": [
+                {
+                  "UUID": "a5c2e02a-6a91-4061-b724-c53ab07fa0cb",
+                  "Positions": [
+                    {
+                      "Position": [65.5, 27, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 27, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 27, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 27, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "b303e03c-cce7-4a68-9330-17c6e7cb4a06",
+                  "Positions": [
+                    {
+                      "Position": [69.0, 25.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [69.0, 25.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 25.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 25.5, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "69cfb421-f82e-4943-b442-fdd92f6ee7ed",
+                  "Positions": [
+                    {
+                      "Position": [72.5, 24, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [72.5, 24, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [72.5, 24, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78, 24, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "09616be0-9584-460f-ad8c-3868d2d28aa7",
+                  "Positions": [
+                    {
+                      "Position": [71, 21, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [71, 21, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 21, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [78.0, 21, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "da134600-9126-42ac-bbe1-2fd425220519",
+                  "Positions": [
+                    {
+                      "Position": [68.0, 18.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [68.0, 21.0, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [68.0, 18.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [68.0, 21.0, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "08ceed69-55c1-418d-bed2-764836acf1c6",
+                  "Positions": [
+                    {
+                      "Position": [64.0, 18.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.0, 21.0, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.0, 18.5, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.0, 21.0, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "78fde438-fbf0-4ddf-aef1-92e0ea7e66c5",
+                  "Positions": [
+                    {
+                      "Position":[72.5,11.5,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[72.5,13.0,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[72.5,11.5,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[72.5,13.0,0.0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID":"4ec25e64-7a65-439d-8300-7c8a4a7ce54b",
+                  "Positions": [
+                    {
+                      "Position": [64.5, 12.0, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.5, 14.0, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.5, 12.0, 0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position": [64.5, 14.0, 0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                },
+                {
+                  "UUID": "14e2514d-c89f-4051-bdf9-cc1836f3d1fb",
+                   "Positions": [
+                    {
+                      "Position":[68.5,12.0,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[68.5,14.0,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[68.5,12.0,0.0],
+                      "TimeToFinish": 0.2
+                    },
+                    {
+                      "Position":[68.5,14.0,0.0],
+                      "TimeToFinish": 0.2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "da134600-9126-42ac-bbe1-2fd425220519",
+      "Name": "Platform2-6",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [68.0, 18.5, 0.0],
+            "Scale": [0.30000001192092896, 3.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "69cfb421-f82e-4943-b442-fdd92f6ee7ed",
+      "Name": "Platform2-2",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [72.5, 24.0, 0.0],
+            "Scale": [5.0, 0.20000000298023224, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "09616be0-9584-460f-ad8c-3868d2d28aa7",
+      "Name": "Platform2-3",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [71.0, 21.0, 0.0],
+            "Scale": [4.0, 0.20000000298023224, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "08ceed69-55c1-418d-bed2-764836acf1c6",
+      "Name": "Platform2-4",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [64.0, 18.5, 0.0],
+            "Scale": [0.30000001192092896, 3.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b303e03c-cce7-4a68-9330-17c6e7cb4a06",
+      "Name": "Platform2-5",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [69.0, 25.5, 0.0],
+            "Scale": [5.0, 0.20000000298023224, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "059e84fc-cd71-4984-b29f-c7ce8b40ac9a",
+      "Name": "Hazard",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [65.5, 22.0, 0.0],
+            "Scale": [5.0, 1.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "HazardCollider",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "14e2514d-c89f-4051-bdf9-cc1836f3d1fb",
+      "Name": "Platform3-1",
+      "Layer": 1,
+      "Tags": ["Puzzle2"],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [68.5, 12.0, 0.0],
+            "Scale": [0.30000001192092896, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "4ec25e64-7a65-439d-8300-7c8a4a7ce54b",
+      "Name": "Platform3-2",
+      "Layer": 1,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [64.5, 12.0, 0.0],
+            "Scale": [0.30000001192092896, 4.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "78fde438-fbf0-4ddf-aef1-92e0ea7e66c5",
+      "Name": "Platform3-3",
+      "Layer": 1,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [72.5, 11.5, 0.0],
+            "Scale": [0.30000001192092896, 3.0, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 18,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "Data": {
+            "Width": 1.0,
+            "Height": 1.0,
+            "Offset": [0.0, 0.0],
+            "IsTrigger": 0
+          }
+        },
+        {
+          "Type": "RigidBody2D",
+          "Data": {
+            "Mass": 1.0,
+            "Inertia": 1.0,
+            "LinearVelocity": [0.0, 0.0],
+            "AngularVelocity": 0.0,
+            "LinearDamping": 0.0,
+            "AngularDamping": 0.0,
+            "GravityScale": 0.0,
+            "BodyType": 0
+          }
+        },
+        {
+          "Type": "ActionList"
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MovablePlatform",
+            "Fields": {}
+          }
+        }
+      ]
+    }
+  ]
+}

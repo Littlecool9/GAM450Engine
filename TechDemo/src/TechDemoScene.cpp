@@ -4,12 +4,18 @@
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
+#include "Engine/Input/Input.h"
+
 #include "Script/BeatBarController.h"
 #include "Script/CollectableController.h"
 #include "Script/ConductorScript.h"
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
-#include "Engine/Input/Input.h"
+#include "Script/CameraController.h"
+#include "Script/MovablePlatform.h"
+#include "Script/PlatformPuzzleScript.h"
+#include "Script/RhythmSystem.h"
+#include "Script/CheckPoint.h"
 
 static const mts::MusicTrack kMausoleumMash = {"MausoleumMash",
                                                "event:/MausoleumMash",
@@ -22,6 +28,7 @@ TechDemoScene::~TechDemoScene()
     mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
     conductor.onBeat.Unsubscribe(mBeatSubId);
     conductor.onBar.Unsubscribe(mBarSubId);
+    mRhythmSystem->Shutdown();
 }
 
 void TechDemoScene::OnEnterPlayMode()
@@ -36,8 +43,8 @@ void TechDemoScene::OnEnterPlayMode()
 
     auto* player = FindGameObjectByName("Player");
     camera = FindGameObjectByName("CameraObject");
-    background = FindGameObjectByName("Sky");
-    background2 = FindGameObjectByName("BackgroundTest");
+    // background = FindGameObjectByName("Sky");
+    // background2 = FindGameObjectByName("BackgroundTest");
     mBeatLine = FindGameObjectByName("BeatLine");
 
     if (camera && player)
@@ -57,15 +64,6 @@ void TechDemoScene::OnUpdate()
 {
     // sync the background to the camera
     mts::Transform* camTransform = camera->GetComponent<mts::Transform>();
-    if (camTransform)
-    {
-        mts::Transform* backgroundTransform = background->GetComponent<mts::Transform>();
-        if (backgroundTransform)
-        {
-            backgroundTransform->SetPosition(
-                glm::vec2(camTransform->GetPosition().x, camTransform->GetPosition().y));
-        }
-    }
 
     // Hit-window validation: press F to test IsInBeatWindow() on/off beat.
     if (mts::Input::IsKeyPressed(mts::Key::A))
@@ -80,44 +78,48 @@ void TechDemoScene::OnUpdate()
         else
             LOG_WARN("[HIT] A -> OFF-BEAT | beat={} phase={:.3f}", beatIdx, phase);
     }
+
+    mRhythmSystem->Update();
 }
 
 void TechDemoScene::OnBeat(mts::BeatInfo info)
 {
     ++mBeatCount;
-    if (info.isHalfBeat)
-    {
-        LOG_INFO("[BEAT] half  | halfBeatIdx={} beatIdx={} barIdx={} beatInBar={} phase={:.3f}",
-                 info.halfBeatIndex,
-                 info.beatIndex,
-                 info.barIndex,
-                 info.beatInBar,
-                 info.beatPhase);
-    }
-    else
-    {
-        LOG_INFO("[BEAT] full  | beatIdx={}  barIdx={}  beatInBar={}  phase={:.3f}  (total={})",
-                 info.beatIndex,
-                 info.barIndex,
-                 info.beatInBar,
-                 info.beatPhase,
-                 mBeatCount);
-    }
+    // if (info.isHalfBeat)
+    //{
+    //     LOG_INFO("[BEAT] half  | halfBeatIdx={} beatIdx={} barIdx={} beatInBar={} phase={:.3f}",
+    //              info.halfBeatIndex,
+    //              info.beatIndex,
+    //              info.barIndex,
+    //              info.beatInBar,
+    //              info.beatPhase);
+    // }
+    // else
+    //{
+    //     LOG_INFO("[BEAT] full  | beatIdx={}  barIdx={}  beatInBar={}  phase={:.3f}  (total={})",
+    //              info.beatIndex,
+    //              info.barIndex,
+    //              info.beatInBar,
+    //              info.beatPhase,
+    //              mBeatCount);
+    // }
 }
 
 void TechDemoScene::OnBar(mts::BeatInfo info)
 {
     ++mBarCount;
-    LOG_INFO("[BAR ] new bar | barIdx={}  started at beatIdx={}  (total bars={})",
-             info.barIndex,
-             info.beatIndex,
-             mBarCount);
+    // LOG_INFO("[BAR ] new bar | barIdx={}  started at beatIdx={}  (total bars={})",
+    //          info.barIndex,
+    //          info.beatIndex,
+    //          mBarCount);
 }
 void TechDemoScene::OnInit()
 {
     mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
     mBeatSubId = conductor.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
     mBarSubId = conductor.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
+
+#pragma region Script Registry
 
     mts::ScriptFactory::RegisterScript(ConductorScript::StaticClassName(),
                                        []() { return new ConductorScript(); });
@@ -129,9 +131,20 @@ void TechDemoScene::OnInit()
 
     mts::ScriptFactory::RegisterScript("CollectableController",
                                        []() { return new CollectableController(); });
+    mts::ScriptFactory::RegisterScript("CameraController", []() { return new CameraController(); });
+    mts::ScriptFactory::RegisterScript("MovablePlatform", []() { return new MovablePlatform(); });
+    mts::ScriptFactory::RegisterScript(PlatformPuzzleScript::StaticClassName(),
+                                       []() { return new PlatformPuzzleScript(); });
+    mts::ScriptFactory::RegisterScript("CheckPointController", []() { return new CheckPoint(); });
+
+#pragma endregion
 
     mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
 
     camera = FindGameObjectByName("CameraObject");
-    background = FindGameObjectByName("Sky");
+    // background = FindGameObjectByName("Sky");
+
+    mRhythmSystem = &RhythmSystem::Get();
+    mRhythmSystem->Init(this);  // Essential to initialize RhythmSystem after loading the scene so
+                                // it can resolve references
 }

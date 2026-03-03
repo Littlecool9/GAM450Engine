@@ -108,7 +108,7 @@ namespace mts
                 return nullptr;
             }
             components.emplace_back(newComp);
-            LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);
+            //LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);
             newComp->owner = this;
             T* res = dynamic_cast<T*>(newComp);
 

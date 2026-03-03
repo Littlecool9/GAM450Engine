@@ -17,8 +17,8 @@
 
 #include "Engine/Core/Editor/DebugDraw.h"
 
-#define CHUNK_LOAD_ADDITIONAL_RADIUS 3    // in chunks
-#define CHUNK_UNLOAD_ADDITIONAL_RADIUS 5  // in chunks
+#define CHUNK_LOAD_ADDITIONAL_RADIUS 1    // in chunks
+#define CHUNK_UNLOAD_ADDITIONAL_RADIUS 2  // in chunks
 
 namespace mts::Tilemap
 {

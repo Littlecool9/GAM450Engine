@@ -141,13 +141,13 @@
     {
       "Type": "NativeScript",
       "Data": {
-      "Class": "PlayerController",
+        "Class": "PlayerController",
         "Fields": {
         "moveSpeed":3.0,
           "jumpSpeed": 14.0,
           "walkParticleCooldown": 0.1
         }
+      }
     }
-  }
   ]
 }

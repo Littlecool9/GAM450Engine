@@ -38,6 +38,15 @@
       "IsCollidable": true,
 
       "IsFullTile": true
+    },
+    {
+      "TileID": 4,
+      "Name": "Demo_Tile_4",
+      "IndexX": 5,
+      "IndexY": 0,
+
+      "Tag": "Water",
+      "IsCollidable": false
     }
   ]
 }

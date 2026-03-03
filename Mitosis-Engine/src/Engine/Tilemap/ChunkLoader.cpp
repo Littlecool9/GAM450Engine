@@ -25,17 +25,37 @@ namespace mts::Tilemap
 
 	std::vector<ChunkLoadingTask> ChunkLoader::CollectResults()
     {
-        std::lock_guard<std::mutex> lock(m_resultMutex);
+        std::lock_guard<std::mutex> lockResult(m_resultMutex);
         std::vector<ChunkLoadingTask> results = std::move(m_finishedTasks);
         m_finishedTasks.clear();
+        
+        // Clear pending positions for collected results
+        {
+            std::lock_guard<std::mutex> lockQueue(m_queueMutex);
+            for (const auto& task : results)
+            {
+                m_pendingPositions.erase(task.pos);
+            }
+        }
+        
         return results;
     }
 
     std::vector<ChunkUnloadingTask> ChunkLoader::CollectUnloadResults()
     {
-        std::lock_guard<std::mutex> lock(m_unloadResultMutex);
+        std::lock_guard<std::mutex> lockResult(m_unloadResultMutex);
         std::vector<ChunkUnloadingTask> results = std::move(m_finishedUnloadTasks);
         m_finishedUnloadTasks.clear();
+        
+        // Clear pending unload positions for collected results
+        {
+            std::lock_guard<std::mutex> lockUnload(m_unloadMutex);
+            for (const auto& task : results)
+            {
+                m_pendingUnloads.erase(task.pos);
+            }
+        }
+        
         return results;
     }
 

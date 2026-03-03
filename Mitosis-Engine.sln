@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11520.95 d18.3
+VisualStudioVersion = 18.3.11520.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TechDemo", "TechDemo\TechDemo.vcxproj", "{8ECC764E-7A99-D159-A3B2-BF018FDE06E8}"
 EndProject
@@ -14,6 +13,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnemyPrototype", "EnemyPrototype\EnemyPrototype.vcxproj", "{65C59374-2EB9-4347-A039-0C881E17371B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mitosis-Tests", "Mitosis-Tests\Mitosis-Tests.vcxproj", "{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImplicitPrototype", "ImplicitPrototype\ImplicitPrototype.vcxproj", "{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,8 +59,17 @@ Global
 		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.DebugOpt|x64.Build.0 = DebugOpt|x64
 		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Release|x64.ActiveCfg = Release|x64
 		{D7E8F9A0-B1C2-4D3E-8F5A-6B7C8D9E0F1A}.Release|x64.Build.0 = Release|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Debug|x64.ActiveCfg = Debug|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Debug|x64.Build.0 = Debug|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.DebugOpt|x64.ActiveCfg = DebugOpt|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.DebugOpt|x64.Build.0 = DebugOpt|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Release|x64.ActiveCfg = Release|x64
+		{2F36ABC2-B8D1-449E-AF70-FA181A3FE846}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEFDFFB8-0A57-4317-9876-44349645023E}
 	EndGlobalSection
 EndGlobal

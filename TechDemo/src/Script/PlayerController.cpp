@@ -22,6 +22,11 @@
 #include "Engine/Input/Input.h"
 #include <glm/vec2.hpp>
 
+#include "MovablePlatform.h"
+#include "CheckPoint.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
+
 void PlayerController::OnCreate()
 {
     rb = GetGameObject()->GetComponent<mts::RigidBody2D>();
@@ -45,7 +50,7 @@ void PlayerController::OnUpdate(float dt)
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
-    bool inWindow = audio.IsInBeatWindow(0.100f, 0.100f);
+    bool inWindow = audio.IsInBeatWindow(hitWindowEarlyEdge, hitWindowLateEdge);
 
     // Reset dash count if on ground and dash cooldown is done
     if (isGrounded && dashTimer < 0.0f)
@@ -106,6 +111,7 @@ void PlayerController::OnUpdate(float dt)
             // Reset dash cooldown on jump
             dashTimer = -1.0f;
             dashCount = dashMax;
+            LOG_INFO("Jumped %sbeat", inWindow ? "on " : "off ");
         }
         else
         {
@@ -214,6 +220,10 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         dashRhythmLock = fields["dashRhythmLock"].GetBool(dashRhythmLock);
     if (fields.Has("jumpRhythmLock"))
         jumpRhythmLock = fields["jumpRhythmLock"].GetBool(jumpRhythmLock);
+    if (fields.Has("hitWindowEarlyEdge"))
+        hitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(hitWindowEarlyEdge);
+    if (fields.Has("hitWindowLateEdge"))
+        hitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(hitWindowLateEdge);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -319,11 +329,64 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision exit normal dot up: {}",
-                 glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
+        LOG_INFO("Collision exit normal dot up: {}", glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) + 1.0f) < 0.1f)
         {
             isGrounded = false;
         }
+    }
+}
+
+void PlayerController::Test()
+{
+    // Generate code for testing the MovablePlatform's FirePlatformTranslate function
+    // Press the key T to fire the test
+    if (mts::Input::IsKeyPressed(mts::Key::T))
+    {
+        LOG_INFO("PlayerController Test: Firing MovablePlatform FirePlatformTranslate");
+        // Get all game objects in the current scene
+        auto* currentScene = mts::SceneSystem::GetCurrentScene();
+        
+        if (currentScene)
+        {
+            // Find all MovablePlatform scripts and trigger them
+            mts::GameObject* testPlatform = currentScene->FindGameObjectByName("TestPlatform");
+            auto* platform = testPlatform->GetScript<MovablePlatform>();
+            auto* platformTransform = testPlatform->GetComponent<mts::Transform>();
+            if (!platformTransform)
+            {
+                LOG_ERROR("Transform component not found on TestPlatform");
+                return;
+            }
+            if (!platform)
+            {
+                LOG_ERROR("MovablePlatform script not found on TestPlatform");
+                return;
+            }
+            if (platform)
+            {
+                platform->FirePlatformTranslate(glm::vec3{platformTransform->GetPosition().x,
+                                                          platformTransform->GetPosition().y+3.0f,
+                                                          platformTransform->GetPosition().z,
+                                                          },1.0f);
+            }
+        }
+    }
+}
+
+void PlayerController::SetCheckPoint(CheckPoint* checkPoint)
+{
+    LOG_INFO("CheckPoint set at position: ({}, {}, {})", checkPoint->GetCheckPointPosition().x,
+             checkPoint->GetCheckPointPosition().y,
+             checkPoint->GetCheckPointPosition().z);
+    actvitedCheckPoint = checkPoint;
+}
+
+void PlayerController::ReturnToCheckPoint()
+{
+    if (actvitedCheckPoint)
+    {
+        transform->SetPosition(actvitedCheckPoint->GetCheckPointPosition());
+        rb->SetVelocity({0.0f, 0.0f});
     }
 }

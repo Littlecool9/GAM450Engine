@@ -42,10 +42,9 @@ namespace mts
         GameObject* FindGameObjectByUUID(const UUID& uuid);
         GameObject* FindGameObjectByName(const std::string& name);
 
-        // TODO: REMOVE, TEMPORARY SETTER FOR TESTING
-        void AddGameObject(GameObject* g) { mGameObjects.push_back(g); }
+        void AddGameObject(GameObject* g) { mPendingGameObjects.push_back(g); }
 
-        void DestroyGameObjects();
+        void CleanupGameObjects();
         void ClearGameObjects();
 
         void StashGameObjects();  // move mGameObjects → mEditGameObjects (call before deserialize)
@@ -65,8 +64,11 @@ namespace mts
         std::vector<GameObject*> mGameObjects;
         std::string mFilePath;
 
+        void FlushPendingGameObjects();
+
        private:
         std::vector<GameObject*> mEditGameObjects;
+        std::vector<GameObject*> mPendingGameObjects;
     };
 
 }  // namespace mts

@@ -32,6 +32,11 @@ namespace mts
             if (!g->GetDontDestroy())
                 delete g;
         }
+        for (auto g : mPendingGameObjects)
+        {
+            if (!g->GetDontDestroy())
+                delete g;
+        }
     }
 
     void Scene::Init()
@@ -48,6 +53,8 @@ namespace mts
         OnUpdate();
         for (auto g : mGameObjects)
         {
+            if (g->IsDead())
+                continue;
             g->Update(dt);
         }
     }
@@ -56,6 +63,8 @@ namespace mts
     {
         for (auto g : mGameObjects)
         {
+            if (g->IsDead())
+                continue;
             g->LateUpdate(dt);
         }
     }
@@ -63,17 +72,19 @@ namespace mts
     void Scene::FixedUpdate(float dt)
     {
         for (auto g : mGameObjects)
+        {
+            if (g->IsDead())
+                continue;
             g->FixedUpdate(dt);
+        }
     }
 
     void Scene::Render()
     {
-        // for (auto g : mGameObjects)
-        //{
-        //     g->Render();
-        // }
         for (int i = 0; i < mGameObjects.size(); ++i)
         {
+            if (mGameObjects[i]->IsDead())
+                continue;
             mGameObjects[i]->Render();
         }
     }
@@ -82,6 +93,8 @@ namespace mts
     {
         for (auto g : mGameObjects)
         {
+            if (g->IsDead())
+                continue;
             g->DebugRender();
         }
     }
@@ -125,8 +138,21 @@ namespace mts
         return nullptr;
     }
 
+    void Scene::FlushPendingGameObjects()
+    {
+        for (auto* g : mPendingGameObjects)
+        {
+            mGameObjects.push_back(g);
+            g->Init();
+        }
+        mPendingGameObjects.clear();
+    }
+
     void Scene::ClearGameObjects()
     {
+        for (auto* go : mPendingGameObjects)
+            delete go;
+        mPendingGameObjects.clear();
         for (auto* go : mGameObjects)
             delete go;
         mGameObjects.clear();
@@ -145,7 +171,7 @@ namespace mts
         mEditGameObjects.clear();
     }
 
-    void Scene::DestroyGameObjects()
+    void Scene::CleanupGameObjects()
     {
         for (auto it = mGameObjects.begin(); it != mGameObjects.end(); /* no increment here */)
         {
@@ -160,6 +186,7 @@ namespace mts
                 ++it;  // only increment if no element was erased
             }
         }
+        FlushPendingGameObjects();
     }
 
     void Scene::Deserialize(JsonValue const& jsonObj)
@@ -176,6 +203,7 @@ namespace mts
             auto go = GameObjectFactory::CreateGameObject(this);
             go->Deserialize(gv);
         }
+        FlushPendingGameObjects();
     }
 
     void Scene::Serialize(JsonDocument& doc) const

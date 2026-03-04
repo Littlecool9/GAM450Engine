@@ -39,6 +39,7 @@ namespace mts
         if (open && !removed)
         {
             ImGui::Checkbox("Active", &cam->isActive);
+            ImGui::DragFloat("Ortho Size", &cam->orthoSize, 0.1f, 0.1f, 100.0f);
             ImGui::DragFloat("Near Plane", &cam->nearPlane, 0.01f);
             ImGui::DragFloat("Far Plane", &cam->farPlane, 0.1f);
         }

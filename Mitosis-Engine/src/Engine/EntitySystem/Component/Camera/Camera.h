@@ -34,6 +34,10 @@ namespace mts
         float nearPlane;
         float farPlane;
 
+        // Half-height in world units. Controls how much of the world is visible.
+        // Smaller = zoomed in, larger = zoomed out.
+        float orthoSize;
+
        private:
         glm::mat4 BuildView2D();
         glm::mat4 BuildProjFromViewport() const;

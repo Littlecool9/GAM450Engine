@@ -18,11 +18,11 @@
 
 namespace mts
 {
-    CameraComponent::CameraComponent() : isActive(true), nearPlane(-1.0f), farPlane(1.0f)
+    CameraComponent::CameraComponent() : isActive(true), nearPlane(-1.0f), farPlane(1.0f), orthoSize(5.0f)
     {
     }
     CameraComponent::CameraComponent(GameObject* owner)
-        : Component(owner), isActive(true), nearPlane(-1.0f), farPlane(1.0f)
+        : Component(owner), isActive(true), nearPlane(-1.0f), farPlane(1.0f), orthoSize(5.0f)
     {
     }
 
@@ -40,6 +40,10 @@ namespace mts
         {
             farPlane = jsonObj["FarPlane"].GetFloat(farPlane);
         }
+        if (jsonObj.Has("OrthoSize"))
+        {
+            orthoSize = jsonObj["OrthoSize"].GetFloat(orthoSize);
+        }
     }
     void CameraComponent::Serialize(JsonDocument& doc) const
     {
@@ -49,6 +53,7 @@ namespace mts
         doc.WriteInt("IsActive", isActive);
         doc.WriteFloat("NearPlane", nearPlane);
         doc.WriteFloat("FarPlane", farPlane);
+        doc.WriteFloat("OrthoSize", orthoSize);
 
         doc.EndObject();
     }
@@ -79,16 +84,12 @@ namespace mts
         const float w = static_cast<float>(vp.z);
         const float h = static_cast<float>(vp.w);
 
-        float logicW = w / mts::PixelsPerUnit;
-        float logicH = h / mts::PixelsPerUnit;
+        const float aspect = (h > 0.0f) ? (w / h) : 1.0f;
+        const float halfH = orthoSize;
+        const float halfW = halfH * aspect;
 
         // The camera position is now at the center
-        return glm::ortho(-logicW / 2.0f,
-                          logicW / 2.0f,
-                          -logicH / 2.0f,
-                          logicH / 2.0f,
-                          nearPlane,
-                          farPlane);
+        return glm::ortho(-halfW, halfW, -halfH, halfH, nearPlane, farPlane);
     }
 
     void CameraComponent::Update(float dt)

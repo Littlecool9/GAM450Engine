@@ -10,7 +10,6 @@
 #include "pch.h"
 #include "PlayerController.h"
 
-#include "AttackHitboxScript.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
@@ -21,10 +20,13 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
+#include "Engine/Conductor/ConductorSystem.h"
 #include <glm/vec2.hpp>
 
 #include "MovablePlatform.h"
 #include "CheckPoint.h"
+#include "CameraController.h"
+#include "AttackHitboxScript.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -84,7 +86,10 @@ void PlayerController::OnUpdate(float dt)
         {
             if (!queuedJump)
             {
-                queuedJump = [this, inWindow]() { Jump(inWindow); };
+                queuedJump = [this, inWindow]() {
+                    TriggerCameraVFX(true, inWindow);
+                    Jump(inWindow);
+                };
                 LOG_INFO("Jumped {} beat", inWindow ? "on" : "off");
             }
         }
@@ -101,7 +106,10 @@ void PlayerController::OnUpdate(float dt)
         {
             if (!queuedDash)
             {
-                queuedDash = [this, inputDir, inWindow]() { Dash(inputDir, inWindow); };
+                queuedDash = [this, inputDir, inWindow]() {
+                    TriggerCameraVFX(true, inWindow);
+                    Dash(inputDir, inWindow);
+                };
                 LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
             }
         }
@@ -272,6 +280,8 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         mHitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(mHitWindowEarlyEdge);
     if (fields.Has("hitWindowLateEdge"))
         mHitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(mHitWindowLateEdge);
+    if (fields.Has("camZoomSpeed"))
+        mCamZoomSpeed = fields["camZoomSpeed"].GetFloat(mCamZoomSpeed);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -296,6 +306,7 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("jumpBeatBoost", mJumpBeatBoost);
     out.WriteBool("dashRhythmLock", mDashRhythmLock);
     out.WriteBool("jumpRhythmLock", mJumpRhythmLock);
+    out.WriteFloat("camZoomSpeed", mCamZoomSpeed);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -386,6 +397,10 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mHitWindowLateEdge},
                       .step = 0.01f});
+    fields.push_back({.name = "camZoomSpeed",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mCamZoomSpeed},
+                      .step = 0.1f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
@@ -556,4 +571,54 @@ void PlayerController::ReturnToCheckPoint()
         transform->SetPosition(activatedCheckPoint->GetCheckPointPosition());
         rb->SetVelocity({0.0f, 0.0f});
     }
+}
+
+void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
+{
+    // Determine zoom strength based on action and timing
+    // Lower zoom value = stronger zoom in effect
+    float zoomStrength = 1.0f;
+    // float speed = 0.5f; // Quick zoom duration
+
+    if (isAction && inWindow)
+    {
+        // Strongest: Action performed on beat
+        zoomStrength = 0.98f;
+    }
+    else if (isAction && !inWindow)
+    {
+        // Medium-strong: Action performed off beat
+        // zoomStrength = 0.985f;
+    }
+    else if (!isAction && inWindow)
+    {
+        // Medium: Beat indicator (no action)
+        // zoomStrength = 0.99f;
+    }
+    else
+    {
+        // Weakest: Off-beat, no action
+        // zoomStrength = 0.98f;
+    }
+
+    // Apply zoom effect
+    cam->TriggerZoom(zoomStrength, mCamZoomSpeed);
+    // Reset to normal zoom
+    cam->TriggerZoom(1.0f, mCamZoomSpeed * 2);
+}
+
+void PlayerController::OnBeat(mts::BeatInfo info)
+{
+    // TriggerCameraVFX(false, true);
+}
+
+void PlayerController::OnBar(mts::BeatInfo info)
+{
+}
+
+void PlayerController::Init(mts::ConductorSystem& system, CameraController* cam)
+{
+    mBeatSubId = system.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
+    mBarSubId = system.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
+    this->cam = cam;
 }

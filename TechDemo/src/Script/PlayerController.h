@@ -11,11 +11,12 @@
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 #include "Engine/Scripting/ScriptBase.h"
+#include "Engine/Conductor/ConductorSystem.h"
 
 #include <glm/common.hpp>
 
+class CameraController;
 class CheckPoint;
-
 
 class PlayerController : public mts::ScriptBase
 {
@@ -30,18 +31,6 @@ class PlayerController : public mts::ScriptBase
         DOWN_LEFT,
         LEFT,
         UP_LEFT
-    };
-
-    enum PlayerState
-    {
-        DEFAULT = 0,
-        IDLE,
-        JUMP,
-        FALL,
-        ATTACK_1,
-        ATTACK_2,
-        DASH,
-        WALK
     };
 
    public:
@@ -65,8 +54,10 @@ class PlayerController : public mts::ScriptBase
     }
 
     void Test();
+    void Init(mts::ConductorSystem& system, CameraController* cam);
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();
+    void TriggerCameraVFX(bool isAction, bool inWindow);
 
     SCRIPT_CLASS(PlayerController)
 
@@ -127,4 +118,14 @@ class PlayerController : public mts::ScriptBase
 
     // CheckPoint Properties
     CheckPoint* activatedCheckPoint = nullptr;
+
+        // Camera VFX properties
+    CameraController* cam = nullptr;
+    float mCamZoomSpeed = 0.5f;  // Quick zoom duration
+
+    // Conductor event handlers
+    void OnBeat(mts::BeatInfo info);
+    void OnBar(mts::BeatInfo info);
+    mts::Delegate<mts::BeatInfo>::Id mBeatSubId = 0;
+    mts::Delegate<mts::BeatInfo>::Id mBarSubId = 0;
 };

@@ -89,19 +89,19 @@
             "Components": [
                 {
                     "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            2.1500000953674316,
-                            8.75,
-                            0.0
-                        ],
-                        "Scale": [
-                            5.0,
-                            5.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
+                  "Data": {
+                    "Position": [
+                      63.0,
+                      25.0,
+                      0.0
+                    ],
+                    "Scale": [
+                      5.0,
+                      5.0,
+                      1.0
+                    ],
+                    "Rotation": 0.0
+                  }
                 },
                 {
                     "Type": "BoxCollider2D",
@@ -248,28 +248,32 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "PlayerController",
-                        "Fields": {
-                            "moveSpeed": 5.0,
-                            "jumpSpeed": 9.0,
-                            "dashSpeed": 8.0,
-                            "friction": 20.0,
-                            "acceleration": 40.0,
-                            "deceleration": 15.0,
-                            "turnSpeed": 100.0,
-                            "dashDampening": 0.800000011920929,
-                            "dashCooldown": 0.20000000298023224,
-                            "dashMax": 1,
-                            "attackCooldown": 0.5,
-                            "attackComboMaxDelay": 1.0,
-                            "attackDelay": 0.20000000298023224,
-                            "attackLightDamage": 1.0,
-                            "attackHeavyDamage": 2.0,
-                            "attackHitboxOffsetX": 1.0,
-                            "dashBeatBoost": 1.5,
-                            "jumpBeatBoost": 1.5,
-                            "dashRhythmLock": false,
-                            "jumpRhythmLock": false
-                        }
+                      "Fields": {
+                        "moveSpeed": 4.0,
+                        "jumpSpeed": 9.5,
+                        "dashSpeed": 8.5,
+                        "friction": 45.0,
+                        "acceleration": 40.0,
+                        "deceleration": 15.0,
+                        "turnSpeed": 100.0,
+                        "dashDampening": 0.800000011920929,
+                        "dashCooldown": 0.20000000298023224,
+                        "dashMax": 1,
+                        "attackCooldown": 0.5,
+                        "attackComboMaxDelay": 1.0,
+                        "attackDelay": 0.20000000298023224,
+                        "attackLightDamage": 1.0,
+                        "attackHeavyDamage": 2.0,
+                        "attackHitboxOffsetX": 1.0,
+                        "dashBeatBoost": 1.5,
+                        "jumpBeatBoost": 1.5,
+                        "dashRhythmLock": true,
+                        "jumpRhythmLock": true,
+                        "attackRhythmLock": true,
+                        "hitWindowEarlyEdge": 0.10000000149011612,
+                        "hitWindowLateEdge": 0.10000000149011612,
+                        "camZoomSpeed": 0.5
+                      }
                     }
                 }
             ]

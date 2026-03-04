@@ -15,8 +15,8 @@
 
 #include <glm/common.hpp>
 
-class CheckPoint;
 class CameraController;
+class CheckPoint;
 
 class PlayerController : public mts::ScriptBase
 {
@@ -64,56 +64,68 @@ class PlayerController : public mts::ScriptBase
    private:
     void Dash(glm::vec2 inputDir, bool inWindow);
     void Jump(bool inWindow);
+    void Attack(bool inWindow);
+    void SpawnAttackHitbox(float damage);
 
     glm::vec2 currVelocity{0.0f, 0.0f};
     std::function<void()> queuedDash = nullptr;
     std::function<void()> queuedJump = nullptr;
+    std::function<void()> queuedAttackSpawn = nullptr;
 
     mts::RigidBody2D* rb = nullptr;
     mts::AnimationSystem* anim = nullptr;
     mts::SpriteRenderer* sprite = nullptr;
     mts::Transform* transform = nullptr;
 
-    float moveSpeed = 5.0f;
-    float jumpSpeed = 12.0f;
-    float dashSpeed = 12.0f;
-    float friction = 20.0f;
-    float acceleration = 40.0f;
-    float deceleration = 15.0f;
-    float dashDampening = 0.8f;
-    float turnSpeed = 100.0f;
-    int dashMax = 1;
-    float dashCooldown = 0.2f;
+    // Adjustable parameters
+    float mMoveSpeed = 5.0f;
+    float mJumpSpeed = 12.0f;
+    float mDashSpeed = 12.0f;
+    float mFriction = 20.0f;
+    float mAcceleration = 40.0f;
+    float mDeceleration = 15.0f;
+    float mDashDampening = 0.8f;
+    float mTurnSpeed = 100.0f;
+    int mDashMax = 1;
+    float mDashCooldown = 0.2f;
+    float mAttackCooldown = 0.5f;
+    float mAttackComboMaxDelay = 3.0f;
+    // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
+    float mAttackDelay = 0.0f;
+    float mAttackLightDamage = 1.0f;
+    float mAttackHeavyDamage = 2.0f;
+    float mAttackHitboxOffsetX = 3.0f;
     // beat boosts are multipliers to the strength of actions
     // these are applied if the player hits the action on beat
-    float dashBeatBoost = 1.0f;
-    float jumpBeatBoost = 1.0f;
+    float mDashBeatBoost = 1.0f;
+    float mJumpBeatBoost = 1.0f;
+    float mHitWindowEarlyEdge = 0.1f;
+    float mHitWindowLateEdge = 0.1f;
+    // rhythm lock means the player can only jump/dash if hitting on beat
+    bool mDashRhythmLock = false;
+    bool mJumpRhythmLock = false;
+    bool mAttackRhythmLock = false;
 
-    float hitWindowEarlyEdge = 0.1f;
-    float hitWindowLateEdge = 0.1f;
-
+    // State variables
     bool isGrounded = false;
     int dashCount = 1;
     float dashTimer = -1.0f;
-
-    // rhythm lock means the player can only jump/dash if hitting on beat
-    bool dashRhythmLock = true;
-    bool jumpRhythmLock = true;
-
+    float attackTimer = -1.0f;
+    float attackComboTimer = -1.0f;
+    float attackDelayTimer = -2.0f;
+    bool isAttacking = false;
     Direction facingDir = RIGHT;
 
     // CheckPoint Properties
-    CheckPoint* actvitedCheckPoint = nullptr;
+    CheckPoint* activatedCheckPoint = nullptr;
 
     // Camera VFX properties
     CameraController* cam = nullptr;
-    float camZoomSpeed = 0.5f;  // Quick zoom duration
+    float mCamZoomSpeed = 0.5f;  // Quick zoom duration
 
     // Conductor event handlers
     void OnBeat(mts::BeatInfo info);
     void OnBar(mts::BeatInfo info);
     mts::Delegate<mts::BeatInfo>::Id mBeatSubId = 0;
     mts::Delegate<mts::BeatInfo>::Id mBarSubId = 0;
-    int beatCount = 0;
-    int beatPerBar = 4;
 };

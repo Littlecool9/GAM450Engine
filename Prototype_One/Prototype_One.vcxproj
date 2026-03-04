@@ -179,6 +179,7 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Prototype_One.h" />
     <ClInclude Include="src\Prototype_OneScene.h" />
+    <ClInclude Include="src\Script\AttackHitboxScript.h" />
     <ClInclude Include="src\Script\BeatBarController.h" />
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
@@ -198,6 +199,7 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     </ClCompile>
     <ClCompile Include="src\Prototype_One.cpp" />
     <ClCompile Include="src\Prototype_OneScene.cpp" />
+    <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
     <ClCompile Include="src\Script\BeatBarController.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />

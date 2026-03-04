@@ -4,31 +4,45 @@
       "UUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c",
       "Name": "Player",
       "Layer": 0,
-      "Tags": ["Player"],
+      "Tags": [ "Player" ],
       "Components": [
         {
           "Type": "Transform",
           "Data": {
-            "Position": [3.0, 9.0, 0.0],
-            "Scale": [1.5, 1.5, 1.0],
+            "Position": [
+              63.0,
+              25.0,
+              0.0
+            ],
+            "Scale": [
+              5.0,
+              5.0,
+              1.0
+            ],
             "Rotation": 0.0
           }
         },
         {
           "Type": "BoxCollider2D",
           "Data": {
-            "Width": 0.550000011920929,
-            "Height": 0.75,
-            "Offset": [0.0, -0.20000000298023224],
+            "Width": 0.10000000149011612,
+            "Height": 0.20000000298023224,
+            "Offset": [
+              0.0,
+              -0.05000000074505806
+            ],
             "IsTrigger": 0
           }
         },
         {
           "Type": "RigidBody2D",
           "Data": {
-            "Mass": 0.05000000074505806,
+            "Mass": 1.0,
             "Inertia": 0.0,
-            "LinearVelocity": [0.0, 0.0],
+            "LinearVelocity": [
+              0.0,
+              0.0
+            ],
             "AngularVelocity": 0.0,
             "LinearDamping": 0.0,
             "AngularDamping": 0.0,
@@ -39,25 +53,29 @@
         {
           "Type": "SpriteRenderer",
           "Data": {
-            "TintColor": [1.0, 1.0, 1.0],
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
             "Alpha": 1.0,
-            "FrameIndex": 1,
+            "FrameIndex": 12,
             "ParallaxFactorX": 1.0,
             "RenderLayer": 1,
-            "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-            "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+            "TextureResource": "./Data/Resources/PlayerTexture.tex",
+            "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
           }
         },
         {
           "Type": "Animation",
           "Data": {
-            "FrameIndex": 0,
-            "FrameCount": 0,
-            "FrameDelay": 0.0,
-            "FrameDuration": 0.0,
-            "IsRunning": 0,
-            "IsLooping": 0
+            "FrameIndex": 12,
+            "FrameCount": 7,
+            "FrameDelay": 0.10000000149011612,
+            "FrameDuration": 0.10000000149011612,
+            "IsRunning": 1,
+            "IsLooping": 1
           }
         },
         {
@@ -66,66 +84,79 @@
             "States": [
               {
                 "State": 0,
-                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
                 "ShaderResource": "",
                 "HasAnimation": 1,
                 "FrameIndex": 0,
-                "FrameCount": 1,
+                "FrameCount": 12,
                 "FrameDelay": 0.0,
-                "FrameDuration": 0.0,
+                "FrameDuration": 0.10000000149011612,
                 "IsRunning": 0,
-                "IsLooping": 0
+                "IsLooping": 1
               },
               {
                 "State": 1,
-                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
                 "ShaderResource": "",
                 "HasAnimation": 1,
-                "FrameIndex": 2,
-                "FrameCount": 2,
+                "FrameIndex": 12,
+                "FrameCount": 7,
                 "FrameDelay": 0.0,
-                "FrameDuration": 0.20000000298023224,
+                "FrameDuration": 0.10000000149011612,
                 "IsRunning": 0,
                 "IsLooping": 1
               },
               {
                 "State": 2,
-                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
                 "ShaderResource": "",
                 "HasAnimation": 1,
-                "FrameIndex": 1,
-                "FrameCount": 1,
+                "FrameIndex": 20,
+                "FrameCount": 3,
                 "FrameDelay": 0.0,
-                "FrameDuration": 0.0,
+                "FrameDuration": 0.10000000149011612,
                 "IsRunning": 0,
                 "IsLooping": 0
               },
               {
                 "State": 3,
-                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
                 "ShaderResource": "",
                 "HasAnimation": 1,
-                "FrameIndex": 2,
-                "FrameCount": 1,
+                "FrameIndex": 28,
+                "FrameCount": 3,
                 "FrameDelay": 0.0,
-                "FrameDuration": 0.0,
+                "FrameDuration": 0.10000000149011612,
                 "IsRunning": 0,
                 "IsLooping": 0
               },
               {
                 "State": 4,
-                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.tex",
-                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.mesh",
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
                 "ShaderResource": "",
                 "HasAnimation": 1,
-                "FrameIndex": 4,
-                "FrameCount": 4,
+                "FrameIndex": 42,
+                "FrameCount": 6,
                 "FrameDelay": 0.0,
-                "FrameDuration": 0.5,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 0,
+                "IsLooping": 0
+              },
+              {
+                "State": 5,
+                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                "ShaderResource": "",
+                "HasAnimation": 1,
+                "FrameIndex": 47,
+                "FrameCount": 8,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.10000000149011612,
                 "IsRunning": 0,
                 "IsLooping": 0
               }
@@ -146,9 +177,16 @@
               "turnSpeed": 100.0,
               "dashDampening": 0.800000011920929,
               "dashCooldown": 0.20000000298023224,
-              "dashCount": 1,
+              "dashMax": 1,
               "dashBeatBoost": 1.5,
               "jumpBeatBoost": 1.5,
+              "attackCooldown": 0.5,
+              "attackComboMaxDelay": 1.0,
+              "attackDelay": 0.20000000298023224,
+              "attackLightDamage": 1.0,
+              "attackHeavyDamage": 2.0,
+              "attackHitboxOffsetX": 1.0,
+              "attackRhythmLock": true,
               "dashRhythmLock": true,
               "jumpRhythmLock": true,
               "hitWindowEarlyEdge": 0.10000000149011612,

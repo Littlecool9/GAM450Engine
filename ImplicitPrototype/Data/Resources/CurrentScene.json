@@ -151,8 +151,8 @@
               "jumpBeatBoost": 1.5099999904632568,
               "dashRhythmLock": false,
               "jumpRhythmLock": false,
-              "hitWindowEarlyEdge": 0.15000000596046448,
-              "hitWindowLateEdge": 0.15000000596046448,
+              "hitWindowEarlyEdge": 0.25,
+              "hitWindowLateEdge": 0.25,
               "camZoomSpeed": 0.20000000298023224
             }
           }
@@ -178,13 +178,14 @@
           "Data": {
             "IsActive": 1,
             "NearPlane": -1.0,
-            "FarPlane": 1.0
+            "FarPlane": 1.0,
+            "OrthoSize": 5.0
           }
         },
         {
           "Type": "CameraFollow",
           "Data": {
-            "MaxAcceleration": 500.0,
+            "MaxAcceleration": 1000.0,
             "Interpolant": 1.0,
             "CameraOffset": [0.0, 0.0, 0.0],
             "TargetUUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c"
@@ -331,7 +332,7 @@
               "BeatInterval": 4,
               "HalfBeatInterval": 0,
               "LoopSequence": true,
-              "AutoActivate": false,
+              "AutoActivate": true,
               "Platforms": [
                 {
                   "UUID": "6967d62c-787b-4a3c-8fc2-fa5f67afe938",
@@ -1802,9 +1803,9 @@
             "Fields": {
               "PuzzleId": 5,
               "BeatInterval": 2,
-              "HalfBeatInterval": 1,
+              "HalfBeatInterval": 0,
               "LoopSequence": true,
-              "AutoActivate": false,
+              "AutoActivate": true,
               "Platforms": [
                 {
                   "UUID": "7a5af6cd-0d9d-4724-b761-afc32accad06",
@@ -2023,6 +2024,129 @@
                 }
               ]
             }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b4ff1bb9-2a79-4900-ad23-19f668270872",
+      "Name": "HeartBeat",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "BeatPulseScript",
+            "Fields": {
+              "Amplitude": 0.4000000059604645,
+              "Decay": 10.0,
+              "XPos": -5.0,
+              "YPos": 3.5
+            }
+          }
+        },
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [10.0, 0.0, 0.0],
+            "Scale": [1.7999999523162842, 1.7999999523162842, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 67,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../ImplicitPrototype/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../ImplicitPrototype/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "f59ac2e5-29c6-4b98-bd59-edee1801a5ba",
+      "Name": "HeartBeat2",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "BeatPulseScript",
+            "Fields": {
+              "Amplitude": 0.4000000059604645,
+              "Decay": 10.0,
+              "XPos": -4.0,
+              "YPos": 3.5
+            }
+          }
+        },
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [10.0, 0.0, 0.0],
+            "Scale": [1.7999999523162842, 1.7999999523162842, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 67,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../ImplicitPrototype/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../ImplicitPrototype/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "d6b7810b-589a-4593-af74-d5bf96756fd0",
+      "Name": "HeartBeat3",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "BeatPulseScript",
+            "Fields": {
+              "Amplitude": 0.4000000059604645,
+              "Decay": 10.0,
+              "XPos": -3.0,
+              "YPos": 3.5
+            }
+          }
+        },
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [10.0, 0.0, 0.0],
+            "Scale": [1.7999999523162842, 1.7999999523162842, 1.0],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [1.0, 1.0, 1.0],
+            "Alpha": 1.0,
+            "FrameIndex": 67,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 0,
+            "TextureResource": "../ImplicitPrototype/Data/Resources/DemoTextureResource.tex",
+            "MeshResource": "../ImplicitPrototype/Data/Resources/14x7MeshResource.mesh",
+            "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
           }
         }
       ]

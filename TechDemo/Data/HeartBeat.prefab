@@ -1,0 +1,53 @@
+{
+    "UUID": "b4ff1bb9-2a79-4900-ad23-19f668270872",
+    "Name": "HeartBeat",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "BeatPulseScript",
+                "Fields": {
+                    "Amplitude": 0.4000000059604645,
+                    "Decay": 10.0,
+                    "XPos": -5.0,
+                    "YPos": 3.5
+                }
+            }
+        },
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    10.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.7999999523162842,
+                    1.7999999523162842,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 67,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "../ImplicitPrototype/Data/Resources/DemoTextureResource.tex",
+                "MeshResource": "../ImplicitPrototype/Data/Resources/14x7MeshResource.mesh",
+                "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

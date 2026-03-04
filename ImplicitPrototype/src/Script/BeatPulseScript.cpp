@@ -6,6 +6,8 @@
 
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Serialization/JsonAbstraction.h"
+#include "Engine/Renderer.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
 #include <cmath>
 
 #include "CameraController.h"

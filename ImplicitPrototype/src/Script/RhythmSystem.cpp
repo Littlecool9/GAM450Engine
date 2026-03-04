@@ -45,6 +45,11 @@ void RhythmSystem::Init(mts::Scene* scene)
     mBeatSubId = mConductor->onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
     mBarSubId = mConductor->onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
 
+    for (auto& [puzzleId, state] : mPlatformPuzzles)
+    {
+        if (state.isActive)
+            ActivatePlatformPuzzle(puzzleId);
+    }
     LOG_INFO("[RhythmSystem] Initialized.");
 }
 

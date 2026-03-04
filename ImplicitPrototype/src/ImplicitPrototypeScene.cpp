@@ -52,12 +52,7 @@ void ImplicitPrototypeScene::OnInit()
 
     mts::SceneSystem::LoadScene(this, "../ImplicitPrototype/Data/Resources/CurrentScene.json");
 
-    camera = FindGameObjectByName("CameraObject");
-    // background = FindGameObjectByName("Sky");
 
-    mRhythmSystem = &RhythmSystem::Get();
-    mRhythmSystem->Init(this);  // Essential to initialize RhythmSystem after loading the scene so
-                                // it can resolve references
 }
 
 void ImplicitPrototypeScene::OnUpdate()
@@ -92,14 +87,26 @@ void ImplicitPrototypeScene::OnEnterPlayMode()
 
     Scene::OnEnterPlayMode();
 
-    auto* player = FindGameObjectByName("Player");
+    //auto* player = FindGameObjectByName("Player");
+    mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
     camera = FindGameObjectByName("CameraObject");
+    player = FindGameObjectByName("Player");
 
+    mRhythmSystem = &RhythmSystem::Get();
+    mRhythmSystem->Init(this);  // Essential to initialize RhythmSystem after loading the scene so
+                                // it can resolve references
     if (camera && player)
     {
         auto* playerTr = player->GetComponent<mts::Transform>();
         // CameraFollow target is resolved by Init() from saved UUID
         camera->GetComponent<mts::Transform>()->SetPosition(playerTr->GetPosition());
+
+        CameraController* camController = camera->GetScript<CameraController>();
+        if (camController)
+            camController->GetAndInitCamera(conductor);
+        PlayerController* playerController = player->GetScript<PlayerController>();
+        if (playerController)
+            playerController->Init(conductor, camController);
     }
 }
 

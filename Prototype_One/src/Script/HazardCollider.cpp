@@ -14,7 +14,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 
-#include "PlayerController.h"
+#include "../../ImplicitPrototype/src/Script/PlayerController.h"
 
 void HazardCollider::OnCollisionEnter2D(const mts::Collision2D& collision)
 {

@@ -20,10 +20,12 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
+#include "Engine/Conductor/ConductorSystem.h"
 #include <glm/vec2.hpp>
 
 #include "MovablePlatform.h"
 #include "CheckPoint.h"
+#include "CameraController.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 
@@ -34,7 +36,6 @@ void PlayerController::OnCreate()
     sprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
     transform = GetGameObject()->GetComponent<mts::Transform>();
 }
-
 
 void PlayerController::OnUpdate(float dt)
 {
@@ -60,21 +61,97 @@ void PlayerController::OnUpdate(float dt)
     }
 
     // Get facing direction
+    if (leftHeld)
+    {
+        sprite->SetFlipX(true);
+    }
+    if (rightHeld)
+    {
+        sprite->SetFlipX(false);
+    }
+
+    // Jump check
+    if (jumpPressed && isGrounded)
+    {
+        //TriggerCameraVFX(true, inWindow);
+        if (!jumpRhythmLock || (jumpRhythmLock && inWindow))
+        {
+            if (!queuedJump)
+            {
+                queuedJump = [this, inWindow]() { 
+                    TriggerCameraVFX(true, inWindow);
+                    Jump(inWindow); 
+                };
+                LOG_INFO("Jumped {} beat", inWindow ? "on" : "off");
+            }
+        }
+        else
+        {
+            LOG_INFO("Jumped off beat");
+        }
+    }
+
+    // Dash check
+    if (dashPressed && dashCount > 0)
+    {
+        //TriggerCameraVFX(true, inWindow);
+        if (!dashRhythmLock || (dashRhythmLock && inWindow))
+        {
+            if (!queuedDash)
+            {
+                queuedDash = [this, inputDir, inWindow]() { 
+                    TriggerCameraVFX(true, inWindow);
+                    Dash(inputDir, inWindow); 
+                };
+                LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
+            }
+        }
+        else
+        {
+            LOG_INFO("Dashed off beat");
+        }
+    }
+
+    dashTimer -= dt;
+
+    // Set animation states based on movement
+    if (!isGrounded && currVelocity.y > 0.1f)
+        anim->ChangeState(mts::AnimationSystem::States::Jump);
+    else if (!isGrounded && currVelocity.y < -0.1f)
+        anim->ChangeState(mts::AnimationSystem::States::Falling);
+    else if (std::abs(currVelocity.x) > 0.01f)
+        anim->ChangeState(mts::AnimationSystem::States::Walking);
+    else
+        anim->ChangeState(mts::AnimationSystem::States::Idle);
+
+    // Possible animation/sprite/color change while dash is in cooldown
+    if (dashTimer > 0.0f)
+        sprite->SetTintColor(glm::vec3(0.7f));
+    else
+        sprite->SetTintColor(glm::vec3(1.0f));
+}
+
+void PlayerController::OnFixedUpdate(float dt)
+{
+    // Check all important held keys at start of loop
+    // This cleans up the code and reduces function calls
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left);
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right);
+
+    // Get facing direction
     float moveDir = 0.0f;
     if (leftHeld)
     {
         facingDir = LEFT;
         moveDir = -1.0f;
-        sprite->SetFlipX(true);
     }
     if (rightHeld)
     {
         facingDir = RIGHT;
         moveDir = 1.0f;
-        sprite->SetFlipX(false);
     }
 
-    auto currVelocity = rb->GetVelocity();
+    currVelocity = rb->GetVelocity();
     // Calculate horizontal velocity
     if (static_cast<int>(moveDir) != 0)
     {
@@ -93,100 +170,21 @@ void PlayerController::OnUpdate(float dt)
     else
         currVelocity.x = MoveToward(currVelocity.x, 0.0f, friction * dt);
 
-    // Jump check
-    if (jumpPressed && isGrounded)
+    // Call queued jump call
+    if (queuedJump)
     {
-        if (!jumpRhythmLock || (jumpRhythmLock && inWindow))
-        {
-            isGrounded = false;
-
-            // currently collider is getting stuck in ground occasionally
-            // This moves player a tiny bit up to make sure it doesn't get stuck
-            // TODO: remove if physics collider fixed
-            transform->SetPosition(
-                glm::vec2(transform->GetPosition().x, transform->GetPosition().y + 0.3f));
-
-            // multiply jump speed if hit on beat
-            float adjustedJumpSpeed = inWindow ? jumpSpeed * jumpBeatBoost : jumpSpeed;
-            currVelocity.y = adjustedJumpSpeed;
-            // Reset dash cooldown on jump
-            dashTimer = -1.0f;
-            dashCount = dashMax;
-            LOG_INFO("Jumped{}beat", inWindow ? " on " : " off ");
-        }
-        else
-        {
-            LOG_INFO("Jumped off beat");
-        }
+        queuedJump();
+        queuedJump = nullptr;
     }
 
-    // Dash calculation
-    if (dashPressed && dashCount > 0)
+    // Call queued dash call
+    if (queuedDash)
     {
-        if (!dashRhythmLock || (dashRhythmLock && inWindow))
-        {
-            // currently collider is getting stuck in ground occasionally
-            // This moves player a tiny bit up to make sure it doesn't get stuck
-            // TODO: remove if physics collider fixed
-            transform->SetPosition(
-                glm::vec2(transform->GetPosition().x, transform->GetPosition().y + 0.3f));
-
-            glm::vec2 dashDir{0.0f, 0.0f};
-            // If not holding a direction, use direction character is facing (left or right)
-            if (inputDir == glm::vec2(0))
-                facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
-            else
-                dashDir = inputDir;
-            // Deceleration when above max speed affects dash distance only to left and right
-            // dashDampening is used to adjust horizontal dash distance
-            if (dashDampening > 1.0f)
-            {
-                if (static_cast<int>(dashDir.y) == 0)
-                    dashDir.x *= dashDampening;
-            }
-            else if (dashDampening < 1.0f)
-            {
-                if (static_cast<int>(dashDir.y) != 0)
-                    dashDir.x *= dashDampening;
-            }
-            // Multiply dash speed if hit on beat
-            float adjustedDashSpeed = inWindow ? dashSpeed * dashBeatBoost : dashSpeed;
-
-            // Set velocity directly in direction of dash but don't change velocity where component
-            // of dash direction is zero
-            currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
-            --dashCount;
-            dashTimer = dashCooldown;
-            LOG_INFO("Dashed{}beat", inWindow ? " on " : " off ");
-        }
-        else
-        {
-            LOG_INFO("Dashed off beat");
-        }
-        
+        queuedDash();
+        queuedDash = nullptr;
     }
-
-    dashTimer -= dt;
 
     rb->SetVelocity(currVelocity);
-
-    // Set animation states based on movement
-    if (!isGrounded && currVelocity.y > 0.1f)
-        anim->ChangeState(mts::AnimationSystem::States::Jump);
-    else if (!isGrounded && currVelocity.y < -0.1f)
-        anim->ChangeState(mts::AnimationSystem::States::Falling);
-    else if (std::abs(currVelocity.x) > 0.01f)
-        anim->ChangeState(mts::AnimationSystem::States::Walking);
-    else
-        anim->ChangeState(mts::AnimationSystem::States::Idle);
-
-    // Possible animation/sprite/color change while dash is in cooldown
-    if (dashTimer > 0.0f)
-        sprite->SetTintColor(glm::vec3(0.7f));
-    else
-        sprite->SetTintColor(glm::vec3(1.0f));
-
-
 }
 
 void PlayerController::DeserializeFields(mts::JsonValue const& fields)
@@ -223,6 +221,8 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         hitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(hitWindowEarlyEdge);
     if (fields.Has("hitWindowLateEdge"))
         hitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(hitWindowLateEdge);
+    if (fields.Has("camZoomSpeed"))
+        camZoomSpeed = fields["camZoomSpeed"].GetFloat(camZoomSpeed);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -243,6 +243,7 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteBool("jumpRhythmLock", jumpRhythmLock);
     out.WriteFloat("hitWindowEarlyEdge", hitWindowEarlyEdge);
     out.WriteFloat("hitWindowLateEdge", hitWindowLateEdge);
+    out.WriteFloat("camZoomSpeed", camZoomSpeed);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -309,13 +310,16 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &hitWindowLateEdge},
                       .step = 0.05f});
+    fields.push_back({.name = "camZoomSpeed",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &camZoomSpeed},
+                      .step = 0.1f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision normal dot up: {}", glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) - 1.0f) < 0.1f)
         {
             isGrounded = true;
@@ -338,8 +342,6 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
 {
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
-        LOG_INFO("Collision exit normal dot up: {}",
-                 glm::dot(glm::vec2(0.0f, -1.0f), collision.normal));
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) + 1.0f) < 0.1f)
         {
             isGrounded = false;
@@ -347,6 +349,47 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
     }
 }
 
+void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
+{
+    glm::vec2 dashDir{0.0f, 0.0f};
+    // If not holding a direction, use direction character is facing (left or right)
+    if (inputDir == glm::vec2(0))
+        facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
+    else
+        dashDir = inputDir;
+    // Deceleration when above max speed affects dash distance only to left and right
+    // dashDampening is used to adjust horizontal dash distance
+    if (dashDampening > 1.0f)
+    {
+        if (static_cast<int>(dashDir.y) == 0)
+            dashDir.x *= dashDampening;
+    }
+    else if (dashDampening < 1.0f)
+    {
+        if (static_cast<int>(dashDir.y) != 0)
+            dashDir.x *= dashDampening;
+    }
+    // Multiply dash speed if hit on beat
+    float adjustedDashSpeed = inWindow ? dashSpeed * dashBeatBoost : dashSpeed;
+
+    // Set velocity directly in direction of dash but don't change velocity where component
+    // of dash direction is zero
+    currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
+    --dashCount;
+    dashTimer = dashCooldown;
+}
+
+void PlayerController::Jump(bool inWindow)
+{
+    isGrounded = false;
+
+    // multiply jump speed if hit on beat
+    float adjustedJumpSpeed = inWindow ? jumpSpeed * jumpBeatBoost : jumpSpeed;
+    currVelocity.y = adjustedJumpSpeed;
+    // Reset dash cooldown on jump
+    dashTimer = -1.0f;
+    dashCount = dashMax;
+}
 void PlayerController::Test()
 {
     // Generate code for testing the MovablePlatform's FirePlatformTranslate function
@@ -389,6 +432,10 @@ void PlayerController::Test()
 
 void PlayerController::SetCheckPoint(CheckPoint* checkPoint)
 {
+    LOG_INFO("CheckPoint set at position: ({}, {}, {})",
+             checkPoint->GetCheckPointPosition().x,
+             checkPoint->GetCheckPointPosition().y,
+             checkPoint->GetCheckPointPosition().z);
     actvitedCheckPoint = checkPoint;
 }
 
@@ -399,4 +446,54 @@ void PlayerController::ReturnToCheckPoint()
         transform->SetPosition(actvitedCheckPoint->GetCheckPointPosition());
         rb->SetVelocity({0.0f, 0.0f});
     }
+}
+
+void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
+{
+    // Determine zoom strength based on action and timing
+    // Lower zoom value = stronger zoom in effect
+    float zoomStrength = 1.0f;
+    //float speed = 0.5f; // Quick zoom duration
+    
+    if (isAction && inWindow)
+    {
+        // Strongest: Action performed on beat
+        zoomStrength = 0.98f;
+    }
+    else if (isAction && !inWindow)
+    {
+        // Medium-strong: Action performed off beat
+        //zoomStrength = 0.985f;
+    }
+    else if (!isAction && inWindow)
+    {
+        // Medium: Beat indicator (no action)
+        //zoomStrength = 0.99f;
+    }
+    else
+    {
+        // Weakest: Off-beat, no action
+        //zoomStrength = 0.98f;
+    }
+    
+    // Apply zoom effect
+    cam->TriggerZoom(zoomStrength, camZoomSpeed);
+    // Reset to normal zoom
+    cam->TriggerZoom(1.0f, camZoomSpeed * 2);
+}
+
+void PlayerController::OnBeat(mts::BeatInfo info)
+{
+    //TriggerCameraVFX(false, true);
+}
+
+void PlayerController::OnBar(mts::BeatInfo info)
+{
+}
+
+void PlayerController::Init(mts::ConductorSystem& system, CameraController* cam)
+{
+    mBeatSubId = system.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
+    mBarSubId = system.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
+    this->cam = cam;
 }

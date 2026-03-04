@@ -15,7 +15,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 
-#include "PlayerController.h"
+#include "../../ImplicitPrototype/src/Script/PlayerController.h"
 
 void CheckPoint::OnCollisionEnter2D(mts::Collision2D const& collision)
 {

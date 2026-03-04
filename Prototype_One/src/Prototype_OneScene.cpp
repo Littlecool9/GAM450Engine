@@ -41,17 +41,29 @@ void Prototype_OneScene::OnEnterPlayMode()
 
     Scene::OnEnterPlayMode();
 
+    mts::ConductorSystem& conductor = mts::ConductorSystem::Get();
     auto* player = FindGameObjectByName("Player");
     camera = FindGameObjectByName("CameraObject");
-    // background = FindGameObjectByName("Sky");
-    // background2 = FindGameObjectByName("BackgroundTest");
+    player = FindGameObjectByName("Player");
     mBeatLine = FindGameObjectByName("BeatLine");
+
+    // uncomment these lines if using movable platforms
+    //mRhythmSystem = &RhythmSystem::Get();
+    //mRhythmSystem->Init(this);  
 
     if (camera && player)
     {
         auto* playerTr = player->GetComponent<mts::Transform>();
         // CameraFollow target is resolved by Init() from saved UUID
         camera->GetComponent<mts::Transform>()->SetPosition(playerTr->GetPosition());
+
+        CameraController* camController = camera->GetScript<CameraController>();
+        if (camController)
+            camController->GetAndInitCamera(conductor);
+        PlayerController* playerController = player->GetScript<PlayerController>();
+        if (playerController)
+            playerController->Init(conductor, camController);
+
     }
 }
 

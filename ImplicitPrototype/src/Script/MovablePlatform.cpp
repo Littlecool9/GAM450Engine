@@ -65,13 +65,13 @@ void MovablePlatform::FirePlatformTranslate(const glm::vec3& targetPos, float ti
     if (m_parent_actionList != nullptr)
     {
         targetPosition = targetPos;
-        m_parent_actionList->Clear();
+        //m_parent_actionList->Clear();
         m_parent_actionList->AddTranslateAction(targetPos,
                                                 GetGameObject(),
                                                 timeToFinish,
                                                 0,
                                                 0,
-                                                true,
+                                                false,
                                                 mts::BaseAction::EaseType::InAndOut);
     }
     else

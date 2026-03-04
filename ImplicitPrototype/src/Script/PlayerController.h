@@ -10,13 +10,13 @@
 #pragma once
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
-#include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Scripting/ScriptBase.h"
+#include "Engine/Conductor/ConductorSystem.h"
 
 #include <glm/common.hpp>
 
+class CameraController;
 class CheckPoint;
-
 
 class PlayerController : public mts::ScriptBase
 {
@@ -36,6 +36,7 @@ class PlayerController : public mts::ScriptBase
    public:
     void OnCreate() override;
     void OnUpdate(float dt) override;
+    void OnFixedUpdate(float dt) override;
 
     void DeserializeFields(mts::JsonValue const& fields) override;
     void SerializeFields(mts::JsonDocument& out) const override;
@@ -53,12 +54,21 @@ class PlayerController : public mts::ScriptBase
     }
 
     void Test();
+    void Init(mts::ConductorSystem& system, CameraController* cam);
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();
+    void TriggerCameraVFX(bool isAction, bool inWindow);
 
     SCRIPT_CLASS(PlayerController)
 
    private:
+    void Dash(glm::vec2 inputDir, bool inWindow);
+    void Jump(bool inWindow);
+
+    glm::vec2 currVelocity{0.0f, 0.0f};
+    std::function<void()> queuedDash = nullptr;
+    std::function<void()> queuedJump = nullptr;
+
     mts::RigidBody2D* rb = nullptr;
     mts::AnimationSystem* anim = nullptr;
     mts::SpriteRenderer* sprite = nullptr;
@@ -94,4 +104,15 @@ class PlayerController : public mts::ScriptBase
 
     // CheckPoint Properties
     CheckPoint* actvitedCheckPoint = nullptr;
+
+    // Camera VFX properties
+    CameraController* cam = nullptr;
+    float camZoomSpeed = 0.5f;  // Quick zoom duration
+
+    // Conductor event handlers
+    void OnBeat(mts::BeatInfo info);
+    void OnBar(mts::BeatInfo info);
+    mts::Delegate<mts::BeatInfo>::Id mBeatSubId = 0;
+    mts::Delegate<mts::BeatInfo>::Id mBarSubId = 0;
+
 };

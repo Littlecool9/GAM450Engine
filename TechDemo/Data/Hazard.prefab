@@ -1,0 +1,61 @@
+{
+    "UUID": "4f2a4752-7afd-4111-969c-23242003ae8a",
+    "Name": "Hazard",
+    "Layer": 0,
+    "Tags": [
+        "Hazard"
+    ],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    33.0,
+                    2.5,
+                    0.0
+                ],
+                "Scale": [
+                    8.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "BoxCollider2D",
+            "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                    0.0,
+                    0.0
+                ],
+                "IsTrigger": 1
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "HazardCollider",
+                "Fields": {}
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+            }
+        }
+    ]
+}

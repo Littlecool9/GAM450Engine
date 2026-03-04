@@ -22,6 +22,7 @@ class ImplicitPrototypeScene : public mts::Scene
     int mBarCount = 0;
 
     mts::GameObject* camera;
+    mts::GameObject* player;
 
     RhythmSystem* mRhythmSystem;
 };

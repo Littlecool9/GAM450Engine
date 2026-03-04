@@ -24,8 +24,15 @@
 
 #include "MovablePlatform.h"
 #include "CheckPoint.h"
+#include "CameraController.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
+
+bool ActionAvailableOnBeat(int beatPerBar, int beatCount)
+{
+    // Return true only for even beats (2, 4, 6, 8, etc.)
+    return beatCount % 2 == 0 && beatCount != 0;
+}
 
 void PlayerController::OnCreate()
 {
@@ -71,11 +78,17 @@ void PlayerController::OnUpdate(float dt)
     // Jump check
     if (jumpPressed && isGrounded)
     {
+        // TriggerCameraVFX(true, inWindow);
+        //if ((!jumpRhythmLock || (jumpRhythmLock && inWindow)) && ActionAvailableOnBeat(beatPerBar, beatCount))
         if (!jumpRhythmLock || (jumpRhythmLock && inWindow))
         {
             if (!queuedJump)
             {
-                queuedJump = [this, inWindow]() { Jump(inWindow); };
+                queuedJump = [this, inWindow]()
+                {
+                    TriggerCameraVFX(true, inWindow);
+                    Jump(inWindow);
+                };
                 LOG_INFO("Jumped {} beat", inWindow ? "on" : "off");
             }
         }
@@ -88,11 +101,17 @@ void PlayerController::OnUpdate(float dt)
     // Dash check
     if (dashPressed && dashCount > 0)
     {
+        // TriggerCameraVFX(true, inWindow);
+        //if ((!dashRhythmLock || (dashRhythmLock && inWindow))&& ActionAvailableOnBeat(beatPerBar, beatCount))
         if (!dashRhythmLock || (dashRhythmLock && inWindow))
         {
             if (!queuedDash)
             {
-                queuedDash = [this, inputDir, inWindow]() { Dash(inputDir, inWindow); };
+                queuedDash = [this, inputDir, inWindow]()
+                {
+                    TriggerCameraVFX(true, inWindow);
+                    Dash(inputDir, inWindow);
+                };
                 LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
             }
         }
@@ -211,6 +230,8 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         hitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(hitWindowEarlyEdge);
     if (fields.Has("hitWindowLateEdge"))
         hitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(hitWindowLateEdge);
+    if (fields.Has("camZoomSpeed"))
+        camZoomSpeed = fields["camZoomSpeed"].GetFloat(camZoomSpeed);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -231,6 +252,7 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteBool("jumpRhythmLock", jumpRhythmLock);
     out.WriteFloat("hitWindowEarlyEdge", hitWindowEarlyEdge);
     out.WriteFloat("hitWindowLateEdge", hitWindowLateEdge);
+    out.WriteFloat("camZoomSpeed", camZoomSpeed);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -289,18 +311,18 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     fields.push_back({.name = "jumpRhythmLock",
                       .type = mts::ScriptField::Type::Bool,
                       .ptr = {.b = &jumpRhythmLock}});
-    fields.push_back({
-        .name = "hitWindowEarlyEdge",
-        .type = mts::ScriptField::Type::Float,
-        .ptr = {.f = &hitWindowEarlyEdge},
-        .step = 0.1f,
-    });
-    fields.push_back({
-        .name = "hitWindowLateEdge",
-        .type = mts::ScriptField::Type::Float,
-        .ptr = {.f = &hitWindowLateEdge},
-        .step = 0.1f,
-    });
+    fields.push_back({.name = "hitWindowEarlyEdge",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &hitWindowEarlyEdge},
+                      .step = 0.05f});
+    fields.push_back({.name = "hitWindowLateEdge",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &hitWindowLateEdge},
+                      .step = 0.05f});
+    fields.push_back({.name = "camZoomSpeed",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &camZoomSpeed},
+                      .step = 0.1f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
@@ -434,3 +456,56 @@ void PlayerController::ReturnToCheckPoint()
         rb->SetVelocity({0.0f, 0.0f});
     }
 }
+
+void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
+{
+    // Determine zoom strength based on action and timing
+    // Lower zoom value = stronger zoom in effect
+    float zoomStrength = 1.0f;
+    // float speed = 0.5f; // Quick zoom duration
+
+    if (isAction && inWindow)
+    {
+        // Strongest: Action performed on beat
+        zoomStrength = 0.98f;
+    }
+    else if (isAction && !inWindow)
+    {
+        // Medium-strong: Action performed off beat
+        // zoomStrength = 0.985f;
+    }
+    else if (!isAction && inWindow)
+    {
+        // Medium: Beat indicator (no action)
+        // zoomStrength = 0.99f;
+    }
+    else
+    {
+        // Weakest: Off-beat, no action
+        // zoomStrength = 0.98f;
+    }
+
+    // Apply zoom effect
+    cam->TriggerZoom(zoomStrength, camZoomSpeed);
+    // Reset to normal zoom
+    cam->TriggerZoom(1.0f, camZoomSpeed * 2);
+}
+
+void PlayerController::OnBeat(mts::BeatInfo info)
+{
+    ++beatCount;
+}
+
+void PlayerController::OnBar(mts::BeatInfo info)
+{
+    beatCount = 0;
+}
+
+void PlayerController::Init(mts::ConductorSystem& system, CameraController* cam)
+{
+    mBeatSubId = system.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
+    mBarSubId = system.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
+    beatPerBar = mts::AudioManager::Get().GetBeatsPerBar();
+    this->cam = cam;
+}
+

@@ -10,8 +10,14 @@
 
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"
-#include "Engine/Renderer.h"
-#include "Engine/EntitySystem/Component/Camera/Camera.h"
+#include <queue>
+
+namespace mts
+{
+    class RenderCamera;
+    class CameraComponent;
+    class ConductorSystem;
+}  // namespace mts
 
 class CameraController : public mts::ScriptBase
 {
@@ -22,7 +28,10 @@ class CameraController : public mts::ScriptBase
     void TriggerZoom(float zoomLevel, float speed);
     void TriggerShake(float duration, float intensity);
 
-    SCRIPT_CLASS(CameraController)
+    SCRIPT_CLASS(CameraController);
+    bool GetAndInitCamera(mts::ConductorSystem&);
+
+    
 
    private:
     // Define Zoom Process: When the zoom is triggered, we set a target zoom level and a zoom
@@ -34,8 +43,6 @@ class CameraController : public mts::ScriptBase
     // Each frame, if the shake duration is greater than zero, we apply a random offset to the
     // camera's
     void HandleShake(float dt);
-
-    bool GetAndInitCamera();
 
    private:
     mts::RenderCamera* mainCamera = nullptr;
@@ -51,12 +58,15 @@ class CameraController : public mts::ScriptBase
     float targetZoom = 1.0f;          // Desired zoom level
     float currentZoom = 1.0f;         // Current zoom level
     const float originalZoom = 1.0f;  // Original zoom level (for anchoring)
+    bool isZooming = false;           // Flag to indicate if zooming is in progress
+    std::queue<std::pair<float, float>> zoomQueue;  // Queue to handle multiple zoom requests
 
     // Shake parameters
     float shakeDuration = 0.0f;   // Remaining duration of the shake effect
     float shakeIntensity = 0.0f;  // Intensity of the shake effect
     glm::vec3 shakeOffset{0.0f};  // Keep track of the accumulated shake offset to reset the
                                   // camera position correctly
+    bool isShaking = false;       // Flag to indicate if shaking is in progress
 
     mts::CameraComponent* cachedCameraComponent = nullptr;
     static constexpr float ZOOM_EPSILON = 0.001f;

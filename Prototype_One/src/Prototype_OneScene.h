@@ -25,6 +25,7 @@ class Prototype_OneScene : public mts::Scene
 
     mts::GameObject* camera;
     mts::GameObject* mBeatLine;
+    mts::GameObject* player;
 
     RhythmSystem* mRhythmSystem;
 };

@@ -41,7 +41,18 @@ namespace mts
 
         ImGui::PushID("RigidBody2DDrawer");
 
-        if (ImGui::CollapsingHeader("RigidBody2D", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("RigidBody2D", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(rb);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             // BodyType dropdown
             int typeIdx = 0;

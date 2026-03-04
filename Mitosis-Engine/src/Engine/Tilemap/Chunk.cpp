@@ -31,6 +31,24 @@ namespace mts::Tilemap
     float Chunk::CHUNK_UNIT_WIDTH = CHUNK_PIXEL_WIDTH / static_cast<float>(mts::PixelsPerUnit);
     float Chunk::CHUNK_UNIT_HEIGHT = CHUNK_PIXEL_HEIGHT / static_cast<float>(mts::PixelsPerUnit);
 
+    Chunk::~Chunk()
+    {
+        // Normally ChunkManager steals the pool before the Chunk is destroyed.
+        // If not (e.g. the chunk was destroyed without being properly unloaded), clean up here.
+        for (auto* obj : mColliderObjects)
+            obj->Destroy();
+    }
+
+    std::vector<GameObject*> Chunk::StealColliderPool()
+    {
+        return std::move(mColliderObjects);  // mColliderObjects is now empty; ~Chunk() is a no-op
+    }
+
+    void Chunk::InjectColliderPool(std::vector<GameObject*> pool)
+    {
+        mColliderObjects = std::move(pool);
+    }
+
     bool Chunk::Load()
     {
         // Step 1: Load tile data for this chunk
@@ -341,7 +359,15 @@ namespace mts::Tilemap
         if (!mIsLoaded)
             return;
 
-        ClearColliders();
+        // If the pool already exists from a previous load, just re-enable the objects.
+        // Chunk world positions are fixed, so the collider transforms are still valid.
+        if (!mColliderObjects.empty())
+        {
+            for (auto* obj : mColliderObjects)
+                obj->SetActive(true);
+            return;
+        }
+
         std::vector<ColliderRect> rects = GenerateColliderRects();
 
         // Get chunk's world position using the same function as rendering
@@ -378,11 +404,10 @@ namespace mts::Tilemap
 
     void Chunk::ClearColliders()
     {
+        // Deactivate instead of destroying — physics skips inactive GameObjects.
+        // mColliderObjects is kept as a pool; BuildColliders() will re-enable them on next load.
         for (auto* obj : mColliderObjects)
-        {
-            obj->Destroy();
-        }
-        mColliderObjects.clear();
+            obj->SetActive(false);
     }
 
     void Chunk::DebugDrawCollider()

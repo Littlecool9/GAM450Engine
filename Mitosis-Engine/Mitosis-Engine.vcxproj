@@ -181,6 +181,34 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\ActionListDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\CameraDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\AudioListenerDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\AudioEmitterDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\AnimationDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\AnimationSystemDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\ParticleEmitterDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Inspector\InspectorRegistry.h">
       <SubType>
       </SubType>
@@ -399,6 +427,34 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\NativeScriptDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\ActionListDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\CameraDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\AudioListenerDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\AudioEmitterDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\AnimationDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\AnimationSystemDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\ParticleEmitterDrawer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

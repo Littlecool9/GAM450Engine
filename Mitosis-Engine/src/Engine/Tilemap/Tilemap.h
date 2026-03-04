@@ -50,8 +50,7 @@ namespace mts::Tilemap
         Tilemap()
             : mChunkLoader(),
               mChunkManager(this, mChunkLoader),
-              mRenderer(this),
-              visibleChunks(mChunkManager.GetVisibleChunks())
+              mRenderer(this)
         {
         }
 
@@ -106,16 +105,18 @@ namespace mts::Tilemap
         ChunkManager mChunkManager;
         ChunkLoader mChunkLoader;
 
+        // @brief: Call whenever tileGrid is structurally changed (rows/columns added or rebuilt).
+        // Marks the cached extents stale so GetGridPixelWidthRangeInWorldSpace /
+        // GetGridPixelHeightRangeInWorldSpace recompute on next access.
+        void InvalidateGridCache() { mCachedMaxWidth = -1; mCachedGridHeight = -1; }
+
         std::vector<std::vector<TileID>> tileGrid;  // 2D grid representing tile IDs
+        mutable int mCachedMaxWidth = -1;    // -1 = dirty; updated lazily by GetGridPixelWidthRangeInWorldSpace
+        mutable int mCachedGridHeight = -1;  // -1 = dirty; updated lazily by GetGridPixelHeightRangeInWorldSpace
         std::vector<std::string>
             tilesetSources;  // List of tileset texture sources used in the tilemap
         std::unordered_map<int, std::set<TileID>>
             tilesetTileIDMap;  // Map of tileset index to set of TileIDs
-
-        // potential large performance issue here if the tilemap is too large
-        // @brief: reference to the visible chunks from chunk manager for rendering
-        // std::vector<std::shared_ptr<Chunk>> visibleChunks;
-        std::unordered_set<Chunk*> visibleChunks;
 
         bool mIsChunkDirty = false;
         std::vector<ChunkPos> dirtyChunks;

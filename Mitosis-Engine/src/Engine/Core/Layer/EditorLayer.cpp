@@ -208,6 +208,15 @@ namespace mts
                 if (!scene->GetFilePath().empty())
                     SceneSystem::SaveScene(scene, scene->GetFilePath());
             }
+            ImGui::SameLine();
+            if (ImGui::Button(" Reload "))
+            {
+                if (!scene->GetFilePath().empty())
+                {
+                    SceneSystem::LoadScene(scene, scene->GetFilePath());
+                    scene->Init();
+                }
+            }
             if (isPlaying)
                 ImGui::EndDisabled();
 

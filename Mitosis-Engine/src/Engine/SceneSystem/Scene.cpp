@@ -36,7 +36,6 @@ namespace mts
 
     void Scene::Init()
     {
-        mGameObjects.reserve(250);
         OnInit();
         for (auto g : mGameObjects)
         {
@@ -69,10 +68,10 @@ namespace mts
 
     void Scene::Render()
     {
-        //for (auto g : mGameObjects)
+        // for (auto g : mGameObjects)
         //{
-        //    g->Render();
-        //}
+        //     g->Render();
+        // }
         for (int i = 0; i < mGameObjects.size(); ++i)
         {
             mGameObjects[i]->Render();
@@ -85,6 +84,18 @@ namespace mts
         {
             g->DebugRender();
         }
+    }
+
+    void Scene::EnterPlayMode()
+    {
+        for (auto* go : mGameObjects)
+            go->Init();
+        OnEnterPlayMode();
+    }
+
+    void Scene::ExitPlayMode()
+    {
+        OnExitPlayMode();
     }
 
     // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
@@ -121,12 +132,6 @@ namespace mts
         mGameObjects.clear();
     }
 
-    void Scene::OnEnterPlayMode()
-    {
-        for (auto* go : mGameObjects)
-            go->Init();
-    }
-
     void Scene::StashGameObjects()
     {
         mEditGameObjects = std::move(mGameObjects);
@@ -159,6 +164,7 @@ namespace mts
 
     void Scene::Deserialize(JsonValue const& jsonObj)
     {
+        ClearGameObjects();
         JsonValue gameObjects = jsonObj["GameObjects"];
         assert(gameObjects.IsArray());
         size_t s = gameObjects.Size();

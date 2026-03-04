@@ -27,6 +27,10 @@ namespace mts
         static Shader* GetShader(const std::string& shaderSourcePath);
         static Mesh* GetMesh(const std::string& meshSourcePath);
 
+        // Evicts a resource from cache so it is rebuilt fresh on next access.
+        // Existing scene objects keep their current pointer until a scene reload.
+        static void ReloadResource(const std::string& path);
+
        private:
         static Texture* BuildTexture(const std::string& textureSourcePath);
         static Shader* BuildShader(const std::string& shaderSourcePath);

@@ -26,7 +26,18 @@ namespace mts
 
         ImGui::PushID("SpriteRendererDrawer");
 
-        if (ImGui::CollapsingHeader("SpriteRenderer", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("SpriteRenderer", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(sr);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             // Texture
             {

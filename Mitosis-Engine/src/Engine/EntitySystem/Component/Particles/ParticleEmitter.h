@@ -47,9 +47,56 @@ namespace mts
                              float dt);
 
         glm::vec2 GetAcceleration() const { return mAcceleration; }
+        void SetAcceleration(glm::vec2 v) { mAcceleration = v; }
 
         void ToggleEmitter() { mIsRunning ^= true; }
         Component* Clone(GameObject* newOwner) const override;
+
+        Mesh* GetMesh() const { return mMesh; }
+        void SetMesh(Mesh* v) { mMesh = v; }
+        Texture* GetTexture() const { return mTexture; }
+        void SetTexture(Texture* v) { mTexture = v; }
+        Shader* GetShader() const { return mShader; }
+        void SetShader(Shader* v) { mShader = v; }
+        float GetAlpha() const { return mAlpha; }
+        void SetAlpha(float v) { mAlpha = v; }
+        glm::vec3 GetTintColor() const { return mTintColor; }
+        void SetTintColor(glm::vec3 v) { mTintColor = v; }
+        int GetNumRows() const { return mNumRows; }
+        void SetNumRows(int v) { mNumRows = v; }
+        int GetNumCols() const { return mNumCols; }
+        void SetNumCols(int v) { mNumCols = v; }
+        glm::vec2 GetEmitterScale() const { return mEmitterScale; }
+        void SetEmitterScale(glm::vec2 v) { mEmitterScale = v; }
+        glm::vec2 GetScaleMin() const { return mScaleMin; }
+        void SetScaleMin(glm::vec2 v) { mScaleMin = v; }
+        glm::vec2 GetScaleMax() const { return mScaleMax; }
+        void SetScaleMax(glm::vec2 v) { mScaleMax = v; }
+        glm::vec2 GetDirectionRange() const { return mDirectionRange; }
+        void SetDirectionRange(glm::vec2 v) { mDirectionRange = v; }
+        float GetEmitRate() const { return mEmitRate; }
+        void SetEmitRate(float v) { mEmitRate = v; }
+        unsigned GetEmitMax() const { return mEmitMax; }
+        void SetEmitMax(unsigned v) { mEmitMax = v; }
+        float GetLifetimeMin() const { return mLifetimeMin; }
+        void SetLifetimeMin(float v) { mLifetimeMin = v; }
+        float GetLifetimeMax() const { return mLifetimeMax; }
+        void SetLifetimeMax(float v) { mLifetimeMax = v; }
+        float GetSpeedMin() const { return mSpeedMin; }
+        void SetSpeedMin(float v) { mSpeedMin = v; }
+        float GetSpeedMax() const { return mSpeedMax; }
+        void SetSpeedMax(float v) { mSpeedMax = v; }
+        float GetRotationSpeedMin() const { return mRotationSpeedMin; }
+        void SetRotationSpeedMin(float v) { mRotationSpeedMin = v; }
+        float GetRotationSpeedMax() const { return mRotationSpeedMax; }
+        void SetRotationSpeedMax(float v) { mRotationSpeedMax = v; }
+        float GetRotationMin() const { return mRotationMin; }
+        void SetRotationMin(float v) { mRotationMin = v; }
+        float GetRotationMax() const { return mRotationMax; }
+        void SetRotationMax(float v) { mRotationMax = v; }
+        bool GetOneShot() const { return mOneShot; }
+        void SetOneShot(bool v) { mOneShot = v; }
+        bool GetIsRunning() const { return mIsRunning; }
 
        private:
         Mesh* mMesh{nullptr};

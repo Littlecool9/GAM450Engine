@@ -14,7 +14,7 @@
 #include "ChunkManager.h"
 #include "Tilemap.h"
 #include <math.h>
-
+#include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Core/Editor/DebugDraw.h"
 
 #define CHUNK_LOAD_ADDITIONAL_RADIUS 1    // in chunks
@@ -22,33 +22,21 @@
 
 namespace mts::Tilemap
 {
-    static glm::vec3 GetCameraPosition(const RenderCamera& camera)
+    ChunkManager::~ChunkManager()
     {
-        // The view matrix contains -position in its translation component
-        return glm::vec3(-camera.view[3][0], -camera.view[3][1], -camera.view[3][2]);
-    }
-
-    static glm::vec2 ScreenToWorld(glm::vec2 screenPos, RenderCamera cam)
-    {
-        // 1. Screen -> NDC
-        GLint viewport[4];
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        int width = viewport[2];
-        int height = viewport[3];
-        float x = (2.0f * screenPos.x) / width - 1.0f;
-        float y = 1.0f - (2.0f * screenPos.y) / height;  // flip y
-
-        glm::vec4 ndcPos(x, y, 0.0f, 1.0f);
-
-        // 2. NDC -> World
-        glm::mat4 invVP = glm::inverse(cam.viewProj);
-        glm::vec4 world = invVP * ndcPos;
-
-        return glm::vec2(world.x, world.y);
+        // Destroy any pooled collider objects that were never reused (e.g. chunks that
+        // went out of range but the player never returned to that area).
+        for (auto& [pos, pool] : mColliderPools)
+            for (auto* obj : pool)
+                obj->Destroy();
     }
 
     void ChunkManager::UpdateChunks(const RenderCamera& cam)
     {
+        // Rebuild visible set each frame — stale raw pointers from unloaded chunks
+        // would otherwise accumulate here indefinitely.
+        mVisibleChunks.clear();
+
         // Handle the async result of loaded chunks
         auto results = mLoader.CollectResults();
         for (const ChunkLoadingTask& task : results)
@@ -56,6 +44,14 @@ namespace mts::Tilemap
             if (task.success)
             {
                 task.chunkData->BuildMesh();
+                // Inject a previously-saved collider pool so we reuse existing GameObjects
+                // instead of allocating new ones on every reload.
+                auto poolIt = mColliderPools.find(task.pos);
+                if (poolIt != mColliderPools.end())
+                {
+                    task.chunkData->InjectColliderPool(std::move(poolIt->second));
+                    mColliderPools.erase(poolIt);
+                }
                 task.chunkData->BuildColliders();
                 mActiveChunks[task.pos] = task.chunkData;
             }
@@ -99,6 +95,9 @@ namespace mts::Tilemap
             ChunkPos p = it->first;
             if (p.x < unloadL || p.x > unloadR || p.y < unloadB || p.y > unloadT)
             {
+                // Steal the collider pool before the Chunk is destroyed so the GameObjects
+                // stay alive (inactive) and can be reused when this position reloads.
+                mColliderPools[p] = it->second->StealColliderPool();
                 it->second->Unload();
                 it = mActiveChunks.erase(it);
             }
@@ -146,7 +145,9 @@ namespace mts::Tilemap
 
     void ChunkManager::DebugDraw()
     {
-        for (const auto& chunk : mVisibleChunks)
+        // Use GetVisibleChunks() — it cross-references mActiveChunks so it never
+        // returns a pointer to a chunk that has already been freed.
+        for (const auto& chunk : GetVisibleChunks())
         {
             chunk->DebugDrawCollider();
         }

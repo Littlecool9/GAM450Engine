@@ -102,6 +102,16 @@ namespace mts
         return newObj;
     }
 
+    void GameObjectFactory::RemoveArchetype(const std::string& path)
+    {
+        auto it = archetypes.find(path);
+        if (it != archetypes.end())
+        {
+            delete it->second;
+            archetypes.erase(it);
+        }
+    }
+
     GameObject* GameObjectFactory::BuildArchetypeFromJSON(const std::string& filename)
     {
         auto go = new GameObject();

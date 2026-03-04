@@ -34,7 +34,18 @@ namespace mts
             std::string header = "Native Script: " + nsc->GetClassName();
             ImGui::PushID(idx++);
 
-            if (ImGui::CollapsingHeader(header.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            bool open = ImGui::CollapsingHeader(header.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+            bool removed = false;
+            if (ImGui::BeginPopupContextItem("##remove_ctx"))
+            {
+                if (ImGui::MenuItem("Remove Component"))
+                {
+                    go->RemoveComponent(nsc);
+                    removed = true;
+                }
+                ImGui::EndPopup();
+            }
+            if (open && !removed)
             {
                 ScriptBase* script = nsc->GetScript();
                 if (!script)

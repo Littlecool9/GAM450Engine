@@ -10,6 +10,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "Engine/Core/Editor/EditorContext.h"
 
 namespace mts
@@ -24,11 +25,15 @@ namespace mts
 
        private:
         void Scan();
+        void RebuildDirs();
 
-        struct Entry { std::string name; std::string path; std::string displayName; bool isPrefab = false; };
+        struct Entry { std::string name; std::string path; std::string displayName; bool isPrefab = false; int64_t lastWriteTimeNs = 0; };
         struct Dir   { std::string label; std::string scanPath; std::vector<std::string> extensions; std::vector<Entry> entries; };
         std::vector<Dir> mDirs;
+        std::unordered_map<std::string, int64_t> mFileTimes;
         float mFontScale = 1.3f;
+        std::string mProjectRoot = "../TechDemo/";
+        char mProjectRootBuf[256] = "../TechDemo/";
     };
 
 }  // namespace mts

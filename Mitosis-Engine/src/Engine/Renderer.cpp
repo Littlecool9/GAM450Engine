@@ -19,20 +19,17 @@ namespace mts
 
     glm::vec2 Renderer::ScreenToWorld(glm::vec2 screenPos)
     {
+        glm::vec4 vp = GetViewportInfo();
+        int width  = static_cast<int>(vp.z);
+        int height = static_cast<int>(vp.w);
+
         // 1. Screen -> NDC
-        GLint viewport[4];
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        int width = viewport[2];
-        int height = viewport[3];
         float x = (2.0f * screenPos.x) / width - 1.0f;
         float y = 1.0f - (2.0f * (height - screenPos.y)) / height;
 
-        glm::vec4 ndcPos(x, y, 0.0f, 1.0f);
-
         // 2. NDC -> World
         glm::mat4 invVP = glm::inverse(ActiveCamera.viewProj);
-        glm::vec4 world = invVP * ndcPos;
-
+        glm::vec4 world = invVP * glm::vec4(x, y, 0.0f, 1.0f);
         return glm::vec2(world.x, world.y);
     }
 
@@ -52,27 +49,26 @@ namespace mts
     // screen
     glm::vec4 Renderer::GetViewportInfo()
     {
+        // Prefer the cached game viewport (set by SetViewport / editor layout) to avoid a
+        // glGetIntegerv GPU pipeline stall. Fall back to GL query only in standalone mode.
+        Viewport gv = GetGameViewport();
+        if (gv.valid)
+            return glm::vec4(gv.x, -gv.y, gv.w, gv.h);
+
         GLint vp[4];
         glGetIntegerv(GL_VIEWPORT, vp);
-        float pixelWidth = static_cast<float>(vp[2]);
-        float pixelHeight = static_cast<float>(vp[3]);
-
-        float logicWidth = pixelWidth;
-        float logicHeight = pixelHeight;
-
-        return glm::vec4(vp[0], -vp[1], logicWidth, logicHeight);
+        return glm::vec4(vp[0], -vp[1], (float)vp[2], (float)vp[3]);
     }
 
     glm::vec2 Renderer::WorldToScreen(glm::vec2 worldPos)
     {
         // 1. World -> NDC
-        glm::vec4 world(worldPos, 0.0f, 1.0f);
-        glm::vec4 ndc = ActiveCamera.viewProj * world;
+        glm::vec4 ndc = ActiveCamera.viewProj * glm::vec4(worldPos, 0.0f, 1.0f);
+
         // 2. NDC -> Screen
-        GLint viewport[4];
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        int width = viewport[2];
-        int height = viewport[3];
+        glm::vec4 vp = GetViewportInfo();
+        int width  = static_cast<int>(vp.z);
+        int height = static_cast<int>(vp.w);
         float x = (ndc.x / ndc.w + 1.0f) * 0.5f * width;
         float y = (1.0f - ndc.y / ndc.w) * 0.5f * height;  // flip y
         return glm::vec2(x, y);

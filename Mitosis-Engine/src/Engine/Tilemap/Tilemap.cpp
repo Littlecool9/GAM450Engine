@@ -32,6 +32,10 @@ namespace mts::Tilemap
 
     Tilemap::~Tilemap()
     {
+        // Stop workers FIRST — they hold a raw Tilemap* and call into Tilesets.
+        // Member destructors run after this body, so without an explicit Stop() here
+        // the workers would outlive the Tileset data freed on the next line.
+        mChunkLoader.Stop();
         Tileset::UnloadAllTileset();
         mChunkRenderData.shader = nullptr;
         mChunkRenderData.texture = nullptr;
@@ -56,7 +60,6 @@ namespace mts::Tilemap
     {
         // Keep chunks up to date every frame regardless of play state
         mChunkManager.UpdateChunks(Renderer::GetActiveCamera());
-        visibleChunks = mChunkManager.GetVisibleChunks();
 
         if (!mChunkRenderData.isValid())
             LoadRenderData(defaultTextureSource, defaultShaderSource);
@@ -67,7 +70,7 @@ namespace mts::Tilemap
     void Tilemap::SubmitRenderCommand() const
     {
         // submit RenderCommand for each chunks
-        for (auto& chunk : visibleChunks)
+        for (auto& chunk : mChunkManager.GetVisibleChunks())
         {
             if (!chunk->IsLoaded())
                 continue;
@@ -254,6 +257,7 @@ namespace mts::Tilemap
             }
         }
 
+        InvalidateGridCache();
         LoadRenderData(defaultTextureSource, defaultShaderSource);
     }
 
@@ -421,7 +425,7 @@ namespace mts::Tilemap
     {
         // Debug render the tilemap grid
         mChunkManager.DebugDraw();
-        for (auto& chunk : visibleChunks)
+        for (auto& chunk : mChunkManager.GetVisibleChunks())
         {
             mRenderer.DebugDraw(*chunk);
         }
@@ -431,29 +435,27 @@ namespace mts::Tilemap
     {
         if (tileGrid.empty())
             return {0, 0};
-        int maxCountInWidth = 0;
-        for (const auto& row : tileGrid)
+        if (mCachedMaxWidth < 0)
         {
-            if (!row.empty())
-            {
-                if (static_cast<int>(row.size()) > maxCountInWidth)
-                {
-                    maxCountInWidth = static_cast<int>(row.size());
-                }
-            }
+            mCachedMaxWidth = 0;
+            for (const auto& row : tileGrid)
+                if (static_cast<int>(row.size()) > mCachedMaxWidth)
+                    mCachedMaxWidth = static_cast<int>(row.size());
         }
         return {
             static_cast<int>(mLeftBottomWorldPos.x),
-            static_cast<int>(mLeftBottomWorldPos.x) + maxCountInWidth * Tileset::TILE_PIXEL_WIDTH};
+            static_cast<int>(mLeftBottomWorldPos.x) + mCachedMaxWidth * Tileset::TILE_PIXEL_WIDTH};
     }
 
     std::pair<int, int> Tilemap::GetGridPixelHeightRangeInWorldSpace() const
     {
         if (tileGrid.empty())
             return {0, 0};
+        if (mCachedGridHeight < 0)
+            mCachedGridHeight = static_cast<int>(tileGrid.size());
         return {static_cast<int>(mLeftBottomWorldPos.y),
                 static_cast<int>(mLeftBottomWorldPos.y) +
-                    static_cast<int>(tileGrid.size()) * Tileset::TILE_PIXEL_HEIGHT};
+                    mCachedGridHeight * Tileset::TILE_PIXEL_HEIGHT};
     }
     Component* Tilemap::Clone(GameObject* newOwner) const
     {

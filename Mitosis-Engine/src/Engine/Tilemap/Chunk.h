@@ -70,21 +70,22 @@ namespace mts::Tilemap
     class Chunk
     {
        public:
-
         // The unit here is tile count
         // Chunk size has to be dividable by the tile pixel size
         // or zigzag rendering artifacts may occur
-        static constexpr int CHUNK_WIDTH = 8;  // in tiles
+        static constexpr int CHUNK_WIDTH = 8;   // in tiles
         static constexpr int CHUNK_HEIGHT = 8;  // in tiles
-        static constexpr int TOTAL_TILES = CHUNK_WIDTH * CHUNK_HEIGHT;   // CHUNK_WIDTH * CHUNK_HEIGHT
-        static int CHUNK_PIXEL_WIDTH;  // in pixels
-        static int CHUNK_PIXEL_HEIGHT;  // in pixels
-        static float CHUNK_UNIT_WIDTH;  // in world units
+        static constexpr int TOTAL_TILES =
+            CHUNK_WIDTH * CHUNK_HEIGHT;  // CHUNK_WIDTH * CHUNK_HEIGHT
+        static int CHUNK_PIXEL_WIDTH;    // in pixels
+        static int CHUNK_PIXEL_HEIGHT;   // in pixels
+        static float CHUNK_UNIT_WIDTH;   // in world units
         static float CHUNK_UNIT_HEIGHT;  // in world units
 
        public:
-
         Chunk(ChunkPos pos) : mPos(pos) {}
+        // Destroys any pooled collider GameObjects when this chunk is finally freed.
+        ~Chunk();
 
         // @brief: Loads the tile data for this chunk from disk or other sources
         bool Load();
@@ -101,6 +102,15 @@ namespace mts::Tilemap
 
         void BuildColliders();
         void ClearColliders();
+
+        // @brief: Moves mColliderObjects out so ChunkManager can pool them across
+        // load/unload cycles. After this call mColliderObjects is empty and ~Chunk()
+        // will NOT destroy those objects.
+        std::vector<GameObject*> StealColliderPool();
+
+        // @brief: Inject a previously-stolen pool before BuildColliders() so the objects
+        // are reused rather than re-created.
+        void InjectColliderPool(std::vector<GameObject*> pool);
 
         void SetTile(int localX, int localY, TileID tileID);
         TileID GetTile(int localX, int localY) const;

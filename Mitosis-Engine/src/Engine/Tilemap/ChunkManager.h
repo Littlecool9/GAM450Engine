@@ -27,23 +27,28 @@ namespace mts::Tilemap
        public:
         ChunkManager(Tilemap* owner, ChunkLoader& loader) : mOwner(owner), mLoader(loader)
         {}
+        ~ChunkManager();
+
 
         // @brief: Update loaded chunks based on camera position
         // @brief: If some chunks are out of view, unload them
         // @brief: If some chunks are in view but not loaded, load them from the tilemap data
         void UpdateChunks(const RenderCamera& cam);
-        // Replace the GetVisibleChunks method with the following implementation
-        const std::unordered_set<Chunk*> GetVisibleChunks() const
+        // Returns the set of chunks that are both loaded and visible this frame.
+        // Invariant: mVisibleChunks is cleared at the start of UpdateChunks() and only populated
+        // from entries that currently exist in mActiveChunks, so every pointer here is valid.
+        const std::unordered_set<Chunk*>& GetVisibleChunks() const
         {
-            std::unordered_set<Chunk*> result;
-            for (const auto& pair : mActiveChunks)
+#ifdef MTS_DEBUG
+            for (Chunk* c : mVisibleChunks)
             {
-                if (pair.second && mVisibleChunks.find(pair.second.get()) != mVisibleChunks.end())
-                {
-                    result.insert(pair.second.get());
-                }
+                bool found = false;
+                for (const auto& pair : mActiveChunks)
+                    if (pair.second.get() == c) { found = true; break; }
+                MTS_ASSERT(found && "mVisibleChunks contains a pointer not in mActiveChunks");
             }
-            return result;
+#endif
+            return mVisibleChunks;
         }
 
         void DebugDraw();
@@ -56,8 +61,11 @@ namespace mts::Tilemap
         std::unordered_map<ChunkPos, std::shared_ptr<Chunk>> mActiveChunks;
 
         // The chunks sent to renderer
-        //std::vector<std::shared_ptr<Chunk>> mVisibleChunks;
         std::unordered_set<Chunk*> mVisibleChunks;
+
+        // Collider GameObjects are expensive to create. When a chunk unloads, its pool is moved
+        // here so it can be injected back on next load instead of creating new objects.
+        std::unordered_map<ChunkPos, std::vector<GameObject*>> mColliderPools;
     };
 
 }  // namespace mts::Tilemap    

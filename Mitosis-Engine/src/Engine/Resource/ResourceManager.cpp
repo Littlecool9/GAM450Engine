@@ -214,6 +214,19 @@ namespace mts
         return mesh;
     }
 
+    void ResourceManager::ReloadResource(const std::string& path)
+    {
+        namespace fs = std::filesystem;
+        std::string ext = fs::path(path).extension().string();
+
+        if (ext == ".tex")
+            mTextureSources.erase(path);
+        else if (ext == ".shader")
+            mShaderSources.erase(path);
+        else if (ext == ".mesh")
+            mMeshSources.erase(path);
+    }
+
     std::string ResourceManager::LoadTextFile(const char* path)
     {
         std::string out;

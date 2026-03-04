@@ -48,12 +48,22 @@ namespace mts::Tilemap
         std::vector<ChunkLoadingTask> CollectResults();
         std::vector<ChunkUnloadingTask> CollectUnloadResults();
 
-        ~ChunkLoader()
+        // @brief: Signals all worker threads to stop and blocks until they finish.
+        // Must be called before any data the workers reference (e.g. Tilesets) is freed.
+        void Stop()
         {
+            if (!m_running)
+                return;
             m_running = false;
             m_cv.notify_all();
             for (auto& t : m_workers)
                 t.join();
+            m_workers.clear();
+        }
+
+        ~ChunkLoader()
+        {
+            Stop();
         }
 
        private:

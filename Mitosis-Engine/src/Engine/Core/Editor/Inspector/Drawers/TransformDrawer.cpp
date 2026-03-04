@@ -26,7 +26,18 @@ namespace mts
         // Stable ID scope for this component UI
         ImGui::PushID("TransformDrawer");
 
-        if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(tr);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             glm::vec3 pos = tr->GetPosition();
             if (ImGui::DragFloat3("Position", &pos.x, 0.05f))

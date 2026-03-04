@@ -12,13 +12,27 @@
 
 #include <imgui.h>
 
+#include "Engine/Core/Editor/Inspector/Drawers/ActionListDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/AnimationDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/AnimationSystemDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/AudioEmitterDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/AudioListenerDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/BoxCollider2DDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/CameraDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/CameraFollowDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/CircleCollider2DDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/NativeScriptDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/ParticleEmitterDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/RigidBody2DDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/SpriteRendererDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/TransformDrawer.h"
+#include "Engine/EntitySystem/Component/ActionList.h"
+#include "Engine/EntitySystem/Component/Animation.h"
+#include "Engine/EntitySystem/Component/AnimationSystem.h"
+#include "Engine/EntitySystem/Component/Audio/AudioEmitter.h"
+#include "Engine/EntitySystem/Component/Audio/AudioListener.h"
+#include "Engine/EntitySystem/Component/Camera/Camera.h"
+#include "Engine/EntitySystem/Component/Particles/ParticleEmitter.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/CircleCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
@@ -140,6 +154,41 @@ namespace mts
                 go->AddComponent<CircleCollider2D>();
             ImGui::EndDisabled();
 
+            ImGui::BeginDisabled(go->GetComponent<CameraComponent>() != nullptr);
+            if (ImGui::MenuItem("Camera"))
+                go->AddComponent<CameraComponent>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<AudioListener>() != nullptr);
+            if (ImGui::MenuItem("AudioListener"))
+                go->AddComponent<AudioListener>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<AudioEmitter>() != nullptr);
+            if (ImGui::MenuItem("AudioEmitter"))
+                go->AddComponent<AudioEmitter>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<Animation>() != nullptr);
+            if (ImGui::MenuItem("Animation"))
+                go->AddComponent<Animation>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<AnimationSystem>() != nullptr);
+            if (ImGui::MenuItem("AnimationSystem"))
+                go->AddComponent<AnimationSystem>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<ParticleEmitter>() != nullptr);
+            if (ImGui::MenuItem("ParticleEmitter"))
+                go->AddComponent<ParticleEmitter>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<ActionList>() != nullptr);
+            if (ImGui::MenuItem("ActionList"))
+                go->AddComponent<ActionList>();
+            ImGui::EndDisabled();
+
             ImGui::EndPopup();
         }
 
@@ -155,5 +204,12 @@ namespace mts
         mRegistry.Add<CircleCollider2DDrawer>();
         mRegistry.Add<NativeScriptDrawer>();
         mRegistry.Add<CameraFollowDrawer>();
+        mRegistry.Add<CameraDrawer>();
+        mRegistry.Add<AudioListenerDrawer>();
+        mRegistry.Add<AudioEmitterDrawer>();
+        mRegistry.Add<AnimationDrawer>();
+        mRegistry.Add<AnimationSystemDrawer>();
+        mRegistry.Add<ParticleEmitterDrawer>();
+        mRegistry.Add<ActionListDrawer>();
     }
 }  // namespace mts

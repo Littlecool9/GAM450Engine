@@ -61,6 +61,15 @@ namespace mts
         void Clear();
         Component* Clone(GameObject* newOwner) const override;
 
+        float GetSlowFactor() const { return Slow; }
+        void SetSlowFactor(float v) { Slow = v; }
+        float GetFastForwardSpeed() const { return FastForwardSpeed; }
+        void SetFastForwardSpeed(float v) { FastForwardSpeed = v; }
+        float GetSpeedModifier() const { return SpeedModifier; }
+        bool IsPaused() const { return Paused; }
+        void SetPaused(bool v) { Paused = v; }
+        int GetActionCount() const { return static_cast<int>(Actions.size()); }
+
        private:
         std::vector<BaseAction*> Actions;
         std::bitset<8> Groups;

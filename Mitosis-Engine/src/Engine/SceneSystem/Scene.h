@@ -30,6 +30,9 @@ namespace mts
         void Render();
         void DebugRender();
 
+        void EnterPlayMode();
+        void ExitPlayMode();
+
         std::vector<GameObject*>& GetGameObjects() { return mGameObjects; }
 
         const std::string& GetFilePath() const { return mFilePath; }
@@ -51,12 +54,12 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-        virtual void OnEnterPlayMode();
-        virtual void OnExitPlayMode() {}
-
        protected:
         virtual void OnInit() = 0;
         virtual void OnUpdate() {}
+
+        virtual void OnEnterPlayMode() {}
+        virtual void OnExitPlayMode() {}
 
        protected:
         std::vector<GameObject*> mGameObjects;

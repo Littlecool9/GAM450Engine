@@ -177,6 +177,23 @@ namespace mts
         return nsc;
     }
 
+    void GameObject::RemoveComponent(Component* c)
+    {
+        auto it = std::find(components.begin(), components.end(), c);
+        if (it == components.end())
+            return;
+
+        if (auto* nsc = dynamic_cast<NativeScriptComponent*>(c))
+        {
+            auto sit = std::find(m_scripts.begin(), m_scripts.end(), nsc);
+            if (sit != m_scripts.end())
+                m_scripts.erase(sit);
+        }
+
+        delete *it;
+        components.erase(it);
+    }
+
     void GameObject::Update(float dt)
     {
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->Update(dt));

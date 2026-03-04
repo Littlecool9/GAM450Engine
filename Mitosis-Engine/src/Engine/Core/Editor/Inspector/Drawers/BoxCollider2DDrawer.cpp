@@ -25,7 +25,18 @@ namespace mts
 
         ImGui::PushID("BoxCollider2DDrawer");
 
-        if (ImGui::CollapsingHeader("BoxCollider2D", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("BoxCollider2D", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(box);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             glm::vec2 size = box->GetLocalSize();
             float w = size.x;

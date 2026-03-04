@@ -12,18 +12,34 @@
 
 #include <imgui.h>
 #include <filesystem>
+#include <fstream>
+#include "Engine/Resource/ResourceManager.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+
+static constexpr const char* kPrefsFile = "asset_panel.cfg";
 
 namespace mts
 {
     AssetPanel::AssetPanel()
     {
-        mDirs = {
-            { "Data/Resources",   "../TechDemo/Data/Resources/",      { ".tex", ".mesh", ".shader" }, {} },
-            { "Data",             "../TechDemo/Data/",                { ".prefab" },                   {} },
-            { "Assets",           "../TechDemo/Assets/",              { ".png", ".jpg" },              {} },
-            { "Engine/Resources", "../Mitosis-Engine/src/Resources/", { ".tex", ".mesh", ".shader" }, {} },
-        };
+        if (std::ifstream f(kPrefsFile); f)
+            std::getline(f, mProjectRoot);
+        snprintf(mProjectRootBuf, sizeof(mProjectRootBuf), "%s", mProjectRoot.c_str());
+        RebuildDirs();
         Scan();
+    }
+
+    void AssetPanel::RebuildDirs()
+    {
+        mDirs = {
+            {"Data/Resources", mProjectRoot + "Data/Resources/", {".tex", ".mesh", ".shader"}, {}},
+            {"Data", mProjectRoot + "Data/", {".prefab"}, {}},
+            {"Assets", mProjectRoot + "Assets/", {".png", ".jpg"}, {}},
+            {"Engine/Resources",
+             "../Mitosis-Engine/src/Resources/",
+             {".tex", ".mesh", ".shader"},
+             {}},
+        };
     }
 
     void AssetPanel::Scan()
@@ -46,7 +62,11 @@ namespace mts
                 std::string ext = fsEntry.path().extension().string();
                 bool match = false;
                 for (const auto& allowed : dir.extensions)
-                    if (ext == allowed) { match = true; break; }
+                    if (ext == allowed)
+                    {
+                        match = true;
+                        break;
+                    }
                 if (!match)
                     continue;
 
@@ -55,6 +75,18 @@ namespace mts
                 e.path = fsEntry.path().string();
                 e.isPrefab = (ext == ".prefab");
                 e.displayName = e.isPrefab ? "[P] " + e.name : e.name;
+                e.lastWriteTimeNs = fsEntry.last_write_time().time_since_epoch().count();
+
+                auto it = mFileTimes.find(e.path);
+                if (it != mFileTimes.end() && it->second != e.lastWriteTimeNs)
+                {
+                    LOG_INFO("Asset changed, evicting from cache: {}", e.path);
+                    ResourceManager::ReloadResource(e.path);
+                    if (e.isPrefab)
+                        GameObjectFactory::RemoveArchetype(e.path);
+                }
+                mFileTimes[e.path] = e.lastWriteTimeNs;
+
                 dir.entries.push_back(std::move(e));
             }
         }
@@ -64,6 +96,19 @@ namespace mts
     {
         ImGui::Begin("Assets");
         ImGui::SetWindowFontScale(mFontScale);
+
+        // Project root input
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - 60.0f);
+        ImGui::InputText("##projroot", mProjectRootBuf, sizeof(mProjectRootBuf));
+        ImGui::SameLine();
+        if (ImGui::Button("Apply"))
+        {
+            mProjectRoot = mProjectRootBuf;
+            if (std::ofstream f(kPrefsFile); f)
+                f << mProjectRoot;
+            RebuildDirs();
+            Scan();
+        }
 
         if (ImGui::Button("Refresh"))
             Scan();
@@ -86,7 +131,8 @@ namespace mts
                         if (ImGui::BeginDragDropSource())
                         {
                             ImGui::SetDragDropPayload("PREFAB_PATH",
-                                entry.path.c_str(), entry.path.size() + 1);
+                                                      entry.path.c_str(),
+                                                      entry.path.size() + 1);
                             ImGui::Text("Prefab: %s", entry.name.c_str());
                             ImGui::EndDragDropSource();
                         }
@@ -97,7 +143,8 @@ namespace mts
                         if (ImGui::BeginDragDropSource())
                         {
                             ImGui::SetDragDropPayload("ASSET_PATH",
-                                entry.path.c_str(), entry.path.size() + 1);
+                                                      entry.path.c_str(),
+                                                      entry.path.size() + 1);
                             ImGui::TextUnformatted(entry.name.c_str());
                             ImGui::EndDragDropSource();
                         }

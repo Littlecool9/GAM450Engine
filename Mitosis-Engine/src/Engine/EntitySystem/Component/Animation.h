@@ -27,6 +27,18 @@ namespace mts
         void AnimationStop();
         Component* Clone(GameObject* newOwner) const override;
 
+        int GetFrameIndex() const { return mFrameIndex; }
+        int GetStartFrame() const { return mStartFrame; }
+        void SetStartFrame(int v) { mStartFrame = v; }
+        int GetFrameCount() const { return mFrameCount; }
+        void SetFrameCount(int v) { mFrameCount = v; }
+        float GetFrameDuration() const { return mFrameDuration; }
+        void SetFrameDuration(float v) { mFrameDuration = v; }
+        bool GetIsLooping() const { return mIsLooping; }
+        void SetIsLooping(bool v) { mIsLooping = v; }
+        bool GetIsRunning() const { return mIsRunning; }
+        bool GetIsDone() const { return IsDone; }
+
        private:
         // The current frame being displayed.
         int mFrameIndex = 0;

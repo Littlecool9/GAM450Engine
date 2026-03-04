@@ -150,6 +150,8 @@ namespace mts
             return result;
         }
 
+        void RemoveComponent(Component* c);
+
         // Add an additional script by class name (bypasses AddComponent duplicate guard)
         NativeScriptComponent* AddNativeScript(const std::string& className);
 

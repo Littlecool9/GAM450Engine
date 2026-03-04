@@ -29,7 +29,18 @@ namespace mts
 
         ImGui::PushID("CameraFollowDrawer");
 
-        if (ImGui::CollapsingHeader("CameraFollow", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("CameraFollow", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(cf);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             Scene* scene = SceneSystem::GetCurrentScene();
 

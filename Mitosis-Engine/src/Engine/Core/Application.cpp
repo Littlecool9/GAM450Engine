@@ -206,19 +206,19 @@ namespace mts
         // Preserve edit GOs untouched; deserialize fresh play GOs
         scene->StashGameObjects();
         SerializationUtility::DeserializeFromString(scene, snapshot);
-        scene->OnEnterPlayMode();
+        scene->EnterPlayMode();
         mCtx.playState = PlayState::Play;
     }
 
     void Application::StopPlayMode()
     {
         mCtx.playState = PlayState::Edit;
-        mCtx.selected  = UUID::InvalidID;
+        mCtx.selected = UUID::InvalidID;
         Scene* scene = SceneSystem::GetCurrentScene();
-        scene->OnExitPlayMode();           // stop audio / custom teardown
-        scene->ClearGameObjects();         // delete play GOs
+        scene->ExitPlayMode();      // stop audio / custom teardown
+        scene->ClearGameObjects();  // delete play GOs
         physics::PhysicsSystem2D::Reset();
-        scene->RestoreGameObjects();       // restore pristine edit GOs (no deserialize)
+        scene->RestoreGameObjects();  // restore pristine edit GOs (no deserialize)
     }
 
 }  // namespace mts

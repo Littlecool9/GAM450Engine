@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImplicitPrototype", "Implic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Prototype_One", "Prototype_One\Prototype_One.vcxproj", "{7657C736-F5BE-4326-9705-8A5FC9E06869}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RhythmRunner", "RhythmRunner\RhythmRunner.vcxproj", "{C82F7477-7713-49A5-9081-4C8FB49CF3E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -73,6 +75,12 @@ Global
 		{7657C736-F5BE-4326-9705-8A5FC9E06869}.DebugOpt|x64.Build.0 = DebugOpt|x64
 		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Release|x64.ActiveCfg = Release|x64
 		{7657C736-F5BE-4326-9705-8A5FC9E06869}.Release|x64.Build.0 = Release|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.Debug|x64.ActiveCfg = Debug|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.Debug|x64.Build.0 = Debug|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.DebugOpt|x64.ActiveCfg = DebugOpt|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.DebugOpt|x64.Build.0 = DebugOpt|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.Release|x64.ActiveCfg = Release|x64
+		{C82F7477-7713-49A5-9081-4C8FB49CF3E4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,7 +25,18 @@ namespace mts
 
         ImGui::PushID("CircleCollider2DDrawer");
 
-        if (ImGui::CollapsingHeader("CircleCollider2D", ImGuiTreeNodeFlags_DefaultOpen))
+        bool open = ImGui::CollapsingHeader("CircleCollider2D", ImGuiTreeNodeFlags_DefaultOpen);
+        bool removed = false;
+        if (ImGui::BeginPopupContextItem("##remove_ctx"))
+        {
+            if (ImGui::MenuItem("Remove Component"))
+            {
+                go->RemoveComponent(c);
+                removed = true;
+            }
+            ImGui::EndPopup();
+        }
+        if (open && !removed)
         {
             float r = c->GetLocalRadius();
             if (ImGui::DragFloat("Radius", &r, 0.05f, 0.0f, 100000.0f))

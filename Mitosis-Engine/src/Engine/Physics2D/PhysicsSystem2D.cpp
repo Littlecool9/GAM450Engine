@@ -175,7 +175,7 @@ namespace mts::physics
 
         for (auto gameObject : gameObjects)
         {
-            if (gameObject->IsDead())
+            if (gameObject->IsDead() || !gameObject->IsActive())
                 continue;
 
             auto rb = gameObject->GetComponent<RigidBody2D>();
@@ -277,6 +277,10 @@ namespace mts::physics
                 const PhysicsBody& B = physicsBodies[j];
 
                 if (!A.col || !B.col)
+                    continue;
+
+                // Two static bodies can never produce a useful collision response — skip early.
+                if (!A.isDynamic && !B.isDynamic)
                     continue;
 
                 if (!includeTriggers && (A.isTrigger || B.isTrigger))

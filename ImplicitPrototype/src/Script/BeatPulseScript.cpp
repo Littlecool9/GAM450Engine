@@ -9,6 +9,7 @@
 #include <cmath>
 
 #include "CameraController.h"
+#include "Engine/Renderer.h"
 
 BeatPulseScript::~BeatPulseScript()
 {

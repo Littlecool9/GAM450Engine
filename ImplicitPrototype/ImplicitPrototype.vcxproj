@@ -189,6 +189,8 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClInclude Include="src\Script\MovablePlatform.h" />
     <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
+    <ClInclude Include="src\Script\BeatPulseScript.h" />
+    <ClInclude Include="src\Script\FollowOffsetScript.h" />
     <ClInclude Include="src\Script\RhythmConfigScript.h" />
     <ClInclude Include="src\Script\RhythmSystem.h" />
   </ItemGroup>
@@ -208,6 +210,8 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClCompile Include="src\Script\MovablePlatform.cpp" />
     <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
+    <ClCompile Include="src\Script\BeatPulseScript.cpp" />
+    <ClCompile Include="src\Script\FollowOffsetScript.cpp" />
     <ClCompile Include="src\Script\RhythmConfigScript.cpp" />
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
   </ItemGroup>

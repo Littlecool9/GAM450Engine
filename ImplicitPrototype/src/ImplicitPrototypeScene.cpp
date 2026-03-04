@@ -14,6 +14,8 @@
 #include "Script/RhythmSystem.h"
 #include "Script/CheckPoint.h"
 #include "Script/HazardCollider.h"
+#include "Script/BeatPulseScript.h"
+#include "Script/FollowOffsetScript.h"
 
 static const mts::MusicTrack kMausoleumMash = {"MausoleumMash",
                                                "event:/MausoleumMash",
@@ -47,6 +49,10 @@ void ImplicitPrototypeScene::OnInit()
                                        []() { return new PlatformPuzzleScript(); });
     mts::ScriptFactory::RegisterScript("CheckPoint", []() { return new CheckPoint(); });
     mts::ScriptFactory::RegisterScript("HazardCollider", []() { return new HazardCollider(); });
+    mts::ScriptFactory::RegisterScript(BeatPulseScript::StaticClassName(),
+                                       []() { return new BeatPulseScript(); });
+    mts::ScriptFactory::RegisterScript(FollowOffsetScript::StaticClassName(),
+                                       []() { return new FollowOffsetScript(); });
 
 #pragma endregion
 

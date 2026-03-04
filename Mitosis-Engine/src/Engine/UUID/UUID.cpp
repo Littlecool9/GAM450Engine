@@ -35,6 +35,8 @@ namespace mts
 
     UUID UUID::FromString(const std::string& str)
     {
+        if (str.empty())
+            return UUID::InvalidID;
         boost::uuids::string_generator gen;
         boost::uuids::uuid u = gen(str);
 

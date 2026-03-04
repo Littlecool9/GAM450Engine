@@ -96,10 +96,13 @@ namespace mts
         template <typename T>
         T* AddComponent()
         {
-            if (GetComponent<T>() != nullptr)
+            if constexpr (!std::is_same_v<T, NativeScriptComponent>)
             {
-                LOG_WARN("GameObject {} already has component of type {}", name, typeid(T).name());
-                return nullptr;
+                if (GetComponent<T>() != nullptr)
+                {
+                    LOG_WARN("GameObject {} already has component of type {}", name, typeid(T).name());
+                    return nullptr;
+                }
             }
             Component* newComp = ComponentFactory::CreateComponent<T>();
             if (newComp == nullptr)
@@ -108,8 +111,9 @@ namespace mts
                 return nullptr;
             }
             components.emplace_back(newComp);
-            //LOG_INFO("Added component of type {} to GameObject {}", typeid(T).name(), name);
             newComp->owner = this;
+            if constexpr (std::is_same_v<T, NativeScriptComponent>)
+                m_scripts.push_back(static_cast<NativeScriptComponent*>(newComp));
             T* res = dynamic_cast<T*>(newComp);
 
             return res;

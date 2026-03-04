@@ -1,0 +1,30 @@
+{
+    "UUID": "40c174a0-ca6a-49ee-a74b-bd4ac43912f8",
+    "Name": "AudioController",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "AudioController"
+            }
+        }
+    ]
+}

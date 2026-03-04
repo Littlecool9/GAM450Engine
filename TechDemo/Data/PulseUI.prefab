@@ -1,0 +1,53 @@
+{
+    "UUID": "8ef86774-5f48-4b56-8bfb-6f879cac8437",
+    "Name": "PulseUI",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    5.550000190734863,
+                    8.149999618530273,
+                    0.0
+                ],
+                "Scale": [
+                    3.0,
+                    3.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 67,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "../ImplicitPrototype/Data/Resources/DemoTextureResource.tex",
+                "MeshResource": "../ImplicitPrototype/Data/Resources/14x7MeshResource.mesh",
+                "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "BeatPulseScript",
+                "Fields": {
+                    "Amplitude": 0.25,
+                    "Decay": 10.0,
+                    "XPos": 0.0,
+                    "YPos": -5.0
+                }
+            }
+        }
+    ]
+}

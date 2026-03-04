@@ -24,11 +24,8 @@ namespace mts::Tilemap
 {
     ChunkManager::~ChunkManager()
     {
-        // Destroy any pooled collider objects that were never reused (e.g. chunks that
-        // went out of range but the player never returned to that area).
-        for (auto& [pos, pool] : mColliderPools)
-            for (auto* obj : pool)
-                obj->Destroy();
+        // Pool GOs are owned by the scene. ClearGameObjects() deletes them.
+        mColliderPools.clear();
     }
 
     void ChunkManager::UpdateChunks(const RenderCamera& cam)

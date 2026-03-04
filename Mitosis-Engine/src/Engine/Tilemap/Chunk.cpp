@@ -33,10 +33,9 @@ namespace mts::Tilemap
 
     Chunk::~Chunk()
     {
-        // Normally ChunkManager steals the pool before the Chunk is destroyed.
-        // If not (e.g. the chunk was destroyed without being properly unloaded), clean up here.
-        for (auto* obj : mColliderObjects)
-            obj->Destroy();
+        // GOs are owned by the scene (added via GameObjectFactory::CreateGameObject).
+        // ClearGameObjects() deletes them; calling Destroy() here would be a use-after-free.
+        mColliderObjects.clear();
     }
 
     std::vector<GameObject*> Chunk::StealColliderPool()
@@ -271,12 +270,6 @@ namespace mts::Tilemap
         // reset visited array
         std::memset(mVisited, 0, sizeof(mVisited));
 
-        if (!mTileset && !mcpuVertices.empty())
-        {
-            LOG_WARN("Chunk GenerateColliderRects: Tileset not found.");
-            return rects;
-        }
-
         // Iterate each tile in the chunk
         for (int y = 0; y < CHUNK_HEIGHT; ++y)
         {
@@ -292,6 +285,8 @@ namespace mts::Tilemap
 
                 if (!mTileset)
                     mTileset = mParentTilemap->GetTilesetBasedOnTileID(id);
+                if (!mTileset)
+                    return rects;  // tilesets not loaded (unloaded during stop)
                 const TileProperties& props = mTileset->Get(id);
 
                 if (!props.isCollidable)
@@ -368,6 +363,7 @@ namespace mts::Tilemap
             return;
         }
 
+        mTileset = nullptr;  // force re-fetch; prevents dangling pointer if tilesets were reloaded/unloaded
         std::vector<ColliderRect> rects = GenerateColliderRects();
 
         // Get chunk's world position using the same function as rendering

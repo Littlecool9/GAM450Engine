@@ -19,8 +19,8 @@
 
 static const mts::MusicTrack kMausoleumMash = {"MausoleumMash",
                                                "event:/MausoleumMash",
-                                               140.f,
-                                               4,
+                                               70.f,
+                                               2,
                                                0.f};
 
 TechDemoScene::~TechDemoScene()

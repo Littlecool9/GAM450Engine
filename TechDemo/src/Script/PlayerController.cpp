@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "PlayerController.h"
 
+#include "AttackHitboxScript.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
@@ -26,9 +27,13 @@
 #include "CheckPoint.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
+#include "Engine/Scripting/ScriptFactory.h"
+#include "Engine/Serialization/SerializationUtility.h"
 
 void PlayerController::OnCreate()
 {
+    mts::ScriptFactory::RegisterScript("AttackHitboxScript",
+                                       []() { return new AttackHitboxScript(); });
     rb = GetGameObject()->GetComponent<mts::RigidBody2D>();
     anim = GetGameObject()->GetComponent<mts::AnimationSystem>();
     sprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
@@ -47,31 +52,35 @@ void PlayerController::OnUpdate(float dt)
                           static_cast<int>(upHeld) - static_cast<int>(downHeld)};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
     bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift);
+    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
-    bool inWindow = audio.IsInBeatWindow(hitWindowEarlyEdge, hitWindowLateEdge);
+    bool inWindow = audio.IsInBeatWindow(mHitWindowEarlyEdge, mHitWindowLateEdge);
 
     // Reset dash count if on ground and dash cooldown is done
     if (isGrounded && dashTimer < 0.0f)
     {
-        dashCount = dashMax;
+        dashCount = mDashMax;
     }
 
-    // Get facing direction
-    if (leftHeld)
+    // Change sprite facing direction if able
+    if (!isAttacking)
     {
-        sprite->SetFlipX(true);
-    }
-    if (rightHeld)
-    {
-        sprite->SetFlipX(false);
+        if (leftHeld)
+        {
+            sprite->SetFlipX(true);
+        }
+        if (rightHeld)
+        {
+            sprite->SetFlipX(false);
+        }
     }
 
     // Jump check
-    if (jumpPressed && isGrounded)
+    if (jumpPressed && isGrounded && !isAttacking)
     {
-        if (!jumpRhythmLock || (jumpRhythmLock && inWindow))
+        if (!mJumpRhythmLock || (mJumpRhythmLock && inWindow))
         {
             if (!queuedJump)
             {
@@ -86,9 +95,9 @@ void PlayerController::OnUpdate(float dt)
     }
 
     // Dash check
-    if (dashPressed && dashCount > 0)
+    if (dashPressed && dashCount > 0 && !isAttacking)
     {
-        if (!dashRhythmLock || (dashRhythmLock && inWindow))
+        if (!mDashRhythmLock || (mDashRhythmLock && inWindow))
         {
             if (!queuedDash)
             {
@@ -101,18 +110,56 @@ void PlayerController::OnUpdate(float dt)
             LOG_INFO("Dashed off beat");
         }
     }
+    if (dashTimer >= 0.0f)
+        dashTimer -= dt;
 
-    dashTimer -= dt;
+    // Attack check
+    if (attackPressed && !isAttacking)
+    {
+        if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
+        {
+            Attack(inWindow);
+            LOG_INFO("Attacked {} beat", inWindow ? "on" : "off");
+        }
+        else
+        {
+            LOG_INFO("Attacked off beat");
+        }
+    }
+    if (attackTimer >= 0.0f)
+        attackTimer -= dt;
+    if (attackComboTimer >= 0.0f)
+        attackComboTimer -= dt;
+    
+    // Spawn attack hitbox after set delay
+    if (attackDelayTimer > 0.0f)
+    {
+        attackDelayTimer -= dt;
+    }
+    else if (attackDelayTimer > -1.0f)
+    {
+        queuedAttackSpawn();
+        attackDelayTimer = -2.0f;
+    }
 
     // Set animation states based on movement
-    if (!isGrounded && currVelocity.y > 0.1f)
-        anim->ChangeState(mts::AnimationSystem::States::Jump);
-    else if (!isGrounded && currVelocity.y < -0.1f)
-        anim->ChangeState(mts::AnimationSystem::States::Falling);
-    else if (std::abs(currVelocity.x) > 0.01f)
-        anim->ChangeState(mts::AnimationSystem::States::Walking);
-    else
-        anim->ChangeState(mts::AnimationSystem::States::Idle);
+    if (attackTimer < 0.0f && anim->IsDone())
+    {
+        isAttacking = false;
+    }
+    if (!isAttacking)
+    {
+        if (dashTimer > 0.0f)
+            anim->ChangeState(mts::AnimationSystem::States::Jump);
+        else if (!isGrounded && currVelocity.y > 0.1f)
+            anim->ChangeState(mts::AnimationSystem::States::Jump);
+        else if (!isGrounded && currVelocity.y < -0.1f)
+            anim->ChangeState(mts::AnimationSystem::States::Falling);
+        else if (std::abs(currVelocity.x) > 0.01f)
+            anim->ChangeState(mts::AnimationSystem::States::Walking);
+        else
+            anim->ChangeState(mts::AnimationSystem::States::Idle);
+    }
 
     // Possible animation/sprite/color change while dash is in cooldown
     if (dashTimer > 0.0f)
@@ -143,22 +190,22 @@ void PlayerController::OnFixedUpdate(float dt)
 
     currVelocity = rb->GetVelocity();
     // Calculate horizontal velocity
-    if (static_cast<int>(moveDir) != 0)
+    if (static_cast<int>(moveDir) != 0 && !isAttacking)
     {
         // Turning around
         if (currVelocity.x != 0.0f &&
             static_cast<int>(glm::sign(currVelocity.x)) != static_cast<int>(glm::sign(moveDir)))
-            currVelocity.x = MoveToward(currVelocity.x, 0.0f, turnSpeed * dt);
+            currVelocity.x = MoveToward(currVelocity.x, 0.0f, mTurnSpeed * dt);
         // Accelerating
-        else if ((moveDir < 0.0f && (currVelocity.x > moveDir * moveSpeed)) ||
-                 ((moveDir > 0.0f && (currVelocity.x < moveDir * moveSpeed))))
-            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, acceleration * dt);
+        else if ((moveDir < 0.0f && (currVelocity.x > moveDir * mMoveSpeed)) ||
+                 ((moveDir > 0.0f && (currVelocity.x < moveDir * mMoveSpeed))))
+            currVelocity.x = MoveToward(currVelocity.x, moveDir * mMoveSpeed, mAcceleration * dt);
         // Decelerating
         else
-            currVelocity.x = MoveToward(currVelocity.x, moveDir * moveSpeed, deceleration * dt);
+            currVelocity.x = MoveToward(currVelocity.x, moveDir * mMoveSpeed, mDeceleration * dt);
     }
     else
-        currVelocity.x = MoveToward(currVelocity.x, 0.0f, friction * dt);
+        currVelocity.x = MoveToward(currVelocity.x, 0.0f, mFriction * dt);
 
     // Call queued jump call
     if (queuedJump)
@@ -180,113 +227,165 @@ void PlayerController::OnFixedUpdate(float dt)
 void PlayerController::DeserializeFields(mts::JsonValue const& fields)
 {
     if (fields.Has("moveSpeed"))
-        moveSpeed = fields["moveSpeed"].GetFloat(moveSpeed);
+        mMoveSpeed = fields["moveSpeed"].GetFloat(mMoveSpeed);
     if (fields.Has("jumpSpeed"))
-        jumpSpeed = fields["jumpSpeed"].GetFloat(jumpSpeed);
+        mJumpSpeed = fields["jumpSpeed"].GetFloat(mJumpSpeed);
     if (fields.Has("dashSpeed"))
-        dashSpeed = fields["dashSpeed"].GetFloat(dashSpeed);
+        mDashSpeed = fields["dashSpeed"].GetFloat(mDashSpeed);
     if (fields.Has("friction"))
-        friction = fields["friction"].GetFloat(friction);
+        mFriction = fields["friction"].GetFloat(mFriction);
     if (fields.Has("acceleration"))
-        acceleration = fields["acceleration"].GetFloat(acceleration);
+        mAcceleration = fields["acceleration"].GetFloat(mAcceleration);
     if (fields.Has("deceleration"))
-        deceleration = fields["deceleration"].GetFloat(deceleration);
+        mDeceleration = fields["deceleration"].GetFloat(mDeceleration);
     if (fields.Has("turnSpeed"))
-        turnSpeed = fields["turnSpeed"].GetFloat(turnSpeed);
+        mTurnSpeed = fields["turnSpeed"].GetFloat(mTurnSpeed);
     if (fields.Has("dashDampening"))
-        dashDampening = fields["dashDampening"].GetFloat(dashDampening);
+        mDashDampening = fields["dashDampening"].GetFloat(mDashDampening);
     if (fields.Has("dashCooldown"))
-        dashCooldown = fields["dashCooldown"].GetFloat(dashCooldown);
-    if (fields.Has("dashCount"))
-        dashCount = fields["dashCount"].GetInt(dashCount);
+        mDashCooldown = fields["dashCooldown"].GetFloat(mDashCooldown);
+    if (fields.Has("dashMax"))
+        mDashMax = fields["dashMax"].GetInt(mDashMax);
+    if (fields.Has("attackCooldown"))
+        mAttackCooldown = fields["attackCooldown"].GetFloat(mAttackCooldown);
+    if (fields.Has("attackComboMaxDelay"))
+        mAttackComboMaxDelay = fields["attackComboMaxDelay"].GetFloat(mAttackComboMaxDelay);
+    if (fields.Has("attackDelay"))
+        mAttackDelay = fields["attackDelay"].GetFloat(mAttackDelay);
+    if (fields.Has("attackLightDamage"))
+        mAttackLightDamage = fields["attackLightDamage"].GetFloat(mAttackLightDamage);
+    if (fields.Has("attackHeavyDamage"))
+        mAttackHeavyDamage = fields["attackHeavyDamage"].GetFloat(mAttackHeavyDamage);
+    if (fields.Has("attackHitboxOffsetX"))
+        mAttackHitboxOffsetX = fields["attackHitboxOffsetX"].GetFloat(mAttackHitboxOffsetX);
     if (fields.Has("dashBeatBoost"))
-        dashBeatBoost = fields["dashBeatBoost"].GetFloat(dashBeatBoost);
+        mDashBeatBoost = fields["dashBeatBoost"].GetFloat(mDashBeatBoost);
     if (fields.Has("jumpBeatBoost"))
-        jumpBeatBoost = fields["jumpBeatBoost"].GetFloat(jumpBeatBoost);
+        mJumpBeatBoost = fields["jumpBeatBoost"].GetFloat(mJumpBeatBoost);
     if (fields.Has("dashRhythmLock"))
-        dashRhythmLock = fields["dashRhythmLock"].GetBool(dashRhythmLock);
+        mDashRhythmLock = fields["dashRhythmLock"].GetBool(mDashRhythmLock);
     if (fields.Has("jumpRhythmLock"))
-        jumpRhythmLock = fields["jumpRhythmLock"].GetBool(jumpRhythmLock);
+        mJumpRhythmLock = fields["jumpRhythmLock"].GetBool(mJumpRhythmLock);
+    if (fields.Has("attackRhythmLock"))
+        mAttackRhythmLock = fields["attackRhythmLock"].GetBool(mAttackRhythmLock);
     if (fields.Has("hitWindowEarlyEdge"))
-        hitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(hitWindowEarlyEdge);
+        mHitWindowEarlyEdge = fields["hitWindowEarlyEdge"].GetFloat(mHitWindowEarlyEdge);
     if (fields.Has("hitWindowLateEdge"))
-        hitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(hitWindowLateEdge);
+        mHitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(mHitWindowLateEdge);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
 {
-    out.WriteFloat("moveSpeed", moveSpeed);
-    out.WriteFloat("jumpSpeed", jumpSpeed);
-    out.WriteFloat("dashSpeed", dashSpeed);
-    out.WriteFloat("friction", friction);
-    out.WriteFloat("acceleration", acceleration);
-    out.WriteFloat("deceleration", deceleration);
-    out.WriteFloat("turnSpeed", turnSpeed);
-    out.WriteFloat("dashDampening", dashDampening);
-    out.WriteFloat("dashCooldown", dashCooldown);
-    out.WriteInt("dashCount", dashCount);
-    out.WriteFloat("dashBeatBoost", dashBeatBoost);
-    out.WriteFloat("jumpBeatBoost", jumpBeatBoost);
-    out.WriteBool("dashRhythmLock", dashRhythmLock);
-    out.WriteBool("jumpRhythmLock", jumpRhythmLock);
+    out.WriteFloat("moveSpeed", mMoveSpeed);
+    out.WriteFloat("jumpSpeed", mJumpSpeed);
+    out.WriteFloat("dashSpeed", mDashSpeed);
+    out.WriteFloat("friction", mFriction);
+    out.WriteFloat("acceleration", mAcceleration);
+    out.WriteFloat("deceleration", mDeceleration);
+    out.WriteFloat("turnSpeed", mTurnSpeed);
+    out.WriteFloat("dashDampening", mDashDampening);
+    out.WriteFloat("dashCooldown", mDashCooldown);
+    out.WriteInt("dashMax", mDashMax);
+    out.WriteFloat("attackCooldown", mAttackCooldown);
+    out.WriteFloat("attackComboMaxDelay", mAttackComboMaxDelay);
+    out.WriteFloat("attackDelay", mAttackDelay);
+    out.WriteFloat("attackLightDamage", mAttackLightDamage);
+    out.WriteFloat("attackHeavyDamage", mAttackHeavyDamage);
+    out.WriteFloat("attackHitboxOffsetX", mAttackHitboxOffsetX);
+    out.WriteFloat("dashBeatBoost", mDashBeatBoost);
+    out.WriteFloat("jumpBeatBoost", mJumpBeatBoost);
+    out.WriteBool("dashRhythmLock", mDashRhythmLock);
+    out.WriteBool("jumpRhythmLock", mJumpRhythmLock);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
 {
     fields.push_back({.name = "moveSpeed",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &moveSpeed},
+                      .ptr = {.f = &mMoveSpeed},
                       .step = 0.1f});
     fields.push_back({.name = "jumpSpeed",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &jumpSpeed},
+                      .ptr = {.f = &mJumpSpeed},
                       .step = 0.1f});
     fields.push_back({.name = "dashSpeed",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &dashSpeed},
+                      .ptr = {.f = &mDashSpeed},
                       .step = 0.1f});
     fields.push_back({.name = "friction",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &friction},
+                      .ptr = {.f = &mFriction},
                       .step = 0.1f});
     fields.push_back({.name = "acceleration",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &acceleration},
+                      .ptr = {.f = &mAcceleration},
                       .step = 0.1f});
     fields.push_back({.name = "deceleration",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &deceleration},
+                      .ptr = {.f = &mDeceleration},
                       .step = 0.1f});
     fields.push_back({.name = "turnSpeed",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &turnSpeed},
+                      .ptr = {.f = &mTurnSpeed},
                       .step = 0.1f});
     fields.push_back({.name = "dashDampening",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &dashDampening},
+                      .ptr = {.f = &mDashDampening},
                       .step = 0.1f});
     fields.push_back({.name = "dashCooldown",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &dashCooldown},
+                      .ptr = {.f = &mDashCooldown},
                       .step = 0.1f});
-    fields.push_back({.name = "dashCount",
+    fields.push_back({.name = "dashMax",
                       .type = mts::ScriptField::Type::Int,
-                      .ptr = {.i = &dashCount},
+                      .ptr = {.i = &mDashMax},
                       .step = 1});
+    fields.push_back({.name = "attackCooldown",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackCooldown},
+                      .step = 0.1f});
+    fields.push_back({.name = "attackComboMaxDelay",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackComboMaxDelay},
+                      .step = 0.1f});
+    fields.push_back({.name = "attackDelay",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackDelay},
+                      .step = 0.1f});
+    fields.push_back({.name = "attackLightDamage",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackLightDamage},
+                      .step = 0.1f});
+    fields.push_back({.name = "attackHeavyDamage",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackHeavyDamage},
+                      .step = 0.1f});
+    fields.push_back({.name = "attackHitboxOffsetX",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mAttackHitboxOffsetX},
+                      .step = 0.1f});
     fields.push_back({.name = "dashBeatBoost",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &dashBeatBoost},
+                      .ptr = {.f = &mDashBeatBoost},
                       .step = 0.1f});
     fields.push_back({.name = "jumpBeatBoost",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &jumpBeatBoost},
+                      .ptr = {.f = &mJumpBeatBoost},
                       .step = 0.1f});
     fields.push_back({.name = "dashRhythmLock",
                       .type = mts::ScriptField::Type::Bool,
-                      .ptr = {.b = &dashRhythmLock}});
+                      .ptr = {.b = &mDashRhythmLock}});
     fields.push_back({.name = "jumpRhythmLock",
                       .type = mts::ScriptField::Type::Bool,
-                      .ptr = {.b = &jumpRhythmLock}});
+                      .ptr = {.b = &mJumpRhythmLock}});
+    fields.push_back({.name = "hitWindowEarlyEdge",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHitWindowEarlyEdge},
+                      .step = 0.01f});
+    fields.push_back({.name = "hitWindowLateEdge",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHitWindowLateEdge},
+                      .step = 0.01f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
@@ -332,24 +431,24 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
         dashDir = inputDir;
     // Deceleration when above max speed affects dash distance only to left and right
     // dashDampening is used to adjust horizontal dash distance
-    if (dashDampening > 1.0f)
+    if (mDashDampening > 1.0f)
     {
         if (static_cast<int>(dashDir.y) == 0)
-            dashDir.x *= dashDampening;
+            dashDir.x *= mDashDampening;
     }
-    else if (dashDampening < 1.0f)
+    else if (mDashDampening < 1.0f)
     {
         if (static_cast<int>(dashDir.y) != 0)
-            dashDir.x *= dashDampening;
+            dashDir.x *= mDashDampening;
     }
     // Multiply dash speed if hit on beat
-    float adjustedDashSpeed = inWindow ? dashSpeed * dashBeatBoost : dashSpeed;
+    float adjustedDashSpeed = inWindow ? mDashSpeed * mDashBeatBoost : mDashSpeed;
 
     // Set velocity directly in direction of dash but don't change velocity where component
     // of dash direction is zero
     currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
     --dashCount;
-    dashTimer = dashCooldown;
+    dashTimer = mDashCooldown;
 }
 
 void PlayerController::Jump(bool inWindow)
@@ -357,12 +456,54 @@ void PlayerController::Jump(bool inWindow)
     isGrounded = false;
 
     // multiply jump speed if hit on beat
-    float adjustedJumpSpeed = inWindow ? jumpSpeed * jumpBeatBoost : jumpSpeed;
+    float adjustedJumpSpeed = inWindow ? mJumpSpeed * mJumpBeatBoost : mJumpSpeed;
     currVelocity.y = adjustedJumpSpeed;
     // Reset dash cooldown on jump
     dashTimer = -1.0f;
-    dashCount = dashMax;
+    dashCount = mDashMax;
 }
+
+void PlayerController::Attack(bool inWindow)
+{
+    // Check if in time range to combo attack
+    // Also can only combo if on beat
+    if (attackComboTimer > 0.0f && inWindow)
+    {
+        queuedAttackSpawn = [this]() { SpawnAttackHitbox(mAttackHeavyDamage); };
+        anim->ChangeState(mts::AnimationSystem::States::Attack2);
+        attackComboTimer = -1.0f;
+    }
+    else
+    {
+        queuedAttackSpawn = [this]() { SpawnAttackHitbox(mAttackLightDamage); };
+        anim->ChangeState(mts::AnimationSystem::States::Attack1);
+        attackComboTimer = mAttackComboMaxDelay;
+    }
+
+    isAttacking = true;
+    attackDelayTimer = mAttackDelay;
+    attackTimer = mAttackCooldown;
+}
+
+void PlayerController::SpawnAttackHitbox(float damage)
+{
+    // Create attack hitbox object
+    mts::GameObject* attackHitbox = mts::GameObjectFactory::CreateGameObject();
+    mts::SerializationUtility::DeserializeFromFile(attackHitbox, "Data/AttackHitbox.prefab");
+    // Get transform and add or subtract offset based on facing dir
+    mts::Transform* attackHitboxTransform = attackHitbox->GetComponent<mts::Transform>();
+    glm::vec2 hitBoxPos = transform->GetPosition();
+    if (facingDir == LEFT)
+        hitBoxPos.x -= mAttackHitboxOffsetX;
+    else if (facingDir == RIGHT)
+        hitBoxPos.x += mAttackHitboxOffsetX;
+    attackHitboxTransform->SetPosition(hitBoxPos);
+    // Set damage of hitbox
+    auto hitboxScript = attackHitbox->GetScript<AttackHitboxScript>();
+    if (hitboxScript)
+        hitboxScript->SetDamage(damage);
+}
+
 void PlayerController::Test()
 {
     // Generate code for testing the MovablePlatform's FirePlatformTranslate function
@@ -405,14 +546,14 @@ void PlayerController::SetCheckPoint(CheckPoint* checkPoint)
     LOG_INFO("CheckPoint set at position: ({}, {}, {})", checkPoint->GetCheckPointPosition().x,
              checkPoint->GetCheckPointPosition().y,
              checkPoint->GetCheckPointPosition().z);
-    actvitedCheckPoint = checkPoint;
+    activatedCheckPoint = checkPoint;
 }
 
 void PlayerController::ReturnToCheckPoint()
 {
-    if (actvitedCheckPoint)
+    if (activatedCheckPoint)
     {
-        transform->SetPosition(actvitedCheckPoint->GetCheckPointPosition());
+        transform->SetPosition(activatedCheckPoint->GetCheckPointPosition());
         rb->SetVelocity({0.0f, 0.0f});
     }
 }

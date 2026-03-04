@@ -96,6 +96,7 @@ namespace mts
 
         // --- Mixing ---
         void SetCategoryVolume(AudioCategory category, float volume01) const;
+        float GetCategoryVolume(AudioCategory category) const;
         void SetCategoryPaused(AudioCategory category, bool paused) const;
 
         // --- Snapshots (engine-level wrapper) ---
@@ -134,6 +135,9 @@ namespace mts
 
         // Bus mapping (to make into convenient FMOD bus paths)
         std::unordered_map<AudioCategory, std::string> mBusPaths;
+
+        // Cached category volumes
+        mutable std::unordered_map<AudioCategory, float> mCategoryVolumes;
 
         // Rhythm state
         MusicTrack mCurrentTrack{};

@@ -199,6 +199,13 @@ namespace mts
         return m_className;
     }
 
+    void NativeScriptComponent::SetClassName(const std::string& name)
+    {
+        m_className = name;
+        m_created = false;
+        m_script.reset();
+    }
+
     void NativeScriptComponent::SyncFieldsToJson()
     {
         if (!m_script)

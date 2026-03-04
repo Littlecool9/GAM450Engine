@@ -183,6 +183,10 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Script\AudioController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Script\BeatBarController.h" />
     <ClInclude Include="src\Script\CameraController.h">
       <SubType>
@@ -207,6 +211,10 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Script\AudioController.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Script\BeatBarController.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp">
       <SubType>

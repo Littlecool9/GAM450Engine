@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "TechDemoScene.h"
-
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -16,6 +15,7 @@
 #include "Script/PlatformPuzzleScript.h"
 #include "Script/RhythmSystem.h"
 #include "Script/CheckPoint.h"
+#include "Script/AudioController.h"
 
 static const mts::MusicTrack kMausoleumMash = {"MausoleumMash",
                                                "event:/MausoleumMash",
@@ -136,6 +136,8 @@ void TechDemoScene::OnInit()
     mts::ScriptFactory::RegisterScript(PlatformPuzzleScript::StaticClassName(),
                                        []() { return new PlatformPuzzleScript(); });
     mts::ScriptFactory::RegisterScript("CheckPointController", []() { return new CheckPoint(); });
+    mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
+                                       []() { return new AudioController(); });
 
 #pragma endregion
 

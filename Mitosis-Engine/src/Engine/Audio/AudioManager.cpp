@@ -24,6 +24,12 @@ namespace mts
         mBusPaths[AudioCategory::SFX] = "bus:/SFX";
         mBusPaths[AudioCategory::UI] = "bus:/UI";
         mBusPaths[AudioCategory::Ambience] = "bus:/Ambience";
+
+        mCategoryVolumes[AudioCategory::Master]   = 1.0f;
+        mCategoryVolumes[AudioCategory::Music]    = 1.0f;
+        mCategoryVolumes[AudioCategory::SFX]      = 1.0f;
+        mCategoryVolumes[AudioCategory::UI]       = 1.0f;
+        mCategoryVolumes[AudioCategory::Ambience] = 1.0f;
     }
 
     AudioManager::~AudioManager()
@@ -322,7 +328,14 @@ namespace mts
         if (!EnsureInitOrWarn("SetCategoryVolume"))
             return;
 
+        mCategoryVolumes[category] = volume01;
         mBackend->SetBusVolume(GetBusPath(category), volume01);
+    }
+
+    float AudioManager::GetCategoryVolume(AudioCategory category) const
+    {
+        auto it = mCategoryVolumes.find(category);
+        return (it != mCategoryVolumes.end()) ? it->second : 1.0f;
     }
 
     void AudioManager::SetCategoryPaused(AudioCategory category, bool paused) const

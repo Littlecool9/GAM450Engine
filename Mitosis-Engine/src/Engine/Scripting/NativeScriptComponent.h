@@ -37,14 +37,14 @@ namespace mts
         virtual void OnCollisionExit2D(const Collision2D& collision) override;
 
         const std::string& GetClassName() const;
-        void SetClassName(const std::string& name) { m_className = name; }
+        void SetClassName(const std::string& name);
         bool HasScript() const { return m_script != nullptr; }
         ScriptBase* GetScript() const { return m_script.get(); }
 
         void SyncFieldsToJson();
+        void EnsureCreated();
 
        private:
-        void EnsureCreated();
 
         std::string m_className;
 

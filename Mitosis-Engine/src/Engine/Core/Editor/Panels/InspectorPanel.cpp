@@ -40,6 +40,8 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/SceneSystem/Scene.h"
+#include "Engine/Scripting/NativeScriptComponent.h"
+#include "Engine/Scripting/ScriptFactory.h"
 
 namespace mts
 {
@@ -87,7 +89,7 @@ namespace mts
             go->SetName(nameBuf);
 
         // Layer
-        const char* layerNames[] = { "Default", "Ground", "UI" };
+        const char* layerNames[] = {"Default", "Ground", "UI"};
         int layerIdx = static_cast<int>(go->GetLayer());
         if (ImGui::Combo("Layer", &layerIdx, layerNames, IM_ARRAYSIZE(layerNames)))
             go->SetLayer(static_cast<GameObject::LayerMasks>(layerIdx));
@@ -189,6 +191,32 @@ namespace mts
                 go->AddComponent<ActionList>();
             ImGui::EndDisabled();
 
+            ImGui::EndPopup();
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Add Script"))
+            ImGui::OpenPopup("AddScriptPopup");
+
+        if (ImGui::BeginPopup("AddScriptPopup"))
+        {
+            auto& names = mts::ScriptFactory::GetRegisteredNames();
+            if (names.empty())
+            {
+                ImGui::TextDisabled("(no scripts registered)");
+            }
+            else
+            {
+                for (const auto& name : names)
+                {
+                    if (ImGui::MenuItem(name.c_str()))
+                    {
+                        auto* nsc = go->AddComponent<NativeScriptComponent>();
+                        nsc->SetClassName(name);
+                        nsc->EnsureCreated();
+                    }
+                }
+            }
             ImGui::EndPopup();
         }
 

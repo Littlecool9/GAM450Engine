@@ -21,9 +21,11 @@ namespace mts
         static bool RegisterScript(const std::string& className, ScriptCreator creator);
         static bool IsRegistered(const std::string& className);
         static ScriptBase* Create(const std::string& className);
+        static const std::vector<std::string>& GetRegisteredNames();
 
        private:
         static std::unordered_map<std::string, ScriptCreator> s_creators;
+        static std::vector<std::string> s_sortedNames;
     };
 
 }  // namespace mts

@@ -12,6 +12,7 @@
 namespace mts
 {
     std::unordered_map<std::string, ScriptFactory::ScriptCreator> ScriptFactory::s_creators;
+    std::vector<std::string> ScriptFactory::s_sortedNames;
 
     bool ScriptFactory::RegisterScript(const std::string& className, ScriptCreator creator)
     {
@@ -19,6 +20,8 @@ namespace mts
             return false;
 
         s_creators[className] = std::move(creator);
+        auto it = std::lower_bound(s_sortedNames.begin(), s_sortedNames.end(), className);
+        s_sortedNames.insert(it, className);
         return true;
     }
 
@@ -33,5 +36,10 @@ namespace mts
         if (it == s_creators.end())
             return nullptr;
         return (it->second)();
+    }
+
+    const std::vector<std::string>& ScriptFactory::GetRegisteredNames()
+    {
+        return s_sortedNames;
     }
 }  // namespace mts

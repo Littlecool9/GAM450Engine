@@ -15,6 +15,7 @@
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
 #include "Script/BarScaler.h"
+#include "Script/BeatBarController.h"
 #include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
 
@@ -41,6 +42,7 @@ void EnemyPrototypeScene::OnInit()
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new mts::EnemyController(); });
     mts::ScriptFactory::RegisterScript("BarScaler", []() { return new mts::BarScaler(); });
+    mts::ScriptFactory::RegisterScript("BeatBarController", []() { return new BeatBarController(); });
 
     player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");
@@ -62,7 +64,7 @@ void EnemyPrototypeScene::OnInit()
     enemyhp->SetName("HP Bar Enemy");
     playerhp = mts::GameObjectFactory::InstantiateFromJSON("Data/HPBarP.prefab");
     playerhp->SetName("HP Bar Player");
-
+    mBeatLine = mts::GameObjectFactory::InstantiateFromJSON("Data/BeatLine.prefab");
     //mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
     // if this is not created last it crashes
     auto tilemap = mts::GameObjectFactory::InstantiateFromJSON("Data/DemoTilemapEntity.prefab");
@@ -85,6 +87,7 @@ void EnemyPrototypeScene::OnEnterPlayMode()
     camera = FindGameObjectByName("CameraObject");
     enemyhp = FindGameObjectByName("HP Bar Enemy");
     playerhp = FindGameObjectByName("HP Bar Player");
+    mBeatLine = FindGameObjectByName("BeatLine");
     if (enemyhp)
     {
         enemyhp->GetComponent<mts::CameraFollow>()->SetObjectToFollow(camera->GetComponent<mts::Transform>());

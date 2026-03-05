@@ -12,11 +12,14 @@
 
 #include <fmod_dsp_effects.h>
 
+#include "../Actions/ColliderScaleAction.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/Conductor/ConductorSystem.h"
+#include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/Animation.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 
 namespace mts
 {
@@ -40,16 +43,33 @@ namespace mts
     {
         //++mBulletsFired;
         //LOG_INFO("Bullet fired {}", mBulletsFired);  // spawn bullet
+        if (!agent.GetGameObject())
+        {
+            return;
+        }
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Attack1);
+        auto a = agent.GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
+        glm::vec2 newSize{size.x * 3.3, size.y};
+        LOG_INFO("Scaling up");
+        agent.GetGameObject()->GetComponent<ActionList>()->AddAction(new 
+            ColliderScaleAction(newSize, agent.GetGameObject(), 1, a * 1.f, a * 5, true, BaseAction::EaseType::Linear));
+        agent.GetGameObject()->GetComponent<ActionList>()->AddAction(
+            new ColliderScaleAction(size,
+                                    agent.GetGameObject(),
+                                    1,
+                                    a,
+                                    a,
+                                    false,
+                                    BaseAction::EaseType::Linear));
+        ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
     }
 
 	void EnemyAttackAction::OnBeginning(EnemyAgent& agent)
 	{
         agent.GetState().SetInAction(true);
-        mBulletsFired = 0;
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() - agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
-
+        size = agent.GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize();
         ConductorSystem& cs = ConductorSystem::Get();
         mConductorSubId = cs.onBeat.Subscribe(
             [this, &agent](mts::BeatInfo info)
@@ -57,8 +77,9 @@ namespace mts
                 if (info.isHalfBeat)
                     FireBullet(agent);
         });
+
         // debug
-        LOG_INFO("EnemyAttackAction: Attacking player! Resetted bulletcount: {}", mBulletsFired);
+        LOG_INFO("EnemyAttackAction: Attacking player!",);
     }
     
 	bool EnemyAttackAction::IsAvailable(const EnemyState& state, 
@@ -82,7 +103,6 @@ namespace mts
 
         if (agent->GetGameObject()->GetComponent<Animation>()->AnimationIsDone())
         {
-            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             agent->GetState().SetAttackCountdown(agent->GetState().GetAttackCooldownTime());  // cooldown after attack
             agent->GetState().SetInAction(false);
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(

@@ -24,4 +24,6 @@ class EnemyPrototypeScene : public mts::Scene
     mts::GameObject* player;
     mts::GameObject* enemy;
     mts::GameObject* mBeatLine;
+    mts::GameObject* enemyhp;
+    mts::GameObject* playerhp;
 };

@@ -33,9 +33,7 @@ namespace mts
        private:
         std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
             const EnemyPreference& preference) override;
-        int mMaxBullets = 4;
-        int mBulletsFired = 0;  
-        
+        glm::vec2 size;
         uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 

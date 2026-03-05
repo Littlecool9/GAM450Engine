@@ -1,187 +1,22 @@
 {
     "GameObjects": [
         {
-            "UUID": "b701f2a7-93af-452b-a98d-f97a96b1f9f9",
-            "Name": "Player",
+            "UUID": "c1b8e5c7-9a0d-4c3b-9f1e-2a1b2c3d4e5f",
+            "Name": "TestPlatform",
             "Layer": 0,
-            "Tags": [
-                "Player"
-            ],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            1.0,
-                            12.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            2.0,
-                            2.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 0.75,
-                        "Height": 0.800000011920929,
-                        "Offset": [
-                            0.0,
-                            -0.20000000298023224
-                        ],
-                        "IsTrigger": 0
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 0.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 3.0,
-                        "BodyType": 1
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 1,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 1,
-                        "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                        "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
-                    }
-                },
-                {
-                    "Type": "Animation",
-                    "Data": {
-                        "FrameIndex": 0,
-                        "FrameCount": 0,
-                        "FrameDelay": 0.0,
-                        "FrameDuration": 0.0,
-                        "IsRunning": 0,
-                        "IsLooping": 0
-                    }
-                },
-                {
-                    "Type": "AnimationSystem",
-                    "Data": {
-                        "States": [
-                            {
-                                "State": 0,
-                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                                "ShaderResource": "",
-                                "HasAnimation": 1,
-                                "FrameIndex": 0,
-                                "FrameCount": 1,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.0,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 1,
-                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                                "ShaderResource": "",
-                                "HasAnimation": 1,
-                                "FrameIndex": 2,
-                                "FrameCount": 2,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.20000000298023224,
-                                "IsRunning": 0,
-                                "IsLooping": 1
-                            },
-                            {
-                                "State": 2,
-                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                                "ShaderResource": "",
-                                "HasAnimation": 1,
-                                "FrameIndex": 1,
-                                "FrameCount": 1,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.0,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 3,
-                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                                "ShaderResource": "",
-                                "HasAnimation": 1,
-                                "FrameIndex": 2,
-                                "FrameCount": 1,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.0,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 4,
-                                "TextureResource": "../TechDemo/Data/Resources/PlayerTexture.json",
-                                "MeshResource": "../TechDemo/Data/Resources/4x2MeshResource.json",
-                                "ShaderResource": "",
-                                "HasAnimation": 1,
-                                "FrameIndex": 4,
-                                "FrameCount": 4,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.5,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "PlayerController",
-                        "Fields": {
-                            "moveSpeed": 3.0,
-                            "jumpSpeed": 14.0,
-                            "walkParticleCooldown": 0.1
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "c65acb28-651e-4584-9b08-29ba4096f6ec",
-            "Name": "Ground",
-            "Layer": 1,
             "Tags": [],
             "Components": [
                 {
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            0.0,
+                            -10.0,
                             5.0,
                             0.0
                         ],
                         "Scale": [
                             20.0,
-                            1.0,
+                            5.0,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -212,13 +47,235 @@
                         "LinearDamping": 0.0,
                         "AngularDamping": 0.0,
                         "GravityScale": 0.0,
-                        "BodyType": 0
+                        "BodyType": 2
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 70,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "MovablePlatform",
+                        "Fields": {}
                     }
                 }
             ]
         },
         {
-            "UUID": "f48c12cd-5100-49f8-ac71-404eefbd9d57",
+            "UUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c",
+            "Name": "Player",
+            "Layer": 0,
+            "Tags": [
+                "Player"
+            ],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            2.1500000953674316,
+                            8.75,
+                            0.0
+                        ],
+                        "Scale": [
+                            5.0,
+                            5.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 0.10000000149011612,
+                        "Height": 0.20000000298023224,
+                        "Offset": [
+                            0.0,
+                            -0.05000000074505806
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 3.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 12,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                        "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 12,
+                        "FrameCount": 7,
+                        "FrameDelay": 0.10000000149011612,
+                        "FrameDuration": 0.10000000149011612,
+                        "IsRunning": 1,
+                        "IsLooping": 1
+                    }
+                },
+                {
+                    "Type": "AnimationSystem",
+                    "Data": {
+                        "States": [
+                            {
+                                "State": 0,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 0,
+                                "FrameCount": 12,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 1
+                            },
+                            {
+                                "State": 1,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 12,
+                                "FrameCount": 7,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 1
+                            },
+                            {
+                                "State": 2,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 20,
+                                "FrameCount": 3,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 3,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 28,
+                                "FrameCount": 3,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 4,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 42,
+                                "FrameCount": 6,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 5,
+                                "TextureResource": "./Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "./Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 47,
+                                "FrameCount": 8,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.10000000149011612,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "PlayerController",
+                        "Fields": {
+                            "moveSpeed": 5.0,
+                            "jumpSpeed": 9.0,
+                            "dashSpeed": 8.0,
+                            "friction": 20.0,
+                            "acceleration": 40.0,
+                            "deceleration": 15.0,
+                            "turnSpeed": 100.0,
+                            "dashDampening": 0.800000011920929,
+                            "dashCooldown": 0.20000000298023224,
+                            "dashMax": 1,
+                            "attackCooldown": 0.5,
+                            "attackComboMaxDelay": 1.0,
+                            "attackDelay": 0.20000000298023224,
+                            "attackLightDamage": 1.0,
+                            "attackHeavyDamage": 2.0,
+                            "attackHitboxOffsetX": 1.0,
+                            "dashBeatBoost": 1.5,
+                            "jumpBeatBoost": 1.5,
+                            "dashRhythmLock": false,
+                            "jumpRhythmLock": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "891587b9-8eeb-4ee3-b871-9d5e21c3c082",
             "Name": "CameraObject",
             "Layer": 0,
             "Tags": [],
@@ -256,7 +313,8 @@
                             0.0,
                             0.0,
                             0.0
-                        ]
+                        ],
+                        "TargetUUID": "2f22e857-4cf5-41ea-bf64-57ce0453a26c"
                     }
                 },
                 {
@@ -265,7 +323,7 @@
             ]
         },
         {
-            "UUID": "ca234957-5dec-4443-9d0d-af11d66da3bd",
+            "UUID": "210370ef-9d3f-479e-8d2f-344fe34c2963",
             "Name": "Crate1",
             "Layer": 1,
             "Tags": [],
@@ -298,9 +356,9 @@
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -334,7 +392,7 @@
             ]
         },
         {
-            "UUID": "61204ebd-782e-4f6b-a954-bde3d780ba66",
+            "UUID": "8c3b422b-25be-4e13-b342-95ff8b906356",
             "Name": "Crate2",
             "Layer": 1,
             "Tags": [],
@@ -367,9 +425,9 @@
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -403,7 +461,7 @@
             ]
         },
         {
-            "UUID": "424bbff8-56c7-4b83-bc07-abc3e3220eca",
+            "UUID": "9adfdb93-f52e-4ce3-b208-fa819dde05f8",
             "Name": "Crate3",
             "Layer": 1,
             "Tags": [],
@@ -436,9 +494,9 @@
                         "FrameIndex": 74,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -472,7 +530,7 @@
             ]
         },
         {
-            "UUID": "f5f9b9ef-7bb3-4301-bb27-99fc1dcbf33f",
+            "UUID": "49ad4a34-c8b8-478c-a8c8-3e22777f107d",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -505,15 +563,15 @@
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "931623db-10b3-4374-a15d-43c66272a834",
+            "UUID": "a4f91d03-4626-4321-abfe-66cea2dff263",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -546,15 +604,15 @@
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "bf70dac0-fe3f-41e5-bca5-0b4fae3826f8",
+            "UUID": "9800c7ce-84fe-4173-8863-07c630f50319",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -587,9 +645,9 @@
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
@@ -628,15 +686,15 @@
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "c76c203e-3805-4e03-8233-985d8d0428ce",
+            "UUID": "ca787a50-1dcc-473f-aef8-a7d56e2e8d4d",
             "Name": "GrassPatch",
             "Layer": 0,
             "Tags": [],
@@ -669,15 +727,15 @@
                         "FrameIndex": 72,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "d41dbc46-974c-4514-abd3-7789f831630b",
+            "UUID": "4f4fa956-c842-4b77-942e-c5160a4ab9b7",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -710,15 +768,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "234f6f86-29cd-4e19-98ca-5836ba675de3",
+            "UUID": "d37a66fd-fcea-4233-980e-d1004c5d8cc8",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -751,15 +809,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "1c4cf08a-2d2e-4d44-91b8-a562c74154d1",
+            "UUID": "db656778-80bc-4e8a-848e-d2561a8f8358",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -792,15 +850,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "60bd6722-e547-423e-b0c7-048c6e8f69a2",
+            "UUID": "4a3ae5f8-8922-414a-8438-8c2c5093e7d8",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -833,15 +891,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "a0fa824b-add0-422c-a9f5-7a9fbca6e982",
+            "UUID": "b24cedd0-9f58-4e10-9364-077bf09dd63e",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -874,15 +932,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "dad038cd-e3c6-4711-be22-793f0ea027f8",
+            "UUID": "d8ce0664-dfb8-49d4-a6ad-9e11ba540655",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -915,15 +973,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "23ba7143-70a2-4c23-9562-68abedc49faa",
+            "UUID": "68350164-aac5-4e41-adf4-7b35d65f16c2",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -956,15 +1014,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "94cd65e3-44b2-497a-99a1-e5ee04a6e1ea",
+            "UUID": "78db10e7-fcf7-43b9-9d65-e7fc4fa058f8",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -997,15 +1055,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "961fb6e5-d513-445e-8b48-089d1c07fca7",
+            "UUID": "f2e49fbc-6b27-4c61-bb2c-d3e0f211fd2f",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1038,9 +1096,9 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
@@ -1079,15 +1137,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "1d8b48ab-94ec-4877-a912-a31ad8fb4e21",
+            "UUID": "298d1de5-3d39-4ca5-8429-378ae76f741a",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1120,15 +1178,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "d21a03b5-b403-4584-8eac-eb5c7ecf379b",
+            "UUID": "a9745893-ca55-4778-845f-049593558371",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1161,15 +1219,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "34254953-4d66-4c08-8aef-6a631b8a2f6a",
+            "UUID": "c96f83cb-1c58-4c91-b9f1-e9c72bda5791",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1202,15 +1260,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "f4f967f2-bf0b-4010-a805-3f46f42df06f",
+            "UUID": "f0c3b881-496e-4536-a2cd-e7ef541d7090",
             "Name": "Fence",
             "Layer": 0,
             "Tags": [],
@@ -1243,15 +1301,15 @@
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
         },
         {
-            "UUID": "ffb40f0f-dfaa-4ad9-b1f7-d794b2d767a5",
+            "UUID": "64d056d5-0d2d-4c47-925f-d3edcdd6d256",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1284,9 +1342,9 @@
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1353,9 +1411,9 @@
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1389,7 +1447,7 @@
             ]
         },
         {
-            "UUID": "0601a962-90a3-4129-89f8-3faf2f4b178b",
+            "UUID": "fadde11b-095f-4097-89bb-2751d5d3fd91",
             "Name": "Block",
             "Layer": 1,
             "Tags": [],
@@ -1422,9 +1480,9 @@
                         "FrameIndex": 7,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1458,7 +1516,7 @@
             ]
         },
         {
-            "UUID": "141dbddd-4cc8-402e-b64e-184b71ce3759",
+            "UUID": "f4aceac2-6d5a-4f4d-952f-11b15bd9827c",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1491,9 +1549,9 @@
                         "FrameIndex": 58,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1527,7 +1585,7 @@
             ]
         },
         {
-            "UUID": "5493dc94-3438-45f3-89d4-052f8be3cbcd",
+            "UUID": "097bffc5-6b5c-4f48-afd2-b8a9a1eae3d9",
             "Name": "WoodPlatform",
             "Layer": 1,
             "Tags": [],
@@ -1560,9 +1618,9 @@
                         "FrameIndex": 58,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1596,7 +1654,7 @@
             ]
         },
         {
-            "UUID": "53ab38b3-aeae-40d2-8436-736c448b31ef",
+            "UUID": "8d96181a-0144-41af-8d08-6d5f0142372c",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1629,9 +1687,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1643,10 +1701,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -1733,7 +1791,7 @@
             ]
         },
         {
-            "UUID": "31452920-b79f-480d-b21a-6599329c5dc3",
+            "UUID": "f38efaa9-13ab-47b5-a9df-b7e0b2f000d2",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1766,9 +1824,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1780,10 +1838,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -1870,7 +1928,7 @@
             ]
         },
         {
-            "UUID": "17216733-ac76-4a55-9b9f-f45b7a524969",
+            "UUID": "fdb235d6-8ab7-4348-81b4-fc67c420a796",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -1903,9 +1961,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -1917,10 +1975,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -2007,7 +2065,7 @@
             ]
         },
         {
-            "UUID": "2c61e852-86d5-490a-b1a5-830f82c3be8f",
+            "UUID": "a33b2c27-e042-421c-b700-d8fb8897c9db",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2040,9 +2098,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -2054,10 +2112,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -2144,7 +2202,7 @@
             ]
         },
         {
-            "UUID": "9906dac2-5e34-4971-a86d-684cdab1b1f8",
+            "UUID": "a3385510-1b0a-47b4-ae4c-21b97f823f9b",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2177,9 +2235,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -2191,10 +2249,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -2281,7 +2339,7 @@
             ]
         },
         {
-            "UUID": "14fe4cf2-4468-4df1-9153-90613fe034f5",
+            "UUID": "ce7958c9-d180-4a64-a630-3b1abbd619a8",
             "Name": "Gem",
             "Layer": 0,
             "Tags": [],
@@ -2314,9 +2372,9 @@
                         "FrameIndex": 50,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -2328,10 +2386,10 @@
                             0.0
                         ],
                         "Alpha": 1.0,
-                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.json",
-                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.json",
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
                         "FrameIndex": 36,
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader",
                         "Scale": [
                             0.0,
                             0.0
@@ -2418,89 +2476,7 @@
             ]
         },
         {
-            "UUID": "cc1a0012-2b90-4704-a96c-8ea752436bbc",
-            "Name": "Sky",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            1.0,
-                            10.0,
-                            -1.0
-                        ],
-                        "Scale": [
-                            10.0,
-                            10.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.8999999761581421,
-                        "RenderLayer": -1,
-                        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
-                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "baf7a624-dbea-43a5-83d5-ab3d2a990a33",
-            "Name": "BackgroundTest",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            1.0,
-                            10.0,
-                            -1.0
-                        ],
-                        "Scale": [
-                            10.0,
-                            15.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.5,
-                        "RenderLayer": -1,
-                        "TextureResource": "../TechDemo/Data/Resources/SkyTextureResource.json",
-                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "9db7553d-6237-4ede-a868-c657eff6a47e",
+            "UUID": "5eebed0a-46e6-4b26-a219-4d4baf90ab33",
             "Name": "BeatLine",
             "Layer": 0,
             "Tags": [],
@@ -2533,9 +2509,9 @@
                         "FrameIndex": 0,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 10,
-                        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.json",
-                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.json",
-                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.json"
+                        "TextureResource": "../TechDemo/Data/Resources/BeatLineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 },
                 {
@@ -2543,14 +2519,14 @@
                     "Data": {
                         "Class": "BeatBarController",
                         "Fields": {
-                            "SpeedMultiplier": 1.0
+                            "SpeedMultiplier": 2.0
                         }
                     }
                 }
             ]
         },
         {
-            "UUID": "171b0da6-7f6c-440b-9e0b-5eda8f357544",
+            "UUID": "f2e60619-6e44-4a26-a615-b9f2922377de",
             "Name": "DemoTilemapEntity",
             "Layer": 1,
             "Tags": [],
@@ -2559,8 +2535,8 @@
                     "Type": "Tilemap",
                     "Data": {
                         "Name": "Demo Tilemap",
-                        "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.json",
-                        "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.json",
+                        "TextureSourcePath": "../Mitosis-Engine/src/Resources/TilemapDefaultTextureResource.tex",
+                        "ShaderPath": "../Mitosis-Engine/src/Resources/TilemapDefaultShaderResource.shader",
                         "TilesetsPath": [
                             "Data/Tilemap/Tileset_0.json"
                         ],
@@ -2570,7 +2546,8 @@
                                 "TileIDs": [
                                     1,
                                     2,
-                                    3
+                                    3,
+                                    4
                                 ]
                             }
                         ],
@@ -2580,7 +2557,6 @@
                         ],
                         "TilemapCellGrid": [
                             [
-                                3,
                                 0,
                                 0,
                                 0,
@@ -2614,269 +2590,270 @@
                                 0,
                                 0,
                                 0,
-                                3
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
                             ],
                             [
                                 3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                3
-                            ],
-                            [
-                                3,
                                 2,
                                 2,
                                 2,
@@ -2885,14 +2862,14 @@
                                 2,
                                 2,
                                 2,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
                                 2,
                                 2,
                                 2,
@@ -2910,118 +2887,7 @@
                                 2,
                                 2,
                                 2,
-                                3
-                            ],
-                            [
-                                3,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                3
-                            ],
-                            [
-                                3,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                3
-                            ],
-                            [
-                                3,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                2,
-                                2,
-                                2,
-                                2,
-                                2,
-                                2,
-                                2,
-                                2,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                1,
-                                3
+                                2
                             ],
                             [
                                 3,
@@ -3058,7 +2924,7 @@
                                 1,
                                 1,
                                 1,
-                                3
+                                1
                             ],
                             [
                                 3,
@@ -3095,7 +2961,118 @@
                                 1,
                                 1,
                                 1,
-                                3
+                                1
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1
+                            ],
+                            [
+                                3,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1
                             ],
                             [
                                 3,
@@ -3132,9 +3109,1765 @@
                                 3,
                                 3,
                                 3,
-                                3
+                                1
                             ]
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a3b3c7c5-a399-48f4-a29d-15f5df1dd171",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f8445278-8ebb-487c-b36f-d0d5877c7b82",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d87263e9-bcf1-4f6b-81ce-3126a7714725",
+            "Name": "EnemyCollectable",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            10.0,
+                            8.399999618530273,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 2
+                    }
+                },
+                {
+                    "Type": "CircleCollider2D",
+                    "Data": {
+                        "Radius": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 1,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/EnemyTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "AudioEmitter",
+                    "Data": {
+                        "EventId": "event:/Coin",
+                        "PositionOffset": [
+                            0.0,
+                            0.0
+                        ],
+                        "MaxAudibleDistance": 1500.0,
+                        "StartVolume": 1.0,
+                        "StartPitch": 1.0,
+                        "PlayOnStart": 0,
+                        "Spatialized2D": 1,
+                        "IsOneShot": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "EnemyController",
+                        "Fields": {
+                            "moveTime": 3,
+                            "spinDegrees": 180
+                        }
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CollectableController"
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                }
+            ]
+        },
+        {
+            "UUID": "5f320e62-23de-48ef-9932-dc9e372c7541",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1933f394-1c68-4390-aaf4-56cda89006fc",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e323d436-0245-419c-98f2-38ea85207571",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "193eedef-2afb-4c91-baa1-d66de728c0ba",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "5f424db2-98f2-486f-b9d5-854f85dff856",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "80dfe33b-f5cd-4db9-9191-8c3e94c4533a",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c15a0353-d99c-4d41-9a15-e65c2e1e61eb",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "3fe7b57d-364e-4df7-ad0a-0064cc3389a5",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c4f69c13-5d33-422d-be27-6403121ee864",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "53126fb6-604c-4951-9797-2ead2d1f2bbc",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "4014f5df-576c-40fa-8583-49b64c5424e5",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "2b3eda03-57bd-4897-955f-4e68785c0027",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d1c8e5b7-9c3a-4c8b-9f0c-1e5a2b6f8e9d",
+            "Name": "PlatformPuzzle1",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "PlatformPuzzleScript",
+                        "Fields": {
+                            "PuzzleId": 1,
+                            "BeatInterval": 4,
+                            "HalfBeatInterval": 0,
+                            "LoopSequence": true,
+                            "AutoActivate": true,
+                            "Platforms": [
+                                {
+                                    "UUID": "6967d62c-787b-4a3c-8fc2-fa5f67afe938",
+                                    "Positions": [
+                                        {
+                                            "Position": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                10,
+                                                0,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                10,
+                                                10,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                0,
+                                                10,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        }
+                                    ]
+                                },
+                                {
+                                    "UUID": "06dd0290-44c8-4b0d-a12f-01306cdd7fae",
+                                    "Positions": [
+                                        {
+                                            "Position": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                0,
+                                                10,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                10,
+                                                10,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        },
+                                        {
+                                            "Position": [
+                                                10,
+                                                0,
+                                                0
+                                            ],
+                                            "Speed": 2.0
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "6967d62c-787b-4a3c-8fc2-fa5f67afe938",
+            "Name": "Platform1",
+            "Layer": 0,
+            "Tags": [
+                "Puzzle1"
+            ],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            10.0,
+                            10.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            2.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 19,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "MovablePlatform",
+                        "Fields": {}
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "7e187814-c461-46eb-afc5-cbe509f9037e",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "be2ec3f0-6c8b-4302-8779-dcc6fe9e75d4",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d3211644-94cf-46a2-a2fb-bcffc786810b",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "51d654b8-04a0-4335-9943-555dfb268ff8",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "06dd0290-44c8-4b0d-a12f-01306cdd7fae",
+            "Name": "Platform1",
+            "Layer": 0,
+            "Tags": [
+                "Puzzle1"
+            ],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "../TechDemo/Data/Resources/DemoTextureResource.tex",
+                        "MeshResource": "../TechDemo/Data/Resources/14x7MeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "MovablePlatform",
+                        "Fields": {}
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "4f48c246-d0d1-4ee8-b103-853f98bcc0d8",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a87f9f94-b9e6-4286-89db-07b205c5ec9c",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1c067338-942b-4531-83da-5a494f5c3530",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a03cdd97-9426-4cc9-98aa-d745f4acb01f",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "424ca4d1-f2de-4c26-9e9e-6eedbd88b45d",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "403dbaf8-533e-4b43-b69b-f48c424ecb35",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a9af0637-7f5c-491e-9aa8-e397b48c3070",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "84b85d43-ba1f-4c96-b606-420a2335d02b",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "6e24989b-ea32-4503-ba08-f1447736ff82",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "27993a7d-0b67-4180-b916-049f4648804f",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "79593a63-bbbe-416f-97ab-8b951622c017",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "8cdefc8a-b52f-415d-84f5-579f438ccf94",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "57635565-a5fb-4a59-9365-21d2a3349ba4",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "9073b415-1bb8-41c8-ac50-5d05519658d1",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f26a4594-8c3a-4474-9f9a-e8a2a0bb0220",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d54485b1-41b4-4037-a23d-39bacdeb2a70",
+            "Name": "BeatMarker",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.5,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 10,
+                        "TextureResource": "../TechDemo/Data/Resources/ABtnOutlineTextureResource.tex",
+                        "MeshResource": "../Mitosis-Engine/src/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "../Mitosis-Engine/src/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

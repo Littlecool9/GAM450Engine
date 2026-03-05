@@ -1,0 +1,54 @@
+{
+  "Name": "HP Bar",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          7,
+          7,
+          0
+        ],
+        "Scale": [
+          8,
+          0.2,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "BarScaler"
+      }
+    },
+    {
+        "Type": "CameraFollow",
+        "Data": {
+            "MaxAcceleration": 500.0,
+            "Interpolant": 2.0,
+            "CameraOffset": [
+                0,
+                0,
+                0
+            ]
+        }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 1,
+        "NumCols": 1,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 1,
+        "TextureResource": "../EnemyPrototype/Data/Resources/hpbarp.tex",
+        "RenderLayer":1
+      }
+    }
+  ]
+}

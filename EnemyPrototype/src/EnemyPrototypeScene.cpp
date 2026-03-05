@@ -14,6 +14,8 @@
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
+#include "Script/BarScaler.h"
+#include "Script/EnemyController.h"
 #include "Script/PlayerController.h"
 
 REGISTER_ENEMY_ACTION("Enemy1", mts::EnemyAttackAction);
@@ -37,6 +39,9 @@ EnemyPrototypeScene::~EnemyPrototypeScene()
 void EnemyPrototypeScene::OnInit()
 {
     mts::ScriptFactory::RegisterScript("PlayerController", []() { return new PlayerController(); });
+    mts::ScriptFactory::RegisterScript("EnemyController", []() { return new mts::EnemyController(); });
+    mts::ScriptFactory::RegisterScript("BarScaler", []() { return new mts::BarScaler(); });
+
     player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");
 
@@ -52,6 +57,11 @@ void EnemyPrototypeScene::OnInit()
 
     enemy = mts::GameObjectFactory::InstantiateFromJSON("Data/Enemy.prefab");
     enemy->SetName("Enemy");
+
+    enemyhp = mts::GameObjectFactory::InstantiateFromJSON("Data/HPBar.prefab");
+    enemyhp->SetName("HP Bar Enemy");
+    playerhp = mts::GameObjectFactory::InstantiateFromJSON("Data/HPBarP.prefab");
+    playerhp->SetName("HP Bar Player");
 
     //mts::SceneSystem::LoadScene(this, "../TechDemo/Data/Resources/CurrentScene.json");
     // if this is not created last it crashes
@@ -73,6 +83,17 @@ void EnemyPrototypeScene::OnEnterPlayMode()
     enemy->GetComponent<mts::EnemyAgent>()->SetPlayerReference(player);
     enemy->GetComponent<mts::EnemyAgent>()->Initialize(mts::AIPlanner::GetPlannerById("Enemy1"));
     camera = FindGameObjectByName("CameraObject");
+    enemyhp = FindGameObjectByName("HP Bar Enemy");
+    playerhp = FindGameObjectByName("HP Bar Player");
+    if (enemyhp)
+    {
+        enemyhp->GetComponent<mts::CameraFollow>()->SetObjectToFollow(camera->GetComponent<mts::Transform>());
+        enemy->GetScript<mts::EnemyController>()->SetBar(enemyhp);
+    }
+    if (playerhp)
+    {
+        player->GetScript<PlayerController>()->SetHpBar(playerhp);
+    }
     if (camera)
     {
         camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
@@ -93,5 +114,13 @@ void EnemyPrototypeScene::OnExitPlayMode()
 
 void EnemyPrototypeScene::OnUpdate()
 {
-
+    if (player->IsDead())
+    {
+        if (enemy)
+        {
+            enemy->GetComponent<mts::EnemyAgent>()->SetPlayerReference(nullptr);
+            camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
+                enemy->GetComponent<mts::Transform>());
+        }
+    }
 }

@@ -31,7 +31,7 @@ namespace mts
             const EnemyPreference& preference) override;
 
 
-        float mStopDistance = 3.0f;  // how close is “arrived”
+        float mStopDistance = 1.4f;  // how close is “arrived”
         float mGiveUpTime = 3.0f;    // fail if cannot reach in time
         float mMoveSpeed = 5.0f;     // units/sec
     };

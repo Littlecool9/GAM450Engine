@@ -49,11 +49,11 @@ namespace mts
         float mPlayerHealthLeftRatio = 0.0f;
         float mMovementSpeed = 0.0f;
         float mDistanceToPlayer = 0.0f;
-        float mAttackCooldownTime = 4.0f;
+        float mAttackCooldownTime = 3.4f;
         float mAttackCountdown = 0.0f;
-        float mAttack2CooldownTime = 6.0f;
+        float mAttack2CooldownTime = 4.0f;
         float mAttack2Countdown = 0.0f;
-        float mDodgeCooldownTime = 6.0f;
+        float mDodgeCooldownTime = 4.5f;
         float mDodgeCountdown = 0.0f;
         bool mMeleeAnimation = false;
         bool mInAction = false;

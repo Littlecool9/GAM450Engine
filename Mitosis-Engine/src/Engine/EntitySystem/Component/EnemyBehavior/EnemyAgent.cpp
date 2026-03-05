@@ -39,6 +39,10 @@ namespace mts
 
     void EnemyAgent::Update(float dt)
     {
+        if (!mPlayerRef)
+        {
+            return;
+        }
         UpdateStateFromWorld(dt);
         bool hasPlanOrExecuting = PlanningAndPlanExecution(dt);
         // if want behavior for when agent isnt executing actions

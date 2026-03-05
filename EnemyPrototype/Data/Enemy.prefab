@@ -5,8 +5,8 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          11,
-          12,
+          25,
+          5,
           0
         ],
         "Scale": [
@@ -20,11 +20,11 @@
     {
       "Type": "BoxCollider2D",
       "Data": {
-        "Width": 0.37,
-        "Height": 0.4,
+        "Width": 0.18,
+        "Height": 0.3,
         "Offset": [
           0,
-          -0.2
+          0
         ]
       }
     },
@@ -55,7 +55,7 @@
           1.0
         ],
         "FrameIndex": 1,
-        "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+        "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex.tex",
         "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
         "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
         "RenderLayer":1
@@ -78,7 +78,7 @@
         "States": [
             {
               "State": 0,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -91,7 +91,7 @@
             },
             {
               "State": 1,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -104,7 +104,7 @@
             },
             {
               "State": 2,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -117,7 +117,7 @@
             },
             {
               "State": 3,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -130,7 +130,7 @@
             },
             {
               "State": 4,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -143,7 +143,7 @@
             },
             {
               "State": 5,
-              "TextureResource": "../EnemyPrototype/Data/Resources/EnemyTexture.tex",
+              "TextureResource": "../EnemyPrototype/Data/Resources/PlayerTexture.tex",
               "MeshResource": "../EnemyPrototype/Data/Resources/1000x900MeshResource.mesh",
               "ShaderResource": "../EnemyPrototype/Data/Resources/EnemyShader.shader",
               "HasAnimation": 1,
@@ -158,7 +158,16 @@
       }
     },
     {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "EnemyController"
+      }
+    },
+    {
       "Type": "EnemyAgent"
+    },
+    {
+      "Type": "ActionList"
     }
   ]
 }

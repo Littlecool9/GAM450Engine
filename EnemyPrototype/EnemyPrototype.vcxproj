@@ -176,6 +176,10 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actions\ColliderScaleAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\EnemyAI\EnemyAttackAction.h">
     </ClInclude>
     <ClInclude Include="src\EnemyAI\EnemyAttackAction2.h" />
@@ -190,9 +194,20 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\EnemyPrototype.h" />
     <ClInclude Include="src\EnemyPrototypeScene.h" />
+    <ClInclude Include="src\Script\AttackHitboxScript.h" />
+    <ClInclude Include="src\Script\BarScaler.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\BeatBarController.h" />
+    <ClInclude Include="src\Script\EnemyController.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Actions\ColliderScaleAction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\EnemyAI\EnemyAttackAction.cpp">
     </ClCompile>
     <ClCompile Include="src\EnemyAI\EnemyAttackAction2.cpp" />
@@ -209,6 +224,13 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     </ClCompile>
     <ClCompile Include="src\EnemyPrototype.cpp" />
     <ClCompile Include="src\EnemyPrototypeScene.cpp" />
+    <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
+    <ClCompile Include="src\Script\BarScaler.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\BeatBarController.cpp" />
+    <ClCompile Include="src\Script\EnemyController.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>

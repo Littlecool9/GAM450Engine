@@ -17,7 +17,7 @@ namespace mts
     bool EnemyDodgeAction::IsAvailable(const EnemyState& state,
                                        const EnemyPreference& /*preferences*/) const
     {
-        if (state.GetDodgeCountdown() > 0 || state.GetDistanceToPlayer() > 5 || state.GetCurrentPlayerState() != AnimationSystem::States::Attack1)
+        if (state.GetDodgeCountdown() > 0 || state.GetDistanceToPlayer() > 6 || state.GetCurrentPlayerState() != AnimationSystem::States::Attack1)
         {
             return false;
         }

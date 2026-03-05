@@ -174,8 +174,8 @@ namespace mts
         dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& ev)
                                               { return OnWindowClose(ev); });
 
-        // if (Input::IsKeyPressed(Key::C))
-        //     mInDebugView = !mInDebugView;
+        if (Input::IsKeyPressed(Key::C))
+            mInDebugView = !mInDebugView;
     }
 
     bool Application::OnWindowClose(class WindowCloseEvent& e)
@@ -205,7 +205,7 @@ namespace mts
         std::string snapshot = SerializationUtility::SerializeToString(scene);
         // Preserve edit GOs untouched; deserialize fresh play GOs
         scene->StashGameObjects();
-        mCtx.selected = UUID::InvalidID;  // clear stale edit-mode UUID before play GOs load
+        mCtx.selected = UUID::InvalidID;   // clear stale edit-mode UUID before play GOs load
         SerializationUtility::DeserializeFromString(scene, snapshot);
         scene->EnterPlayMode();
         mCtx.playState = PlayState::Play;

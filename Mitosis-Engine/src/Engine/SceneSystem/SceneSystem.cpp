@@ -95,7 +95,7 @@ namespace mts
     void SceneSystem::SceneCleanUp()
     {
         MTS_ASSERT(currentScene != nullptr);
-        currentScene->CleanupGameObjects();
+        currentScene->DestroyGameObjects();
     }
 
     // @brief: change the current scene if the next scene is set

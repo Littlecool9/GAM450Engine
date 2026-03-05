@@ -508,6 +508,7 @@ void PlayerController::SpawnAttackHitbox(float damage)
     // Create attack hitbox object
     mts::GameObject* attackHitbox = mts::GameObjectFactory::CreateGameObject();
     mts::SerializationUtility::DeserializeFromFile(attackHitbox, "Data/AttackHitbox.prefab");
+    attackHitbox->Init();
     // Get transform and add or subtract offset based on facing dir
     mts::Transform* attackHitboxTransform = attackHitbox->GetComponent<mts::Transform>();
     glm::vec2 hitBoxPos = transform->GetPosition();

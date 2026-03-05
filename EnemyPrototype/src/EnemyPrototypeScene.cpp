@@ -14,6 +14,7 @@
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Scripting/ScriptFactory.h"
+#include "Script/AttackHitboxScript.h"
 #include "Script/BarScaler.h"
 #include "Script/BeatBarController.h"
 #include "Script/EnemyController.h"
@@ -43,6 +44,8 @@ void EnemyPrototypeScene::OnInit()
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new mts::EnemyController(); });
     mts::ScriptFactory::RegisterScript("BarScaler", []() { return new mts::BarScaler(); });
     mts::ScriptFactory::RegisterScript("BeatBarController", []() { return new BeatBarController(); });
+    //mts::ScriptFactory::RegisterScript("AttackHitboxScript",
+    //                                   []() { return new AttackHitboxScript(); });
 
     player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");

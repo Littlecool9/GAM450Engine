@@ -78,16 +78,16 @@ class PlayerController : public mts::ScriptBase
     mts::Transform* transform = nullptr;
 
     // Adjustable parameters
-    float mMoveSpeed = 5.0f;
+    float mMoveSpeed = 5.0f; // Max Speed
     float mJumpSpeed = 12.0f;
     float mDashSpeed = 12.0f;
-    float mFriction = 20.0f;
-    float mAcceleration = 40.0f;
-    float mDeceleration = 15.0f;
-    float mDashDampening = 0.8f;
-    float mTurnSpeed = 100.0f;
-    int mDashMax = 1;
-    float mDashCooldown = 0.2f;
+    float mFriction = 20.0f; // Deceleration when not moving
+    float mAcceleration = 40.0f; // Acceleration when holding direction
+    float mDeceleration = 15.0f; // Deceleration when moving above max speed (mMoveSpeed)
+    float mDashDeceleration = 100.0f; // Deceleration when in dash state
+    float mTurnSpeed = 100.0f; // Acceleration when changing directions
+    int mDashMax = 1; // Max number of dashes before recharge
+    float mDashCooldown = 0.2f; // Length of dash state
     float mAttackCooldown = 0.5f;
     float mAttackComboMaxDelay = 3.0f;
     // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
@@ -110,9 +110,11 @@ class PlayerController : public mts::ScriptBase
     bool isGrounded = false;
     int dashCount = 1;
     float dashTimer = -1.0f;
+    glm::vec2 currentDashDir = {0.0f, 0.0f};
     float attackTimer = -1.0f;
     float attackComboTimer = -1.0f;
     float attackDelayTimer = -2.0f;
+    float defaultGravityScale = 1.0f;
     bool isAttacking = false;
     Direction facingDir = RIGHT;
 

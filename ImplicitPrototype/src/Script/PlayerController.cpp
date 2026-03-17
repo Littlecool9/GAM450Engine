@@ -40,18 +40,19 @@ void PlayerController::OnCreate()
     anim = GetGameObject()->GetComponent<mts::AnimationSystem>();
     sprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
     transform = GetGameObject()->GetComponent<mts::Transform>();
+
+    defaultGravityScale = rb->GetGravityScale();
 }
 
 void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    bool upHeld = mts::Input::IsKeyDown(mts::Key::Up);
-    bool downHeld = mts::Input::IsKeyDown(mts::Key::Down);
-    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left);
-    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right);
-    glm::vec2 inputDir = {static_cast<int>(rightHeld) - static_cast<int>(leftHeld),
-                          static_cast<int>(upHeld) - static_cast<int>(downHeld)};
+    float upStrength = mts::Input::IsKeyDown(mts::Key::Up) ? 1.0f : 0.0f;
+    float downStrength = mts::Input::IsKeyDown(mts::Key::Down) ? 1.0f : 0.0f;
+    float leftStrength = mts::Input::IsKeyDown(mts::Key::Left) ? 1.0f : 0.0f;
+    float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) ? 1.0f : 0.0f;
+    glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
     bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift);
     bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z);
@@ -69,11 +70,11 @@ void PlayerController::OnUpdate(float dt)
     // Change sprite facing direction if able
     if (!isAttacking)
     {
-        if (leftHeld)
+        if (leftStrength > 0.0f)
         {
             sprite->SetFlipX(true);
         }
-        if (rightHeld)
+        if (rightStrength > 0.0f)
         {
             sprite->SetFlipX(false);
         }
@@ -173,9 +174,15 @@ void PlayerController::OnUpdate(float dt)
 
     // Possible animation/sprite/color change while dash is in cooldown
     if (dashTimer > 0.0f)
+    {
         sprite->SetTintColor(glm::vec3(0.7f));
+        rb->SetGravityScale(0.0f);
+    }
     else
+    {
         sprite->SetTintColor(glm::vec3(1.0f));
+        rb->SetGravityScale(defaultGravityScale);
+    }
 }
 
 void PlayerController::OnFixedUpdate(float dt)
@@ -200,7 +207,16 @@ void PlayerController::OnFixedUpdate(float dt)
 
     currVelocity = rb->GetVelocity();
     // Calculate horizontal velocity
-    if (static_cast<int>(moveDir) != 0 && !isAttacking)
+    if (dashTimer > 0.0f)
+    {
+        currVelocity.x = MoveToward(currVelocity.x, moveDir * mMoveSpeed, mDashDeceleration * dt);
+        // Only decelerate vertically if dashing vertically up
+        if (currentDashDir.y > 0.1f)
+        {
+            currVelocity.y = MoveToward(currVelocity.y, 0.0f, mDashDeceleration * dt);
+        }
+    }
+    else if (static_cast<int>(moveDir) != 0 && !isAttacking)
     {
         // Turning around
         if (currVelocity.x != 0.0f &&
@@ -250,8 +266,8 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         mDeceleration = fields["deceleration"].GetFloat(mDeceleration);
     if (fields.Has("turnSpeed"))
         mTurnSpeed = fields["turnSpeed"].GetFloat(mTurnSpeed);
-    if (fields.Has("dashDampening"))
-        mDashDampening = fields["dashDampening"].GetFloat(mDashDampening);
+    if (fields.Has("dashDeceleration"))
+        mDashDeceleration = fields["dashDeceleration"].GetFloat(mDashDeceleration);
     if (fields.Has("dashCooldown"))
         mDashCooldown = fields["dashCooldown"].GetFloat(mDashCooldown);
     if (fields.Has("dashMax"))
@@ -295,7 +311,7 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("acceleration", mAcceleration);
     out.WriteFloat("deceleration", mDeceleration);
     out.WriteFloat("turnSpeed", mTurnSpeed);
-    out.WriteFloat("dashDampening", mDashDampening);
+    out.WriteFloat("dashDeceleration", mDashDeceleration);
     out.WriteFloat("dashCooldown", mDashCooldown);
     out.WriteInt("dashMax", mDashMax);
     out.WriteFloat("attackCooldown", mAttackCooldown);
@@ -341,9 +357,9 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mTurnSpeed},
                       .step = 0.1f});
-    fields.push_back({.name = "dashDampening",
+    fields.push_back({.name = "dashDeceleration",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mDashDampening},
+                      .ptr = {.f = &mDashDeceleration},
                       .step = 0.1f});
     fields.push_back({.name = "dashCooldown",
                       .type = mts::ScriptField::Type::Float,
@@ -446,26 +462,14 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
         facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
     else
         dashDir = inputDir;
-    // Deceleration when above max speed affects dash distance only to left and right
-    // dashDampening is used to adjust horizontal dash distance
-    if (mDashDampening > 1.0f)
-    {
-        if (static_cast<int>(dashDir.y) == 0)
-            dashDir.x *= mDashDampening;
-    }
-    else if (mDashDampening < 1.0f)
-    {
-        if (static_cast<int>(dashDir.y) != 0)
-            dashDir.x *= mDashDampening;
-    }
+
     // Multiply dash speed if hit on beat
     float adjustedDashSpeed = inWindow ? mDashSpeed * mDashBeatBoost : mDashSpeed;
 
-    // Set velocity directly in direction of dash but don't change velocity where component
-    // of dash direction is zero
-    currVelocity = (currVelocity * (1.0f - glm::abs(dashDir))) + adjustedDashSpeed * dashDir;
+    currVelocity = adjustedDashSpeed * dashDir;
     --dashCount;
     dashTimer = mDashCooldown;
+    currentDashDir = dashDir;
 }
 
 void PlayerController::Jump(bool inWindow)

@@ -316,6 +316,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyState.h" />
+    <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyStateParameter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyStep.h">
       <SubType>
       </SubType>
@@ -550,6 +554,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\DebugDraw.cpp" />
+    <ClCompile Include="src\Engine\EntitySystem\Component\EnemyBehavior\EnemyStateParameter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Entity\Entity.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\ActionList.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\Actions\BaseAction.cpp" />

@@ -20,6 +20,7 @@
 #include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
+#include "params/AttackCountdownParam.h"
 
 namespace mts
 {
@@ -29,7 +30,6 @@ namespace mts
         EnemyState newState = state;
 		//TODO: update once player gameobject has stats
         newState.SetPlayerHealthLeftRatio(0.6f);
-
 		return newState;
     }
 
@@ -41,8 +41,6 @@ namespace mts
 
     void EnemyAttackAction::FireBullet(EnemyAgent& agent)
     {
-        //++mBulletsFired;
-        //LOG_INFO("Bullet fired {}", mBulletsFired);  // spawn bullet
         if (!agent.GetGameObject())
         {
             return;
@@ -85,7 +83,8 @@ namespace mts
 	bool EnemyAttackAction::IsAvailable(const EnemyState& state, 
 		const EnemyPreference& preferences) const
 	{
-        if (state.GetInAction() || state.GetAttackCountdown() > 0)
+        if (state.GetInAction() ||
+            std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue()) > 0)
         {
             return false;
         }
@@ -103,7 +102,12 @@ namespace mts
 
         if (agent->GetGameObject()->GetComponent<Animation>()->AnimationIsDone())
         {
-            agent->GetState().SetAttackCountdown(agent->GetState().GetAttackCooldownTime());  // cooldown after attack
+             // cooldown after attack
+            agent->GetState()
+                .params.at(HashAction("AttackCooldown"))
+                ->SetValue(static_cast<AttackCountdownParam*>(
+                              agent->GetState().params.at(HashAction("AttackCooldown")))
+                              ->GetCooldownTime());
             agent->GetState().SetInAction(false);
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);

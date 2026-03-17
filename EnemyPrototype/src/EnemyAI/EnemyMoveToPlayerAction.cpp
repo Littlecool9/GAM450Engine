@@ -69,7 +69,6 @@ namespace mts
             // Stop movement when reached
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));  // TODO: replace
 
-            //agent->GetState().SetInAction(false);
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);
             return Success;
@@ -81,7 +80,7 @@ namespace mts
             // Stop movement on failure too
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
 
-            //agent->GetState().SetInAction(false);
+            agent->GetState().SetInAction(false);
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);
             return Failed;
@@ -98,7 +97,6 @@ namespace mts
             agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
         }
         const glm::vec2 vel = dir * mMoveSpeed;
-        //float y = agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y;
         agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
             glm::vec2{vel.x, agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y});  
 

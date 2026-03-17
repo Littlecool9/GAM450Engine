@@ -21,6 +21,8 @@
 #include "Engine/EntitySystem/Component/Actions/BaseAction.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "../Actions/ColliderScaleAction.h"
+#include "params/AttackCountdown2Param.h"
+
 namespace mts
 {
 
@@ -30,7 +32,6 @@ namespace mts
         EnemyState newState = state;
 		//TODO: update once player gameobject has stats
         newState.SetPlayerHealthLeftRatio(0.4f);
-
 		return newState;
     }
 
@@ -42,8 +43,6 @@ namespace mts
 
     void EnemyAttackAction2::FireBullet(EnemyAgent& agent)
     {
-        //++mBulletsFired;
-        //LOG_INFO("Bullet fired {}", mBulletsFired);  // spawn bullet
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Attack2);
         auto a = agent.GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
@@ -71,6 +70,7 @@ namespace mts
 	void EnemyAttackAction2::OnBeginning(EnemyAgent& agent)
 	{
         agent.GetState().SetInAction(true);
+
         size = agent.GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize();
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() - agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
 
@@ -81,14 +81,13 @@ namespace mts
                 if (info.isHalfBeat)
                     FireBullet(agent);
         });
-        // debug
-        //LOG_INFO("EnemyAttackAction: Heavy Attacking player!{}", mBulletsFired);
     }
     
 	bool EnemyAttackAction2::IsAvailable(const EnemyState& state, 
 		const EnemyPreference& preferences) const
 	{
-        if (state.GetInAction() || state.GetAttack2Countdown() > 0)
+        if (state.GetInAction() ||
+            std::get<float>(state.params.at(HashAction("Attack2Cooldown"))->GetValue()) > 0)
         {
             return false;
         }
@@ -103,10 +102,16 @@ namespace mts
         {
             return Invalid;
         }
+
         if (agent->GetGameObject()->GetComponent<Animation>()->AnimationIsDone())
         {
-            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
-            agent->GetState().SetAttack2Countdown(agent->GetState().GetAttack2CooldownTime());  // cooldown after attack
+            // cooldown after attack
+            agent->GetState()
+                .params.at(HashAction("Attack2Cooldown"))
+                ->SetValue(static_cast<AttackCountdown2Param*>(
+                               agent->GetState().params.at(HashAction("Attack2Cooldown")))
+                               ->GetCooldownTime());
+
             agent->GetState().SetInAction(false);
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);
@@ -125,6 +130,7 @@ namespace mts
         if (result == Failed)
         {
             ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+            // agent.GetState().SetInAction(false);
             agent.GetState().SetInAction(false);
             LOG_INFO("Attack Failed, unsubscribing from beat");
         }

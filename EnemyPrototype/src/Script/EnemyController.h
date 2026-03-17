@@ -20,7 +20,7 @@ namespace mts
         void DeserializeFields(JsonValue const& fields) override;
         void SerializeFields(JsonDocument& out) const override;
         void OnCollisionEnter2D(const Collision2D& collision) override;
-
+        int GetCurHP() { return curhp; }
         void SetBar(GameObject* bar) { hpBar = bar; }
 
         SCRIPT_CLASS(EnemyController)

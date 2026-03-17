@@ -286,7 +286,7 @@ namespace mts
 
         // set state variables by querying the world here, e.g. distance to player, player health
         // ratio, etc
-        //mstate.parameter....
+
         if (mPlayerRef)
         {
             mState.SetDistanceToPlayer(
@@ -295,20 +295,9 @@ namespace mts
             mState.SetCurrentPlayerState(mPlayerRef->GetComponent<AnimationSystem>()->GetCurrentState());
         }
 
-        if (mState.GetAttackCountdown() > 0)
+        for (auto& [id, value] : mState.params)
         {
-            mState.SetAttackCountdown(mState.GetAttackCountdown() - dt);  
-            //LOG_INFO("Attack Cooldown: {}", mState.GetAttackCountdown());
-        }
-        if (mState.GetAttack2Countdown() > 0)
-        {
-            mState.SetAttack2Countdown(mState.GetAttack2Countdown() - dt);
-            //LOG_INFO("Attack 2 Cooldown: {}", mState.GetAttack2Countdown());
-        }
-        if (mState.GetDodgeCountdown() > 0)
-        {
-            mState.SetDodgeCountdown(mState.GetDodgeCountdown() - dt);
-            //LOG_INFO("Dodge Cooldown: {}", mState.GetDodgeCountdown());
+            value->Update(dt, GetGameObject());
         }
     }
 

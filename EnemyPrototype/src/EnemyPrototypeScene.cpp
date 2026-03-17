@@ -7,14 +7,18 @@
 #include "EnemyAI/EnemyAttackAction2.h"
 #include "EnemyAI/EnemyDodgeAction.h"
 #include "EnemyAI/EnemyMoveToPlayerAction.h"
+#include "EnemyAI/params/AttackCountdown2Param.h"
+#include "EnemyAI/params/AttackCountdownParam.h"
+
+#include "EnemyAI/params/DodgeCountdownParam.h"
+
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/EntitySystem/Component/Camera/CameraFollow.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
-#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/EntitySystem/Component/EnemyBehavior/EnemyState.h"
 #include "Engine/Scripting/ScriptFactory.h"
-#include "Script/AttackHitboxScript.h"
 #include "Script/BarScaler.h"
 #include "Script/BeatBarController.h"
 #include "Script/EnemyController.h"
@@ -44,8 +48,6 @@ void EnemyPrototypeScene::OnInit()
     mts::ScriptFactory::RegisterScript("EnemyController", []() { return new mts::EnemyController(); });
     mts::ScriptFactory::RegisterScript("BarScaler", []() { return new mts::BarScaler(); });
     mts::ScriptFactory::RegisterScript("BeatBarController", []() { return new BeatBarController(); });
-    //mts::ScriptFactory::RegisterScript("AttackHitboxScript",
-    //                                   []() { return new AttackHitboxScript(); });
 
     player = mts::GameObjectFactory::InstantiateFromJSON("Data/Player.prefab");
     player->AddTag("Player");
@@ -76,15 +78,10 @@ void EnemyPrototypeScene::OnInit()
 void EnemyPrototypeScene::OnEnterPlayMode()
 {
     Scene::OnEnterPlayMode();
-    //player->AddTag("Player");
-    //camera->SetName("CameraObject");
-    //mts::Transform* playerTr = player->GetComponent<mts::Transform>();
-    //camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(playerTr);
-    //enemy->GetComponent<mts::EnemyAgent>()->SetPlayerReference(player);
-    //enemy->GetComponent<mts::EnemyAgent>()->Initialize(mts::AIPlanner::GetPlannerById("Enemy1"));
+
     player = FindGameObjectByName("Player");
     enemy = FindGameObjectByName("Enemy");
-    //auto a = enemy->GetComponent<mts::EnemyAgent>();
+
     enemy->GetComponent<mts::EnemyAgent>()->SetPlayerReference(player);
     enemy->GetComponent<mts::EnemyAgent>()->Initialize(mts::AIPlanner::GetPlannerById("Enemy1"));
     camera = FindGameObjectByName("CameraObject");
@@ -105,6 +102,13 @@ void EnemyPrototypeScene::OnEnterPlayMode()
         camera->GetComponent<mts::CameraFollow>()->SetObjectToFollow(
             player->GetComponent<mts::Transform>());
     }
+    auto& p = enemy->GetComponent<mts::EnemyAgent>()->GetState().params;
+    p.emplace(mts::HashAction("AttackCooldown"), new mts::AttackCountdownParam());
+    p.emplace(mts::HashAction("Attack2Cooldown"), new mts::AttackCountdown2Param());
+    p.emplace(mts::HashAction("DodgeCountdown"), new mts::DodgeCountdownParam());
+
+
+
 
     mts::AudioManager& audio = mts::AudioManager::Get();
     if (!audio.StartMusic(kMausoleumMash))

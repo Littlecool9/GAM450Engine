@@ -11,16 +11,22 @@
 #include "EnemyDodgeAction.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "params/DodgeCountdownParam.h"
 
 namespace mts
 {
     bool EnemyDodgeAction::IsAvailable(const EnemyState& state,
                                        const EnemyPreference& /*preferences*/) const
     {
-        if (state.GetDodgeCountdown() > 0 || state.GetDistanceToPlayer() > 6 || state.GetCurrentPlayerState() != AnimationSystem::States::Attack1)
+        if (std::get<float>(state.params.at(HashAction("DodgeCountdown"))->GetValue()) > 0 ||
+            state.GetDistanceToPlayer() > 6 ||
+            state.GetCurrentPlayerState() != AnimationSystem::States::Attack1)
         {
             return false;
         }
+
         return true;
     }
 
@@ -51,7 +57,12 @@ namespace mts
         if (totalTime >= mDuration)
         {
             agent->GetState().SetInAction(false);
-            agent->GetState().SetDodgeCountdown(agent->GetState().GetDodgeCooldownTime());  // apply dodge cooldown
+            // apply dodge cooldown
+            agent->GetState()
+                .params.at(HashAction("DodgeCountdown"))
+                ->SetValue(static_cast<DodgeCountdownParam*>(
+                               agent->GetState().params.at(HashAction("DodgeCountdown")))
+                               ->GetCooldownTime());
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);
             return Success;
@@ -71,14 +82,23 @@ namespace mts
                                             const EnemyPreference& /*preferences*/) const
     {
         EnemyState newState = state;
-        newState.SetDodgeCountdown(state.GetDodgeCooldownTime());
+        newState
+            .params.at(HashAction("DodgeCountdown"))
+            ->SetValue(static_cast<DodgeCountdownParam*>(
+                           newState.params.at(HashAction("DodgeCountdown")))
+                           ->GetCooldownTime());
+        
         return newState;
     }
 
     void EnemyDodgeAction::OnEnd(EnemyAgent& agent, EnemyActionResult /*result*/)
     {
         // Set dodge cooldown
-        agent.GetState().SetDodgeCountdown(agent.GetState().GetDodgeCooldownTime());
+        agent.GetState()
+            .params.at(HashAction("DodgeCountdown"))
+            ->SetValue(static_cast<DodgeCountdownParam*>(
+                           agent.GetState().params.at(HashAction("DodgeCountdown")))
+                           ->GetCooldownTime());
     }
 
      std::unordered_map<EnemyGoal, float> EnemyDodgeAction::InternalHeuristic(const EnemyState& state,
@@ -86,7 +106,10 @@ namespace mts
      {
          std::unordered_map<EnemyGoal, float> heuristic;
          // Heuristic: if player is close, dodging is more favorable for self-preservation
-         heuristic[EnemyGoal::SelfPreservation] = state.GetDistanceToPlayer() < 4.0f ? 1.0f : 0.5f;
+         heuristic[EnemyGoal::SelfPreservation] =
+             state.GetDistanceToPlayer() < 4.0f
+                 ? 1.0f
+                 : 0.5f;
          heuristic[EnemyGoal::PlayerElimination] = 0.2f;  // dodging doesn't directly contribute to offense
          return heuristic;
      }

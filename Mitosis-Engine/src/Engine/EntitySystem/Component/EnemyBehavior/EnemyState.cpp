@@ -23,14 +23,15 @@ namespace mts
         // If player is going to be eliminated, this is the end goal state, which should have the
         // highest score. We can also add a modifier based on how quickly we eliminate the player,
         // but for now we just give it a flat high score.
-        if (mPlayerHealthLeftRatio <= 0)
+        if (GetPlayerHealthLeftRatio()<= 0)
         {
             score = baseMultiplier * baseMultiplier;
         }
         else
         {
-            score = preference[EnemyGoal::PlayerElimination] * (1.0f - mDistanceToPlayer / 100.0f) *
-                    (1.0f - static_cast<float>(mEnemyHealth) / 100.0f);
+            score = preference[EnemyGoal::PlayerElimination] *
+                    (1.0f - GetDistanceToPlayer()) /
+                    (1.0f - static_cast<float>(GetEnemyHealth()));
         }
 
         // can add more modifiers as we go on
@@ -41,8 +42,10 @@ namespace mts
                                                float baseMultiplier) const
     {
         float score = 0.f;
-        score = preference[EnemyGoal::SelfPreservation] * (mDistanceToPlayer / 100.0f) *
-                (static_cast<float>(mEnemyHealth) / 100.0f);
+        score = preference[EnemyGoal::SelfPreservation] *
+                (GetDistanceToPlayer() / 100.0f) *
+                (static_cast<float>(GetEnemyHealth()) /
+             100.0f);
         //can add more modifiers as we go on
         return score;
     }

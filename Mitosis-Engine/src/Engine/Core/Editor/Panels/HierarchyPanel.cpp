@@ -76,7 +76,7 @@ namespace mts
                 ImGui::Separator();
                 if (ImGui::MenuItem("Save as Prefab"))
                 {
-                    std::string savePath = "../TechDemo/Data/" + go->GetName() + ".prefab";
+                    std::string savePath = "Data/" + go->GetName() + ".prefab";
                     if (SerializationUtility::SerializeToFile(go, savePath))
                         LOG_INFO("Prefab saved: {}", savePath);
                     else

@@ -165,8 +165,11 @@ namespace mts
     void Scene::Deserialize(JsonValue const& jsonObj)
     {
         ClearGameObjects();
+        if (!jsonObj.Has("GameObjects"))
+            return;
         JsonValue gameObjects = jsonObj["GameObjects"];
-        assert(gameObjects.IsArray());
+        if (!gameObjects.IsArray())
+            return;
         size_t s = gameObjects.Size();
         mGameObjects.reserve(s * 2);
         for (size_t i = 0; i < s; ++i)

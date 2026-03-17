@@ -32,8 +32,6 @@ namespace mts
         std::vector<Dir> mDirs;
         std::unordered_map<std::string, int64_t> mFileTimes;
         float mFontScale = 1.3f;
-        std::string mProjectRoot = "../TechDemo/";
-        char mProjectRootBuf[256] = "../TechDemo/";
     };
 
 }  // namespace mts

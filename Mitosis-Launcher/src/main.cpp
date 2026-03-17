@@ -9,9 +9,17 @@
 
 #include "pch.h"
 #include <MitosisEngine.h>
+#include <filesystem>
+#include "Engine/Serialization/FileManager.h"
 
 int main(int argc, char** argv)
 {
+    char exeBuf[MAX_PATH];
+    GetModuleFileNameA(nullptr, exeBuf, MAX_PATH);
+    std::string exeDir = std::filesystem::path(exeBuf).parent_path().string();
+    mts::FileManager::SetRoot(exeDir);
+    std::filesystem::current_path(exeDir);
+
     mts::Log::Init();
     mts::MemoryManager::Init();
 

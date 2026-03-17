@@ -114,7 +114,12 @@
     <PostBuildEvent>
       <Command>IF NOT EXIST "..\bin\Debug-windows-x86_64\__APPNAME__" (mkdir "..\bin\Debug-windows-x86_64\__APPNAME__")
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll" "..\bin\Debug-windows-x86_64\__APPNAME__\fmodL.dll"
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\Debug-windows-x86_64\__APPNAME__\fmodstudioL.dll"</Command>
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\Debug-windows-x86_64\__APPNAME__\fmodstudioL.dll"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
+IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
+IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
 
@@ -151,7 +156,12 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <PostBuildEvent>
       <Command>IF NOT EXIST "..\bin\Release-windows-x86_64\__APPNAME__" (mkdir "..\bin\Release-windows-x86_64\__APPNAME__")
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmod.dll" "..\bin\Release-windows-x86_64\__APPNAME__\fmod.dll"
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "..\bin\Release-windows-x86_64\__APPNAME__\fmodstudio.dll"</Command>
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "..\bin\Release-windows-x86_64\__APPNAME__\fmodstudio.dll"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
+IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
+IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
 
@@ -188,7 +198,12 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
     <PostBuildEvent>
       <Command>IF NOT EXIST "..\bin\DebugOpt-windows-x86_64\__APPNAME__" (mkdir "..\bin\DebugOpt-windows-x86_64\__APPNAME__")
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll" "..\bin\DebugOpt-windows-x86_64\__APPNAME__\fmodL.dll"
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\DebugOpt-windows-x86_64\__APPNAME__\fmodstudioL.dll"</Command>
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\DebugOpt-windows-x86_64\__APPNAME__\fmodstudioL.dll"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
+IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
+IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
 

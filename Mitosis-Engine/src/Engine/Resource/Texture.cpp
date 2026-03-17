@@ -11,6 +11,7 @@
 #include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include "Engine/Serialization/FileManager.h"
 
 namespace mts
 {
@@ -53,7 +54,8 @@ namespace mts
         int channels;
 
         // Load image file
-        unsigned char* data = stbi_load(filepath.c_str(), &mWidth, &mHeight, &channels, 0);
+        std::string resolved = FileManager::Resolve(filepath);
+        unsigned char* data = stbi_load(resolved.c_str(), &mWidth, &mHeight, &channels, 0);
 
         if (channels == 4)
         {
@@ -89,7 +91,7 @@ namespace mts
         }
         else
         {
-            LOG_ERROR("Failed to load texture");
+            LOG_ERROR("Failed to load texture at {}", resolved);
         }
 
         // Free image file data

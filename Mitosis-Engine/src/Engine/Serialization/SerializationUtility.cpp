@@ -13,6 +13,7 @@
 
 // other includes
 #include "JsonAbstraction.h"
+#include "FileManager.h"
 
 namespace mts
 {
@@ -21,9 +22,9 @@ namespace mts
         void DeserializeFromFile(Deserializable* item, std::string const& filepath)
         {
             mts::JsonDocument doc;
-            if (!doc.LoadFromFile(filepath))
+            if (!doc.LoadFromFile(FileManager::Resolve(filepath)))
             {
-                LOG_INFO("File parsing error occurred\n");
+                LOG_WARN("Failed to deserialize file: {}", filepath);
                 return;
             }
 
@@ -46,7 +47,7 @@ namespace mts
 
             item->Serialize(doc);  // builds the document
 
-            return doc.SaveToFile(path);
+            return doc.SaveToFile(FileManager::Resolve(path));
         }
 
         std::string SerializeToString(Deserializable* item)

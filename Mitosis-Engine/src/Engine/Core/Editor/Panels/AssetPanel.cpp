@@ -12,19 +12,13 @@
 
 #include <imgui.h>
 #include <filesystem>
-#include <fstream>
 #include "Engine/Resource/ResourceManager.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
-
-static constexpr const char* kPrefsFile = "asset_panel.cfg";
 
 namespace mts
 {
     AssetPanel::AssetPanel()
     {
-        if (std::ifstream f(kPrefsFile); f)
-            std::getline(f, mProjectRoot);
-        snprintf(mProjectRootBuf, sizeof(mProjectRootBuf), "%s", mProjectRoot.c_str());
         RebuildDirs();
         Scan();
     }
@@ -32,13 +26,10 @@ namespace mts
     void AssetPanel::RebuildDirs()
     {
         mDirs = {
-            {"Data/Resources", mProjectRoot + "Data/Resources/", {".tex", ".mesh", ".shader"}, {}},
-            {"Data", mProjectRoot + "Data/", {".prefab"}, {}},
-            {"Assets", mProjectRoot + "Assets/", {".png", ".jpg"}, {}},
-            {"Engine/Resources",
-             "../Mitosis-Engine/src/Resources/",
-             {".tex", ".mesh", ".shader"},
-             {}},
+            {"Data/Resources", "Data/Resources/",   {".tex", ".mesh", ".shader"}, {}},
+            {"Data",           "Data/",              {".prefab"},                  {}},
+            {"Assets",         "Assets/",            {".png", ".jpg"},             {}},
+            {"Engine/Resources", "Engine/Resources/", {".tex", ".mesh", ".shader"}, {}},
         };
     }
 
@@ -96,19 +87,6 @@ namespace mts
     {
         ImGui::Begin("Assets");
         ImGui::SetWindowFontScale(mFontScale);
-
-        // Project root input
-        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - 60.0f);
-        ImGui::InputText("##projroot", mProjectRootBuf, sizeof(mProjectRootBuf));
-        ImGui::SameLine();
-        if (ImGui::Button("Apply"))
-        {
-            mProjectRoot = mProjectRootBuf;
-            if (std::ofstream f(kPrefsFile); f)
-                f << mProjectRoot;
-            RebuildDirs();
-            Scan();
-        }
 
         if (ImGui::Button("Refresh"))
             Scan();

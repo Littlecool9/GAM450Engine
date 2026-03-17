@@ -24,6 +24,7 @@ namespace mts
        public:
 
         static void SetRoot(std::string rootDir);
+        static const std::string& GetRoot() { return mRoot; }
 
         /// Checks if a file exists at the given path.
         static bool Exists(const std::string& path);

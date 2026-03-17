@@ -73,7 +73,6 @@ namespace mts
 
     void SceneSystem::Shutdown()
     {
-        delete currentScene;
         for (auto obj : dontDestroyObjects)
         {
             delete obj;

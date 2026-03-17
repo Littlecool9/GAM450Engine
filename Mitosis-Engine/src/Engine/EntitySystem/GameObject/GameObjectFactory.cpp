@@ -17,52 +17,9 @@
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Serialization/SerializationUtility.h"
 
-#define ARCHETYPEPATH "Data/GameObjectFactoryArchetypes.json"
-#define DEFAULTDESERIALIZEPATH "Data/"
-
 namespace mts
 {
     std::unordered_map<std::string, GameObject*> GameObjectFactory::archetypes;
-
-    void GameObjectFactory::InitFactory()
-    {
-        JsonDocument doc = JsonDocument();
-        if (!doc.LoadFromFile(ARCHETYPEPATH))
-        {
-            LOG_WARN("GameObjectFactory: Failed to load archetypes file '{}'", ARCHETYPEPATH);
-            return;
-        }
-
-        JsonValue root = doc.Root();
-        if (!root.Has("ArchetypesPaths"))
-        {
-            LOG_WARN(
-                "GameObjectFactory: JSON root does not contain 'ArchetypesPaths', no archetypes "
-                "will be loaded");
-            return;
-        }
-
-        JsonValue archetypeArray = root["ArchetypesPaths"];
-        if (archetypeArray.IsArray())
-        {
-            for (int i = 0; i < archetypeArray.Size(); ++i)
-            {
-                JsonValue archetype = archetypeArray[i];
-                if (!archetype.Has("Name") || !archetype.Has("Path"))
-                {
-                    LOG_WARN("Archetype entry missing Name or Path, skipping");
-                    continue;
-                }
-                std::string name = archetype["Name"].GetString("");
-                std::string archetypePath = archetype["Path"].GetString("");
-                if (!archetypePath.empty())
-                {
-                    archetypes[name] = BuildArchetypeFromJSON(archetypePath);
-                    LOG_INFO("Loaded archetype {} from path {}", name, archetypePath);
-                }
-            }
-        }
-    }
 
     void GameObjectFactory::ShutdownFactory()
     {
@@ -143,7 +100,7 @@ namespace mts
         auto it = archetypes.find(gameObjectName);
         if (it == archetypes.end())
         {
-            std::string jsonPath = DEFAULTDESERIALIZEPATH + gameObjectName + ".prefab";
+            std::string jsonPath = "Data/" + gameObjectName + ".prefab";
             GameObject* archetype = BuildArchetypeFromJSON(jsonPath);
             if (archetype)
                 it = archetypes.emplace(gameObjectName, archetype).first;

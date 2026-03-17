@@ -29,9 +29,6 @@ namespace mts
     class GameObjectFactory
     {
        public:
-        // Load all the archetypes from json files
-        // This function can be later changed to scene-specific to satisfy deserializing scene json
-        static void InitFactory();
         static void ShutdownFactory();
 
         // Instantiate from archetype/prefabs, if not a archetype/prefab, it will create a new one

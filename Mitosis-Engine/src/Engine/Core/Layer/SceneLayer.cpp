@@ -22,7 +22,6 @@ namespace mts
 
     void SceneLayer::OnAttach()
     {
-        GameObjectFactory::InitFactory();
         SceneSystem::Init(mInitialScene);
         Layer::OnAttach();
     }

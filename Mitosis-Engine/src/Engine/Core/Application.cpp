@@ -49,6 +49,8 @@ namespace mts
         mCtx.showEditorUI = true;
         mCtx.selected = UUID::InvalidID;
 
+        RegisterScripts();
+
         // push in order of calling
         mLayerStack.PushLayer(std::make_unique<MemoryManageLayer>());
         mLayerStack.PushLayer(std::make_unique<InputLayer>());
@@ -205,7 +207,7 @@ namespace mts
         std::string snapshot = SerializationUtility::SerializeToString(scene);
         // Preserve edit GOs untouched; deserialize fresh play GOs
         scene->StashGameObjects();
-        mCtx.selected = UUID::InvalidID;   // clear stale edit-mode UUID before play GOs load
+        mCtx.selected = UUID::InvalidID;  // clear stale edit-mode UUID before play GOs load
         SerializationUtility::DeserializeFromString(scene, snapshot);
         scene->EnterPlayMode();
         mCtx.playState = PlayState::Play;

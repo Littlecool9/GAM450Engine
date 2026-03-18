@@ -71,14 +71,14 @@ namespace mts
         float mInertia = 1.0f;
         float mInvInertia = 1.0f;
 
-        glm::vec2 mLinearVelocity;
+        glm::vec2 mLinearVelocity{};
         float mAngularVelocity = 0.0f;
 
         float mLinearDamping = 0.0f;
         float mAngularDamping = 0.0f;
 
         // for step calculation
-        glm::vec2 mForceAccumulation;
+        glm::vec2 mForceAccumulation{};
         float mTorqueAccumulation = 0.0f;
 
         // 0 for no gravity

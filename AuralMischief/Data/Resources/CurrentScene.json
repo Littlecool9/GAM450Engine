@@ -1,8 +1,171 @@
 {
     "GameObjects": [
         {
-            "UUID": "8993e8ee-2101-4e6b-be89-dffd41b2dbd5",
+            "UUID": "ad979d05-eb3b-459b-8e22-f90cbe5be292",
             "Name": "Player",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            1.100000023841858,
+                            0.0
+                        ],
+                        "Scale": [
+                            2.0,
+                            2.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 0.75,
+                        "Height": 0.800000011920929,
+                        "Offset": [
+                            0.0,
+                            -0.20000000298023224
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 3.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 1,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "Data/Resources/PlayerTexture.tex",
+                        "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 0,
+                        "FrameCount": 0,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.0,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    }
+                },
+                {
+                    "Type": "AnimationSystem",
+                    "Data": {
+                        "States": [
+                            {
+                                "State": 0,
+                                "TextureResource": "Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 0,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 1,
+                                "TextureResource": "Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 2,
+                                "FrameCount": 2,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.20000000298023224,
+                                "IsRunning": 0,
+                                "IsLooping": 1
+                            },
+                            {
+                                "State": 2,
+                                "TextureResource": "Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 1,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 3,
+                                "TextureResource": "Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 2,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 4,
+                                "TextureResource": "Data/Resources/PlayerTexture.tex",
+                                "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 1,
+                                "FrameIndex": 4,
+                                "FrameCount": 4,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.5,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "PlayerController",
+                        "Fields": {
+                            "moveSpeed": 3,
+                            "jumpSpeed": 14,
+                            "walkParticleCooldown": 0.1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "3f32c343-51ee-45f1-89cd-91ff570d3309",
+            "Name": "Camera",
             "Layer": 0,
             "Tags": [],
             "Components": [
@@ -23,20 +186,64 @@
                     }
                 },
                 {
-                    "Type": "SpriteRenderer",
+                    "Type": "Camera",
                     "Data": {
-                        "TintColor": [
+                        "IsActive": 1,
+                        "NearPlane": -1.0,
+                        "FarPlane": 1.0,
+                        "OrthoSize": 5.0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e88ce957-4728-4a14-aa16-2c4373483a60",
+            "Name": "Ground",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            -1.2999999523162842,
+                            0.0
+                        ],
+                        "Scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/PlayerTexture.tex",
-                        "MeshResource": "Data/Resources/10x9MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 7.550000190734863,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 0
                     }
                 }
             ]

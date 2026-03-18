@@ -10,6 +10,7 @@ class AuralMischief : public mts::Application
 
    private:
     mts::Scene* GetInitialScene() override;
+    void RegisterScripts() override;
 
    private:
     AuralMischiefScene* m_scene;

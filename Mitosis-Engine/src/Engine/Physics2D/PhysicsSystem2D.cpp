@@ -171,7 +171,7 @@ namespace mts::physics
 
     void PhysicsSystem2D::GatherAndIntegrateBodies(float dt)
     {
-        auto gameObjects = currentScene->GetGameObjects();
+        const auto& gameObjects = currentScene->GetGameObjects();
 
         for (auto gameObject : gameObjects)
         {
@@ -184,7 +184,6 @@ namespace mts::physics
 
             if (!rb || !tr)
                 continue;
-
             PhysicsBody p{};
             p.rb = rb;
             p.col = col;

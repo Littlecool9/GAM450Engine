@@ -40,6 +40,7 @@ namespace mts
 
        protected:
         virtual Scene* GetInitialScene() = 0;
+        virtual void RegisterScripts() {};
 
        private:
         bool OnWindowClose(class WindowCloseEvent& e);

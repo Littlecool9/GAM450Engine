@@ -196,8 +196,8 @@ namespace mts
         // (preferably initialized in the deserialization process)
         // (or modified in gameplay)
 
-        bool dontDestroy;
-        bool isActive;
+        bool dontDestroy = false;
+        bool isActive = true;
         bool isDead = false;  // in the queue for destruction;
 
         // @brief: Name can be non-unique

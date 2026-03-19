@@ -9,4 +9,5 @@ class AuralMischiefScene : public mts::Scene
    protected:
     void OnInit() override;
     void OnUpdate() override;
+    void OnEnterPlayMode() override;
 };

@@ -7,6 +7,7 @@
 #include "Script/CheckPoint.h"
 #include "Script/MovablePlatform.h"
 #include "Script/PlayerController.h"
+#include "Script/EnemyBehaviors/EnemyController.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -40,4 +41,7 @@ void AuralMischief::RegisterScripts()
                                        []() { return new CheckPoint(); });
     mts::ScriptFactory::RegisterScript(MovablePlatform::StaticClassName(),
                                        []() { return new MovablePlatform(); });
+    mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
+                                       []() { return new mts::EnemyController(); });
+
 }

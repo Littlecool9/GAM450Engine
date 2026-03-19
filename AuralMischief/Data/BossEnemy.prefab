@@ -1,0 +1,173 @@
+{
+  "Name": "Enemy",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          25,
+          5,
+          0
+        ],
+        "Scale": [
+          5,
+          5,
+          1
+        ],
+        "Rotation": 0
+      }
+    },
+    {
+      "Type": "BoxCollider2D",
+      "Data": {
+        "Width": 0.18,
+        "Height": 0.3,
+        "Offset": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Type": "RigidBody2D",
+      "Data": {
+        "Mass": 1.0,
+        "Inertia": 0.0,
+        "LinearVelocity": [
+          0.0,
+          0
+        ],
+        "AngularVelocity": 0,
+        "LinearDamping": 0,
+        "AngularDamping": 0,
+        "GravityScale": 3,
+        "BodyType": 1
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "NumRows": 2,
+        "NumCols": 4,
+        "TintColor": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "FrameIndex": 1,
+        "TextureResource": "Data/Resources/PlayerTexture.tex",
+        "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+        "ShaderResource": "Data/Resources/EnemyShader.shader",
+        "RenderLayer":1
+      }
+    },
+    {
+      "Type": "Animation",
+      "Data": {
+        "FrameIndex": 0,
+        "FrameCount": 0,
+        "FrameDelay": 0,
+        "FrameDuration": 0.0,
+        "IsRunning": 0,
+        "IsLooping": 0
+      }
+    },
+    {
+      "Type": "AnimationSystem",
+      "Data":{
+        "States": [
+            {
+              "State": 0,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 0,
+              "FrameCount": 12,
+              "FrameDelay": 0,
+              "FrameDuration": 0.21428571428571428571428571428572,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 1,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 12,
+              "FrameCount": 7,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.21428571428571428571428571428572,
+              "IsRunning": 0,
+              "IsLooping": 1
+            },
+            {
+              "State": 2,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 20,
+              "FrameCount": 3,
+              "FrameDelay": 0,
+              "FrameDuration": 0.21428571428571428571428571428572,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 3,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 28,
+              "FrameCount": 3,
+              "FrameDelay": 0,
+              "FrameDuration": 0.21428571428571428571428571428572,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 4,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 38,
+              "FrameCount": 10,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.10714285714285714285714285714286,
+              "IsRunning": 0,
+              "IsLooping": 0
+            },
+            {
+              "State": 5,
+              "TextureResource": "Data/Resources/PlayerTexture.tex",
+              "MeshResource": "Data/Resources/10x9MeshResource.mesh",
+              "ShaderResource": "Data/Resources/EnemyShader.shader",
+              "HasAnimation": 1,
+              "FrameIndex": 47,
+              "FrameCount": 14,
+              "FrameDelay": 0.0,
+              "FrameDuration": 0.10714285714285714285714285714286,
+              "IsRunning": 0,
+              "IsLooping": 0
+            }
+        ]
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "EnemyController"
+      }
+    },
+    {
+      "Type": "EnemyAgent"
+    },
+    {
+      "Type": "ActionList"
+    }
+  ]
+}

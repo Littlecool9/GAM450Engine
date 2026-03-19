@@ -197,6 +197,16 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\AttackHitboxScript.h" />
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyController.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Script\MovablePlatform.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
   </ItemGroup>
@@ -209,6 +219,16 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyController.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Script\MovablePlatform.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
   </ItemGroup>

@@ -109,7 +109,9 @@
         "Fields": {
             "EnemyType": "Fly",
             "MoveSpeed": 1.5,
-            "PatrolRadius": 2.0
+            "PatrolRadius": 2.0,
+            "AggroRange": 3.0,,
+            "AttackCooldown": 5.0
         }
       }
     },

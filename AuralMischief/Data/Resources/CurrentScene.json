@@ -267,138 +267,6 @@
             ]
         },
         {
-            "UUID": "6123d9b4-ca11-4421-84c8-92b6316b5415",
-            "Name": "FlyingEnemy",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            3.0,
-                            1.2000000476837158,
-                            0.0
-                        ],
-                        "Scale": [
-                            0.5,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 0.9300000071525574,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            -0.05000000074505806
-                        ],
-                        "IsTrigger": 0
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 0.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 1
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 1,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 1,
-                        "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Animation",
-                    "Data": {
-                        "FrameIndex": 0,
-                        "FrameCount": 0,
-                        "FrameDelay": 0.0,
-                        "FrameDuration": 0.0,
-                        "IsRunning": 0,
-                        "IsLooping": 0
-                    }
-                },
-                {
-                    "Type": "AnimationSystem",
-                    "Data": {
-                        "States": [
-                            {
-                                "State": 1,
-                                "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
-                                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                                "ShaderResource": "",
-                                "HasAnimation": 0,
-                                "FrameIndex": 0,
-                                "FrameCount": 1,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.0,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 4,
-                                "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
-                                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                                "ShaderResource": "",
-                                "HasAnimation": 0,
-                                "FrameIndex": 0,
-                                "FrameCount": 0,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.0,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "EnemyController",
-                        "Fields": {
-                            "MoveSpeed": 2.0,
-                            "PatrolRadius": 2.0
-                        }
-                    }
-                },
-                {
-                    "Type": "EnemyAgent",
-                    "Data": {
-                        "Plan Name": "FlyEnemy"
-                    }
-                },
-                {
-                    "Type": "ActionList"
-                }
-            ]
-        },
-        {
             "UUID": "bba9e3a8-895d-4dc1-9789-a2190c8bb9a3",
             "Name": "SlugEnemy",
             "Layer": 0,
@@ -517,6 +385,140 @@
                             "EnemyType": "Crawl",
                             "MoveSpeed": 1.5,
                             "PatrolRadius": 2.0
+                        }
+                    }
+                },
+                {
+                    "Type": "EnemyAgent",
+                    "Data": {
+                        "Plan Name": "SlugEnemy"
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                }
+            ]
+        },
+        {
+            "UUID": "3113f76f-04ff-40f6-b863-7761eef100eb",
+            "Name": "FlyingEnemy",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            4.650000095367432,
+                            1.149999976158142,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.5,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 0.9300000071525574,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            -0.05000000074505806
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 1,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 0,
+                        "FrameCount": 0,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.0,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    }
+                },
+                {
+                    "Type": "AnimationSystem",
+                    "Data": {
+                        "States": [
+                            {
+                                "State": 1,
+                                "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
+                                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 0,
+                                "FrameIndex": 0,
+                                "FrameCount": 1,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 4,
+                                "TextureResource": "Data/Resources/FlyEnemyTexture.tex",
+                                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                                "ShaderResource": "",
+                                "HasAnimation": 0,
+                                "FrameIndex": 0,
+                                "FrameCount": 0,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.0,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "EnemyController",
+                        "Fields": {
+                            "EnemyType": "Fly",
+                            "MoveSpeed": 1.5,
+                            "PatrolRadius": 2.0,
+                            "AggroRange": 3.0
                         }
                     }
                 },

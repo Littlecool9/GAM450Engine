@@ -40,6 +40,8 @@ namespace mts
         std::string type;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;
+        float mAggroRange = 5.f;
+        float mAttackCooldown = 5.f;
         int maxhp = 2;
         int curhp = 0;
     };

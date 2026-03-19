@@ -197,11 +197,18 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\AttackHitboxScript.h" />
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyController.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AggroRangeParam.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackCountdownParam.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.h">
       <SubType>
@@ -219,11 +226,18 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyController.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AggroRangeParam.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackCountdownParam.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.cpp">
       <SubType>

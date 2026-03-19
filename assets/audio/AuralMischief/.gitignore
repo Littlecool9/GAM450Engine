@@ -1,0 +1,10 @@
+# FMOD Studio — generated/user-local artifacts
+.cache/
+.unsaved/
+.user/
+Metadata/
+
+# Keep the project file, Assets, and Build
+!*.fspro
+!Assets/
+!Build/

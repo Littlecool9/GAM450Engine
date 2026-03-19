@@ -165,6 +165,18 @@ namespace mts
         // no-op
     }
 
+    void NativeScriptComponent::OnEnable()
+    {
+        if (m_script)
+            m_script->OnEnable();
+    }
+
+    void NativeScriptComponent::OnDisable()
+    {
+        if (m_script)
+            m_script->OnDisable();
+    }
+
     void NativeScriptComponent::OnCollisionEnter2D(const mts::Collision2D& collision)
     {
         if (!IsEnabled())

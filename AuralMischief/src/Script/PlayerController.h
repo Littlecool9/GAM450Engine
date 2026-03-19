@@ -15,6 +15,7 @@
 
 #include <glm/common.hpp>
 
+class AttackHitboxScript;
 class CameraController;
 class CheckPoint;
 
@@ -62,9 +63,9 @@ class PlayerController : public mts::ScriptBase
     SCRIPT_CLASS(PlayerController)
 
    private:
-    void Dash(glm::vec2 inputDir, bool inWindow);
+    void Dash(glm::vec2 inputDir, bool inWindow, float speedScale);
     void Jump(bool inWindow);
-    void Attack(bool inWindow);
+    void Attack(bool inWindow, bool isChargeAttack, float damageMult);
     void SpawnAttackHitbox(float damage);
 
     glm::vec2 currVelocity{0.0f, 0.0f};
@@ -77,17 +78,20 @@ class PlayerController : public mts::ScriptBase
     mts::SpriteRenderer* sprite = nullptr;
     mts::Transform* transform = nullptr;
 
+    mts::GameObject* attackHitbox = nullptr;
+    AttackHitboxScript* attackHitboxScript = nullptr;
+
     // Adjustable parameters
-    float mMoveSpeed = 5.0f; // Max Speed
+    float mMoveSpeed = 5.0f;  // Max Speed
     float mJumpSpeed = 12.0f;
     float mDashSpeed = 12.0f;
-    float mFriction = 20.0f; // Deceleration when not moving
-    float mAcceleration = 40.0f; // Acceleration when holding direction
-    float mDeceleration = 15.0f; // Deceleration when moving above max speed (mMoveSpeed)
-    float mDashDeceleration = 100.0f; // Deceleration when in dash state
-    float mTurnSpeed = 100.0f; // Acceleration when changing directions
-    int mDashMax = 1; // Max number of dashes before recharge
-    float mDashCooldown = 0.2f; // Length of dash state
+    float mFriction = 20.0f;           // Deceleration when not moving
+    float mAcceleration = 40.0f;       // Acceleration when holding direction
+    float mDeceleration = 15.0f;       // Deceleration when moving above max speed (mMoveSpeed)
+    float mDashDeceleration = 100.0f;  // Deceleration when in dash state
+    float mTurnSpeed = 100.0f;         // Acceleration when changing directions
+    int mDashMax = 1;                  // Max number of dashes before recharge
+    float mDashCooldown = 0.2f;        // Length of dash state
     float mAttackCooldown = 0.5f;
     float mAttackComboMaxDelay = 3.0f;
     // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
@@ -114,8 +118,16 @@ class PlayerController : public mts::ScriptBase
     float attackTimer = -1.0f;
     float attackComboTimer = -1.0f;
     float attackDelayTimer = -2.0f;
+    float attackHeldLength = -1.0f;
     float defaultGravityScale = 1.0f;
+    float chargeFlashTimer = -1.0f;
     bool isAttacking = false;
+    bool isCharging = false;
+    bool attackAnimType = true;  // keeps track of if previous attack animation was 1st or 2nd (used
+                                 // to alternate animations)
+    float iFrames = 0.8f;
+    float iFramesTimer = -1.0f;
+    float enemyKnockback = 0.7f;
     Direction facingDir = RIGHT;
 
     // CheckPoint Properties

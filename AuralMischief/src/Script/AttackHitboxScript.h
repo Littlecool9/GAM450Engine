@@ -14,6 +14,7 @@ class AttackHitboxScript : public mts::ScriptBase
 {
    public:
 	void OnCreate() override;
+	void OnEnable() override;
 	void OnUpdate(float) override;
 	void DeserializeFields(mts::JsonValue const&) override;
 	void SerializeFields(mts::JsonDocument& out) const override;

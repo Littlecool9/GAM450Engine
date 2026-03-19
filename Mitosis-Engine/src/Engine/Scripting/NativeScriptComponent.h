@@ -32,6 +32,9 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& jsonDoc) const override;
 
+        void OnEnable() override;
+        void OnDisable() override;
+
         virtual void OnCollisionEnter2D(const Collision2D& collision) override;
         virtual void OnCollisionStay2D(const Collision2D& collision) override;
         virtual void OnCollisionExit2D(const Collision2D& collision) override;

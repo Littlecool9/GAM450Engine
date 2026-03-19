@@ -363,7 +363,8 @@ namespace mts::Tilemap
             return;
         }
 
-        mTileset = nullptr;  // force re-fetch; prevents dangling pointer if tilesets were reloaded/unloaded
+        mTileset = nullptr;  // force re-fetch; prevents dangling pointer if tilesets were
+                             // reloaded/unloaded
         std::vector<ColliderRect> rects = GenerateColliderRects();
 
         // Get chunk's world position using the same function as rendering
@@ -373,7 +374,7 @@ namespace mts::Tilemap
         {
             // Step A: Create a child object/temporary object with a collider
             // Its position should be the Chunk's world position + rectangle's center offset
-            GameObject* colObj = GameObjectFactory::CreateGameObject();
+            GameObject* colObj = GameObjectFactory::CreateEmptyGameObject();
             colObj->AddTag("TilemapCollider");
 
             // Step B: Calculate the world position center point

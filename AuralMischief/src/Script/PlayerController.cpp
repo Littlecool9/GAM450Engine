@@ -29,10 +29,13 @@
 #include "AttackHitboxScript.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
+#include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Serialization/SerializationUtility.h"
 
 void PlayerController::OnCreate()
 {
+    mts::ScriptFactory::RegisterScript("AttackHitboxScript",
+                                       []() { return new AttackHitboxScript(); });
     rb = GetGameObject()->GetComponent<mts::RigidBody2D>();
     anim = GetGameObject()->GetComponent<mts::AnimationSystem>();
     sprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
@@ -53,6 +56,7 @@ void PlayerController::OnUpdate(float dt)
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
     bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift);
     bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z);
+    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::Z);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
@@ -108,7 +112,7 @@ void PlayerController::OnUpdate(float dt)
                 queuedDash = [this, inputDir, inWindow]()
                 {
                     TriggerCameraVFX(true, inWindow);
-                    Dash(inputDir, inWindow);
+                    Dash(inputDir, inWindow, 1.0f);
                 };
                 LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
             }
@@ -122,22 +126,47 @@ void PlayerController::OnUpdate(float dt)
         dashTimer -= dt;
 
     // Attack check
-    if (attackPressed && !isAttacking)
+
+    if (attackPressed)
     {
-        if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
-        {
-            Attack(inWindow);
-            LOG_INFO("Attacked {} beat", inWindow ? "on" : "off");
-        }
-        else
-        {
-            LOG_INFO("Attacked off beat");
-        }
+        attackHeldLength = 0.0f;
     }
+    else if (attackReleased)
+    {
+        if (attackHeldLength < 0.35f && !isAttacking)
+        {
+            if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
+            {
+                Attack(inWindow, false, 1.0f);
+                LOG_INFO("Attacked {} beat", inWindow ? "on" : "off");
+            }
+            else
+            {
+                LOG_INFO("Attacked off beat");
+            }
+        }
+        else if (!isAttacking)
+        {
+            Attack(inWindow, true, 1.0f);
+            LOG_INFO("Charged attack for {} seconds", attackHeldLength);
+        }
+        isCharging = false;
+        attackHeldLength = -1.0f;
+    }
+
+    if (attackHeldLength > 0.35f)
+    {
+        isCharging = true;
+    }
+
+    if (attackHeldLength > -1.0f)
+        attackHeldLength += dt;
     if (attackTimer >= 0.0f)
         attackTimer -= dt;
     if (attackComboTimer >= 0.0f)
         attackComboTimer -= dt;
+    if (iFramesTimer >= 0.0f)
+        iFramesTimer -= dt;
 
     // Spawn attack hitbox after set delay
     if (attackDelayTimer > 0.0f)
@@ -151,7 +180,7 @@ void PlayerController::OnUpdate(float dt)
     }
 
     // Set animation states based on movement
-    if (attackTimer < 0.0f && anim->IsDone())
+    if (attackTimer < 0.0f)
     {
         isAttacking = false;
     }
@@ -182,10 +211,18 @@ void PlayerController::OnUpdate(float dt)
             rb->SetGravityScale(0.0f);
         }
     }
-    else
+    else if (dashTimer > -1.0f)
     {
         sprite->SetTintColor(glm::vec3(1.0f));
         rb->SetGravityScale(defaultGravityScale);
+        dashTimer = -1.0f;
+    }
+
+    chargeFlashTimer -= dt;
+    if (chargeFlashTimer < 0.0f && chargeFlashTimer > -1.0f)
+    {
+        sprite->SetTintColor(glm::vec3(1.0f));
+        chargeFlashTimer = -1.0f;
     }
 }
 
@@ -445,6 +482,13 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
             isGrounded = true;
         }
     }
+    if (collision.other->GetGameObject()->HasTag("Enemy") && iFramesTimer < 0.0f)
+    {
+        LOG_INFO("hit by enemy with normal {}, {}", collision.normal.x, collision.normal.y);
+        iFramesTimer = iFrames;
+        glm::vec2 hitDir = -collision.normal;
+        queuedDash = [this, hitDir]() { Dash(hitDir, true, enemyKnockback); };
+    }
 }
 
 void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
@@ -458,7 +502,7 @@ void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
     }
 }
 
-void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
+void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
 {
     glm::vec2 dashDir{0.0f, 0.0f};
     // If not holding a direction, use direction character is facing (left or right)
@@ -470,7 +514,7 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow)
     // Multiply dash speed if hit on beat
     float adjustedDashSpeed = inWindow ? mDashSpeed * mDashBeatBoost : mDashSpeed;
 
-    currVelocity = adjustedDashSpeed * dashDir;
+    currVelocity = adjustedDashSpeed * speedScale * dashDir;
     --dashCount;
     dashTimer = mDashCooldown;
     currentDashDir = dashDir;
@@ -488,20 +532,31 @@ void PlayerController::Jump(bool inWindow)
     dashCount = mDashMax;
 }
 
-void PlayerController::Attack(bool inWindow)
+void PlayerController::Attack(bool inWindow, bool isChargeAttack, float damageMult)
 {
     // Check if in time range to combo attack
     // Also can only combo if on beat
-    if (attackComboTimer > 0.0f && inWindow)
+    if (isChargeAttack)
     {
-        queuedAttackSpawn = [this]() { SpawnAttackHitbox(mAttackHeavyDamage); };
-        anim->ChangeState(mts::AnimationSystem::States::Attack2);
+        queuedAttackSpawn = [this, damageMult]()
+        { SpawnAttackHitbox(mAttackHeavyDamage * damageMult); };
+        anim->ChangeState(mts::AnimationSystem::States::Attack1);
         attackComboTimer = -1.0f;
+        queuedDash = [this]()
+        {
+            TriggerCameraVFX(true, true);
+            Dash(facingDir == LEFT ? glm::vec2(-1.0f, 0.0f) : glm::vec2(1.0f, 0.0f), true, 1.2f);
+        };
     }
     else
     {
         queuedAttackSpawn = [this]() { SpawnAttackHitbox(mAttackLightDamage); };
-        anim->ChangeState(mts::AnimationSystem::States::Attack1);
+        if (attackAnimType)
+            anim->ChangeState(mts::AnimationSystem::States::Attack1);
+        else
+            anim->ChangeState(mts::AnimationSystem::States::Attack2);
+        attackAnimType = !attackAnimType;
+
         attackComboTimer = mAttackComboMaxDelay;
     }
 
@@ -512,9 +567,13 @@ void PlayerController::Attack(bool inWindow)
 
 void PlayerController::SpawnAttackHitbox(float damage)
 {
+    if (!attackHitbox)
+    {
+        attackHitbox = mts::GameObjectFactory::CreateFromArchetype("Data/AttackHitbox.prefab");
+        attackHitboxScript = attackHitbox->GetScript<AttackHitboxScript>();
+    }
     // Create attack hitbox object
-    mts::GameObject* attackHitbox = mts::GameObjectFactory::CreateGameObject();
-    mts::SerializationUtility::DeserializeFromFile(attackHitbox, "Data/AttackHitbox.prefab");
+    attackHitbox->SetActive(true);
     // Get transform and add or subtract offset based on facing dir
     mts::Transform* attackHitboxTransform = attackHitbox->GetComponent<mts::Transform>();
     glm::vec2 hitBoxPos = transform->GetPosition();
@@ -524,9 +583,7 @@ void PlayerController::SpawnAttackHitbox(float damage)
         hitBoxPos.x += mAttackHitboxOffsetX;
     attackHitboxTransform->SetPosition(hitBoxPos);
     // Set damage of hitbox
-    auto hitboxScript = attackHitbox->GetScript<AttackHitboxScript>();
-    if (hitboxScript)
-        hitboxScript->SetDamage(damage);
+    attackHitboxScript->SetDamage(damage);
 }
 
 void PlayerController::SetCheckPoint(CheckPoint* checkPoint)
@@ -586,6 +643,11 @@ void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
 void PlayerController::OnBeat(mts::BeatInfo info)
 {
     // TriggerCameraVFX(false, true);
+    if (info.isHalfBeat == false && isCharging)
+    {
+        chargeFlashTimer = 0.15f;
+        sprite->SetTintColor(glm::vec3(1.5f));
+    }
 }
 
 void PlayerController::OnBar(mts::BeatInfo info)

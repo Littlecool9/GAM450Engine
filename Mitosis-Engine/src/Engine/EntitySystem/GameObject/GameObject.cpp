@@ -219,6 +219,25 @@ namespace mts
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->DebugRender());
     }
 
+    void GameObject::SetActive(bool active)
+    {
+        if (isActive == active)
+            return;
+        isActive = active;
+        if (isActive)
+        {
+            for (auto* c : components)
+                if (c->IsEnabled())
+                    c->OnEnable();
+        }
+        else
+        {
+            for (auto* c : components)
+                if (c->IsEnabled())
+                    c->OnDisable();
+        }
+    }
+
     void GameObject::Destroy()
     {
         isDead = true;

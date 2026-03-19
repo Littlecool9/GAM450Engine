@@ -48,7 +48,8 @@ namespace mts
         OnUpdate();
         for (auto g : mGameObjects)
         {
-            g->Update(dt);
+            if (g->IsActive())
+                g->Update(dt);
         }
     }
 
@@ -56,14 +57,16 @@ namespace mts
     {
         for (auto g : mGameObjects)
         {
-            g->LateUpdate(dt);
+            if (g->IsActive())
+                g->LateUpdate(dt);
         }
     }
 
     void Scene::FixedUpdate(float dt)
     {
         for (auto g : mGameObjects)
-            g->FixedUpdate(dt);
+            if (g->IsActive())
+                g->FixedUpdate(dt);
     }
 
     void Scene::Render()
@@ -74,7 +77,8 @@ namespace mts
         // }
         for (int i = 0; i < mGameObjects.size(); ++i)
         {
-            mGameObjects[i]->Render();
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->Render();
         }
     }
 
@@ -82,14 +86,16 @@ namespace mts
     {
         for (auto g : mGameObjects)
         {
-            g->DebugRender();
+            if (g->IsActive())
+                g->DebugRender();
         }
     }
 
     void Scene::EnterPlayMode()
     {
         for (auto* go : mGameObjects)
-            go->Init();
+            if (go->IsActive())
+                go->Init();
         OnEnterPlayMode();
     }
 
@@ -101,7 +107,7 @@ namespace mts
     // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
     GameObject* Scene::CreateGameObject()
     {
-        GameObject* newGameObject = GameObjectFactory::CreateGameObject();
+        GameObject* newGameObject = GameObjectFactory::CreateEmptyGameObject();
         return newGameObject;
     }
 
@@ -176,7 +182,7 @@ namespace mts
         {
             auto gv = gameObjects[i];
             assert(gv.IsObject());
-            auto go = GameObjectFactory::CreateGameObject(this);
+            auto go = GameObjectFactory::CreateEmptyGameObject(this);
             go->Deserialize(gv);
         }
     }

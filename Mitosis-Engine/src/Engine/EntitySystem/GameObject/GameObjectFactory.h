@@ -35,12 +35,12 @@ namespace mts
         // from json file
         static GameObject* Instantiate(const std::string& gameObjectName);
         // Return Empty GameObject
-        static GameObject* CreateGameObject();
-        static GameObject* CreateGameObject(Scene* scene);
+        static GameObject* CreateEmptyGameObject();
+        static GameObject* CreateEmptyGameObject(Scene* scene);
 
         // Temporary set to be public for testing, will be removed after the scene is cleared
         // Build GameObject from json file and return
-        static GameObject* InstantiateFromJSON(const std::string& filename);
+        static GameObject* CreateFromArchetype(const std::string& filename);
 
         // Remove a cached archetype by path so it is reloaded from disk on next instantiation
         static void RemoveArchetype(const std::string& path);

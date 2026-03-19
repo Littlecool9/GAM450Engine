@@ -31,12 +31,12 @@ namespace mts
     }
 
     // Return Empty GameObject
-    GameObject* GameObjectFactory::CreateGameObject()
+    GameObject* GameObjectFactory::CreateEmptyGameObject()
     {
-        return CreateGameObject(SceneSystem::GetCurrentScene());
+        return CreateEmptyGameObject(SceneSystem::GetCurrentScene());
     }
 
-    GameObject* GameObjectFactory::CreateGameObject(Scene* scene)
+    GameObject* GameObjectFactory::CreateEmptyGameObject(Scene* scene)
     {
         GameObject* obj = new GameObject();
         if (scene)
@@ -46,7 +46,7 @@ namespace mts
         return obj;
     }
 
-    GameObject* GameObjectFactory::InstantiateFromJSON(const std::string& path)
+    GameObject* GameObjectFactory::CreateFromArchetype(const std::string& path)
     {
         auto it = archetypes.find(path);
         if (it == archetypes.end())
@@ -56,6 +56,9 @@ namespace mts
         newObj->RegenerateId();
         if (Scene* scene = SceneSystem::GetCurrentScene())
             scene->AddGameObject(newObj);
+
+        newObj->Init();
+
         return newObj;
     }
 

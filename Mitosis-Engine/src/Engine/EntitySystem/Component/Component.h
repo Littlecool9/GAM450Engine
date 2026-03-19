@@ -38,6 +38,9 @@ namespace mts
         virtual void Render() {}
         virtual void DebugRender() {}
 
+        virtual void OnEnable() {}
+        virtual void OnDisable() {}
+
         virtual void OnCollisionEnter2D(const Collision2D& collision) {};
         virtual void OnCollisionStay2D(const Collision2D& collision) {};
         virtual void OnCollisionExit2D(const Collision2D& collision) {};

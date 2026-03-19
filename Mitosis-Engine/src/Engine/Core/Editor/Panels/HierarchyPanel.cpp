@@ -36,7 +36,7 @@ namespace mts
             return;
         }
         if (ImGui::Button("+ Add GameObject"))
-            GameObjectFactory::CreateGameObject(scene);
+            GameObjectFactory::CreateEmptyGameObject(scene);
         ImGui::Separator();
 
         ImGui::BeginChild("##go_list", ImVec2(0, 0), false);
@@ -94,7 +94,7 @@ namespace mts
             if (auto* payload = ImGui::AcceptDragDropPayload("PREFAB_PATH"))
             {
                 const char* path = static_cast<const char*>(payload->Data);
-                if (GameObject* spawned = GameObjectFactory::InstantiateFromJSON(path))
+                if (GameObject* spawned = GameObjectFactory::CreateFromArchetype(path))
                     ctx.selected = spawned->GetId();
             }
             ImGui::EndDragDropTarget();

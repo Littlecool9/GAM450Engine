@@ -15,11 +15,16 @@ void AttackHitboxScript::OnCreate()
     lifeTimer = mLifetime;
 }
 
+void AttackHitboxScript::OnEnable()
+{
+    lifeTimer = mLifetime;
+}
+
 void AttackHitboxScript::OnUpdate(float dt)
 {
     lifeTimer -= dt;
     if (lifeTimer < 0.0f)
-        GetGameObject()->Destroy();
+        GetGameObject()->SetActive(false);
 }
 
 void AttackHitboxScript::DeserializeFields(mts::JsonValue const& fields)

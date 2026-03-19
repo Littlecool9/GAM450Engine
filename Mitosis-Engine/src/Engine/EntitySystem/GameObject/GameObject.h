@@ -164,7 +164,7 @@ namespace mts
         inline bool GetDontDestroy() const { return dontDestroy; }
         inline bool IsDead() const { return isDead; }
         inline bool IsActive() const { return isActive; }
-        inline bool SetActive(bool active) { return isActive = active; }
+        void SetActive(bool active);
         inline void SetLayer(LayerMasks layer) { objectLayer = layer; }
         inline LayerMasks GetLayer() const { return objectLayer; }
         inline void SetName(std::string const& name) { this->name = name; }

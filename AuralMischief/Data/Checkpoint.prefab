@@ -1,0 +1,42 @@
+{
+    "UUID": "1428702e-47cb-4b5d-bd8b-6a91ea2a6699",
+    "Name": "Checkpoint",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    15.199999809265137,
+                    9.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "BoxCollider2D",
+            "Data": {
+                "Width": 1.0,
+                "Height": 4.0,
+                "Offset": [
+                    0.0,
+                    0.0
+                ],
+                "IsTrigger": 0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "CheckPoint"
+            }
+        }
+    ]
+}

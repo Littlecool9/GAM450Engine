@@ -53,7 +53,7 @@ class PlayerController : public mts::ScriptBase
                    : val_from + glm::sign(val_to - val_from) * delta;
     }
 
-    void Test();
+    //void Test();
     void Init(mts::ConductorSystem& system, CameraController* cam);
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();

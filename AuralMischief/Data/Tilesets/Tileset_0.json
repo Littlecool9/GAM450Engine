@@ -1,0 +1,61 @@
+{
+  "Name": "Tileset",
+  "TilesetId": 1,
+  "AtlasTileCountPerRow": 19.0,
+  "AtlasTileCountPerCol": 13.0,
+  "TilePixelWidth": 80,
+  "TilePixelHeight": 80,
+  "Comment": "32ppu is the default, so the tile size is 1x1 in world space",
+
+  "TileDefinitions": [
+    {
+      "TileID": 1,
+      "Name": "Demo_Tile_1",
+      "IndexX": 4,
+      "IndexY": 3,
+
+      "Tag": "Dirt",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 2,
+      "Name": "Demo_Tile_2",
+      "IndexX": 4,
+      "IndexY": 0,
+
+      "Tag": "Snow",
+      "IsCollidable": true,
+
+      "IsFullTile": true
+    },
+    {
+      "TileID": 3,
+      "Name": "Demo_Tile_3",
+      "IndexX": 3,
+      "IndexY": 4,
+
+      "Tag": "StoneBrick",
+      "IsCollidable": true,
+
+      "IsFullTile": true
+    },
+    {
+      "TileID": 4,
+      "Name": "Demo_Tile_4",
+      "IndexX": 3,
+      "IndexY": 9,
+
+      "Tag": "Water",
+      "IsCollidable": false
+    },
+    {
+      "TileID": 5,
+      "Name": "Demo_Tile_5",
+      "IndexX": 3,
+      "IndexY": 10,
+
+      "Tag": "LavaBlock",
+      "IsCollidable": false
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+    "UUID": "98859e0d-4861-4399-b51b-8e8210ea7867",
+    "Name": "MovablePlatform",
+    "Layer": 0,
+    "Tags": [
+        "PlatformPuzzle1"
+    ],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    97.1500015258789,
+                    11.699999809265137,
+                    0.0
+                ],
+                "Scale": [
+                    2.0,
+                    0.5,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "ActionList"
+        },
+        {
+            "Type": "BoxCollider2D",
+            "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                    0.0,
+                    0.0
+                ],
+                "IsTrigger": 0
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 6,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/TilemapDefaultTextureResource.tex",
+                "MeshResource": "Data/Resources/14x7MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "MovablePlatform"
+            }
+        }
+    ]
+}

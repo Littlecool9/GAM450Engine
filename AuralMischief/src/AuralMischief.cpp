@@ -7,6 +7,8 @@
 #include "Script/CheckPoint.h"
 #include "Script/MovablePlatform.h"
 #include "Script/PlayerController.h"
+#include "Script/HazardCollider.h"
+#include "Script/PlatformPuzzleScript.h"
 #include "Script/EnemyBehaviors/EnemyController.h"
 #include "Script/AudioController.h"
 
@@ -42,10 +44,10 @@ void AuralMischief::RegisterScripts()
                                        []() { return new CheckPoint(); });
     mts::ScriptFactory::RegisterScript(MovablePlatform::StaticClassName(),
                                        []() { return new MovablePlatform(); });
+    mts::ScriptFactory::RegisterScript(HazardCollider::StaticClassName(),
+                                       []() { return new HazardCollider(); });
+    mts::ScriptFactory::RegisterScript(PlatformPuzzleScript::StaticClassName(),
+                                       []() { return new PlatformPuzzleScript(); });
     mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
                                        []() { return new mts::EnemyController(); });
-    mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
-                                       []() { return new mts::EnemyController(); });
-    mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
-                                       []() { return new AudioController(); });
 }

@@ -173,7 +173,14 @@ void PlayerController::OnUpdate(float dt)
     if (dashTimer > 0.0f)
     {
         sprite->SetTintColor(glm::vec3(0.7f));
-        rb->SetGravityScale(0.0f);
+        if (dashTimer < mDashCooldown - 0.1f)   // Resume
+        {
+            rb->SetGravityScale(defaultGravityScale);
+        }
+        else
+        {
+            rb->SetGravityScale(0.0f);
+        }
     }
     else
     {
@@ -522,46 +529,6 @@ void PlayerController::SpawnAttackHitbox(float damage)
         hitboxScript->SetDamage(damage);
 }
 
-void PlayerController::Test()
-{
-    // Generate code for testing the MovablePlatform's FirePlatformTranslate function
-    // Press the key T to fire the test
-    if (mts::Input::IsKeyPressed(mts::Key::T))
-    {
-        LOG_INFO("PlayerController Test: Firing MovablePlatform FirePlatformTranslate");
-        // Get all game objects in the current scene
-        auto* currentScene = mts::SceneSystem::GetCurrentScene();
-
-        if (currentScene)
-        {
-            // Find all MovablePlatform scripts and trigger them
-            mts::GameObject* testPlatform = currentScene->FindGameObjectByName("TestPlatform");
-            auto* platform = testPlatform->GetScript<MovablePlatform>();
-            auto* platformTransform = testPlatform->GetComponent<mts::Transform>();
-            if (!platformTransform)
-            {
-                LOG_ERROR("Transform component not found on TestPlatform");
-                return;
-            }
-            if (!platform)
-            {
-                LOG_ERROR("MovablePlatform script not found on TestPlatform");
-                return;
-            }
-            if (platform)
-            {
-                platform->FirePlatformTranslate(
-                    glm::vec3{
-                        platformTransform->GetPosition().x,
-                        platformTransform->GetPosition().y + 3.0f,
-                        platformTransform->GetPosition().z,
-                    },
-                    1.0f);
-            }
-        }
-    }
-}
-
 void PlayerController::SetCheckPoint(CheckPoint* checkPoint)
 {
     LOG_INFO("CheckPoint set at position: ({}, {}, {})",
@@ -582,6 +549,8 @@ void PlayerController::ReturnToCheckPoint()
 
 void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
 {
+    if (!cam)
+        return;
     // Determine zoom strength based on action and timing
     // Lower zoom value = stronger zoom in effect
     float zoomStrength = 1.0f;

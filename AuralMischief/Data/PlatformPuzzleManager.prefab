@@ -1,0 +1,44 @@
+{
+    "UUID": "a6c8790a-4db0-47ad-b5ba-47dacf284426",
+    "Name": "PlatformPuzzleManager",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "PlatformPuzzleScript",
+                "Fields": {
+                    "PuzzleId": 1,
+                    "BeatInterval": 0,
+                    "HalfBeatInterval": 0,
+                    "LoopSequence": true,
+                    "AutoActivate": true,
+                    "Platforms": [
+                        {
+                            "UUID": "98859e0d-4861-4399-b51b-8e8210ea7867",
+                            "Positions": [
+                                {
+                                    "Position": [
+                                        97,
+                                        11.5,
+                                        0
+                                    ],
+                                    "TimeToFinish": 0.2
+                                },
+                                {
+                                    "Position": [
+                                        105,
+                                        11.5,
+                                        0
+                                    ],
+                                    "TimeToFinish": 0.2
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

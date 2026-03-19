@@ -201,7 +201,7 @@ namespace mts
         bool isDead = false;  // in the queue for destruction;
 
         // @brief: Name can be non-unique
-        std::string name;
+        std::string name = "";
         // @brief: One GameObject can only be in one layer at a time
         LayerMasks objectLayer = LayerMasks::Default;
         // @brief: One GameObject can have multiple tags

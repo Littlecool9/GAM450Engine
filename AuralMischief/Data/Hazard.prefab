@@ -1,0 +1,42 @@
+{
+    "UUID": "e945a8c5-ddae-4975-9b32-d43cfd458a43",
+    "Name": "Hazard",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    36.0,
+                    5.5,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "HazardCollider"
+            }
+        },
+        {
+            "Type": "BoxCollider2D",
+            "Data": {
+                "Width": 21.649999618530273,
+                "Height": 1.0,
+                "Offset": [
+                    0.0,
+                    0.0
+                ],
+                "IsTrigger": 0
+            }
+        }
+    ]
+}

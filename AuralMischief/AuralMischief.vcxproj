@@ -198,6 +198,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\AudioController.h" />
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
+    <ClInclude Include="src\Script\HazardCollider.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.h">
@@ -216,7 +217,9 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Script\MovablePlatform.h" />
+    <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
     <ClInclude Include="src\Script\PlayerController.h" />
+    <ClInclude Include="src\Script\RhythmSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -228,6 +231,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\AudioController.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
+    <ClCompile Include="src\Script\HazardCollider.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyPatrolAction.cpp">
@@ -246,7 +250,9 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Script\MovablePlatform.cpp" />
+    <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
     <ClCompile Include="src\Script\PlayerController.cpp" />
+    <ClCompile Include="src\Script\RhythmSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

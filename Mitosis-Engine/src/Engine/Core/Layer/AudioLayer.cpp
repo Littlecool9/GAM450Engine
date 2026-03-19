@@ -58,9 +58,9 @@ namespace mts
         {
             LOG_INFO("AudioManager Init OK.");
         }
-        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/MausoleumMash/Master.bank");
-        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/MausoleumMash/Master.strings.bank");
-        mAudio->AddBankToGroup(BankGroup::Music, "Assets/Audio/MausoleumMash/Music.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.strings.bank");
+        mAudio->AddBankToGroup(BankGroup::Music, "Assets/Audio/Desktop/BGM.bank");
         mAudio->LoadBankGroup(BankGroup::Core);
         mAudio->LoadBankGroup(BankGroup::Music);
 

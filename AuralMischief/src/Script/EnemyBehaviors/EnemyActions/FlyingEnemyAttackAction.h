@@ -36,6 +36,7 @@ namespace mts
 
         glm::vec2 size;
         uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
+        float AttackDuration = 4.f;
     };
 
 }  // namespace mts

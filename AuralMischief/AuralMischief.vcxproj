@@ -211,8 +211,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackCountdownParam.h" />
-    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\PlayerHealthRatioParam.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -244,8 +247,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackCountdownParam.cpp" />
-    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\MovespeedParam.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\PatrolRadius.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\PlayerHealthRatioParam.cpp">
       <SubType>
       </SubType>
     </ClCompile>

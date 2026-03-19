@@ -9,7 +9,8 @@
 
 #include "pch.h"
 #include "FlyingEnemyAttackAction.h"
-
+#include <Engine/EntitySystem/Component/Actions/TranslateAction.h>
+#include <Engine/EntitySystem/Component/Actions/RotateAction.h>
 #include <fmod_dsp_effects.h>
 #include "../EnemyParameters/AttackCountdownParam.h"
 //#include "../Actions/ColliderScaleAction.h"
@@ -30,14 +31,14 @@ namespace mts
 	{
         EnemyState newState = state;
 		//TODO: update once player gameobject has stats
-        newState.SetPlayerHealthLeftRatio(0.6f);
+        newState.SetPlayerHealthLeftRatio(0.3f);
 		return newState;
     }
 
 	float FlyingEnemyAttackAction::GetEstimatedTimeCost(const EnemyState& state,
 		const EnemyPreference& preferences) const
 	{
-		return 1.28f;
+		return 2.f;
     }
 
     void FlyingEnemyAttackAction::FireBullet(EnemyAgent& agent)
@@ -46,21 +47,66 @@ namespace mts
         {
             return;
         }
-        agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-            AnimationSystem::States::Attack1);
-        auto a = agent.GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
-        glm::vec2 newSize{size.x * 3.3, size.y};
+
+        const glm::vec2 enemyPos = agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
+        const glm::vec2 playerPos =
+            agent.GetPlayerReference()->GetComponent<Transform>()->GetPosition();
+
+        const glm::vec2 toPlayer = playerPos - enemyPos;
+        const float dist = agent.GetState().GetDistanceToPlayer();
+        glm::vec2 dir = (dist > 0.0001f) ? (toPlayer / dist) : glm::vec2{0.0f, 0.0f};
+        float modifier = dir.x < 0 ? -1 : 1;
+        float first = 0.2f;
+        glm::vec3 pos{enemyPos.x + first * modifier,
+                  enemyPos.y,
+                  agent.GetGameObject()->GetComponent<Transform>()->GetPosition().z};
+        agent.GetGameObject()->GetComponent<ActionList>()->AddTranslateAction(pos, agent.GetGameObject(), 0.1f, 0, 0);
+        agent.GetGameObject()->GetComponent<ActionList>()->AddRotateAction(3.665f,
+                                                                           agent.GetGameObject(),
+                                                                           0.25f,
+                                                                           0,
+                                                                           0,
+                                                                           true);
+        pos.x = enemyPos.x + 0.5f * modifier;
+        pos.y = enemyPos.y - 3;
+        agent.GetGameObject()->GetComponent<ActionList>()->AddTranslateAction(pos,
+                                                                              agent.GetGameObject(),
+                                                                              0.7f,
+                                                                              0,
+                                                                              0, true);
+        pos.x = enemyPos.x;
+        pos.y = enemyPos.y;
+        agent.GetGameObject()->GetComponent<ActionList>()->AddTranslateAction(pos,
+                                                                              agent.GetGameObject(),
+                                                                              0.5f,
+                                                                              0,
+                                                                              0);
+        agent.GetGameObject()->GetComponent<ActionList>()->AddRotateAction(0,
+                                                                           agent.GetGameObject(),
+                                                                           0.5f,
+                                                                           0,
+                                                                           0,
+                                                                           true);
+        //if (dir.x < 0)
+        //{
+        //    agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
+        //}
+        //else
+        //{
+        //    agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
+        //}
+
+        //agent.GetGameObject()->GetComponent<ActionList>()->AddTranslateAction();
+        //agent.GetGameObject()->GetComponent<ActionList>()->AddAction(
+        //    new ColliderScaleAction(size,
+        //                            agent.GetGameObject(),
+        //                            1,
+        //                            a,
+        //                            a,
+        //                            false,
+        //                            BaseAction::EaseType::Linear));
+
         LOG_INFO("Scaling up");
-        /*agent.GetGameObject()->GetComponent<ActionList>()->AddAction(new 
-            ColliderScaleAction(newSize, agent.GetGameObject(), 1, a * 1.f, a * 5, true, BaseAction::EaseType::Linear));
-        agent.GetGameObject()->GetComponent<ActionList>()->AddAction(
-            new ColliderScaleAction(size,
-                                    agent.GetGameObject(),
-                                    1,
-                                    a,
-                                    a,
-                                    false,
-                                    BaseAction::EaseType::Linear));*/
         ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
     }
 
@@ -70,13 +116,13 @@ namespace mts
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() - agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
         size = agent.GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize();
         ConductorSystem& cs = ConductorSystem::Get();
-        mConductorSubId = cs.onBeat.Subscribe(
-            [this, &agent](mts::BeatInfo info)
-            {
-                if (info.isHalfBeat)
-                    FireBullet(agent);
-        });
-
+        //mConductorSubId = cs.onBeat.Subscribe(
+        //    [this, &agent](mts::BeatInfo info)
+        //    {
+        //        if (info.isHalfBeat)
+        //            FireBullet(agent);
+        //});
+        FireBullet(agent);
         // debug
         LOG_INFO("EnemyAttackAction: Attacking player!",);
     }
@@ -84,8 +130,8 @@ namespace mts
 	bool FlyingEnemyAttackAction::IsAvailable(const EnemyState& state, 
 		const EnemyPreference& preferences) const
 	{
-        if (state.GetInAction() ||
-            std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue()) > 0)
+        float cd = std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue());
+        if (state.GetInAction() || cd > 0)
         {
             return false;
         }
@@ -101,7 +147,7 @@ namespace mts
             return Invalid;
         }
 
-        if (agent->GetGameObject()->GetComponent<Animation>()->AnimationIsDone())
+        if (totalTime >= AttackDuration)
         {
              // cooldown after attack
             agent->GetState()
@@ -110,8 +156,8 @@ namespace mts
                               agent->GetState().params.at(HashAction("AttackCooldown")))
                               ->GetCooldownTime());
             agent->GetState().SetInAction(false);
-            agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-                AnimationSystem::States::Idle);
+            //agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+            //    AnimationSystem::States::Idle);
             LOG_INFO("Finished Firing");
             return Success;
         }

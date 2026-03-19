@@ -33,7 +33,7 @@ namespace mts
 
         float mStopDistance = 2.f;  // how close is “arrived”
         float mGiveUpTime = 3.0f;    // fail if cannot reach in time
-        float mMoveSpeed = 5.0f;     // units/sec
+        float mMoveSpeed = 1.50f;     // units/sec
     };
 
 }  // namespace mts

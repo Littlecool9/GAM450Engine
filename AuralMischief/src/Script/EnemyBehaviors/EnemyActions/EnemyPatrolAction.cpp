@@ -26,7 +26,18 @@ namespace mts
 {
     bool EnemyPatrolAction::IsAvailable(const EnemyState& state, const EnemyPreference& preferences) const
     {
-        return true; //always can patrol
+        //stop patrolling if player in aggro range
+        auto it = state.params.find(HashAction("AggroRange"));
+        if (it != state.params.end() && it->second != nullptr)
+        {
+            auto* p = it->second;
+
+            if (state.GetDistanceToPlayer() <= std::get<float>(p->GetValue()))
+            {
+                return false;
+            }
+        }
+        return true; 
     }
 
     void EnemyPatrolAction::OnBeginning(EnemyAgent& agent)
@@ -47,7 +58,7 @@ namespace mts
 
     float EnemyPatrolAction::GetEstimatedTimeCost(const EnemyState& state, const EnemyPreference& preferences) const
     {
-        return 0.1f;
+        return 5.f;
     }
 
     EnemyState EnemyPatrolAction::GetExpectedNextState(const EnemyState& state, const EnemyPreference& preferences) const
@@ -60,6 +71,18 @@ namespace mts
     {
         if (!agent)
             return Invalid;
+        auto s = agent->GetState();
+        auto it = s.params.find(HashAction("AggroRange"));
+        if (it != s.params.end() && it->second != nullptr)
+        {
+            auto* p = it->second;
+
+            if (s.GetDistanceToPlayer() <= std::get<float>(p->GetValue()))
+            {
+                return Success;
+            }
+        }
+
         glm::vec3 pos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();
         float x = pos.x;
 

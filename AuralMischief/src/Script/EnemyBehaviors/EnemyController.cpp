@@ -19,19 +19,19 @@
 #include "EnemyActions/FlyingEnemyAttackAction.h"
 #include "EnemyParameters/AggroRangeParam.h"
 #include "EnemyParameters/AttackCountdownParam.h"
-#include "EnemyParameters/MovespeedParam.h"
 #include "EnemyParameters/PatrolRadius.h"
+#include "EnemyParameters/PlayerHealthRatioParam.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
-
+REGISTER_ENEMY_ACTION("FlyEnemy", mts::FlyingEnemyAttackAction);
 REGISTER_ENEMY_ACTION("SlugEnemy", mts::EnemyPatrolAction);
-REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyMoveToPlayerAction)
+REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyMoveToPlayerAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyPatrolAction);
-REGISTER_ENEMY_ACTION("FlyEnemy", mts::FlyingEnemyAttackAction)
+
 namespace mts
 {
     void EnemyController::OnCreate()
@@ -89,12 +89,15 @@ namespace mts
         {
             mAggroRange = fields["AggroRange"].GetFloat();
             p.emplace(mts::HashAction("AggroRange"), new mts::AggroRangeParam());
+            p.at(HashAction("AggroRange"))->SetValue(mAggroRange);
         }
         if (fields.Has("AttackCooldown"))
         {
             mAttackCooldown = fields["AttackCooldown"].GetFloat();
             p.emplace(mts::HashAction("AttackCooldown"), new mts::AttackCountdownParam());
+            static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))->SetCooldownTime(mAttackCooldown);
         }
+        p.emplace(mts::HashAction("PlayerHealthRatio"), new mts::PlayerHealthRatioParam());
     }
     void EnemyController::SerializeFields(mts::JsonDocument& out) const
     {

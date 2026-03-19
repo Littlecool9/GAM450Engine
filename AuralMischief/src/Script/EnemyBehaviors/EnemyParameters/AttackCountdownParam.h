@@ -18,6 +18,7 @@ namespace mts
         AttackCountdownParam() { SetValue(0.0f); }
         void Update(float dt, GameObject* owner) override;
         float GetCooldownTime() { return CooldownTime; }
+        void SetCooldownTime(float n) { CooldownTime = n; }
 
        private:
         float CooldownTime = 3.4f;

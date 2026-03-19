@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "EnemyMoveToPlayerAction.h"
 
+#include "../EnemyController.h"
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
@@ -22,7 +23,8 @@ namespace mts
                                               const EnemyPreference& /*preferences*/) const
     {
         float dis =  std::get<float>(state.params.at(HashAction("AggroRange"))->GetValue());
-        if (state.GetInAction() || (state.GetDistanceToPlayer() <= dis && state.GetDistanceToPlayer() <= mStopDistance))
+        float toPlayer = state.GetDistanceToPlayer();
+        if (state.GetInAction() || state.GetDistanceToPlayer() >= dis || state.GetDistanceToPlayer() <= mStopDistance)
             return false;
 
         return true;
@@ -46,6 +48,7 @@ namespace mts
 
     void EnemyMoveToPlayerAction::OnBeginning(EnemyAgent& agent)
     {
+        LOG_INFO("Chasing!");
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(AnimationSystem::States::Walking);
     }
 
@@ -62,7 +65,7 @@ namespace mts
         const glm::vec2 playerPos = agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();  
 
         const glm::vec2 toPlayer = playerPos - enemyPos;
-        const float dist = glm::length(toPlayer);
+        const float dist = agent->GetState().GetDistanceToPlayer();
 
         //check if arrived
         if (dist <= mStopDistance)
@@ -91,13 +94,13 @@ namespace mts
         glm::vec2 dir = (dist > 0.0001f) ? (toPlayer / dist) : glm::vec2{0.0f, 0.0f};
         if (dir.x < 0)
         {
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
         }
         else
         {
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
         }
-        const glm::vec2 vel = dir * mMoveSpeed;
+        const glm::vec2 vel = dir * agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
         agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
             glm::vec2{vel.x, agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y});  
 
@@ -110,7 +113,7 @@ namespace mts
     {
         // Heuristic: moving towards the player increases player elimination and decreases self preservation
         return {
-            {EnemyGoal::PlayerElimination, 1.0f * preference[EnemyGoal::PlayerElimination]},
+            {EnemyGoal::PlayerElimination, 0.3f * preference[EnemyGoal::PlayerElimination]},
             {EnemyGoal::SelfPreservation, -0.5f * preference[EnemyGoal::SelfPreservation]}
         };
     }

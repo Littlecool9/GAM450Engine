@@ -75,6 +75,9 @@ namespace mts
         RightCtrl,
         LeftAlt,
         RightAlt,
+
+        // Special
+        Grave,  // backtick / tilde (`)
     };
 
     enum class MouseButton : uint8_t

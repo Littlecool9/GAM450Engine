@@ -61,6 +61,9 @@ namespace mts
                 case GLFW_KEY_RIGHT_ALT:
                     return Key::RightAlt;
 
+                case GLFW_KEY_GRAVE_ACCENT:
+                    return Key::Grave;
+
                 default:
                     return Key::Unknown;
             }

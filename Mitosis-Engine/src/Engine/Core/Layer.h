@@ -30,6 +30,9 @@ namespace mts
         virtual void OnDebugRender() {}
         virtual void OnImGuiRender(float dt) {}
 
+        virtual void OnEnterPlayMode() {}
+        virtual void OnExitPlayMode() {}
+
         virtual void OnEndFrame() {}
 
         virtual void OnEvent(Event& e) {}

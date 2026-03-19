@@ -19,6 +19,8 @@ namespace mts
         explicit PhysicsLayer(EditorContext& ctx);
         void OnFixedUpdate(float fixedDt) override;
 
+        void OnExitPlayMode() override;
+
        private:
         EditorContext& mCtx;
     };

@@ -220,6 +220,35 @@ namespace mts
             if (isPlaying)
                 ImGui::EndDisabled();
 
+            // Aspect ratio selector
+            ImGui::SameLine();
+            ImGui::Separator();
+            ImGui::SameLine();
+            ImGui::TextUnformatted("Aspect:");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(90.0f);
+
+            const char* aspectLabels[] = {"Free", "16:9", "4:3", "21:9", "Custom"};
+            int currentAspect = static_cast<int>(Renderer::GetAspectMode());
+            if (ImGui::Combo("##aspect", &currentAspect, aspectLabels, IM_ARRAYSIZE(aspectLabels)))
+                Renderer::SetAspectMode(static_cast<AspectMode>(currentAspect));
+
+            if (Renderer::GetAspectMode() == AspectMode::Custom)
+            {
+                float customX = Renderer::GetCustomAspectX();
+                float customY = Renderer::GetCustomAspectY();
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(50.0f);
+                bool changed = ImGui::InputFloat("##customX", &customX, 0.0f, 0.0f, "%.1f");
+                ImGui::SameLine();
+                ImGui::TextUnformatted(":");
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(50.0f);
+                changed |= ImGui::InputFloat("##customY", &customY, 0.0f, 0.0f, "%.1f");
+                if (changed && customX > 0.0f && customY > 0.0f)
+                    Renderer::SetAspectMode(AspectMode::Custom, customX, customY);
+            }
+
             ImGui::EndMenuBar();
         }
 
@@ -249,21 +278,25 @@ namespace mts
         auto* centralNode = ImGui::DockBuilderGetCentralNode(dockId);
         if (centralNode && centralNode->Size.x > 0 && centralNode->Size.y > 0)
         {
-            mCtx.viewportPos = centralNode->Pos;
-            mCtx.viewportSize = centralNode->Size;
-            mCtx.viewportHovered =
-                ImGui::IsMouseHoveringRect(centralNode->Pos,
-                                           ImVec2(centralNode->Pos.x + centralNode->Size.x,
-                                                  centralNode->Pos.y + centralNode->Size.y));
-
             ImGuiViewport* vp = ImGui::GetMainViewport();
-            int x = static_cast<int>(centralNode->Pos.x - vp->Pos.x);
-            int h = static_cast<int>(centralNode->Size.y);
+            int nodeX = static_cast<int>(centralNode->Pos.x - vp->Pos.x);
+            int nodeW = static_cast<int>(centralNode->Size.x);
+            int nodeH = static_cast<int>(centralNode->Size.y);
             // ImGui Y is top-down; OpenGL Y is bottom-up
-            int y = static_cast<int>(vp->Size.y - (centralNode->Pos.y - vp->Pos.y) -
-                                     centralNode->Size.y);
-            int w = static_cast<int>(centralNode->Size.x);
-            Renderer::SetViewport(x, y, w, h);
+            int nodeY = static_cast<int>(vp->Size.y - (centralNode->Pos.y - vp->Pos.y) - nodeH);
+
+            // Renderer applies the current aspect constraint and stores the result
+            Renderer::SetAvailableViewport(nodeX, nodeY, nodeW, nodeH);
+
+            // Read back the constrained viewport to keep viewportPos/viewportSize in ImGui space
+            // (used by mouse picking and gizmo drawing)
+            Viewport gv = Renderer::GetGameViewport();
+            ImVec2 actualPos = {vp->Pos.x + gv.x, vp->Pos.y + vp->Size.y - gv.y - gv.h};
+            mCtx.viewportPos = actualPos;
+            mCtx.viewportSize = {static_cast<float>(gv.w), static_cast<float>(gv.h)};
+            mCtx.viewportHovered =
+                ImGui::IsMouseHoveringRect(actualPos,
+                                           ImVec2(actualPos.x + gv.w, actualPos.y + gv.h));
         }
         else
         {
@@ -286,5 +319,17 @@ namespace mts
             HandleViewportInput(scene);
             DrawGizmo(scene);
         }
+    }
+
+    void EditorLayer::OnEnterPlayMode()
+    {
+        mCtx.selected = UUID::InvalidID;
+        mCtx.playState = PlayState::Play;
+    }
+
+    void EditorLayer::OnExitPlayMode()
+    {
+        mCtx.selected = UUID::InvalidID;
+        mCtx.playState = PlayState::Edit;
     }
 }  // namespace mts

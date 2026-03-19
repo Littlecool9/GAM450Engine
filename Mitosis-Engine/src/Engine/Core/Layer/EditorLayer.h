@@ -28,6 +28,9 @@ namespace mts
         void OnUpdate(float dt) override;
         void OnImGuiRender(float dt) override;
 
+        void OnEnterPlayMode() override;
+        void OnExitPlayMode() override;
+
        private:
         void UpdateEditorCamera(float dt);
         void HandleViewportInput(Scene* scene);

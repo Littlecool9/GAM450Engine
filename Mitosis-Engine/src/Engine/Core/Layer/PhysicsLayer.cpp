@@ -25,4 +25,9 @@ namespace mts
         if (mCtx.playState == PlayState::Play)
             physics::PhysicsSystem2D::FixedUpdate(SceneSystem::GetCurrentScene(), fixedDt);
     }
+
+    void PhysicsLayer::OnExitPlayMode()
+    {
+        physics::PhysicsSystem2D::Reset();
+    }
 }  // namespace mts

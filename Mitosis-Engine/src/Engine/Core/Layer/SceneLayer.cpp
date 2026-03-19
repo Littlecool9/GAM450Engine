@@ -11,7 +11,9 @@
 #include "SceneLayer.h"
 
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/SceneSystem/Scene.h"
 #include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/Serialization/SerializationUtility.h"
 
 namespace mts
 {
@@ -64,5 +66,24 @@ namespace mts
     void SceneLayer::OnEndFrame()
     {
         SceneSystem::SceneCleanUp();
+    }
+
+    void SceneLayer::OnEnterPlayMode()
+    {
+        Scene* scene = SceneSystem::GetCurrentScene();
+        // Capture current (possibly unsaved) edit state
+        std::string snapshot = SerializationUtility::SerializeToString(scene);
+        // Preserve edit GOs untouched; deserialize fresh play GOs
+        scene->StashGameObjects();
+        SerializationUtility::DeserializeFromString(scene, snapshot);
+        scene->EnterPlayMode();
+    }
+
+    void SceneLayer::OnExitPlayMode()
+    {
+        Scene* scene = SceneSystem::GetCurrentScene();
+        scene->ExitPlayMode();        // stop audio / custom teardown
+        scene->ClearGameObjects();    // delete play GOs
+        scene->RestoreGameObjects();  // restore pristine edit GOs (no deserialize)
     }
 }  // namespace mts

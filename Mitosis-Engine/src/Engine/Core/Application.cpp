@@ -176,8 +176,12 @@ namespace mts
         dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& ev)
                                               { return OnWindowClose(ev); });
 
-        if (Input::IsKeyPressed(Key::C))
+        if (Input::IsKeyPressed(Key::Grave))
+        {
             mInDebugView = !mInDebugView;
+            if (!mInDebugView)
+                Renderer::ClearGameViewport();
+        }
     }
 
     bool Application::OnWindowClose(class WindowCloseEvent& e)
@@ -202,26 +206,20 @@ namespace mts
 
     void Application::EnterPlayMode()
     {
-        Scene* scene = SceneSystem::GetCurrentScene();
-        // Capture current (possibly unsaved) edit state
-        std::string snapshot = SerializationUtility::SerializeToString(scene);
-        // Preserve edit GOs untouched; deserialize fresh play GOs
-        scene->StashGameObjects();
-        mCtx.selected = UUID::InvalidID;  // clear stale edit-mode UUID before play GOs load
-        SerializationUtility::DeserializeFromString(scene, snapshot);
-        scene->EnterPlayMode();
-        mCtx.playState = PlayState::Play;
+        for (auto& layer : mLayerStack)
+        {
+            if (layer->IsEnabled())
+                layer->OnEnterPlayMode();
+        }
     }
 
     void Application::StopPlayMode()
     {
-        mCtx.playState = PlayState::Edit;
-        mCtx.selected = UUID::InvalidID;
-        Scene* scene = SceneSystem::GetCurrentScene();
-        scene->ExitPlayMode();      // stop audio / custom teardown
-        scene->ClearGameObjects();  // delete play GOs
-        physics::PhysicsSystem2D::Reset();
-        scene->RestoreGameObjects();  // restore pristine edit GOs (no deserialize)
+        for (auto& layer : mLayerStack)
+        {
+            if (layer->IsEnabled())
+                layer->OnExitPlayMode();
+        }
     }
 
 }  // namespace mts

@@ -83,4 +83,9 @@ namespace mts
         mAudio->Update(dt);
         mConductor->Update(dt);
     }
+
+    void AudioLayer::OnExitPlayMode()
+    {
+        mAudio->StopMusic();
+    }
 }  // namespace mts

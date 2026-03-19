@@ -195,6 +195,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\AuralMischief.h" />
     <ClInclude Include="src\AuralMischiefScene.h" />
     <ClInclude Include="src\Script\AttackHitboxScript.h" />
+    <ClInclude Include="src\Script\AudioController.h" />
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.h" />
@@ -224,6 +225,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\AuralMischief.cpp" />
     <ClCompile Include="src\AuralMischiefScene.cpp" />
     <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
+    <ClCompile Include="src\Script\AudioController.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.cpp" />

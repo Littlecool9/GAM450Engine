@@ -8,6 +8,7 @@
 #include "Script/MovablePlatform.h"
 #include "Script/PlayerController.h"
 #include "Script/EnemyBehaviors/EnemyController.h"
+#include "Script/AudioController.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -43,5 +44,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new MovablePlatform(); });
     mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
                                        []() { return new mts::EnemyController(); });
-
+    mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
+                                       []() { return new mts::EnemyController(); });
+    mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
+                                       []() { return new AudioController(); });
 }

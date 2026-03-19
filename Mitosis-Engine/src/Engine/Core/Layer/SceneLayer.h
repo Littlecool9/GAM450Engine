@@ -31,6 +31,9 @@ namespace mts
 
         void OnEndFrame() override;
 
+        void OnEnterPlayMode() override;
+        void OnExitPlayMode() override;
+
        private:
         Scene* mInitialScene = nullptr;
         EditorContext& mCtx;

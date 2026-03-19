@@ -24,6 +24,8 @@ namespace mts
 
         void OnLateUpdate(float dt) override;
 
+        void OnExitPlayMode() override;
+
        private:
         std::unique_ptr<AudioManager> mAudio;
         std::unique_ptr<ConductorSystem> mConductor;

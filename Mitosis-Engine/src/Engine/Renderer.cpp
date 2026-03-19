@@ -11,6 +11,9 @@ namespace mts
 {
     RenderCamera Renderer::ActiveCamera{};
     Viewport Renderer::targetViewport{};
+    AspectMode Renderer::s_aspectMode = AspectMode::Free;
+    float Renderer::s_customX = 16.0f;
+    float Renderer::s_customY = 9.0f;
     std::vector<RenderCommand> Renderer::OpaqueCommands;
     std::vector<RenderCommand> Renderer::TransparentCommands;
     GLboolean Renderer::blendEnabled = GL_FALSE;
@@ -20,7 +23,7 @@ namespace mts
     glm::vec2 Renderer::ScreenToWorld(glm::vec2 screenPos)
     {
         glm::vec4 vp = GetViewportInfo();
-        int width  = static_cast<int>(vp.z);
+        int width = static_cast<int>(vp.z);
         int height = static_cast<int>(vp.w);
 
         // 1. Screen -> NDC
@@ -57,7 +60,7 @@ namespace mts
 
         GLint vp[4];
         glGetIntegerv(GL_VIEWPORT, vp);
-        return glm::vec4(vp[0], -vp[1], (float)vp[2], (float)vp[3]);
+        return glm::vec4(vp[0], -vp[1], (float) vp[2], (float) vp[3]);
     }
 
     glm::vec2 Renderer::WorldToScreen(glm::vec2 worldPos)
@@ -67,21 +70,93 @@ namespace mts
 
         // 2. NDC -> Screen
         glm::vec4 vp = GetViewportInfo();
-        int width  = static_cast<int>(vp.z);
+        int width = static_cast<int>(vp.z);
         int height = static_cast<int>(vp.w);
         float x = (ndc.x / ndc.w + 1.0f) * 0.5f * width;
         float y = (1.0f - ndc.y / ndc.w) * 0.5f * height;  // flip y
         return glm::vec2(x, y);
     }
 
-    void Renderer::SetViewport(int x, int y, int w, int h)
+    void Renderer::SetAspectMode(AspectMode mode, float x, float y)
     {
-        targetViewport = {x, y, w, h, true};
+        s_aspectMode = mode;
+        if (mode == AspectMode::Custom)
+        {
+            s_customX = x;
+            s_customY = y;
+        }
     }
+
+    AspectMode Renderer::GetAspectMode()
+    {
+        return s_aspectMode;
+    }
+
+    float Renderer::GetCustomAspectX()
+    {
+        return s_customX;
+    }
+    float Renderer::GetCustomAspectY()
+    {
+        return s_customY;
+    }
+
+    float Renderer::GetTargetAspect()
+    {
+        switch (s_aspectMode)
+        {
+            case AspectMode::R16x9:
+                return 16.0f / 9.0f;
+            case AspectMode::R4x3:
+                return 4.0f / 3.0f;
+            case AspectMode::R21x9:
+                return 21.0f / 9.0f;
+            case AspectMode::Custom:
+                return s_customX / s_customY;
+            default:
+                return 0.0f;
+        }
+    }
+
+    void Renderer::SetAvailableViewport(int x, int y, int w, int h)
+    {
+        const float targetAspect = GetTargetAspect();
+        if (targetAspect <= 0.0f)
+        {
+            targetViewport = {x, y, w, h, true};
+            return;
+        }
+
+        // the size of available area
+        const float nodeAspect = static_cast<float>(w) / static_cast<float>(h);
+        int vpW, vpH, vpX, vpY;
+        //
+        if (nodeAspect > targetAspect)
+        {
+            // node is wider (pillarbox)
+            // fit height, center horizontally
+            vpH = h;
+            vpW = static_cast<int>(h * targetAspect);
+            vpX = x + (w - vpW) / 2;
+            vpY = y;
+        }
+        else
+        {
+            // node is taller (letterbox)
+            // fit width, center vertically
+            vpW = w;
+            vpH = static_cast<int>(w / targetAspect);
+            vpX = x;
+            vpY = y + (h - vpH) / 2;
+        }
+        targetViewport = {vpX, vpY, vpW, vpH, true};
+    }
+
     void Renderer::ClearGameViewport()
     {
         targetViewport.valid = false;
     }
+
     Viewport Renderer::GetGameViewport()
     {
         return targetViewport;

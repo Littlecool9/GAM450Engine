@@ -17,6 +17,15 @@ namespace mts
         bool valid = false;
     };
 
+    enum class AspectMode
+    {
+        Free,
+        R16x9,
+        R4x3,
+        R21x9,
+        Custom
+    };
+
     struct RenderCamera
     {
         glm::vec3 position{0.0f, 0.0f, 0.0f};
@@ -72,7 +81,16 @@ namespace mts
         static void SetActiveCamera(const RenderCamera& cam) { ActiveCamera = cam; }
         static const RenderCamera& GetActiveCamera() { return ActiveCamera; }
 
-        static void SetViewport(int x, int y, int w, int h);
+        // Set the aspect ratio constraint applied when computing the game viewport.
+        static void SetAspectMode(AspectMode mode, float x = 16.0f, float y = 9.0f);
+        static AspectMode GetAspectMode();
+        static float GetTargetAspect();  // returns 0 when Free
+        static float GetCustomAspectX();
+        static float GetCustomAspectY();
+
+        // Provide the available screen region; Renderer applies aspect constraint and stores
+        // result.
+        static void SetAvailableViewport(int x, int y, int w, int h);
         static void ClearGameViewport();
         static Viewport GetGameViewport();
 
@@ -89,6 +107,9 @@ namespace mts
        private:
         static RenderCamera ActiveCamera;
         static Viewport targetViewport;
+        static AspectMode s_aspectMode;
+        static float s_customX;
+        static float s_customY;
 
         // Render Command queue
         static std::vector<RenderCommand> OpaqueCommands;

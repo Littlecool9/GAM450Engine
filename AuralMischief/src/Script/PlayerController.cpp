@@ -90,7 +90,7 @@ void PlayerController::OnUpdate(float dt)
             {
                 queuedJump = [this, inWindow]()
                 {
-                    TriggerCameraVFX(true, inWindow);
+                    //TriggerCameraVFX(true, inWindow);
                     Jump(inWindow);
                 };
                 LOG_INFO("Jumped {} beat", inWindow ? "on" : "off");
@@ -111,7 +111,7 @@ void PlayerController::OnUpdate(float dt)
             {
                 queuedDash = [this, inputDir, inWindow]()
                 {
-                    TriggerCameraVFX(true, inWindow);
+                    //TriggerCameraVFX(true, inWindow);
                     Dash(inputDir, inWindow, 1.0f);
                 };
                 LOG_INFO("Dashed {} beat", inWindow ? "on" : "off");
@@ -506,11 +506,13 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
 {
     glm::vec2 dashDir{0.0f, 0.0f};
     // If not holding a direction, use direction character is facing (left or right)
-    if (inputDir == glm::vec2(0))
+    //if (inputDir == glm::vec2(0))
+    if (inputDir.x == 0)
         facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
     else
         dashDir = inputDir;
 
+    dashDir = glm::vec2(dashDir.x, 0);
     // Multiply dash speed if hit on beat
     float adjustedDashSpeed = inWindow ? mDashSpeed * mDashBeatBoost : mDashSpeed;
 
@@ -544,7 +546,7 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack, float damageMu
         attackComboTimer = -1.0f;
         queuedDash = [this]()
         {
-            TriggerCameraVFX(true, true);
+            //TriggerCameraVFX(true, true);
             Dash(facingDir == LEFT ? glm::vec2(-1.0f, 0.0f) : glm::vec2(1.0f, 0.0f), true, 1.2f);
         };
     }

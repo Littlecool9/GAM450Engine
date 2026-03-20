@@ -150,6 +150,11 @@ namespace mts
     {
         mIsRunning = false;
 
+        // Ensure play mode is exited before layers detach, so scene-owned systems
+        // (e.g. RhythmSystem) can unsubscribe from conductor delegates while they're still alive.
+        if (mCtx.playState == PlayState::Play)
+            StopPlayMode();
+
         // Important to shutdown the opposite way from initializing
 
         // will shutdown in reverse order

@@ -168,27 +168,27 @@
       "Data": {
         "Class": "PlayerController",
         "Fields": {
-          "moveSpeed": 3.0,
-          "jumpSpeed": 9.5,
-          "dashSpeed": 20.0,
-          "friction": 20.0,
+          "moveSpeed": 5.0,
+          "jumpSpeed": 17.0,
+          "dashSpeed": 23.0,
+          "friction": 80.0,
           "acceleration": 40.0,
           "deceleration": 15.0,
           "turnSpeed": 100.0,
           "dashDeceleration": 100.0,
-          "dashCooldown": 0.20000000298023224,
+          "dashCooldown": 0.5,
           "dashMax": 1,
-          "attackCooldown": 0.3,
-          "attackComboMaxDelay": 1.0,
-          "attackDelay": 0.20000000298023224,
+          "attackCooldown": 0.5,
+          "attackComboMaxDelay": 3.0,
+          "attackDelay": 0.0,
           "attackLightDamage": 1.0,
           "attackHeavyDamage": 2.0,
-          "attackHitboxOffsetX": 1.0,
+          "attackHitboxOffsetX": 3.0,
           "dashBeatBoost": 1.0,
           "jumpBeatBoost": 1.0,
           "dashRhythmLock": false,
           "jumpRhythmLock": false,
-          "camZoomSpeed": 0.20000000298023224
+          "camZoomSpeed": 0.5
         }
       }
     }

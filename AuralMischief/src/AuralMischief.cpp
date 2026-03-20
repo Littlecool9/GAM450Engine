@@ -50,4 +50,6 @@ void AuralMischief::RegisterScripts()
                                        []() { return new PlatformPuzzleScript(); });
     mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
                                        []() { return new mts::EnemyController(); });
+    mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
+                                       []() { return new AudioController(); });
 }

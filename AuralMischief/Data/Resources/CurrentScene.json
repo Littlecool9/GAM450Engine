@@ -10616,6 +10616,43 @@
                     }
                 }
             ]
+        },
+        {
+            "UUID": "5efe5737-d490-45a3-84fc-d74dfdeae60e",
+            "Name": "AudioController",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "AudioController",
+                        "Fields": {
+                            "MasterVolume": 0.25,
+                            "MusicVolume": 1.0,
+                            "SFXVolume": 1.0,
+                            "UIVolume": 1.0,
+                            "AmbienceVolume": 1.0
+                        }
+                    }
+                }
+            ]
         }
     ]
 }

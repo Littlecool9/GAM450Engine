@@ -33,10 +33,6 @@ namespace mts
             const EnemyState& state,
             const EnemyPreference& preference) override;
 
-        glm::vec3 origin;
-        int facing = -1;
-        float patrolRadius = 3.f;
-        bool flying = false;
     };
 
 }  // namespace mts

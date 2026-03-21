@@ -13,6 +13,7 @@
 
 //#include "BarScaler.h"
 #include "../AttackHitboxScript.h"
+#include "../PlayerController.h"
 #include "../../AuralMischiefScene.h"
 #include "EnemyActions/EnemyMoveToPlayerAction.h"
 #include "EnemyActions/EnemyPatrolAction.h"
@@ -43,6 +44,7 @@ namespace mts
             ->SetPlayerReference(SceneSystem::GetCurrentScene()
             ->FindGameObjectByName("Player"));
         SetEnemyPlans(type);
+        origin = GetGameObject()->GetComponent<Transform>()->GetPosition();
     }
 
     void EnemyController::OnUpdate(float dt)
@@ -132,7 +134,13 @@ namespace mts
         {
             curhp -= static_cast<int>(p->GetDamage());
         }
+        if (!collision.other->GetGameObject()->GetScript<PlayerController>())
+        {
+            GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(
+                !GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX());
+        }
     }
+
 
 }
 

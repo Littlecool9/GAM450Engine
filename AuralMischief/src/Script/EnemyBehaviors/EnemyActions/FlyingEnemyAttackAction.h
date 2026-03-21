@@ -34,7 +34,7 @@ namespace mts
         std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
             const EnemyPreference& preference) override;
 
-        glm::vec2 size;
+
         uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
         float AttackDuration = 4.f;
     };

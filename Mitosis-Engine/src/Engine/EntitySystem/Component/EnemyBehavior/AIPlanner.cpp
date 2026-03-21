@@ -27,7 +27,7 @@ namespace mts
             auto planner = CreateInstanceById(id);
             auto [newIt, inserted] = mInstances.emplace(id, std::move(planner));
             return *newIt->second;  
-        }
+        }   
         return *it->second;  
     }
 

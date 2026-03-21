@@ -114,7 +114,7 @@ namespace mts
 	{
         agent.GetState().SetInAction(true);
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() - agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
-        size = agent.GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize();
+
         ConductorSystem& cs = ConductorSystem::Get();
         //mConductorSubId = cs.onBeat.Subscribe(
         //    [this, &agent](mts::BeatInfo info)

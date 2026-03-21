@@ -42,18 +42,26 @@ namespace mts
 
     void EnemyPatrolAction::OnBeginning(EnemyAgent& agent)
     {
-        LOG_INFO("Patrolling!");
-        origin = agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
-        facing = Random::Range(0, 10) < 5 ? 1 : -1;
-        agent.GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(facing < 0 ? false: true);
+
+        //origin = agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
+        //facing = Random::Range(0, 10) < 5 ? 1 : -1;
+        //agent.GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(facing < 0 ? false: true);
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Walking);
-        patrolRadius = agent.GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
-        auto a = agent.GetGameObject()->GetScript<EnemyController>();
-        if (a && agent.GetGameObject()->GetScript<EnemyController>()->GetEnemyType() == EnemyType::FlyEnemy)
-        {
-            flying = true;
-        }
+        //patrolRadius = agent.GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
+        //auto a = agent.GetGameObject()->GetScript<EnemyController>();
+        //if (a && agent.GetGameObject()->GetScript<EnemyController>()->GetEnemyType() == EnemyType::FlyEnemy)
+        //{
+        //    flying = true;
+        //}
+        LOG_INFO("Patrolling!");
+        //LOG_INFO("origin = {}, {}, {}", origin.x, origin.y, origin.z);
+        //LOG_INFO("current pos = {}, {}, {}",
+        //         agent.GetGameObject()->GetComponent<Transform>()->GetPosition().x,
+        //         agent.GetGameObject()->GetComponent<Transform>()->GetPosition().y,
+        //         agent.GetGameObject()->GetComponent<Transform>()->GetPosition().z);
+        //LOG_INFO("patrolRadius = {}", patrolRadius);
+        //LOG_INFO("facing = {}", facing);
     }
 
     float EnemyPatrolAction::GetEstimatedTimeCost(const EnemyState& state, const EnemyPreference& preferences) const
@@ -71,6 +79,7 @@ namespace mts
     {
         if (!agent)
             return Invalid;
+        LOG_INFO("Update action ptr = {}", static_cast<void*>(this));
         auto s = agent->GetState();
         auto it = s.params.find(HashAction("AggroRange"));
         if (it != s.params.end() && it->second != nullptr)
@@ -82,9 +91,12 @@ namespace mts
                 return Success;
             }
         }
-
+        glm::vec3 origin = agent->GetGameObject()->GetScript<EnemyController>()->GetOriginPos();
         glm::vec3 pos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();
+
         float x = pos.x;
+        
+        int facing = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? 1 : -1;
 
         // Move
         float spd = agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed(); 
@@ -94,20 +106,22 @@ namespace mts
         float dist = x - origin.x;
         
         // Flip direction if beyond radius
-        if (dist > patrolRadius)
+        if (dist > agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius())
         {
-            x = origin.x + patrolRadius;  // clamp (prevents overshoot)
+            x = origin.x + agent->GetGameObject()
+                               ->GetScript<EnemyController>()
+                               ->GetPatrolRadius();  // clamp (prevents overshoot)
             facing = -1;
             agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
         }
-        else if (dist < -patrolRadius)
+        else if (dist < -agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius())
         {
-            x = origin.x - patrolRadius;
+            x = origin.x - agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
             facing = 1;
             agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
         }
         pos.x = x;
-        if (flying)
+        if (agent->GetGameObject()->GetScript<EnemyController>()->GetEnemyType() == EnemyType::FlyEnemy)
         {
             pos.y = origin.y;
         }

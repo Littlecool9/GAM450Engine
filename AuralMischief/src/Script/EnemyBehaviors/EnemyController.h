@@ -29,6 +29,7 @@ namespace mts
         void OnCollisionEnter2D(const Collision2D& collision) override;
         int GetCurHP() { return curhp; }
         void SetEnemyPlans(std::string name);
+        glm::vec3 GetOriginPos() { return origin; }
         EnemyType GetEnemyType() { return enemyType; }
         float GetMoveSpeed() {return mMoveSpeed;}
         float GetPatrolRadius() { return mPatrolRadius; }
@@ -37,6 +38,7 @@ namespace mts
 
        private:
         EnemyType enemyType;
+        glm::vec3 origin;
         std::string type;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;

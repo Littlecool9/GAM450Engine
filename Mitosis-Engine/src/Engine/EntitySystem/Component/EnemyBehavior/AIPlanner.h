@@ -40,6 +40,7 @@ namespace mts
                                   const EnemyPreference& preference,
                                   float estimatedTime,
                                   float currScore) const;
+        static std::unique_ptr<AIPlanner> CreateInstanceById(const std::string& id);
        private:
 
         struct AIPlanningNode
@@ -58,7 +59,7 @@ namespace mts
         AIPlan SummarizePlanFromNodes(const AIPlanningNode& last,
                                       const EnemyPreference& preference,
                                       const std::vector<AIPlanningNode>& closed) const;
-        static std::unique_ptr<AIPlanner> CreateInstanceById(const std::string& id);
+
         std::vector<std::unique_ptr<BaseEnemyAction>> mActions;
         // Planner cache
         static inline std::unordered_map<std::string, std::unique_ptr<AIPlanner>> mInstances;

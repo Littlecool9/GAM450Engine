@@ -1,0 +1,107 @@
+The hero character has a guitar that is the primary weapon for attack. The sword of the character will glow in the presence of enemies with a little bit of particle effect. The glow on the sword will pulsate on the beat of the song playing in the background. Based on that the player will do the light attack. The heavy attack is a hold and release attack the more the player holds the higher the damage and the release should only be done on beat else the damage will be less powerful than the light attack. On attack on an enemy the damage is shown on screen and goes away. There are three basic enemies: The slugs, The drones and The sentries. The player's objective is to clear the platform and reach the boss and defeat him. Creation of this one entire level from scratch from start to end is the objective for the next one week for the team.
+
+Rahul
+-----
+[-] Slug Enemy
+	[-] SFX
+	[-] Spritesheet
+	
+[-] Drone Enemy
+	[-] SFX
+	[-] Spritesheet
+
+[-] Sentry Enemy
+	[-] SFX
+	[-] Spritesheet
+	
+[-] Boss Enemy (lower priority)
+	[-] SFX
+	[-] Spritesheet
+
+[-] Hero Character (higher priority)
+	[-] Spritesheet polish
+	[-] Light attack SFX
+		[-] On-beat attack sound
+		[-] Off-beat attack sound
+	[-] Heavy attack SFX
+		[-] On-beat attack sound
+		[-] Off-beat attack sound
+
+[-] Full BGM development
+[-] Tileset polish
+[-] Boss BGM
+
+Sumin
+-----
+[-] Splashscreen (legal - higher priority)
+[-] Damage number spawner (higher)
+	[-] Damage math
+	[-]	Displaying damage on attacks
+[-] UI system (can be delegated to Jackey)
+	[-] Main menu, In-game pause
+[-]	All systems review (lower priority)
+[-] Unit tests for all modules (lower priority)
+
+Josh
+----
+[-] Player statemachine polish
+[-] Light attack on glow beat (trigger on glow)
+[-] Heavy attack on glow beat (hold and release on glow)
+	[-] On-beat validation effect
+	[-] Off-beat validation effect
+[-] Particle effects on attack
+[-] Knockback effects
+[-] Hitstop effect on attack
+
+Jackey
+------
+[-]	Level design polish
+[-]	Boss level design
+[-] Camera movement polish
+
+Dong
+----
+[-] Slug behavior polish
+	[-] Patrol mode
+	[-] Alerted mode (whince on seeing hero)
+	[-] Attack mode
+[-]	Drone behavior polish
+	[-] Patrol mode
+	[-] Alerted mode (whince on seeing hero)
+	[-] Attack mode
+[-] Sentry behavior
+	[-] Patrol mode
+	[-] Alerted mode (whince on seeing hero)
+	[-] Attack mode
+[-] Boss behavior
+	[-] TBD
+
+Notes:
+------
+
+Rahul:	The enemies will have patrol mode, alerted mode and attack mode animations
+
+Attack Logic: (player has to feel the punishment)
+
+- Light attack cooldown time: a little more than half a beat (0.6 beat or higher)
+- Heavy attack cooldown time: same cold down as light attack
+
+- On-beat light attack: 3 dmg
+- Off-beat light attack: 1 dmg
+- On-beat heavy attack attack: 8 dmg 
+- Off-beat heavy attack: 2 dmg
+
+On-beat heavy highest
+On-beat light higher
+Off-beat heavy lower
+Off-beat light lowest
+
+Enemies HP:
+
+Slugs: 7 HP
+
+Drones: 6 HP
+
+Sentries: 9 HP
+
+Boss: 30 HP

@@ -1,0 +1,10 @@
+{
+    "splashScreens": [
+        {
+            "texturePath": "Data/Resources/SplashLogo.tex",
+            "fadeInDuration": 0.5,
+            "holdDuration": 1.5,
+            "fadeOutDuration": 0.5
+        }
+    ]
+}

@@ -11,6 +11,7 @@ class AuralMischief : public mts::Application
    private:
     mts::Scene* GetInitialScene() override;
     void RegisterScripts() override;
+    std::vector<mts::SplashScreenConfig> GetSplashScreens() override;
 
    private:
     AuralMischiefScene* m_scene;

@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Core\Application.h" />
+    <ClInclude Include="src\Engine\Core\SplashScreen.h" />
     <ClInclude Include="src\Engine\Core\Editor\EditorContext.h">
       <SubType>
       </SubType>
@@ -412,6 +413,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Core\Application.cpp" />
+    <ClCompile Include="src\Engine\Core\SplashScreen.cpp" />
     <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\BoxCollider2DDrawer.cpp">
       <SubType>
       </SubType>

@@ -9,10 +9,11 @@
 #pragma once
 #include "../Windows/Window.h"
 #include "LayerStack.h"
+#include "SplashScreen.h"
 #include <memory>
+#include <vector>
 
 #include "Editor/EditorContext.h"
-#include "Engine/Delegate/Delegate.h"
 
 namespace mts::physics
 {
@@ -42,6 +43,7 @@ namespace mts
        protected:
         virtual Scene* GetInitialScene() = 0;
         virtual void RegisterScripts() {};
+        virtual std::vector<SplashScreenConfig> GetSplashScreens() { return {}; }
 
        private:
         bool OnWindowClose(class WindowCloseEvent& e);
@@ -56,9 +58,7 @@ namespace mts
         EditorContext mCtx;
 
         bool mIsRunning = false;
-        bool mInDebugView = true;
-
-        Delegate<>::Id mQuitDelegateId = 0;
+        bool mInDebugView = false;
     };
 
     Application* CreateApplication();

@@ -32,6 +32,11 @@ mts::Scene* AuralMischief::GetInitialScene()
     return m_scene;
 }
 
+std::vector<mts::SplashScreenConfig> AuralMischief::GetSplashScreens()
+{
+    return mts::SplashScreen::LoadFromJson("Data/Splashscreen.json");
+}
+
 void AuralMischief::RegisterScripts()
 {
     mts::ScriptFactory::RegisterScript(PlayerController::StaticClassName(),

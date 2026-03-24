@@ -31,6 +31,7 @@
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Engine/Physics2D/PhysicsSystem2D.h"
 #include "Engine/AppSystem/AppSystem.h"
+#include "Engine/Core/SplashScreen.h"
 
 namespace mts
 {
@@ -70,6 +71,12 @@ namespace mts
 
     void Application::Run()
     {
+        if (!mInDebugView)
+        {
+            SplashScreen::Run(GetSplashScreens(), *mWindow, mIsRunning);
+            mCtx.requestPlay = true;
+        }
+
         FPSCounter fps;
         ImGuiLayer* imgui = static_cast<ImGuiLayer*>(mLayerStack.FindLayerByName("ImGuiLayer"));
 

@@ -30,6 +30,8 @@ Rahul
 [-] Full BGM development
 [-] Tileset polish
 [-] Boss BGM
+	[-] Transitional phases, phase 1 -> transitional phase BGM -> Phase 2
+	[-] for transitional phase bgm, refer to discord message
 
 Sumin
 -----
@@ -58,6 +60,7 @@ Jackey
 [-]	Level design polish
 [-]	Boss level design
 [-] Camera movement polish
+[-] Camera post processing
 
 Dong
 ----

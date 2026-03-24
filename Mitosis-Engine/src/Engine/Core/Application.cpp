@@ -30,6 +30,7 @@
 #include "Layer/SceneLayer.h"
 #include "Engine/Serialization/SerializationUtility.h"
 #include "Engine/Physics2D/PhysicsSystem2D.h"
+#include "Engine/AppSystem/AppSystem.h"
 
 namespace mts
 {
@@ -45,6 +46,9 @@ namespace mts
         Random::Init();
 
         mIsRunning = true;
+
+        mQuitDelegateId = AppSystem::Get().onQuitRequested.Subscribe(
+            [this] { mIsRunning = false; });
 
         mCtx.showEditorUI = true;
         mCtx.selected = UUID::InvalidID;
@@ -148,6 +152,8 @@ namespace mts
 
     void Application::Shutdown()
     {
+        AppSystem::Get().onQuitRequested.Unsubscribe(mQuitDelegateId);
+
         mIsRunning = false;
 
         // Ensure play mode is exited before layers detach, so scene-owned systems

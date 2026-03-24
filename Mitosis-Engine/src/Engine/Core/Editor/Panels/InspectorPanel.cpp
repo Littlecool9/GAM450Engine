@@ -26,6 +26,7 @@
 #include "Engine/Core/Editor/Inspector/Drawers/RigidBody2DDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/SpriteRendererDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/TransformDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/UITransformDrawer.h"
 #include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
@@ -38,6 +39,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/Component/UITransform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
@@ -64,6 +66,8 @@ namespace mts
 
         if (ctx.selected == UUID::InvalidID)
         {
+            mCachedId = UUID::InvalidID;
+            mCachedGO = nullptr;
             ImGui::TextUnformatted("No selection.");
             ImGui::End();
             return;
@@ -131,9 +135,16 @@ namespace mts
 
         if (ImGui::BeginPopup("AddComponentPopup"))
         {
-            ImGui::BeginDisabled(go->GetComponent<Transform>() != nullptr);
+            ImGui::BeginDisabled(go->GetComponent<Transform>() != nullptr ||
+                                 go->GetComponent<UITransform>() != nullptr);
             if (ImGui::MenuItem("Transform"))
                 go->AddComponent<Transform>();
+            ImGui::EndDisabled();
+
+            ImGui::BeginDisabled(go->GetComponent<UITransform>() != nullptr ||
+                                 go->GetComponent<Transform>() != nullptr);
+            if (ImGui::MenuItem("UITransform"))
+                go->AddComponent<UITransform>();
             ImGui::EndDisabled();
 
             ImGui::BeginDisabled(go->GetComponent<SpriteRenderer>() != nullptr);
@@ -226,6 +237,7 @@ namespace mts
     void InspectorPanel::RegisterDefaultDrawers()
     {
         mRegistry.Add<TransformDrawer>();
+        mRegistry.Add<UITransformDrawer>();
         mRegistry.Add<SpriteRendererDrawer>();
         mRegistry.Add<RigidBody2DDrawer>();
         mRegistry.Add<BoxCollider2DDrawer>();

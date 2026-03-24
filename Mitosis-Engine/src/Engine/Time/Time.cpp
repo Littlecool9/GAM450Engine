@@ -49,8 +49,9 @@ namespace mts
 
         if (!s_paused)
         {
-            s_timeSinceStart += s_frameDt;
-            s_accumulator += s_frameDt;
+            const double scaled = s_frameDt * static_cast<double>(s_timeScale);
+            s_timeSinceStart += scaled;
+            s_accumulator += scaled;
         }
     }
 
@@ -91,6 +92,10 @@ namespace mts
     // ---- Getters ----
     double Time::FrameDt()
     {
+        return s_frameDt * static_cast<double>(s_timeScale);
+    }
+    double Time::UnscaledDt()
+    {
         return s_frameDt;
     }
     double Time::UnclampedFrameDt()
@@ -128,6 +133,22 @@ namespace mts
     bool Time::IsPaused()
     {
         return s_paused;
+    }
+
+    void Time::SetTimeScale(float scale)
+    {
+        const float clamped = std::max(0.0f, scale);
+        if (s_timeScale == 0.0f && clamped != 0.0f)
+        {
+            // Reset clock anchor to avoid a dt spike on resume
+            s_lastTick = Clock::now();
+        }
+        s_timeScale = clamped;
+    }
+
+    float Time::GetTimeScale()
+    {
+        return s_timeScale;
     }
 
     void Time::SetFixedDt(double seconds)

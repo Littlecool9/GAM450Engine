@@ -6,6 +6,7 @@
 #include "EntitySystem/Component/Particles/ParticleEmitter.h"
 
 #include <algorithm>
+#include <glm/ext/matrix_clip_space.hpp>
 
 namespace mts
 {
@@ -16,6 +17,7 @@ namespace mts
     float Renderer::s_customY = 9.0f;
     std::vector<RenderCommand> Renderer::OpaqueCommands;
     std::vector<RenderCommand> Renderer::TransparentCommands;
+    std::vector<RenderCommand> Renderer::ScreenSpaceCommands;
     GLboolean Renderer::blendEnabled = GL_FALSE;
     GLboolean Renderer::depthTestEnabled = GL_FALSE;
     GLboolean Renderer::depthMaskEnabled = GL_FALSE;
@@ -166,11 +168,14 @@ namespace mts
     {
         OpaqueCommands.clear();
         TransparentCommands.clear();
+        ScreenSpaceCommands.clear();
     }
 
     void Renderer::Submit(const RenderCommand& cmd)
     {
-        if (cmd.hasAlpha)
+        if (cmd.isUI)
+            ScreenSpaceCommands.push_back(cmd);
+        else if (cmd.hasAlpha)
             TransparentCommands.push_back(cmd);
         else
             OpaqueCommands.push_back(cmd);
@@ -208,6 +213,17 @@ namespace mts
 
         for (const auto& cmd : TransparentCommands)
             ExecuteCommand(cmd);
+
+        // 4. Render screen-space (HUD) objects last, on top of everything
+        std::sort(ScreenSpaceCommands.begin(),
+                  ScreenSpaceCommands.end(),
+                  [](const RenderCommand& a, const RenderCommand& b)
+                  { return a.sortKey < b.sortKey; });
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_DEPTH_TEST);
+        for (const auto& cmd : ScreenSpaceCommands)
+            ExecuteCommand(cmd);
     }
 
     void Renderer::EndFrame()
@@ -226,16 +242,40 @@ namespace mts
 
         cmd.shader->UseProgram();
 
-        // Compute view projection matrix with parallax effect if needed
+        // Compute view projection matrix
         glm::mat4 viewProj;
-        if (cmd.parallaxFactorX != 1.0f)
-            viewProj = ComputeViewProjWithParallax(
-                cmd.parallaxFactorX);  // FIXED: Removed duplicate declaration
+
+        // calculate separate viewport for the hud
+        if (cmd.isUI)
+        {
+            Viewport gv = GetGameViewport();
+            float w, h;
+            if (gv.valid)
+            {
+                w = gv.w / PixelsPerUnit;
+                h = gv.h / PixelsPerUnit;
+            }
+            else
+            {
+                GLint vp[4];
+                glGetIntegerv(GL_VIEWPORT, vp);
+                w = vp[2] / PixelsPerUnit;
+                h = vp[3] / PixelsPerUnit;
+            }
+            // (0,0) = top-left, x right, y down, 1 unit = PixelsPerUnit px
+            viewProj = glm::ortho(0.0f, w, h, 0.0f, -1.0f, 1.0f);
+        }
+        else if (cmd.parallaxFactorX != 1.0f)
+            viewProj = ComputeViewProjWithParallax(cmd.parallaxFactorX);
         else
             viewProj = ActiveCamera.viewProj;
 
         // Set Uniform
-        cmd.shader->SetMatrix4("model", cmd.model);
+        // UI: pre-flip the quad's local Y to counteract the Y-down ortho, keeping UVs correct
+        glm::mat4 model = cmd.isUI
+            ? cmd.model * glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, -1.0f, 1.0f))
+            : cmd.model;
+        cmd.shader->SetMatrix4("model", model);
         cmd.shader->SetMatrix4("viewProj", viewProj);
         cmd.shader->SetVector2f("uvOffset", cmd.uvOffset);
         cmd.shader->SetVector3f("tintColor", cmd.tintColor);

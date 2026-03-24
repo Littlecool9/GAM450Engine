@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "Editor/EditorContext.h"
+#include "Engine/Delegate/Delegate.h"
 
 namespace mts::physics
 {
@@ -56,6 +57,8 @@ namespace mts
 
         bool mIsRunning = false;
         bool mInDebugView = true;
+
+        Delegate<>::Id mQuitDelegateId = 0;
     };
 
     Application* CreateApplication();

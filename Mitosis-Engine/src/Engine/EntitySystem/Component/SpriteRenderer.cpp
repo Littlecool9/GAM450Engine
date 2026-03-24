@@ -16,6 +16,7 @@
 #include "../GameObject/GameObject.h"
 #include "Engine/Renderer.h"
 #include "Engine/Resource/ResourceManager.h"
+#include "UITransform.h"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -162,35 +163,35 @@ namespace mts
         if (!mMesh || !mShader || !mTexture)
             return;
 
-        auto transform = GetGameObject()->GetComponent<Transform>();
+        // Resolve model matrix — UITransform takes priority over Transform
+        glm::mat4 model;
+        bool isUI = false;
+        if (auto* uit = GetGameObject()->GetComponent<UITransform>())
+        {
+            model = uit->GetLocalMatrix();
+            isUI  = true;
+        }
+        else if (auto* tr = GetGameObject()->GetComponent<Transform>())
+        {
+            model = tr->GetLocalMatrix();
+        }
+        else return;
+
+        if (mFlipX)
+            model *= glm::scale(glm::mat4(1.0f), {-1, 1, 1});
+        if (mFlipY)
+            model *= glm::scale(glm::mat4(1.0f), {1, -1, 1});
 
         const auto& cam = Renderer::GetActiveCamera();
 
         glm::mat4 viewProj;
-        glm::mat4 view = cam.view;
-        glm::mat4 proj = cam.proj;
-
-        // Apply parallax effect by offsetting the sprite's position based on the camera's position
-        // and the parallax factor
         float offsetFactorX = 1.0f - mParallaxFactorX;
         glm::vec3 parallaxOffset = cam.position * glm::vec3(offsetFactorX, 0.0f, 0.0f);
-        glm::mat4 parallaxView = glm::translate(view, parallaxOffset);
-
-        glm::mat4 model = transform->GetLocalMatrix();
-        RenderCommand cmd;
-        cmd.shader = mShader;
-        cmd.texture = mTexture;
-        cmd.mesh = mMesh;
-
-        cmd.model = transform->GetLocalMatrix();
-        if (mFlipX)
-            cmd.model *= glm::scale(glm::mat4(1.0f), {-1, 1, 1});
-        if (mFlipY)
-            cmd.model *= glm::scale(glm::mat4(1.0f), {1, -1, 1});
+        glm::mat4 parallaxView = glm::translate(cam.view, parallaxOffset);
 
         if (cam.valid)
         {
-            viewProj = proj * parallaxView;
+            viewProj = cam.proj * parallaxView;
         }
         else
         {
@@ -204,6 +205,7 @@ namespace mts
                                   -1.0f,
                                   1.0f);
         }
+
         // set shader uniforms
         mShader->SetMatrix4("model", model);
         mShader->SetMatrix4("viewProj", viewProj);
@@ -211,12 +213,18 @@ namespace mts
         mShader->SetVector3f("tintColor", mTintColor);
         mShader->SetFloat("alpha", mAlpha);
 
-        cmd.uvOffset = mUvOffset;
-        cmd.tintColor = mTintColor;
-        cmd.alpha = mAlpha;
-        cmd.sortKey = static_cast<float>(mRenderLayer);
-        cmd.hasAlpha = mHasTextureAlpha;
+        RenderCommand cmd;
+        cmd.shader          = mShader;
+        cmd.texture         = mTexture;
+        cmd.mesh            = mMesh;
+        cmd.model           = model;
+        cmd.uvOffset        = mUvOffset;
+        cmd.tintColor       = mTintColor;
+        cmd.alpha           = mAlpha;
+        cmd.sortKey         = static_cast<float>(mRenderLayer);
+        cmd.hasAlpha        = mHasTextureAlpha;
         cmd.parallaxFactorX = mParallaxFactorX;
+        cmd.isUI            = isUI;
 
         Renderer::Submit(cmd);
     }

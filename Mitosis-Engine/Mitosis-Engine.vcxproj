@@ -209,6 +209,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\UITransformDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Inspector\InspectorRegistry.h">
       <SubType>
       </SubType>
@@ -240,6 +244,7 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Conductor\BeatMath.h" />
     <ClInclude Include="src\Engine\Conductor\ConductorSystem.h" />
+    <ClInclude Include="src\Engine\AppSystem\AppSystem.h" />
     <ClInclude Include="src\Engine\Audio\AudioManager.h" />
     <ClInclude Include="src\Engine\Audio\AudioTypes.h" />
     <ClInclude Include="src\Engine\Audio\Backends\FMODBackend.h" />
@@ -324,6 +329,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\EntitySystem\Component\UITransform.h" />
     <ClInclude Include="src\Engine\Entity\Entity.h" />
     <ClInclude Include="src\Engine\EntitySystem\Component\ActionList.h" />
     <ClInclude Include="src\Engine\EntitySystem\Component\Actions\BaseAction.h" />
@@ -462,6 +468,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\UITransformDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Inspector\InspectorRegistry.cpp">
       <SubType>
       </SubType>
@@ -485,6 +495,7 @@
     <ClCompile Include="src\Engine\Core\Editor\Panels\ProfilerPanel.cpp" />
     <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
     <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
+    <ClCompile Include="src\Engine\AppSystem\AppSystem.cpp" />
     <ClCompile Include="src\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\FMODBackend.cpp" />
     <ClCompile Include="src\Engine\Audio\Backends\NullAudioBackend.cpp" />
@@ -558,6 +569,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Engine\EntitySystem\Component\UITransform.cpp" />
     <ClCompile Include="src\Engine\Entity\Entity.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\ActionList.cpp" />
     <ClCompile Include="src\Engine\EntitySystem\Component\Actions\BaseAction.cpp" />

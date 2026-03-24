@@ -27,7 +27,8 @@ namespace mts
         static void EndFrame();
 
         // ---- Variable timestep ----
-        static double FrameDt();  // clamped seconds
+        static double FrameDt();          // clamped seconds, scaled by TimeScale
+        static double UnscaledDt();       // clamped seconds, unaffected by TimeScale
         static double UnclampedFrameDt();
         static double TimeSinceStart();  // paused-aware
 
@@ -60,6 +61,9 @@ namespace mts
         static void SetPaused(bool paused);
         static bool IsPaused();
 
+        static void  SetTimeScale(float scale);  // 0.0 = freeze, 1.0 = normal
+        static float GetTimeScale();
+
         static void SetFixedDt(double seconds);
         static void SetMaxFrameDt(double seconds);
         static void SetMaxSubSteps(int steps);
@@ -75,8 +79,9 @@ namespace mts
         static void EnsureInit();
 
        private:
-        static inline bool s_initialized = false;
-        static inline bool s_paused = false;
+        static inline bool  s_initialized = false;
+        static inline bool  s_paused = false;
+        static inline float s_timeScale = 1.0f;
 
         // Clock
         static inline Clock::time_point s_lastTick{};

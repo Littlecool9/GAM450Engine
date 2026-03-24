@@ -27,6 +27,7 @@
 #include "EnemyBehavior/EnemyAgent.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
 #include "Engine/Tilemap/Tilemap.h"
+#include "UITransform.h"
 
 namespace mts
 {
@@ -48,7 +49,8 @@ namespace mts
             {"NativeScript", []() -> Component* { return new NativeScriptComponent(); }},
             {"AnimationSystem", []() -> Component* { return new AnimationSystem(); }},
             {"EnemyAgent", []() -> Component* { return new EnemyAgent(); }},
-            {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }}};
+            {"Tilemap", []() -> Component* { return new Tilemap::Tilemap(); }},
+            {"UITransform", []() -> Component* { return new UITransform(); }}};
 
     bool ComponentFactory::RegisterComponent(const std::string& componentName,
                                              ComponentCreator creator)

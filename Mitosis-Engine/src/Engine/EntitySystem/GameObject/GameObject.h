@@ -15,6 +15,8 @@
 #include "Engine/EntitySystem/Component/Component.h"
 #include "Engine/Entity/Entity.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/Component/UITransform.h"
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -101,6 +103,24 @@ namespace mts
                 if (GetComponent<T>() != nullptr)
                 {
                     LOG_WARN("GameObject {} already has component of type {}", name, typeid(T).name());
+                    return nullptr;
+                }
+            }
+            // TODO: Temporary fix — Transform and UITransform are mutually exclusive.
+            // If more component conflicts are needed, replace with a general conflict registry.
+            if constexpr (std::is_same_v<T, Transform>)
+            {
+                if (GetComponent<UITransform>() != nullptr)
+                {
+                    LOG_WARN("GameObject {} cannot have both Transform and UITransform", name);
+                    return nullptr;
+                }
+            }
+            if constexpr (std::is_same_v<T, UITransform>)
+            {
+                if (GetComponent<Transform>() != nullptr)
+                {
+                    LOG_WARN("GameObject {} cannot have both UITransform and Transform", name);
                     return nullptr;
                 }
             }

@@ -61,6 +61,7 @@ namespace mts
         float sortKey = 0.0f;          // Key for sorting render commands (e.g., based on depth)
         bool hasAlpha = false;         // turn on blending if true
         float parallaxFactorX = 1.0f;  // optional parallax factor
+        bool isUI = false;  // render in screen-space (HUD/UI); drawn last, ignores camera
     };
 
     class Renderer
@@ -114,6 +115,7 @@ namespace mts
         // Render Command queue
         static std::vector<RenderCommand> OpaqueCommands;
         static std::vector<RenderCommand> TransparentCommands;
+        static std::vector<RenderCommand> ScreenSpaceCommands;
 
         static GLboolean blendEnabled;
         static GLboolean depthTestEnabled;

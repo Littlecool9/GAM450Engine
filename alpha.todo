@@ -20,12 +20,14 @@ Rahul
 
 [-] Hero Character (higher priority)
 	[-] Spritesheet polish
-	[-] Light attack SFX
-		[-] On-beat attack sound
-		[-] Off-beat attack sound
-	[-] Heavy attack SFX
-		[-] On-beat attack sound
-		[-] Off-beat attack sound
+	[x] Light attack SFX
+		[x] On-beat attack sound
+		[x] Off-beat attack sound
+	[x] Heavy attack SFX
+		[x] On-beat attack sound
+		[x] Off-beat attack sound
+
+[-] On-beat and Off-beat attack overlays
 
 [-] Full BGM development
 [-] Tileset polish

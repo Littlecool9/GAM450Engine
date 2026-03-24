@@ -39,8 +39,7 @@ Sumin
 [-] Damage number spawner (higher)
 	[-] Damage math
 	[-]	Displaying damage on attacks
-[-] UI system (can be delegated to Jackey)
-	[-] Main menu, In-game pause
+[x] UI system framework
 [-]	All systems review (lower priority)
 [-] Unit tests for all modules (lower priority)
 
@@ -58,9 +57,10 @@ Josh
 Jackey
 ------
 [-]	Level design polish
-[-]	Boss level design
 [-] Camera movement polish
 [-] Camera post processing
+[-] UI system
+	[-] Main menu, In-game pause
 
 Dong
 ----

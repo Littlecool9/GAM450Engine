@@ -4,12 +4,14 @@
 #include "EntitySystem/Component/Transform.h"
 #include "EntitySystem/Component/SpriteRenderer.h"
 #include "EntitySystem/Component/Particles/ParticleEmitter.h"
+#include "Input/Input.h"
 
 #include <algorithm>
 #include <glm/ext/matrix_clip_space.hpp>
 
 namespace mts
 {
+    int Renderer::s_windowH = 0;
     RenderCamera Renderer::ActiveCamera{};
     Viewport Renderer::targetViewport{};
     AspectMode Renderer::s_aspectMode = AspectMode::Free;
@@ -41,6 +43,25 @@ namespace mts
     glm::vec2 Renderer::ScreenToWorld(glm::vec3 screenPos)
     {
         return ScreenToWorld(glm::vec2(screenPos.x, screenPos.y));
+    }
+
+    glm::vec2 Renderer::MouseToWorld()
+    {
+        Viewport gv    = GetGameViewport();
+        float vpLocalX = Input::GetMouseX() - static_cast<float>(gv.x);
+        // gv.y is OpenGL bottom-relative; s_windowH bridges to GLFW top-relative mouseY
+        float flippedY = static_cast<float>(s_windowH) - Input::GetMouseY() - static_cast<float>(gv.y);
+        return ScreenToWorld({vpLocalX, flippedY});
+    }
+
+    glm::vec2 Renderer::MouseToUISpace()
+    {
+        Viewport gv   = GetGameViewport();
+        // gv.y is OpenGL bottom-relative; use s_windowH to recover the viewport's top in GLFW space
+        float gvH     = gv.valid ? static_cast<float>(gv.h) : static_cast<float>(s_windowH);
+        float vpLocalX = Input::GetMouseX() - static_cast<float>(gv.x);
+        float vpLocalY = Input::GetMouseY() - (static_cast<float>(s_windowH) - static_cast<float>(gv.y) - gvH);
+        return {vpLocalX / PixelsPerUnit, vpLocalY / PixelsPerUnit};
     }
 
     glm::vec2 Renderer::WorldToScreen(glm::vec3 worldPos)
@@ -77,6 +98,11 @@ namespace mts
         float x = (ndc.x / ndc.w + 1.0f) * 0.5f * width;
         float y = (1.0f - ndc.y / ndc.w) * 0.5f * height;  // flip y
         return glm::vec2(x, y);
+    }
+
+    void Renderer::SetWindowSize(int w, int h)
+    {
+        s_windowH = h;
     }
 
     void Renderer::SetAspectMode(AspectMode mode, float x, float y)

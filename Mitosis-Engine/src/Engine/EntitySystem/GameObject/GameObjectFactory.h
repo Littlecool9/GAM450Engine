@@ -57,7 +57,6 @@ namespace mts
         // The key is the name of the archetype, and the value is the GameObject pointer of the
         // archetype
         static std::unordered_map<std::string, GameObject*> archetypes;
-        static std::string const deserializePath;
     };
 
 }  // namespace mts

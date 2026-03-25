@@ -1,37 +1,39 @@
-﻿/**
+/**
  * @file Button.h
  * @author Dong Ta
- * @brief  Component for Button functionality
- *         if the Button is clicked, it triggers a message that activates a function
- * @version 0.1
- * @date 1/15/2026 6:55:28 AM
+ * @brief  UI Button component. Requires UITransform.
+ *         Hit area = UITransform scale half-extents.
+ *         Subscribe to delegates at runtime; they are cleared on Clone().
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 - Mitosis Engine
  *
  */
 
 #pragma once
-#include <glm/vec3.hpp>
-
 #include "Component.h"
+#include "Engine/Delegate/Delegate.h"
 
 namespace mts
 {
     class Button : public Component
     {
        public:
-        void Deserialize(JsonValue const& jsonObj) override;
-        void Serialize(JsonDocument& doc) const override;
-        void Update(float dt) override;
+        enum class State { Idle, Hovered, Pressed };
+
         void Init() override;
-        void TransformCheck();
-        void MeshCheck();
+        void Update(float dt) override;
+        void Serialize(JsonDocument& doc) const override;
+        void Deserialize(JsonValue const& jsonObj) override;
         Component* Clone(GameObject* newOwner) const override;
 
+        State GetState() const { return mState; }
+
+        Delegate<> mOnHoverEnter;  // Idle → Hovered
+        Delegate<> mOnHoverExit;   // Hovered/Pressed → Idle
+        Delegate<> mOnClick;       // released inside boundary
+
        private:
-        glm::vec3 ButtonBoundary{0.f};
-        std::string OnClickEvent{""};
-        glm::vec3 ButtonColor{1.f, 1.f, 1.f};
+        State mState{State::Idle};
     };
 
 }  // namespace mts

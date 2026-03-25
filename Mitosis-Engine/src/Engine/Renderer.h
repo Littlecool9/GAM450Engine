@@ -67,14 +67,20 @@ namespace mts
     class Renderer
     {
        public:
-        // Convert screen coordinates (in pixels) to world coordinates (in units)
-        // The screen coordinates should be in the Screen Space, where (0,0) is the left-top of the
-        // screen, and y increases downwards.
+        // Convert viewport-local coordinates (pixels, Y from BOTTOM) to world units.
         static glm::vec2 ScreenToWorld(glm::vec2 screenPos);
         static glm::vec2 ScreenToWorld(glm::vec3 screenPos);
         // Convert world coordinates (in units) to screen coordinates (in pixels)
         static glm::vec2 WorldToScreen(glm::vec2 worldPos);
         static glm::vec2 WorldToScreen(glm::vec3 worldPos);
+
+        // Returns the current mouse position in world space.
+        // Handles viewport offset and Y-flip internally — safe to call from any component.
+        static glm::vec2 MouseToWorld();
+        // Returns the current mouse position in UI space (screen units).
+        // (0,0) = top-left of game viewport, Y-down, 1 unit = PixelsPerUnit px.
+        // Matches the coordinate system used by UITransform.
+        static glm::vec2 MouseToUISpace();
         // Get the info of viewport in screen scale, unit is pixel
         // Returns: left, right, screen width, screen height
         static glm::vec4 GetViewportInfo();
@@ -88,6 +94,11 @@ namespace mts
         static float GetTargetAspect();  // returns 0 when Free
         static float GetCustomAspectX();
         static float GetCustomAspectY();
+
+        // Call once on window creation and on every WindowResizeEvent so that
+        // MouseToWorld / MouseToUISpace can bridge GLFW-top-relative mouse coords
+        // to the OpenGL-bottom-relative game viewport stored in targetViewport.
+        static void SetWindowSize(int w, int h);
 
         // Provide the available screen region; Renderer applies aspect constraint and stores
         // result.
@@ -108,6 +119,7 @@ namespace mts
        private:
         static RenderCamera ActiveCamera;
         static Viewport targetViewport;
+        static int s_windowH;
         static AspectMode s_aspectMode;
         static float s_customX;
         static float s_customY;

@@ -1,108 +1,82 @@
-﻿/**
+/**
  * @file Button.cpp
  * @author Dong Ta
- * @brief  Functionality for Button component
- * @version 0.1
- * @date 1/15/2026 6:55:28 AM
+ * @brief  UI Button component. Requires UITransform.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 - Mitosis Engine
  *
  */
 #include "pch.h"
 #include "Button.h"
 
-#include "Transform.h"
+#include "UITransform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
-#include "Engine/Events/EventButton.h"
 #include "Engine/Input/Input.h"
-#include "Engine/Resource/Mesh.h"
-#include "Engine/Events/InputEvent.h"
-#include "Engine/UI/UIEvent.h"
+#include "Engine/Renderer.h"
 
 namespace mts
 {
-    void Button::TransformCheck()
-    {
-        if (GetGameObject()->GetComponent<Transform>() == nullptr)
-        {
-            assert(false && "Transform Component Missing");
-        }
-    }
-
-    void Button::MeshCheck()
-    {
-        if (GetGameObject()->GetComponent<Mesh>() == nullptr)
-        {
-            assert(false && "Mesh Component Missing");
-        }
-    }
-
     void Button::Init()
     {
-        TransformCheck();
-        // TODO: ADD VISUAL FEEDBACK FOR BUTTON CLICK ONCE MESH CAN RETURN COLOR
-        // MeshCheck();
-        // ButtonColor = GetGameObject()->GetComponent<Mesh>()->GetColor();
-    }
-
-    void Button::Deserialize(JsonValue const& jsonObj)
-    {
-        if (jsonObj.Has("ButtonBoundary"))
-        {
-            auto bb = jsonObj["ButtonBoundary"];
-            ButtonBoundary.x = bb[0].GetFloat(ButtonBoundary.x);
-            ButtonBoundary.y = bb[1].GetFloat(ButtonBoundary.y);
-        }
-        if (jsonObj.Has("OnClickEvent"))
-        {
-            OnClickEvent = jsonObj["OnClickEvent"].GetString("");
-        }
-    }
-    void Button::Serialize(JsonDocument& doc) const
-    {
-        doc.WriteString("Type", "Button");
-        doc.BeginObject("Data");
-
-        doc.BeginArray("ButtonBoundary");
-        doc.WriteFloat(ButtonBoundary.x);
-        doc.WriteFloat(ButtonBoundary.y);
-        doc.EndArray();
-
-        doc.WriteString("OnClickEvent", OnClickEvent.c_str());
-        doc.EndObject();
+        if (!GetGameObject()->GetComponent<UITransform>())
+            LOG_WARN("Button on '{}': UITransform missing — button will not function.",
+                     GetGameObject()->GetName().c_str());
     }
 
     void Button::Update(float dt)
     {
-        // TODO: mousex and y are in screen space, need to convert to world space
+        auto* uit = GetGameObject()->GetComponent<UITransform>();
+        if (!uit)
+            return;
 
-        glm::vec2 mousePos{Input::GetMouseX(), Input::GetMouseY()};
-        glm::vec3 buttonPos = GetGameObject()->GetComponent<Transform>()->GetPosition();
-        if ((mousePos.x >= buttonPos.x - ButtonBoundary.x ||
-             mousePos.x <= buttonPos.x + ButtonBoundary.x) &&
-            (mousePos.y >= buttonPos.y - ButtonBoundary.y ||
-             mousePos.y <= buttonPos.y + buttonPos.y))
+        glm::vec3 pos   = uit->GetPosition();
+        glm::vec3 scale = uit->GetScale();
+        glm::vec2 mouse = Renderer::MouseToUISpace();
+
+        float halfW = scale.x * 0.5f;
+        float halfH = scale.y * 0.5f;
+
+        bool inside = mouse.x >= pos.x - halfW && mouse.x <= pos.x + halfW
+                   && mouse.y >= pos.y - halfH && mouse.y <= pos.y + halfH;
+
+        State prev = mState;
+
+        if (!inside)
         {
-            // Clicked
-            // TODO: ADD VISUAL FEEDBACK FOR BUTTON CLICK ONCE MESH CAN RETURN COLOR
-            if (Input::IsMouseDown(MouseButton::Left))
-            {
-                // Change Button Color on Click
-            }
-            if (Input::IsMouseReleased(MouseButton::Left))
-            {
-                // Execute OnClickAction
-
-                // Delegate<>
-
-                LOG_INFO("Button Clicked! action={}", OnClickEvent.c_str());
-            }
+            mState = State::Idle;
         }
+        else if (Input::IsMouseDown(MouseButton::Left))
+        {
+            mState = State::Pressed;
+        }
+        else
+        {
+            if (prev == State::Pressed && Input::IsMouseReleased(MouseButton::Left))
+                mOnClick.Invoke();
+            mState = State::Hovered;
+        }
+
+        if (prev == State::Idle && mState == State::Hovered)
+            mOnHoverEnter.Invoke();
+        else if (prev != State::Idle && mState == State::Idle)
+            mOnHoverExit.Invoke();
     }
+
+    void Button::Serialize(JsonDocument& doc) const
+    {
+        doc.WriteString("Type", "Button");
+        doc.BeginObject("Data");
+        doc.EndObject();
+    }
+
+    void Button::Deserialize(JsonValue const& jsonObj) {}
 
     Component* Button::Clone(GameObject* newOwner) const
     {
         Button* c = new Button(*this);
+        c->mOnHoverEnter.Clear();
+        c->mOnHoverExit.Clear();
+        c->mOnClick.Clear();
         c->InitFromClone(newOwner);
         return c;
     }

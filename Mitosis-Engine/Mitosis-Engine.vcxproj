@@ -186,6 +186,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\ButtonDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\CameraDrawer.h">
       <SubType>
       </SubType>
@@ -362,7 +366,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Engine\Events\Event.h" />
-    <ClInclude Include="src\Engine\Events\EventButton.h" />
     <ClInclude Include="src\Engine\Events\InputEvent.h" />
     <ClInclude Include="src\Engine\Events\WindowEvent.h" />
     <ClInclude Include="src\Engine\Helpers\Format.h" />
@@ -406,7 +409,6 @@
     <ClInclude Include="src\Engine\Tilemap\Tileset.h" />
     <ClInclude Include="src\Engine\Time\FPSCounter.h" />
     <ClInclude Include="src\Engine\Time\Time.h" />
-    <ClInclude Include="src\Engine\UI\UIEvent.h" />
     <ClInclude Include="src\Engine\UUID\UUID.h" />
     <ClInclude Include="src\Engine\UUID\UUIDPairKey.h" />
     <ClInclude Include="src\Engine\Windows\GLFWInputMapper.h" />
@@ -447,6 +449,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\ActionListDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\ButtonDrawer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -627,7 +633,6 @@
     <ClCompile Include="src\Engine\Tilemap\TilemapRenderer.cpp" />
     <ClCompile Include="src\Engine\Tilemap\Tileset.cpp" />
     <ClCompile Include="src\Engine\Time\Time.cpp" />
-    <ClCompile Include="src\Engine\UI\UIEvent.cpp" />
     <ClCompile Include="src\Engine\UUID\UUID.cpp" />
     <ClCompile Include="src\Engine\Windows\WinGLFWWindow.cpp" />
     <ClCompile Include="src\Engine\Windows\Window.cpp" />

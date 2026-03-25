@@ -11,6 +11,7 @@
 #include "Script/PlatformPuzzleScript.h"
 #include "Script/EnemyBehaviors/EnemyController.h"
 #include "Script/AudioController.h"
+#include "Script/ButtonTest.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -57,4 +58,6 @@ void AuralMischief::RegisterScripts()
                                        []() { return new mts::EnemyController(); });
     mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
                                        []() { return new AudioController(); });
+    mts::ScriptFactory::RegisterScript(ButtonTest::StaticClassName(),
+                                       []() { return new ButtonTest(); });
 }

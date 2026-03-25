@@ -13,6 +13,7 @@
 #include <imgui.h>
 
 #include "Engine/Core/Editor/Inspector/Drawers/ActionListDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/ButtonDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/AnimationDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/AnimationSystemDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/AudioEmitterDrawer.h"
@@ -28,6 +29,7 @@
 #include "Engine/Core/Editor/Inspector/Drawers/TransformDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/UITransformDrawer.h"
 #include "Engine/EntitySystem/Component/ActionList.h"
+#include "Engine/EntitySystem/Component/Button.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/Audio/AudioEmitter.h"
@@ -202,6 +204,11 @@ namespace mts
                 go->AddComponent<ActionList>();
             ImGui::EndDisabled();
 
+            ImGui::BeginDisabled(go->GetComponent<Button>() != nullptr);
+            if (ImGui::MenuItem("Button"))
+                go->AddComponent<Button>();
+            ImGui::EndDisabled();
+
             ImGui::EndPopup();
         }
 
@@ -251,5 +258,6 @@ namespace mts
         mRegistry.Add<AnimationSystemDrawer>();
         mRegistry.Add<ParticleEmitterDrawer>();
         mRegistry.Add<ActionListDrawer>();
+        mRegistry.Add<ButtonDrawer>();
     }
 }  // namespace mts

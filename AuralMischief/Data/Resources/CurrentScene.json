@@ -12113,8 +12113,8 @@
                     "Type": "UITransform",
                     "Data": {
                         "Position": [
-                            0.0,
-                            0.0,
+                            7.25,
+                            6.199999809265137,
                             0.0
                         ],
                         "Scale": [
@@ -12140,6 +12140,16 @@
                         "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/1x1MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "ButtonTest"
                     }
                 }
             ]

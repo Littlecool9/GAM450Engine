@@ -39,6 +39,7 @@ namespace mts
         // ---------------------------
 
         glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
+        Renderer::SetWindowSize(mWindow->GetWidth(), mWindow->GetHeight());
     }
 
     void RenderingLayer::OnBeginFrame()
@@ -76,6 +77,7 @@ namespace mts
         // TODO: Notify the render swap chain, etc.
 
         glViewport(0, 0, static_cast<GLsizei>(e.GetWidth()), static_cast<GLsizei>(e.GetHeight()));
+        Renderer::SetWindowSize(e.GetWidth(), e.GetHeight());
 
         LOG_INFO("Resize -> {}x{}", e.GetWidth(), e.GetHeight());
         return false;  // Allow others to react as well

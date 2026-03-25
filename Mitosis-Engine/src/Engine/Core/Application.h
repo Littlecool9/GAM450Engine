@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "Editor/EditorContext.h"
+#include "Engine/Delegate/Delegate.h"
 
 namespace mts::physics
 {
@@ -58,7 +59,7 @@ namespace mts
         EditorContext mCtx;
 
         bool mIsRunning = false;
-        bool mInDebugView = false;
+        bool mInDebugView = true;
     };
 
     Application* CreateApplication();

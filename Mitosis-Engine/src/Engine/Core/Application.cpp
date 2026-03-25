@@ -28,10 +28,8 @@
 #include "Layer/RenderingLayer.h"
 #include "Layer/ResourceLayer.h"
 #include "Layer/SceneLayer.h"
-#include "Engine/Serialization/SerializationUtility.h"
-#include "Engine/Physics2D/PhysicsSystem2D.h"
 #include "Engine/AppSystem/AppSystem.h"
-#include "Engine/Core/SplashScreen.h"
+#include "Engine/Events/AppEvent.h"
 
 namespace mts
 {
@@ -48,8 +46,7 @@ namespace mts
 
         mIsRunning = true;
 
-        mQuitDelegateId = AppSystem::Get().onQuitRequested.Subscribe(
-            [this] { mIsRunning = false; });
+        AppSystem::Get().SetEventCallback([this](Event& e) { OnEvent(e); });
 
         mCtx.showEditorUI = true;
         mCtx.selected = UUID::InvalidID;
@@ -159,8 +156,6 @@ namespace mts
 
     void Application::Shutdown()
     {
-        AppSystem::Get().onQuitRequested.Unsubscribe(mQuitDelegateId);
-
         mIsRunning = false;
 
         // Ensure play mode is exited before layers detach, so scene-owned systems
@@ -178,6 +173,22 @@ namespace mts
 
     void Application::OnEvent(Event& e)
     {
+        EventDispatcher dispatcher(e);
+
+        dispatcher.Dispatch<WindowCloseEvent>(
+            [this](WindowCloseEvent& ev)
+            {
+                CloseWindow();
+                return true;
+            });
+
+        dispatcher.Dispatch<AppQuitRequestEvent>(
+            [this](AppQuitRequestEvent& ev)
+            {
+                CloseWindow();
+                return true;
+            });
+
         // Dispatch to layers in reverse order (overlays first)
         for (auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it)
         {
@@ -189,11 +200,6 @@ namespace mts
                 break;
         }
 
-        EventDispatcher dispatcher(e);
-
-        dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& ev)
-                                              { return OnWindowClose(ev); });
-
         if (Input::IsKeyPressed(Key::Grave))
         {
             mInDebugView = !mInDebugView;
@@ -202,10 +208,9 @@ namespace mts
         }
     }
 
-    bool Application::OnWindowClose(class WindowCloseEvent& e)
+    void Application::CloseWindow()
     {
         mIsRunning = false;
-        return true;
     }
 
     void Application::HandlePlayStateTransitions()

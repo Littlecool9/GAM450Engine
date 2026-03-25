@@ -8,8 +8,8 @@
  */
 
 #pragma once
-#include "Engine/Delegate/Delegate.h"
 
+#include "Engine/Events/Event.h"
 namespace mts
 {
     class AppSystem
@@ -17,12 +17,12 @@ namespace mts
        public:
         static AppSystem& Get();
 
-        /// Request the application to quit. Fires onQuitRequested synchronously.
+        /// Request the application to quit.
         void Quit();
+        void SetEventCallback(const EventCallbackFn& callback) { sEventCallback = callback; }
 
-        /// Subscribe to be notified when Quit() is called.
-        /// Application subscribes internally to set mIsRunning = false.
-        Delegate<> onQuitRequested;
+       private:
+        EventCallbackFn sEventCallback;
     };
 
 }  // namespace mts

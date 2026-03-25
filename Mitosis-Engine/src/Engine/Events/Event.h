@@ -31,7 +31,10 @@ namespace mts
         MouseButtonReleased,
         MouseMoved,
         MouseScrolled,
-        UIButtonClicked
+        UIButtonClicked,
+
+        // App
+        AppQuitRequest
     };
 
     enum EventCategory

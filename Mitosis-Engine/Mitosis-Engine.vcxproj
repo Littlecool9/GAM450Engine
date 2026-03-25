@@ -357,6 +357,10 @@
     <ClInclude Include="src\Engine\EntitySystem\GameObject\GameObject.h" />
     <ClInclude Include="src\Engine\EntitySystem\GameObject\GameObjectFactory.h" />
     <ClInclude Include="src\Engine\EntitySystem\GameObject\TestGameObjects.h" />
+    <ClInclude Include="src\Engine\Events\AppEvent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Events\Event.h" />
     <ClInclude Include="src\Engine\Events\EventButton.h" />
     <ClInclude Include="src\Engine\Events\InputEvent.h" />

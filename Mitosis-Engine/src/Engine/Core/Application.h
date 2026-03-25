@@ -46,7 +46,7 @@ namespace mts
         virtual std::vector<SplashScreenConfig> GetSplashScreens() { return {}; }
 
        private:
-        bool OnWindowClose(class WindowCloseEvent& e);
+        void CloseWindow();
         void HandlePlayStateTransitions();
         void EnterPlayMode();
         void StopPlayMode();

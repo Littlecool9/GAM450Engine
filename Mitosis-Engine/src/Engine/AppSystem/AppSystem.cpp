@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "AppSystem.h"
 
+#include "Engine/Events/AppEvent.h"
+
 namespace mts
 {
     AppSystem& AppSystem::Get()
@@ -20,7 +22,11 @@ namespace mts
 
     void AppSystem::Quit()
     {
-        onQuitRequested.Invoke();
+        if (sEventCallback)
+        {
+            AppQuitRequestEvent e;
+            sEventCallback(e);
+        }
     }
 
 }  // namespace mts

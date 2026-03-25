@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Olive — Damage System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0d0e11;
+  --bg2:      #13151a;
+  --bg3:      #1a1d24;
+  --bg4:      #21252e;
+  --line:     rgba(255,255,255,0.07);
+  --line2:    rgba(255,255,255,0.13);
+  --text:     #e8eaf0;
+  --muted:    #6b7180;
+  --accent:   #c8f135;
+  --accent2:  #f1c335;
+  --danger:   #f1503b;
+  --warn:     #f1a535;
+  --safe:     #35d4a0;
+  --info:     #5b9cf6;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --r: 8px;
+  --r-lg: 12px;
+}
+
+html { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; }
+
+body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+  background: var(--bg);
+  position: relative;
+}
+
+/* Subtle grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200,241,53,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,241,53,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ─── HEADER ─── */
+.doc-header {
+  border-bottom: 1px solid var(--line2);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+
+.doc-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(200,241,53,0.1);
+  border: 1px solid rgba(200,241,53,0.25);
+  border-radius: 4px;
+  padding: 3px 10px;
+  margin-bottom: 16px;
+}
+
+.doc-title {
+  font-family: var(--font-head);
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.doc-title span { color: var(--accent); }
+
+.doc-sub {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+/* ─── SECTION ─── */
+.section { margin-bottom: 48px; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* ─── ATTACK GRID ─── */
+.attack-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.attack-card {
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.attack-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.attack-card.light::before { background: linear-gradient(90deg, var(--info), transparent); }
+.attack-card.heavy::before { background: linear-gradient(90deg, var(--danger), transparent); }
+
+.attack-type {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.beat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.beat-row:last-of-type { border-bottom: none; }
+
+.beat-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.beat-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.beat-indicator {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+.on-beat .beat-indicator { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.off-beat .beat-indicator { background: var(--muted); }
+
+.dmg-value {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.on-beat .dmg-value { color: var(--text); }
+.off-beat .dmg-value { color: var(--muted); }
+
+.dmg-unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+.penalty-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(241,80,59,0.15);
+  color: var(--danger);
+  border: 1px solid rgba(241,80,59,0.2);
+}
+
+.card-note {
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* ─── KILL COUNT ─── */
+.kill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.kill-card {
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  border-radius: var(--r);
+  padding: 14px;
+}
+
+.kill-enemy {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.kill-hp {
+  font-size: 10px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.kill-num {
+  font-family: var(--font-head);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 8px 0 2px;
+  color: var(--text);
+}
+
+.kill-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.kill-alt {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--bg4);
+  color: var(--muted);
+  border: 1px solid var(--line2);
+}
+
+/* ─── FLAG BANNER ─── */
+.flag {
+  background: rgba(241,165,53,0.08);
+  border: 1px solid rgba(241,165,53,0.2);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--warn);
+  line-height: 1.5;
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.flag-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── ENEMY SECTION ─── */
+.enemy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.enemy-card {
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.enemy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.enemy-name {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.threat-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.threat-low  { background: rgba(53,212,160,0.12); color: var(--safe);  border: 1px solid rgba(53,212,160,0.2); }
+.threat-mid  { background: rgba(241,165,53,0.12); color: var(--warn);  border: 1px solid rgba(241,165,53,0.2); }
+.threat-high { background: rgba(241,80,59,0.12);  color: var(--danger); border: 1px solid rgba(241,80,59,0.2); }
+
+.hp-track {
+  height: 4px;
+  background: var(--bg4);
+  border-radius: 2px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.stat-table { width: 100%; border-collapse: collapse; }
+
+.stat-table tr { border-bottom: 1px solid var(--line); }
+.stat-table tr:last-child { border-bottom: none; }
+
+.stat-table td {
+  padding: 6px 0;
+  font-size: 11px;
+}
+
+.stat-table td:first-child { color: var(--muted); }
+.stat-table td:last-child { text-align: right; font-weight: 600; color: var(--text); }
+
+.stat-table .explode td:last-child { color: var(--warn); }
+
+.enemy-note {
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+/* ─── BOSS CARD ─── */
+.boss-card {
+  background: var(--bg2);
+  border: 1px solid rgba(241,80,59,0.25);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.boss-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--danger), var(--warn), transparent);
+}
+
+.boss-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.boss-name {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.boss-hp-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--danger);
+  background: rgba(241,80,59,0.1);
+  border: 1px solid rgba(241,80,59,0.2);
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+.boss-phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.phase-card {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px;
+}
+
+.phase-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.phase-threshold {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.phase-dmg {
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.phase-1 .phase-dmg { color: var(--safe); }
+.phase-2 .phase-dmg { color: var(--warn); }
+.phase-3 .phase-dmg { color: var(--danger); }
+
+.phase-dmg span { font-size: 12px; color: var(--muted); font-family: var(--font-mono); font-weight: 400; }
+
+.boss-explode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(241,80,59,0.08);
+  border: 1px solid rgba(241,80,59,0.2);
+  border-radius: var(--r);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+.boss-explode-label {
+  font-size: 11px;
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.boss-explode-val {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--danger);
+}
+
+.boss-note {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.boss-note em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+/* ─── PLAYER HP ─── */
+.player-hp-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+}
+
+.hp-main {
+  background: var(--bg2);
+  border: 1px solid rgba(200,241,53,0.2);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.hp-main-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.hp-main-val {
+  font-family: var(--font-head);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.hp-main-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.hp-stat {
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hp-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.hp-stat-val {
+  font-family: var(--font-head);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.hp-stat-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section {
+  animation: fadeUp 0.4s ease both;
+}
+
+.section:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(4) { animation-delay: 0.2s; }
+.section:nth-child(5) { animation-delay: 0.25s; }
+.doc-header { animation: fadeUp 0.4s ease both; }
+
+/* ─── DIVIDER ─── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 0 0 40px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  body { padding: 28px 18px 60px; }
+  .attack-grid, .enemy-grid, .boss-phases { grid-template-columns: 1fr; }
+  .kill-grid { grid-template-columns: repeat(2, 1fr); }
+  .player-hp-grid { grid-template-columns: 1fr 1fr; }
+  .hp-main { grid-column: span 2; }
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="doc-tag">Team Olive · GAM 541</div>
+  <h1 class="doc-title">Damage <span>System</span></h1>
+  <p class="doc-sub">Combat Design Specification — Rhythm-Action Game</p>
+  <div class="doc-meta">
+    <span class="meta-item">v1.0 Draft</span>
+    <span class="meta-item">4 enemy types</span>
+    <span class="meta-item">On-beat / Off-beat mechanics</span>
+    <span class="meta-item">Producer: Rahul</span>
+  </div>
+</header>
+
+<!-- ─── SECTION 1: PLAYER ATTACKS ─── -->
+<section class="section">
+  <div class="section-label">01 — Player</div>
+  <h2 class="section-title">Attack Damage</h2>
+
+  <div class="attack-grid">
+    <div class="attack-card light">
+      <div class="attack-type">Light Attack</div>
+      <div class="beat-row on-beat">
+        <span class="beat-label"><span class="beat-indicator"></span> &nbsp;On-beat</span>
+        <div class="beat-status">
+          <div class="dmg-value">3<span class="dmg-unit">dmg</span></div>
+        </div>
+      </div>
+      <div class="beat-row off-beat">
+        <span class="beat-label"><span class="beat-indicator"></span> &nbsp;Off-beat</span>
+        <div class="beat-status">
+          <span class="penalty-tag">3× penalty</span>
+          <div class="dmg-value">1<span class="dmg-unit">dmg</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="attack-card heavy">
+      <div class="attack-type">Heavy Attack</div>
+      <div class="beat-row on-beat">
+        <span class="beat-label"><span class="beat-indicator"></span> &nbsp;On-beat</span>
+        <div class="beat-status">
+          <div class="dmg-value">8<span class="dmg-unit">dmg</span></div>
+        </div>
+      </div>
+      <div class="beat-row off-beat">
+        <span class="beat-label"><span class="beat-indicator"></span> &nbsp;Off-beat</span>
+        <div class="beat-status">
+          <span class="penalty-tag">4× penalty</span>
+          <div class="dmg-value">2<span class="dmg-unit">dmg</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div class="section-label" style="margin-bottom:14px;">Kills needed — on-beat only</div>
+    <div class="kill-grid">
+      <div class="kill-card">
+        <div class="kill-enemy">Slug</div>
+        <div class="kill-hp">7 HP</div>
+        <div class="kill-num">3</div>
+        <div class="kill-sub">light hits</div>
+        <span class="kill-alt">or 1 heavy</span>
+      </div>
+      <div class="kill-card">
+        <div class="kill-enemy">Drone</div>
+        <div class="kill-hp">6 HP</div>
+        <div class="kill-num">2</div>
+        <div class="kill-sub">light hits</div>
+        <span class="kill-alt">or 1 heavy</span>
+      </div>
+      <div class="kill-card">
+        <div class="kill-enemy">Sentry</div>
+        <div class="kill-hp">9 HP</div>
+        <div class="kill-num">3</div>
+        <div class="kill-sub">light hits</div>
+        <span class="kill-alt">or 2 heavy</span>
+      </div>
+      <div class="kill-card">
+        <div class="kill-enemy">Boss</div>
+        <div class="kill-hp">30 HP</div>
+        <div class="kill-num">10</div>
+        <div class="kill-sub">light hits</div>
+        <span class="kill-alt">or 4 heavy</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── SECTION 2: ENEMY DAMAGE ─── -->
+<section class="section">
+  <div class="section-label">02 — Enemies</div>
+  <h2 class="section-title">Enemy Damage Output</h2>
+
+  <div class="enemy-grid">
+
+    <div class="enemy-card">
+      <div class="enemy-header">
+        <div class="enemy-name">Slug</div>
+        <span class="threat-tag threat-low">Low threat</span>
+      </div>
+      <div class="hp-track"><div class="hp-fill" style="width:47%;background:var(--warn);"></div></div>
+      <table class="stat-table">
+        <tr><td>HP</td><td>7</td></tr>
+        <tr><td>Attack hit</td><td>3 dmg</td></tr>
+        <tr class="explode"><td>💥 Death explosion</td><td>2 dmg</td></tr>
+      </table>
+      <div class="enemy-note">Predictable attack patterns.</div>
+    </div>
+
+    <div class="enemy-card">
+      <div class="enemy-header">
+        <div class="enemy-name">Drone</div>
+        <span class="threat-tag threat-mid">Medium threat</span>
+      </div>
+      <div class="hp-track"><div class="hp-fill" style="width:40%;background:#d98a20;"></div></div>
+      <table class="stat-table">
+        <tr><td>HP</td><td>6</td></tr>
+        <tr><td>Attack hit</td><td>4 dmg</td></tr>
+        <tr class="explode"><td>💥 Death explosion</td><td>3 dmg</td></tr>
+      </table>
+    </div>
+
+    <div class="enemy-card">
+      <div class="enemy-header">
+        <div class="enemy-name">Sentry</div>
+        <span class="threat-tag threat-high">High threat</span>
+      </div>
+      <div class="hp-track"><div class="hp-fill" style="width:60%;background:var(--danger);"></div></div>
+      <table class="stat-table">
+        <tr><td>HP</td><td>9</td></tr>
+        <tr><td>Attack hit</td><td>6 dmg</td></tr>
+        <tr class="explode"><td>💥 Death explosion</td><td>4 dmg</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- BOSS -->
+  <div class="boss-card">
+    <div class="boss-header">
+      <div class="boss-name">Boss</div>
+      <span class="boss-hp-badge">30 HP — 3 Phases</span>
+    </div>
+
+    <div class="boss-phases">
+      <div class="phase-card phase-1">
+        <div class="phase-label">Phase 1</div>
+        <div class="phase-threshold">30 → 20 HP</div>
+        <div class="phase-dmg">4 <span>dmg / hit</span></div>
+      </div>
+      <div class="phase-card phase-2">
+        <div class="phase-label">Phase 2</div>
+        <div class="phase-threshold">20 → 10 HP</div>
+        <div class="phase-dmg">6 <span>dmg / hit</span></div>
+      </div>
+      <div class="phase-card phase-3">
+        <div class="phase-label">Enrage</div>
+        <div class="phase-threshold">10 → 0 HP</div>
+        <div class="phase-dmg">8 <span>dmg / hit</span></div>
+      </div>
+    </div>
+
+    <div class="boss-explode">
+      <span class="boss-explode-label">💥 Death explosion — highest in the game</span>
+      <span class="boss-explode-val">6 dmg</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── SECTION 3: PLAYER HP ─── -->
+<section class="section">
+  <div class="section-label">03 — Player</div>
+  <h2 class="section-title">Player HP</h2>
+
+  <div class="player-hp-grid">
+    <div class="hp-main">
+      <div class="hp-main-label">Player HP</div>
+      <div class="hp-main-val">20</div>
+      <div class="hp-main-sub">Can survive ~5 Slug hits or ~3 Sentry hits before dying</div>
+    </div>
+    <div class="hp-stat">
+      <div class="hp-stat-label">Max hits before death — Slug</div>
+      <div class="hp-stat-val">5</div>
+      <div class="hp-stat-sub">@ 3 dmg / hit</div>
+    </div>
+    <div class="hp-stat">
+      <div class="hp-stat-label">Max hits before death — Sentry</div>
+      <div class="hp-stat-val">3</div>
+      <div class="hp-stat-sub">@ 6 dmg / hit</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

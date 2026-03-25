@@ -4,7 +4,7 @@ Rahul
 -----
 [-] Slug Enemy
 	[-] SFX
-	[-] Spritesheet
+	[x] Spritesheet
 	
 [-] Drone Enemy
 	[-] SFX
@@ -12,7 +12,7 @@ Rahul
 
 [-] Sentry Enemy
 	[-] SFX
-	[-] Spritesheet
+	[x] Spritesheet
 	
 [-] Boss Enemy (lower priority)
 	[-] SFX
@@ -37,7 +37,7 @@ Rahul
 
 Sumin
 -----
-[-] Splashscreen (legal - higher priority)
+[x] Splashscreen (legal - higher priority)
 [-] Damage number spawner (higher)
 	[-] Damage math
 	[-]	Displaying damage on attacks

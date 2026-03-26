@@ -82,7 +82,7 @@ namespace mts
     {
         if (!agent)
             return Invalid;
-        // LOG_INFO("Update action ptr = {}", static_cast<void*>(this));
+        //LOG_INFO("Update action ptr = {}", static_cast<void*>(this));
         auto s = agent->GetState();
         auto it = s.params.find(HashAction("AggroRange"));
         if (it != s.params.end() && it->second != nullptr)

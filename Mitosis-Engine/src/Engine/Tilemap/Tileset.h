@@ -66,7 +66,7 @@ namespace mts::Tilemap
 
        private:
         std::string tilesetName;  // Name of the tileset
-        uint32_t id;
+        uint32_t id = 1;
         std::unordered_map<TileID, TileProperties>
             tileDefinitions;      // Map of tile ID to Tile definitions
     };

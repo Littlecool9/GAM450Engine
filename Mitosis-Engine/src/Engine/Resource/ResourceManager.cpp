@@ -21,6 +21,7 @@
 #include <ranges>
 
 #include "Engine/Serialization/FileManager.h"
+#include "Engine/Tilemap/Tileset.h"
 
 namespace mts
 {
@@ -61,6 +62,10 @@ namespace mts
             delete mesh;
         }
         mMeshSources.clear();
+
+        // Temp solution to free tilesets until we move the resource management of tilemap to
+        // ResourceManager.
+        Tilemap::Tileset::UnloadAllTileset();
     }
 
     Texture* ResourceManager::GetTexture(const std::string& textureSourcePath)

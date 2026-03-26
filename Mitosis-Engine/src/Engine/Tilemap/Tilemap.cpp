@@ -32,11 +32,7 @@ namespace mts::Tilemap
 
     Tilemap::~Tilemap()
     {
-        // Stop workers FIRST — they hold a raw Tilemap* and call into Tilesets.
-        // Member destructors run after this body, so without an explicit Stop() here
-        // the workers would outlive the Tileset data freed on the next line.
         mChunkLoader.Stop();
-        Tileset::UnloadAllTileset();
         mChunkRenderData.shader = nullptr;
         mChunkRenderData.texture = nullptr;
     }

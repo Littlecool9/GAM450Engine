@@ -680,6 +680,7 @@
    { "name": "Death", "from": 68, "to": 82, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
    { "name": "Behind Fill", "opacity": 255, "blendMode": "normal" },
    { "name": "Back Leg Back", "opacity": 255, "blendMode": "normal" },
    { "name": "Back leg Front", "opacity": 255, "blendMode": "normal" },

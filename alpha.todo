@@ -13,6 +13,7 @@ Rahul
 [-] Sentry Enemy
 	[-] SFX
 	[x] Spritesheet
+	[x] Missile
 	
 [-] Boss Enemy (lower priority)
 	[-] SFX
@@ -39,15 +40,15 @@ Sumin
 -----
 [x] Splashscreen (legal - higher priority)
 [-] Damage number spawner (higher)
-	[-] Damage math
-	[-]	Displaying damage on attacks
+	[x] Damage math
+	[-] Displaying damage on attacks
 [x] UI system framework
-[-]	All systems review (lower priority)
+[-] All systems review (lower priority)
 [-] Unit tests for all modules (lower priority)
 
 Josh
 ----
-[-] Player statemachine polish
+[x] Player statemachine polish
 [-] Light attack on glow beat (trigger on glow)
 [-] Heavy attack on glow beat (hold and release on glow)
 	[-] On-beat validation effect
@@ -58,7 +59,7 @@ Josh
 
 Jackey
 ------
-[-]	Level design polish
+[x] Level design polish
 [-] Camera movement polish
 [-] Camera post processing
 [-] UI system
@@ -70,7 +71,7 @@ Dong
 	[-] Patrol mode
 	[-] Alerted mode (whince on seeing hero)
 	[-] Attack mode
-[-]	Drone behavior polish
+[-] Drone behavior polish
 	[-] Patrol mode
 	[-] Alerted mode (whince on seeing hero)
 	[-] Attack mode

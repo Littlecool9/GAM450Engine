@@ -336,7 +336,7 @@
     "duration": 100
    },
    "slug 42.aseprite": {
-    "frame": { "x": 320, "y": 400, "w": 80, "h": 80 },
+    "frame": { "x": 0, "y": 0, "w": 80, "h": 80 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 80 },

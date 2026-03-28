@@ -1,0 +1,163 @@
+{
+    "UUID": "755d0af4-c804-425c-8d70-9acdf1275bfc",
+    "Name": "SentryEnemy",
+    "Layer": 0,
+    "Tags": [
+        "Enemy"
+    ],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    16.75,
+                    9.5,
+                    0.0
+                ],
+                "Scale": [
+                    5.0,
+                    5.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "BoxCollider2D",
+            "Data": {
+                "Width": 0.3499999940395355,
+                "Height": 0.3499999940395355,
+                "Offset": [
+                    0.0,
+                    -1.5499999523162842
+                ],
+                "IsTrigger": 0
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 0.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 1
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 1,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 1,
+                "TextureResource": "Data/Resources/SentryEnemyTexture.tex",
+                "MeshResource": "Data/Resources/9x9MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "Animation",
+            "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 0,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.0,
+                "IsRunning": 0,
+                "IsLooping": 0
+            }
+        },
+        {
+            "Type": "AnimationSystem",
+            "Data": {
+                "States": [
+                    {
+                        "State": 0,
+                        "TextureResource": "Data/Resources/SentryEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/9x9MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 0,
+                        "FrameCount": 11,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.05999999865889549,
+                        "IsRunning": 0,
+                        "IsLooping": 1
+                    },
+                    {
+                        "State": 1,
+                        "TextureResource": "Data/Resources/SentryEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/9x9MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 12,
+                        "FrameCount": 12,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.05999999865889549,
+                        "IsRunning": 0,
+                        "IsLooping": 1
+                    },
+                    {
+                        "State": 4,
+                        "TextureResource": "Data/Resources/SentryEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/9x9MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 34,
+                        "FrameCount": 20,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.05999999865889549,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    },
+                    {
+                        "State": 6,
+                        "TextureResource": "Data/Resources/SentryEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/9x9MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 24,
+                        "FrameCount": 9,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.05999999865889549,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "EnemyController",
+                "Fields": {
+                    "EnemyType": "Sentry",
+                    "MoveSpeed": 1.5,
+                    "PatrolRadius": 2.0,
+                    "AggroRange": 9.0,
+                    "AttackCooldown": 5.0
+                }
+            }
+        },
+        {
+            "Type": "EnemyAgent",
+            "Data": {
+                "Plan Name": "SentryEnemy"
+            }
+        },
+        {
+            "Type": "ActionList"
+        }
+    ]
+}

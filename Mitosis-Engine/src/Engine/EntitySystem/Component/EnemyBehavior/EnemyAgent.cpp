@@ -289,6 +289,11 @@ namespace mts
 
         if (mPlayerRef)
         {
+            //float dis = glm::distance(mPlayerRef->GetComponent<Transform>()->GetPosition(),
+            //                          GetGameObject()->GetComponent<Transform>()->GetPosition());
+            //LOG_INFO("setting distance from {} to {}", GetGameObject()->GetName(),
+            //         glm::distance(mPlayerRef->GetComponent<Transform>()->GetPosition(),
+                                   //GetGameObject()->GetComponent<Transform>()->GetPosition()));
             mState.SetDistanceToPlayer(
                 glm::distance(mPlayerRef->GetComponent<Transform>()->GetPosition(),
                               GetGameObject()->GetComponent<Transform>()->GetPosition()));

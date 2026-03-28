@@ -1,6 +1,6 @@
 /**
  * @file EnemyPatrolAction.cpp
- * @author cyclo
+ * @author Dong Ta
  * @brief // TODO: Add a brief description of this class
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -42,27 +42,12 @@ namespace mts
 
     void EnemyPatrolAction::OnBeginning(EnemyAgent& agent)
     {
-        // origin = agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
-        // facing = Random::Range(0, 10) < 5 ? 1 : -1;
-        // agent.GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(facing < 0 ? false:
-        // true);
+
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Walking);
-        // patrolRadius = agent.GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
-        // auto a = agent.GetGameObject()->GetScript<EnemyController>();
-        // if (a && agent.GetGameObject()->GetScript<EnemyController>()->GetEnemyType() ==
-        // EnemyType::FlyEnemy)
-        //{
-        //     flying = true;
-        // }
+
         LOG_INFO("Patrolling!");
-        // LOG_INFO("origin = {}, {}, {}", origin.x, origin.y, origin.z);
-        // LOG_INFO("current pos = {}, {}, {}",
-        //          agent.GetGameObject()->GetComponent<Transform>()->GetPosition().x,
-        //          agent.GetGameObject()->GetComponent<Transform>()->GetPosition().y,
-        //          agent.GetGameObject()->GetComponent<Transform>()->GetPosition().z);
-        // LOG_INFO("patrolRadius = {}", patrolRadius);
-        // LOG_INFO("facing = {}", facing);
+
     }
 
     float EnemyPatrolAction::GetEstimatedTimeCost(const EnemyState& state,
@@ -96,10 +81,10 @@ namespace mts
         }
         glm::vec3 origin = agent->GetGameObject()->GetScript<EnemyController>()->GetOriginPos();
         glm::vec3 pos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();
-
+        
         float x = pos.x;
 
-        int facing = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? 1 : -1;
+        int facing = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
 
         // Move
         float spd = agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
@@ -115,13 +100,13 @@ namespace mts
                                ->GetScript<EnemyController>()
                                ->GetPatrolRadius();  // clamp (prevents overshoot)
             facing = -1;
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
         }
         else if (dist < -agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius())
         {
             x = origin.x - agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
             facing = 1;
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
         }
         pos.x = x;
         if (agent->GetGameObject()->GetScript<EnemyController>()->GetEnemyType() ==

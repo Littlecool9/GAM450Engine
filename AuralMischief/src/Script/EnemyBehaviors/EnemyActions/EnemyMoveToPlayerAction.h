@@ -1,6 +1,7 @@
 /**
  * @file EnemyMoveToPlayerAction.h
- * @author cyclo
+ * @author 
+ * 
  * @brief // TODO: Add a brief description of this header
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

@@ -1,6 +1,6 @@
 /**
  * @file EnemyAttackAction.cpp
- * @author cyclo
+ * @author Dong Ta
  * @brief // TODO: Add a brief description of this class
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -14,6 +14,7 @@
 #include <fmod_dsp_effects.h>
 #include "../EnemyParameters/AttackCountdownParam.h"
 //#include "../Actions/ColliderScaleAction.h"
+#include "../EnemyController.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
@@ -87,24 +88,6 @@ namespace mts
                                                                            0,
                                                                            0,
                                                                            true);
-        //if (dir.x < 0)
-        //{
-        //    agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
-        //}
-        //else
-        //{
-        //    agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
-        //}
-
-        //agent.GetGameObject()->GetComponent<ActionList>()->AddTranslateAction();
-        //agent.GetGameObject()->GetComponent<ActionList>()->AddAction(
-        //    new ColliderScaleAction(size,
-        //                            agent.GetGameObject(),
-        //                            1,
-        //                            a,
-        //                            a,
-        //                            false,
-        //                            BaseAction::EaseType::Linear));
 
         LOG_INFO("Scaling up");
         ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
@@ -116,14 +99,9 @@ namespace mts
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() - agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
 
         ConductorSystem& cs = ConductorSystem::Get();
-        //mConductorSubId = cs.onBeat.Subscribe(
-        //    [this, &agent](mts::BeatInfo info)
-        //    {
-        //        if (info.isHalfBeat)
-        //            FireBullet(agent);
-        //});
+
         FireBullet(agent);
-        // debug
+
         LOG_INFO("EnemyAttackAction: Attacking player!",);
     }
     
@@ -147,7 +125,7 @@ namespace mts
             return Invalid;
         }
 
-        if (totalTime >= AttackDuration)
+        if (totalTime >=  std::get<float>(agent->GetState().params.at(HashAction("AttackCooldown"))->GetValue()))
         {
              // cooldown after attack
             agent->GetState()

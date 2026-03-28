@@ -15,7 +15,8 @@ namespace mts
     enum class EnemyType
     {
         CrawlEnemy,
-        FlyEnemy
+        FlyEnemy,
+        SentryEnemy
         
     };
 
@@ -46,6 +47,7 @@ namespace mts
         float mAttackCooldown = 5.f;
         int maxhp = 2;
         int curhp = 0;
+        bool alerted = false;
     };
 
 }

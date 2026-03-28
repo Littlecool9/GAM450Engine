@@ -31,7 +31,9 @@ namespace mts
             Jump,
             Falling,
             Attack1,
-            Attack2
+            Attack2,
+            Alerted,
+            Death
         };
 
         struct Info

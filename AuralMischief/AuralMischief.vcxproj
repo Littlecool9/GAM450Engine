@@ -199,6 +199,14 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\ButtonTest.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\BulletBehavior.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SentryEnemyAttackAction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Script\HazardCollider.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.h" />
@@ -236,6 +244,14 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\ButtonTest.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\BulletBehavior.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SentryEnemyAttackAction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Script\HazardCollider.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\FlyingEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyMoveToPlayerAction.cpp" />

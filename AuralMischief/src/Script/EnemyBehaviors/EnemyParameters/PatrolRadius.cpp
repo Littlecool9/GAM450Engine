@@ -1,6 +1,7 @@
 /**
  * @file PatrolRadius.cpp
- * @author cyclo
+ * @author Dong Ta
+ * 
  * @brief // TODO: Add a brief description of this class
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

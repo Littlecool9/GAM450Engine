@@ -1,6 +1,6 @@
 /**
  * @file EnemyAttackAction.h
- * @author cyclo
+ * @author Dong ta
  * @brief // TODO: Add a brief description of this header
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -36,7 +36,6 @@ namespace mts
 
 
         uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
-        float AttackDuration = 4.f;
     };
 
 }  // namespace mts

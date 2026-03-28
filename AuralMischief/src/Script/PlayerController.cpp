@@ -493,6 +493,10 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
 
 void PlayerController::OnCollisionExit2D(const mts::Collision2D& collision)
 {
+    if (!collision.other->GetGameObject())
+    {
+        return;
+    }
     if (collision.other->GetGameObject()->GetLayer() == mts::GameObject::Ground)
     {
         if (abs(glm::dot(glm::vec2(0.0f, -1.0f), collision.normal) + 1.0f) < 0.1f)

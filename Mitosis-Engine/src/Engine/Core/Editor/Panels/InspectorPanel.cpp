@@ -88,10 +88,17 @@ namespace mts
             return;
         }
 
-        // Optional: always show basic info
+        // Active checkbox + name on the same row
+        bool isActive = go->IsActive();
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2.f, 2.f));
+        if (ImGui::Checkbox("##active", &isActive))
+            go->SetActive(isActive);
+        ImGui::PopStyleVar();
+        ImGui::SameLine();
         char nameBuf[256];
         snprintf(nameBuf, sizeof(nameBuf), "%s", go->GetName().c_str());
-        if (ImGui::InputText("Name", nameBuf, sizeof(nameBuf)))
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+        if (ImGui::InputText("##name", nameBuf, sizeof(nameBuf)))
             go->SetName(nameBuf);
 
         // Layer

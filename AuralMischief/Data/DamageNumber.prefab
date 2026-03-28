@@ -1,0 +1,39 @@
+{
+  "Name": "DamageNumber",
+  "Tags": [],
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [0.0, 0.0, 0.0],
+        "Scale": [1.0, 1.0, 1.0],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "SpriteRenderer",
+      "Data": {
+        "TintColor": [1.0, 1.0, 1.0],
+        "Alpha": 1.0,
+        "FrameIndex": 0,
+        "ParallaxFactorX": 1.0,
+        "RenderLayer": 2,
+        "TextureResource": "Data/Resources/WhiteFont.tex",
+        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
+        "Class": "DamageNumberScript",
+        "Fields": {
+          "floatSpeed": 1.5,
+          "duration": 0.8,
+          "floatDirX": 0.0,
+          "floatDirY": 1.0
+        }
+      }
+    }
+  ]
+}

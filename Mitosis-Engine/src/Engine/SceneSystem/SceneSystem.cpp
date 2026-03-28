@@ -94,6 +94,7 @@ namespace mts
     void SceneSystem::SceneCleanUp()
     {
         MTS_ASSERT(currentScene != nullptr);
+        currentScene->FlushPendingGameObjects();
         currentScene->DestroyGameObjects();
     }
 
@@ -116,9 +117,8 @@ namespace mts
 
             // add dont destroy objects to the new scene
             for (auto obj : dontDestroyObjects)
-            {
                 currentScene->AddGameObject(obj);
-            }
+            currentScene->FlushPendingGameObjects();
         }
     }
 

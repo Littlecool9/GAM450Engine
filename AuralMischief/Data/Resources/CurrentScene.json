@@ -191,6 +191,18 @@
                             "camZoomSpeed": 0.5
                         }
                     }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "DamageNumberSpawner",
+                        "Fields": {
+                            "poolSize": 8,
+                            "spawnOffsetY": 0.5,
+                            "digitSpacing": 0.5,
+                            "digitScale": 0.800000011920929
+                        }
+                    }
                 }
             ]
         },

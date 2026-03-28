@@ -12,6 +12,8 @@
 #include "Script/EnemyBehaviors/EnemyController.h"
 #include "Script/AudioController.h"
 #include "Script/ButtonTest.h"
+#include "Script/DamageNumberScript.h"
+#include "Script/DamageNumberSpawner.h"
 #include "Script/EnemyBehaviors/BulletBehavior.h"
 
 mts::Application* mts::CreateApplication()
@@ -61,6 +63,10 @@ void AuralMischief::RegisterScripts()
                                        []() { return new AudioController(); });
     mts::ScriptFactory::RegisterScript(ButtonTest::StaticClassName(),
                                        []() { return new ButtonTest(); });
+    mts::ScriptFactory::RegisterScript(DamageNumberScript::StaticClassName(),
+                                       []() { return new DamageNumberScript(); });
+    mts::ScriptFactory::RegisterScript(DamageNumberSpawner::StaticClassName(),
+                                       []() { return new DamageNumberSpawner(); });
     mts::ScriptFactory::RegisterScript(mts::BulletBehavior::StaticClassName(),
                                        []() { return new mts::BulletBehavior(); });
 }

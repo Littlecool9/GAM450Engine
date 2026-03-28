@@ -18,6 +18,7 @@
 class AttackHitboxScript;
 class CameraController;
 class CheckPoint;
+class DamageNumberSpawner;
 
 class PlayerController : public mts::ScriptBase
 {
@@ -59,6 +60,7 @@ class PlayerController : public mts::ScriptBase
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();
     void TriggerCameraVFX(bool isAction, bool inWindow);
+    void OnEnemyHit(float damage, glm::vec3 pos);
 
     SCRIPT_CLASS(PlayerController)
 
@@ -129,6 +131,8 @@ class PlayerController : public mts::ScriptBase
     float iFramesTimer = -1.0f;
     float enemyKnockback = 0.7f;
     Direction facingDir = RIGHT;
+
+    DamageNumberSpawner* mSpawner = nullptr;
 
     // CheckPoint Properties
     CheckPoint* activatedCheckPoint = nullptr;

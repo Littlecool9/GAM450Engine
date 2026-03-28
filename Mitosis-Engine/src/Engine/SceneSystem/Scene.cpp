@@ -18,6 +18,11 @@ namespace mts
 {
     Scene::~Scene()
     {
+        for (auto g : mPendingGameObjects)
+        {
+            if (!g->GetDontDestroy())
+                delete g;
+        }
         for (auto g : mGameObjects)
         {
             // Skip dontDestroy objects
@@ -71,14 +76,10 @@ namespace mts
 
     void Scene::Render()
     {
-        // for (auto g : mGameObjects)
-        //{
-        //     g->Render();
-        // }
-        for (int i = 0; i < mGameObjects.size(); ++i)
+        for (auto g : mGameObjects)
         {
-            if (mGameObjects[i]->IsActive())
-                mGameObjects[i]->Render();
+            if (g->IsActive())
+                g->Render();
         }
     }
 
@@ -131,8 +132,21 @@ namespace mts
         return nullptr;
     }
 
+    void Scene::FlushPendingGameObjects()
+    {
+        if (mPendingGameObjects.empty())
+            return;
+        mGameObjects.insert(mGameObjects.end(),
+                            mPendingGameObjects.begin(),
+                            mPendingGameObjects.end());
+        mPendingGameObjects.clear();
+    }
+
     void Scene::ClearGameObjects()
     {
+        for (auto* go : mPendingGameObjects)
+            delete go;
+        mPendingGameObjects.clear();
         for (auto* go : mGameObjects)
             delete go;
         mGameObjects.clear();
@@ -140,6 +154,11 @@ namespace mts
 
     void Scene::StashGameObjects()
     {
+        // Discard any pending play GOs — they were created during play and must not
+        // be stashed alongside edit GOs.
+        for (auto* go : mPendingGameObjects)
+            delete go;
+        mPendingGameObjects.clear();
         mEditGameObjects = std::move(mGameObjects);
         mGameObjects.clear();
     }
@@ -177,7 +196,7 @@ namespace mts
         if (!gameObjects.IsArray())
             return;
         size_t s = gameObjects.Size();
-        mGameObjects.reserve(s * 2);
+        mGameObjects.reserve(s);
         for (size_t i = 0; i < s; ++i)
         {
             auto gv = gameObjects[i];
@@ -185,6 +204,7 @@ namespace mts
             auto go = GameObjectFactory::CreateEmptyGameObject(this);
             go->Deserialize(gv);
         }
+        FlushPendingGameObjects();
     }
 
     void Scene::Serialize(JsonDocument& doc) const

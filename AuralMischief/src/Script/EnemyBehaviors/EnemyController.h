@@ -10,6 +10,8 @@
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"
 
+class PlayerController;
+
 namespace mts
 {
     enum class EnemyType
@@ -48,6 +50,9 @@ namespace mts
         int maxhp = 2;
         int curhp = 0;
         bool alerted = false;
+        bool mIsInvincible = false;
+
+        PlayerController* mPlayerController = nullptr;
     };
 
 }

@@ -45,16 +45,17 @@ namespace mts
         // todo: ActionList deserialization....
         curhp = maxhp;
 
-        GetGameObject()->GetComponent<mts::EnemyAgent>()
-            ->SetPlayerReference(SceneSystem::GetCurrentScene()
-            ->FindGameObjectByName("Player"));
+        auto* playerGO = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+        GetGameObject()->GetComponent<mts::EnemyAgent>()->SetPlayerReference(playerGO);
+        if (playerGO)
+            mPlayerController = playerGO->GetScript<PlayerController>();
         SetEnemyPlans(type);
         origin = GetGameObject()->GetComponent<Transform>()->GetPosition();
     }
 
     void EnemyController::OnUpdate(float dt)
     {
-        if (curhp <= 0)
+        if (!mIsInvincible && curhp <= 0)
         {
             GetGameObject()->Destroy();
         }
@@ -152,6 +153,8 @@ namespace mts
             static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))->SetCooldownTime(mAttackCooldown);
         }
         p.emplace(mts::HashAction("PlayerHealthRatio"), new mts::PlayerHealthRatioParam());
+        if (fields.Has("IsInvincible"))
+            mIsInvincible = fields["IsInvincible"].GetBool(false);
     }
     void EnemyController::SerializeFields(mts::JsonDocument& out) const
     {
@@ -160,6 +163,7 @@ namespace mts
         out.WriteFloat("PatrolRadius", mPatrolRadius);
         out.WriteFloat("AggroRange", mAggroRange);
         out.WriteFloat("AttackCooldown", mAttackCooldown);
+        out.WriteBool("IsInvincible", mIsInvincible);
     }
     void EnemyController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     {
@@ -179,13 +183,23 @@ namespace mts
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAttackCooldown},
                           .step = 0.1f});
+        fields.push_back({.name = "IsInvincible",
+                          .type = mts::ScriptField::Type::Bool,
+                          .ptr = {.b = &mIsInvincible}});
     }
     void EnemyController::OnCollisionEnter2D(const mts::Collision2D& collision)
     {
-        auto p = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
-        if (p)
+        auto* hitbox = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
+        if (hitbox)
         {
-            curhp -= static_cast<int>(p->GetDamage());
+            float damage = hitbox->GetDamage();
+            if (!mIsInvincible)
+                curhp -= static_cast<int>(damage);
+            if (mPlayerController)
+            {
+                glm::vec3 pos = GetGameObject()->GetComponent<Transform>()->GetPosition();
+                mPlayerController->OnEnemyHit(damage, pos);
+            }
         }
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {

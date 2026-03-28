@@ -166,6 +166,17 @@
     {
       "Type": "NativeScript",
       "Data": {
+        "Class": "DamageNumberSpawner",
+        "Fields": {
+          "poolSize": 8,
+          "spawnOffsetY": 0.5,
+          "digitSpacing": 0.3
+        }
+      }
+    },
+    {
+      "Type": "NativeScript",
+      "Data": {
         "Class": "PlayerController",
         "Fields": {
           "moveSpeed": 5.0,

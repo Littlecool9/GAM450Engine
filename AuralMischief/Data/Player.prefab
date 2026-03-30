@@ -187,7 +187,7 @@
           "deceleration": 15.0,
           "turnSpeed": 100.0,
           "dashDeceleration": 100.0,
-          "dashCooldown": 0.5,
+          "dashCooldown": 0.25,
           "dashMax": 1,
           "attackCooldown": 0.5,
           "attackComboMaxDelay": 3.0,

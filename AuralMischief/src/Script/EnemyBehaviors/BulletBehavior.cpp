@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "BulletBehavior.h"
 
-#include "../PlayerController.h"
+#include "../Player/PlayerController.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Physics2D/Collision2D.h"

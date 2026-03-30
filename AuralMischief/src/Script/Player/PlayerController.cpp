@@ -548,9 +548,6 @@ void PlayerController::Jump(bool inWindow)
     // multiply jump speed if hit on beat
     float adjustedJumpSpeed = inWindow ? mJumpSpeed * mJumpBeatBoost : mJumpSpeed;
     currVelocity.y = adjustedJumpSpeed;
-    // Reset dash cooldown on jump
-    dashTimer = -1.0f;
-    dashCount = mDashMax;
 }
 
 void PlayerController::Attack(bool inWindow, bool isChargeAttack)

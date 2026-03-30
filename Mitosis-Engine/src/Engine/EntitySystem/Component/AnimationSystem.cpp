@@ -38,8 +38,6 @@ namespace mts
             sPtr->SetFrame(temp->frameIndex);
         }
 
-        sPtr->SetTexture(temp->mTexture);
-
         sPtr->SetShader(temp->mShader);
         if (animPtr == nullptr)
         {
@@ -96,12 +94,6 @@ namespace mts
             JsonValue s = states[i];
 
             Info st{};
-            if (s.Has("TextureResource"))
-            {
-                const char* texPath = s["TextureResource"].GetString("");
-                st.textPath = texPath;
-            }
-            st.mTexture = ResourceManager::GetTexture(st.textPath);
 
             if (s.Has("MeshResource"))
             {
@@ -178,11 +170,9 @@ namespace mts
 
             doc.WriteInt("State", static_cast<int>(state));
 
-            std::string texPath = st.textPath;
             std::string meshPath = st.meshPath;
             std::string shaderPath = st.shaderPath;
 
-            doc.WriteString("TextureResource", texPath.c_str());
             doc.WriteString("MeshResource", meshPath.c_str());
             doc.WriteString("ShaderResource", shaderPath.c_str());
 

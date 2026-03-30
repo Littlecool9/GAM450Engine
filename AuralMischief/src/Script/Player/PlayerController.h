@@ -20,6 +20,7 @@ class AttackHitboxScript;
 class CameraController;
 class CheckPoint;
 class DamageNumberSpawner;
+class mts::Texture;
 
 class PlayerController : public mts::ScriptBase
 {
@@ -86,6 +87,9 @@ class PlayerController : public mts::ScriptBase
     mts::Transform* attackHitboxTransform = nullptr;
     Direction attackHitboxDirection = RIGHT;
 
+    mts::Texture* defaultTexture = nullptr;
+    mts::Texture* altTexture = nullptr;
+
     PlayerParticleController particleController;
 
     // Adjustable parameters
@@ -119,6 +123,9 @@ class PlayerController : public mts::ScriptBase
     bool mDashRhythmLock = false;
     bool mJumpRhythmLock = false;
     bool mAttackRhythmLock = false;
+
+    const char* mDefaultTextureResource = "";
+    const char* mAltTextureResource = "";
 
     // State variables
     bool isGrounded = false;

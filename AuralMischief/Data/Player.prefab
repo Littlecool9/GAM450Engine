@@ -10,13 +10,13 @@
       "Type": "Transform",
       "Data": {
         "Position": [
-          2.0,
-          8.0,
+          4.0,
+          9.35,
           0.0
         ],
         "Scale": [
-          5.0,
-          5.0,
+          6.0,
+          6.0,
           1.0
         ],
         "Rotation": 0.0
@@ -25,8 +25,8 @@
     {
       "Type": "BoxCollider2D",
       "Data": {
-        "Width": 0.10000000149011612,
-        "Height": 0.20000000298023224,
+        "Width": 0.15000000596046448,
+        "Height": 0.20999999344348907,
         "Offset": [
           0.0,
           -0.05000000074505806
@@ -46,7 +46,7 @@
         "AngularVelocity": 0.0,
         "LinearDamping": 0.0,
         "AngularDamping": 0.0,
-        "GravityScale": 3.0,
+        "GravityScale": 3.8,
         "BodyType": 1
       }
     },
@@ -84,7 +84,6 @@
         "States": [
           {
             "State": 0,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
@@ -97,7 +96,6 @@
           },
           {
             "State": 1,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
@@ -110,7 +108,6 @@
           },
           {
             "State": 2,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
@@ -123,7 +120,6 @@
           },
           {
             "State": 3,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
@@ -136,11 +132,10 @@
           },
           {
             "State": 4,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
-            "FrameIndex": 43,
+            "FrameIndex": 41,
             "FrameCount": 5,
             "FrameDelay": 0.0,
             "FrameDuration": 0.06,
@@ -149,12 +144,11 @@
           },
           {
             "State": 5,
-            "TextureResource": "Data/Resources/PlayerTexture.tex",
             "MeshResource": "Data/Resources/10x9MeshResource.mesh",
             "ShaderResource": "",
             "HasAnimation": 1,
-            "FrameIndex": 48,
-            "FrameCount": 7,
+            "FrameIndex": 47,
+            "FrameCount": 14,
             "FrameDelay": 0.0,
             "FrameDuration": 0.06,
             "IsRunning": 0,
@@ -190,16 +184,19 @@
           "dashCooldown": 0.25,
           "dashMax": 1,
           "attackCooldown": 0.5,
-          "attackComboMaxDelay": 3.0,
           "attackDelay": 0.0,
-          "attackLightDamage": 1.0,
-          "attackHeavyDamage": 2.0,
-          "attackHitboxOffsetX": 3.0,
+          "offBeatLightDamage": 1.0,
+          "onBeatLightDamage": 3.0,
+          "offBeatHeavyDamage": 2.0,
+          "onBeatHeavyDamage": 8.0,
+          "attackHitboxOffsetX": 0.5,
           "dashBeatBoost": 1.0,
           "jumpBeatBoost": 1.0,
           "dashRhythmLock": false,
           "jumpRhythmLock": false,
-          "camZoomSpeed": 0.5
+          "camZoomSpeed": 0.5,
+          "defaultTextureResource": "Data/Resources/PlayerTexture.tex",
+          "altTextureResource": "Data/Resources/PlayerTextureAlt.tex"
         }
       }
     }

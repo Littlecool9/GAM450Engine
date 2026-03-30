@@ -18,6 +18,7 @@
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/Resource/Texture.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
 #include "Engine/Conductor/ConductorSystem.h"
@@ -28,6 +29,7 @@
 #include "../CameraController.h"
 #include "../AttackHitboxScript.h"
 #include "../DamageNumberSpawner.h"
+#include "Engine/Resource/ResourceManager.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -130,13 +132,13 @@ void PlayerController::OnUpdate(float dt)
 
     // Attack check
 
-    if (attackPressed && !isAttacking)
+    if (attackPressed)
     {
         attackHeldLength = 0.0f;
     }
     else if (attackReleased)
     {
-        if (attackHeldLength < 0.35f && !isAttacking)
+        if (attackHeldLength < 0.35f)
         {
             if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
             {
@@ -157,7 +159,7 @@ void PlayerController::OnUpdate(float dt)
         isCharging = true;
     }
 
-    if (attackHeldLength > -1.0f)
+    if (attackHeldLength > -1.0f && attackTimer < 0.0f)
         attackHeldLength += dt;
     if (attackTimer >= 0.0f)
         attackTimer -= dt;
@@ -188,7 +190,7 @@ void PlayerController::OnUpdate(float dt)
     }
 
     // Set animation states based on movement
-    if (attackTimer < 0.0f)
+    if (attackTimer < 0.0f || anim->IsDone())
     {
         isAttacking = false;
     }
@@ -229,7 +231,9 @@ void PlayerController::OnUpdate(float dt)
     chargeFlashTimer -= dt;
     if (chargeFlashTimer < 0.0f && chargeFlashTimer > -1.0f)
     {
-        sprite->SetTintColor(glm::vec3(1.0f));
+        //sprite->SetTintColor(glm::vec3(1.0f));
+        if (defaultTexture && sprite)
+            sprite->SetTexture(defaultTexture);
         chargeFlashTimer = -1.0f;
     }
 }
@@ -351,6 +355,17 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         mHitWindowLateEdge = fields["hitWindowLateEdge"].GetFloat(mHitWindowLateEdge);
     if (fields.Has("camZoomSpeed"))
         mCamZoomSpeed = fields["camZoomSpeed"].GetFloat(mCamZoomSpeed);
+    if (fields.Has("defaultTextureResource"))
+    {
+        mDefaultTextureResource =
+            fields["defaultTextureResource"].GetString(mDefaultTextureResource);
+        defaultTexture = mts::ResourceManager::GetTexture(mDefaultTextureResource);
+    }
+    if (fields.Has("altTextureResource"))
+    {
+        mAltTextureResource = fields["altTextureResource"].GetString(mAltTextureResource);
+        altTexture = mts::ResourceManager::GetTexture(mAltTextureResource);
+    }
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -377,6 +392,8 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteBool("dashRhythmLock", mDashRhythmLock);
     out.WriteBool("jumpRhythmLock", mJumpRhythmLock);
     out.WriteFloat("camZoomSpeed", mCamZoomSpeed);
+    out.WriteString("defaultTextureResource", mDefaultTextureResource);
+    out.WriteString("altTextureResource", mAltTextureResource);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -548,6 +565,17 @@ void PlayerController::Jump(bool inWindow)
     // multiply jump speed if hit on beat
     float adjustedJumpSpeed = inWindow ? mJumpSpeed * mJumpBeatBoost : mJumpSpeed;
     currVelocity.y = adjustedJumpSpeed;
+    
+    // If in dash state, increase horizontal velocity and decrease jump height
+    if (dashTimer > 0.0f)
+    {
+        currVelocity.y *= 0.8f;
+        if (currentDashDir.x < 0.0f)
+            currVelocity.x -= mDashSpeed*0.2f;
+        else
+            currVelocity.x += mDashSpeed*0.2f;
+    }
+    dashCount = mDashMax;
 }
 
 void PlayerController::Attack(bool inWindow, bool isChargeAttack)
@@ -698,8 +726,10 @@ void PlayerController::OnBeat(mts::BeatInfo info)
     {
         numBeatsCharged++;
         chargeFlashTimer = 0.15f;
-        if (sprite)
-            sprite->SetTintColor(glm::vec3(1.5f));
+//        if (sprite)
+//            sprite->SetTintColor(glm::vec3(1.5f));
+        if (altTexture && sprite)
+            sprite->SetTexture(altTexture);
     }
     timeSinceLastBeat = 0.0f;
 }

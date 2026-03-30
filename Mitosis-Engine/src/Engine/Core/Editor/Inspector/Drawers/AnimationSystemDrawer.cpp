@@ -91,23 +91,6 @@ namespace mts
                     {
                         auto& info = it->second;
 
-                        // Texture
-                        char texBuf[256];
-                        snprintf(texBuf, sizeof(texBuf), "%s", info.textPath.c_str());
-                        ImGui::InputText("Texture",
-                                         texBuf,
-                                         sizeof(texBuf),
-                                         ImGuiInputTextFlags_ReadOnly);
-                        if (ImGui::BeginDragDropTarget())
-                        {
-                            if (auto* p = ImGui::AcceptDragDropPayload("ASSET_PATH"))
-                            {
-                                info.textPath = static_cast<const char*>(p->Data);
-                                info.mTexture = ResourceManager::GetTexture(info.textPath.c_str());
-                            }
-                            ImGui::EndDragDropTarget();
-                        }
-
                         // Mesh
                         char meshBuf[256];
                         snprintf(meshBuf, sizeof(meshBuf), "%s", info.meshPath.c_str());

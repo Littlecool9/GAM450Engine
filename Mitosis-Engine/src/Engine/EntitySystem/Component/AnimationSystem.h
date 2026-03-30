@@ -17,7 +17,6 @@ namespace mts
 {
     class Mesh;
     class Shader;
-    class Texture;
     class SpriteRenderer;
     class Animation;
     class AnimationSystem : public Component
@@ -40,7 +39,6 @@ namespace mts
         {
             Mesh* mMesh = nullptr;
             Shader* mShader = nullptr;
-            Texture* mTexture = nullptr;
 
             bool animation = false;
 
@@ -64,7 +62,6 @@ namespace mts
 
             std::string meshPath;
             std::string shaderPath;
-            std::string textPath;
         };
 
         std::unordered_map<States, Info> dictionary;

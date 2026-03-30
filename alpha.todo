@@ -17,10 +17,10 @@ Rahul
 	
 [-] Boss Enemy (lower priority)
 	[-] SFX
-	[-] Spritesheet
+	[x] Spritesheet
 
-[-] Hero Character (higher priority)
-	[-] Spritesheet polish
+[x] Hero Character (higher priority)
+	[x] Spritesheet polish
 	[x] Light attack SFX
 		[x] On-beat attack sound
 		[x] Off-beat attack sound
@@ -31,7 +31,7 @@ Rahul
 [-] On-beat and Off-beat attack overlays
 
 [-] Full BGM development
-[-] Tileset polish
+[-] Tileset arrangement
 [-] Boss BGM
 	[-] Transitional phases, phase 1 -> transitional phase BGM -> Phase 2
 	[-] for transitional phase bgm, refer to discord message
@@ -39,9 +39,9 @@ Rahul
 Sumin
 -----
 [x] Splashscreen (legal - higher priority)
-[-] Damage number spawner (higher)
+[x] Damage number spawner (higher)
 	[x] Damage math
-	[-] Displaying damage on attacks
+	[x] Displaying damage on attacks
 [x] UI system framework
 [-] All systems review (lower priority)
 [-] Unit tests for all modules (lower priority)
@@ -67,18 +67,18 @@ Jackey
 
 Dong
 ----
-[-] Slug behavior polish
-	[-] Patrol mode
-	[-] Alerted mode (whince on seeing hero)
-	[-] Attack mode
+[x] Slug behavior polish
+	[x] Patrol mode
+	[x] Alerted mode (whince on seeing hero)
+	[x] Attack mode
 [-] Drone behavior polish
 	[-] Patrol mode
 	[-] Alerted mode (whince on seeing hero)
 	[-] Attack mode
-[-] Sentry behavior
-	[-] Patrol mode
-	[-] Alerted mode (whince on seeing hero)
-	[-] Attack mode
+[x] Sentry behavior
+	[x] Patrol mode
+	[x] Alerted mode (whince on seeing hero)
+	[x] Attack mode
 [-] Boss behavior
 	[-] TBD
 

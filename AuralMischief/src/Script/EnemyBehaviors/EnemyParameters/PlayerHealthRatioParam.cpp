@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "PlayerHealthRatioParam.h"
 
-#include "../../PlayerController.h"
+#include "../../Player/PlayerController.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 
 namespace mts

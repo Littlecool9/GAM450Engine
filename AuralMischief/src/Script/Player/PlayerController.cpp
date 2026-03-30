@@ -23,11 +23,11 @@
 #include "Engine/Conductor/ConductorSystem.h"
 #include <glm/vec2.hpp>
 
-#include "MovablePlatform.h"
-#include "CheckPoint.h"
-#include "CameraController.h"
-#include "AttackHitboxScript.h"
-#include "DamageNumberSpawner.h"
+#include "../MovablePlatform.h"
+#include "../CheckPoint.h"
+#include "../CameraController.h"
+#include "../AttackHitboxScript.h"
+#include "../DamageNumberSpawner.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -41,6 +41,9 @@ void PlayerController::OnCreate()
     anim = GetGameObject()->GetComponent<mts::AnimationSystem>();
     sprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
     transform = GetGameObject()->GetComponent<mts::Transform>();
+
+    particleController = PlayerParticleController();
+
     defaultGravityScale = rb->GetGravityScale();
 }
 
@@ -127,7 +130,7 @@ void PlayerController::OnUpdate(float dt)
 
     // Attack check
 
-    if (attackPressed)
+    if (attackPressed && !isAttacking)
     {
         attackHeldLength = 0.0f;
     }
@@ -137,20 +140,15 @@ void PlayerController::OnUpdate(float dt)
         {
             if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
             {
-                Attack(inWindow, false, 1.0f);
-                LOG_INFO("Attacked {} beat", inWindow ? "on" : "off");
-            }
-            else
-            {
-                LOG_INFO("Attacked off beat");
+                Attack(inWindow, false);
             }
         }
         else if (!isAttacking)
         {
-            Attack(inWindow, true, 1.0f);
-            LOG_INFO("Charged attack for {} seconds", attackHeldLength);
+            Attack(inWindow, true);
         }
         isCharging = false;
+        numBeatsCharged = 1;
         attackHeldLength = -1.0f;
     }
 
@@ -163,10 +161,9 @@ void PlayerController::OnUpdate(float dt)
         attackHeldLength += dt;
     if (attackTimer >= 0.0f)
         attackTimer -= dt;
-    if (attackComboTimer >= 0.0f)
-        attackComboTimer -= dt;
     if (iFramesTimer >= 0.0f)
         iFramesTimer -= dt;
+    timeSinceLastBeat += dt;
 
     // Spawn attack hitbox after set delay
     if (attackDelayTimer > 0.0f)
@@ -177,6 +174,17 @@ void PlayerController::OnUpdate(float dt)
     {
         queuedAttackSpawn();
         attackDelayTimer = -2.0f;
+    }
+
+    // Update attack hitbox position to follow player
+    if (attackHitboxTransform)
+    {
+        glm::vec2 hitBoxPos = transform->GetPosition();
+        if (attackHitboxDirection == LEFT)
+            hitBoxPos.x -= mAttackHitboxOffsetX;
+        else if (attackHitboxDirection == RIGHT)
+            hitBoxPos.x += mAttackHitboxOffsetX;
+        attackHitboxTransform->SetPosition(hitBoxPos);
     }
 
     // Set animation states based on movement
@@ -315,14 +323,16 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         mDashMax = fields["dashMax"].GetInt(mDashMax);
     if (fields.Has("attackCooldown"))
         mAttackCooldown = fields["attackCooldown"].GetFloat(mAttackCooldown);
-    if (fields.Has("attackComboMaxDelay"))
-        mAttackComboMaxDelay = fields["attackComboMaxDelay"].GetFloat(mAttackComboMaxDelay);
     if (fields.Has("attackDelay"))
         mAttackDelay = fields["attackDelay"].GetFloat(mAttackDelay);
-    if (fields.Has("attackLightDamage"))
-        mAttackLightDamage = fields["attackLightDamage"].GetFloat(mAttackLightDamage);
-    if (fields.Has("attackHeavyDamage"))
-        mAttackHeavyDamage = fields["attackHeavyDamage"].GetFloat(mAttackHeavyDamage);
+    if (fields.Has("offBeatLightDamage"))
+        mOffBeatLightDamage = fields["offBeatLightDamage"].GetFloat(mOffBeatLightDamage);
+    if (fields.Has("onBeatLightDamage"))
+        mOffBeatLightDamage = fields["onBeatLightDamage"].GetFloat(mOnBeatLightDamage);
+    if (fields.Has("offBeatHeavyDamage"))
+        mOffBeatHeavyDamage = fields["offBeatHeavyDamage"].GetFloat(mOffBeatHeavyDamage);
+    if (fields.Has("onBeatHeavyDamage"))
+        mOffBeatHeavyDamage = fields["onBeatHeavyDamage"].GetFloat(mOnBeatHeavyDamage);
     if (fields.Has("attackHitboxOffsetX"))
         mAttackHitboxOffsetX = fields["attackHitboxOffsetX"].GetFloat(mAttackHitboxOffsetX);
     if (fields.Has("dashBeatBoost"))
@@ -356,10 +366,11 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("dashCooldown", mDashCooldown);
     out.WriteInt("dashMax", mDashMax);
     out.WriteFloat("attackCooldown", mAttackCooldown);
-    out.WriteFloat("attackComboMaxDelay", mAttackComboMaxDelay);
     out.WriteFloat("attackDelay", mAttackDelay);
-    out.WriteFloat("attackLightDamage", mAttackLightDamage);
-    out.WriteFloat("attackHeavyDamage", mAttackHeavyDamage);
+    out.WriteFloat("offBeatLightDamage", mOffBeatLightDamage);
+    out.WriteFloat("onBeatLightDamage", mOnBeatLightDamage);
+    out.WriteFloat("offBeatHeavyDamage", mOffBeatHeavyDamage);
+    out.WriteFloat("onBeatHeavyDamage", mOnBeatHeavyDamage);
     out.WriteFloat("attackHitboxOffsetX", mAttackHitboxOffsetX);
     out.WriteFloat("dashBeatBoost", mDashBeatBoost);
     out.WriteFloat("jumpBeatBoost", mJumpBeatBoost);
@@ -414,21 +425,25 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mAttackCooldown},
                       .step = 0.1f});
-    fields.push_back({.name = "attackComboMaxDelay",
-                      .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mAttackComboMaxDelay},
-                      .step = 0.1f});
     fields.push_back({.name = "attackDelay",
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mAttackDelay},
                       .step = 0.1f});
-    fields.push_back({.name = "attackLightDamage",
+    fields.push_back({.name = "offBeatLightDamage",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mAttackLightDamage},
+                      .ptr = {.f = &mOffBeatLightDamage},
                       .step = 0.1f});
-    fields.push_back({.name = "attackHeavyDamage",
+    fields.push_back({.name = "onBeatLightDamage",
                       .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mAttackHeavyDamage},
+                      .ptr = {.f = &mOnBeatLightDamage},
+                      .step = 0.1f});
+    fields.push_back({.name = "offBeatHeavyDamage",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mOffBeatHeavyDamage},
+                      .step = 0.1f});
+    fields.push_back({.name = "onBeatHeavyDamage",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mOnBeatHeavyDamage},
                       .step = 0.1f});
     fields.push_back({.name = "attackHitboxOffsetX",
                       .type = mts::ScriptField::Type::Float,
@@ -538,32 +553,56 @@ void PlayerController::Jump(bool inWindow)
     dashCount = mDashMax;
 }
 
-void PlayerController::Attack(bool inWindow, bool isChargeAttack, float damageMult)
+void PlayerController::Attack(bool inWindow, bool isChargeAttack)
 {
-    // Check if in time range to combo attack
-    // Also can only combo if on beat
     if (isChargeAttack)
     {
-        queuedAttackSpawn = [this, damageMult]()
-        { SpawnAttackHitbox(mAttackHeavyDamage * damageMult); };
-        anim->ChangeState(mts::AnimationSystem::States::Attack1);
-        attackComboTimer = -1.0f;
-        queuedDash = [this]()
+        // On beat charge attack
+        if (inWindow && numBeatsCharged == 4)
         {
-            // TriggerCameraVFX(true, true);
-            Dash(facingDir == LEFT ? glm::vec2(-1.0f, 0.0f) : glm::vec2(1.0f, 0.0f), true, 1.2f);
-        };
+            queuedAttackSpawn = [this]()
+            { SpawnAttackHitbox(mOnBeatHeavyDamage, 3.0f, 2.5f); };
+            LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
+                     numBeatsCharged,
+                     mOnBeatHeavyDamage);
+        }
+        // Off beat charge attack
+        else
+        {
+            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOffBeatHeavyDamage, 3.0f, 2.5f); };
+            LOG_INFO("Heavy attacked {} beat, held for {} beats, dealt {} damage",
+                     inWindow ? "on" : "off",
+                     numBeatsCharged,
+                     mOffBeatHeavyDamage);
+        }
+        anim->ChangeState(mts::AnimationSystem::States::Attack2);
+
+        
+        //queuedDash = [this]()
+        //{
+        //    //TriggerCameraVFX(true, true);
+        //    Dash(facingDir == LEFT ? glm::vec2(-1.0f, 0.0f) : glm::vec2(1.0f, 0.0f), true, 1.2f);
+        //};
     }
     else
     {
-        queuedAttackSpawn = [this]() { SpawnAttackHitbox(mAttackLightDamage); };
+        // On beat light attack
+        if (inWindow)
+        {
+            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOnBeatLightDamage, 3.0f, 1.2f); };
+        }
+        else
+        {
+            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOffBeatLightDamage, 3.0f, 1.2f); };
+        }
+        LOG_INFO("Light attacked {} beat", inWindow ? "on" : "off");
+
         if (attackAnimType)
             anim->ChangeState(mts::AnimationSystem::States::Attack1);
         else
-            anim->ChangeState(mts::AnimationSystem::States::Attack2);
+            //change this if we want to alternate attack animations
+            anim->ChangeState(mts::AnimationSystem::States::Attack1);
         attackAnimType = !attackAnimType;
-
-        attackComboTimer = mAttackComboMaxDelay;
     }
 
     isAttacking = true;
@@ -571,7 +610,7 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack, float damageMu
     attackTimer = mAttackCooldown;
 }
 
-void PlayerController::SpawnAttackHitbox(float damage)
+void PlayerController::SpawnAttackHitbox(float damage, float scaleX, float scaleY)
 {
     if (!attackHitbox)
     {
@@ -581,13 +620,22 @@ void PlayerController::SpawnAttackHitbox(float damage)
     // Create attack hitbox object
     attackHitbox->SetActive(true);
     // Get transform and add or subtract offset based on facing dir
-    mts::Transform* attackHitboxTransform = attackHitbox->GetComponent<mts::Transform>();
+    attackHitboxTransform = attackHitbox->GetComponent<mts::Transform>();
+    if (!attackHitboxTransform)
+        return;
     glm::vec2 hitBoxPos = transform->GetPosition();
     if (facingDir == LEFT)
+    {
         hitBoxPos.x -= mAttackHitboxOffsetX;
+        attackHitboxDirection = LEFT;
+    }
     else if (facingDir == RIGHT)
+    {
         hitBoxPos.x += mAttackHitboxOffsetX;
+        attackHitboxDirection = RIGHT;
+    }
     attackHitboxTransform->SetPosition(hitBoxPos);
+    attackHitboxTransform->SetScale(glm::vec3(scaleX, scaleY, 0.0f));
     // Set damage of hitbox
     attackHitboxScript->SetDamage(damage);
 }
@@ -649,11 +697,14 @@ void PlayerController::TriggerCameraVFX(bool isAction, bool inWindow)
 void PlayerController::OnBeat(mts::BeatInfo info)
 {
     // TriggerCameraVFX(false, true);
-    if (info.isHalfBeat == false && isCharging)
+    if (info.isHalfBeat == false && attackHeldLength > timeSinceLastBeat)
     {
+        numBeatsCharged++;
         chargeFlashTimer = 0.15f;
-        sprite->SetTintColor(glm::vec3(1.5f));
+        if (sprite)
+            sprite->SetTintColor(glm::vec3(1.5f));
     }
+    timeSinceLastBeat = 0.0f;
 }
 
 void PlayerController::OnBar(mts::BeatInfo info)

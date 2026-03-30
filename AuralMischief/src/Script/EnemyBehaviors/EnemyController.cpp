@@ -13,7 +13,7 @@
 
 //#include "BarScaler.h"
 #include "../AttackHitboxScript.h"
-#include "../PlayerController.h"
+#include "../Player/PlayerController.h"
 #include "../../AuralMischiefScene.h"
 #include "EnemyActions/EnemyMoveToPlayerAction.h"
 #include "EnemyActions/EnemyPatrolAction.h"

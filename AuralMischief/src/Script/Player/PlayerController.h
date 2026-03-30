@@ -8,6 +8,7 @@
  */
 
 #pragma once
+#include "PlayerParticleController.h"
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 #include "Engine/Scripting/ScriptBase.h"
@@ -67,8 +68,8 @@ class PlayerController : public mts::ScriptBase
    private:
     void Dash(glm::vec2 inputDir, bool inWindow, float speedScale);
     void Jump(bool inWindow);
-    void Attack(bool inWindow, bool isChargeAttack, float damageMult);
-    void SpawnAttackHitbox(float damage);
+    void Attack(bool inWindow, bool isChargeAttack);
+    void SpawnAttackHitbox(float damage, float scaleX, float scaleY);
 
     glm::vec2 currVelocity{0.0f, 0.0f};
     std::function<void()> queuedDash = nullptr;
@@ -82,6 +83,10 @@ class PlayerController : public mts::ScriptBase
 
     mts::GameObject* attackHitbox = nullptr;
     AttackHitboxScript* attackHitboxScript = nullptr;
+    mts::Transform* attackHitboxTransform = nullptr;
+    Direction attackHitboxDirection = RIGHT;
+
+    PlayerParticleController particleController;
 
     // Adjustable parameters
     float mMoveSpeed = 5.0f;  // Max Speed
@@ -94,19 +99,22 @@ class PlayerController : public mts::ScriptBase
     float mTurnSpeed = 100.0f;         // Acceleration when changing directions
     int mDashMax = 1;                  // Max number of dashes before recharge
     float mDashCooldown = 0.2f;        // Length of dash state
+
+    float mAttackDelay = 0.0f;          // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
     float mAttackCooldown = 0.5f;
-    float mAttackComboMaxDelay = 3.0f;
-    // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
-    float mAttackDelay = 0.0f;
-    float mAttackLightDamage = 1.0f;
-    float mAttackHeavyDamage = 2.0f;
+    float mOffBeatLightDamage = 1.0f;
+    float mOnBeatLightDamage = 3.0f;
+    float mOffBeatHeavyDamage = 2.0f;
+    float mOnBeatHeavyDamage = 8.0f;
     float mAttackHitboxOffsetX = 3.0f;
+
     // beat boosts are multipliers to the strength of actions
     // these are applied if the player hits the action on beat
     float mDashBeatBoost = 1.0f;
     float mJumpBeatBoost = 1.0f;
     float mHitWindowEarlyEdge = 0.1f;
     float mHitWindowLateEdge = 0.1f;
+
     // rhythm lock means the player can only jump/dash if hitting on beat
     bool mDashRhythmLock = false;
     bool mJumpRhythmLock = false;
@@ -118,18 +126,19 @@ class PlayerController : public mts::ScriptBase
     float dashTimer = -1.0f;
     glm::vec2 currentDashDir = {0.0f, 0.0f};
     float attackTimer = -1.0f;
-    float attackComboTimer = -1.0f;
     float attackDelayTimer = -2.0f;
     float attackHeldLength = -1.0f;
     float defaultGravityScale = 1.0f;
     float chargeFlashTimer = -1.0f;
     bool isAttacking = false;
     bool isCharging = false;
+    int numBeatsCharged = 1;
     bool attackAnimType = true;  // keeps track of if previous attack animation was 1st or 2nd (used
                                  // to alternate animations)
     float iFrames = 0.8f;
     float iFramesTimer = -1.0f;
     float enemyKnockback = 0.7f;
+    float timeSinceLastBeat = 0.0f;
     Direction facingDir = RIGHT;
 
     DamageNumberSpawner* mSpawner = nullptr;

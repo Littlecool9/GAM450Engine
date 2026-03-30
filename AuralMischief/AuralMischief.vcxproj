@@ -191,6 +191,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Script\Player\PlayerParticleController.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\AuralMischief.h" />
     <ClInclude Include="src\AuralMischiefScene.h" />
@@ -232,10 +233,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </ClInclude>
     <ClInclude Include="src\Script\MovablePlatform.h" />
     <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
-    <ClInclude Include="src\Script\PlayerController.h" />
+    <ClInclude Include="src\Script\Player\PlayerController.h" />
     <ClInclude Include="src\Script\RhythmSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Script\Player\PlayerParticleController.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -279,7 +281,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </ClCompile>
     <ClCompile Include="src\Script\MovablePlatform.cpp" />
     <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
-    <ClCompile Include="src\Script\PlayerController.cpp" />
+    <ClCompile Include="src\Script\Player\PlayerController.cpp" />
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
   </ItemGroup>
   <ItemGroup>

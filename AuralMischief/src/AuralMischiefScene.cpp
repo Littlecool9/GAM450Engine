@@ -9,7 +9,7 @@
 #include "Engine/Audio/AudioManager.h"
 #include "Script/CameraController.h"
 #include "Script/RhythmSystem.h"
-#include "Script/PlayerController.h"
+#include "Script/Player/PlayerController.h"
 
 static const mts::MusicTrack kMausoleumMash = {"Playable - BGM",
                                                "event:/Playable - BGM",

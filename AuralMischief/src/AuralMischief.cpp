@@ -6,7 +6,7 @@
 #include "Script/CameraController.h"
 #include "Script/CheckPoint.h"
 #include "Script/MovablePlatform.h"
-#include "Script/PlayerController.h"
+#include "Script/Player/PlayerController.h"
 #include "Script/HazardCollider.h"
 #include "Script/PlatformPuzzleScript.h"
 #include "Script/EnemyBehaviors/EnemyController.h"

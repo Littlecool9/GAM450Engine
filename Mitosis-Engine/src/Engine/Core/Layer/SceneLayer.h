@@ -13,12 +13,10 @@
 
 namespace mts
 {
-    class Scene;
-
     class SceneLayer : public Layer
     {
        public:
-        explicit SceneLayer(Scene* initialScene, EditorContext& ctx);
+        explicit SceneLayer(const std::string& scenePath, const std::string& registryPath, EditorContext& ctx);
         void OnAttach() override;
         void OnDetach() override;
 
@@ -35,7 +33,8 @@ namespace mts
         void OnExitPlayMode() override;
 
        private:
-        Scene* mInitialScene = nullptr;
+        std::string mInitialScenePath;
+        std::string mRegistryPath;
         EditorContext& mCtx;
     };
 

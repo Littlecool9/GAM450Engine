@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include "AuralMischiefScene.h"
 
 class AuralMischief : public mts::Application
 {
@@ -9,10 +8,13 @@ class AuralMischief : public mts::Application
     ~AuralMischief();
 
    private:
-    mts::Scene* GetInitialScene() override;
+    std::string& GetInitialScene() override;
+    std::string& GetSceneRegistry() override;
     void RegisterScripts() override;
     std::vector<mts::SplashScreenConfig> GetSplashScreens() override;
 
    private:
-    AuralMischiefScene* m_scene;
+    std::string mInitialScene = "Data/Scenes/CurrentScene.scene";
+    std::string mSceneRegistry = "Data/Properties/SceneRegistry.json";
+    std::string mSplashScreenConfigPath = "Data/Splashscreen.json";
 };

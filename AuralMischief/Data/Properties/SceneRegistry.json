@@ -1,0 +1,6 @@
+{
+    "scenes": [
+        "Data/Scenes/CurrentScene.scene",
+        "Data/Scenes/TestScene.scene"
+    ]
+}

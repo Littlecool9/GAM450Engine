@@ -1,0 +1,14 @@
+{
+    "UUID": "07f57d81-ddb2-45dc-b978-300d3959a774",
+    "Name": "SceneSwitcherTest",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "SceneSwitcherScript"
+            }
+        }
+    ]
+}

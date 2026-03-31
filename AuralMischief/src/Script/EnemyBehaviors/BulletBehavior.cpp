@@ -20,10 +20,11 @@
 
 namespace mts
 {
-    void BulletBehavior::OnCreate()
+    void BulletBehavior::Start()
     {
-       playerTransform = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player")->GetComponent<Transform>(); 
-       
+        auto* playerGO = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+        if (playerGO)
+            playerTransform = playerGO->GetComponent<Transform>();
     }
 
     void BulletBehavior::OnUpdate(float dt)

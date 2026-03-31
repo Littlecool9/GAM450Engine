@@ -10,6 +10,7 @@
 #pragma once
 #include "Engine/Core/Layer.h"
 #include "Engine/Core/Editor/EditorContext.h"
+#include "Engine/Delegate/Delegate.h"
 
 namespace mts
 {
@@ -17,12 +18,14 @@ namespace mts
     {
        public:
         explicit PhysicsLayer(EditorContext& ctx);
+        void OnAttach() override;
+        void OnDetach() override;
         void OnFixedUpdate(float fixedDt) override;
-
         void OnExitPlayMode() override;
 
        private:
         EditorContext& mCtx;
+        Delegate<>::Id mSceneChangeId = 0;
     };
 
 }  // namespace mts

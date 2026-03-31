@@ -1,0 +1,14 @@
+{
+    "UUID": "642274a4-4a94-40b8-bba4-ad074e4af10d",
+    "Name": "RhythmSystem",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "RhythmSystemScript"
+            }
+        }
+    ]
+}

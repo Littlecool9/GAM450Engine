@@ -20,6 +20,19 @@ namespace mts
     {
     }
 
+    void PhysicsLayer::OnAttach()
+    {
+        mSceneChangeId = SceneSystem::onChangeSceneDelegate.Subscribe(
+            []() { physics::PhysicsSystem2D::Reset(); });
+        Layer::OnAttach();
+    }
+
+    void PhysicsLayer::OnDetach()
+    {
+        SceneSystem::onChangeSceneDelegate.Unsubscribe(mSceneChangeId);
+        Layer::OnDetach();
+    }
+
     void PhysicsLayer::OnFixedUpdate(float fixedDt)
     {
         if (mCtx.playState == PlayState::Play)

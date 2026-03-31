@@ -18,12 +18,15 @@ BeatPulseScript::~BeatPulseScript()
         mts::ConductorSystem::Get().onBeat.Unsubscribe(mBeatSubId);
 }
 
-void BeatPulseScript::OnCreate()
+void BeatPulseScript::Init()
 {
     mTransform = GetGameObject()->GetComponent<mts::UITransform>();
     if (mTransform)
         mBaseScale = mTransform->GetScale();
+}
 
+void BeatPulseScript::Awake()
+{
     mBeatSubId =
         mts::ConductorSystem::Get().onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
 }

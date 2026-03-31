@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "AttackHitboxScript.h"
 
-void AttackHitboxScript::OnCreate()
+void AttackHitboxScript::Init()
 {
     lifeTimer = mLifetime;
 }

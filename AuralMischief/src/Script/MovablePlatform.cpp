@@ -16,7 +16,7 @@
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 
-void MovablePlatform::OnCreate()
+void MovablePlatform::Init()
 {
     InitPlatform();
 }

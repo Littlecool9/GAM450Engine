@@ -12,7 +12,8 @@
 class BeatPulseScript : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
+    void Init() override;
+    void Awake() override;
     void OnUpdate(float dt) override;
     void OnDisable() override;
     ~BeatPulseScript();

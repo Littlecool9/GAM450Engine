@@ -23,10 +23,13 @@ namespace mts
         ~NativeScriptComponent() override;
 
         void Init() override;
+        void Awake();  // play mode only, broadcast before Start
+        void Start();  // play mode only, called by GameObject on first activation
         void Update(float dt) override;
         void LateUpdate(float dt) override;
         void FixedUpdate(float dt) override;
         void DebugRender() override;
+        void OnDestroy();  // only called inside play mode
 
         Component* Clone(GameObject* newOwner) const override;
         void Deserialize(JsonValue const& jsonObj) override;
@@ -48,7 +51,6 @@ namespace mts
         void EnsureCreated();
 
        private:
-
         std::string m_className;
 
         // Own the fields as a string so it survives past scene document lifetime

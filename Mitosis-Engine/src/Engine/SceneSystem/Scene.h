@@ -16,22 +16,23 @@ namespace mts
 {
     class GameObject;
     class UUID;
-    class Scene : public Deserializable
+    class Scene final : public Deserializable
     {
         // Jackey TODO: multiple layers support
        public:
         Scene() = default;
-        virtual ~Scene();
+        ~Scene();
 
         void Init();
+        void Awake();     // play mode only, broadcast before Start
+        void OnEnable();  // play mode only, fires for all active GOs after Awake
+        void Start();     // play mode only, calls Start on all active GOs
+        void StartPlay(); // convenience: Init → Awake → OnEnable → Start
         void Update(float dt);
         void LateUpdate(float dt);
         void FixedUpdate(float dt);
         void Render();
         void DebugRender();
-
-        void EnterPlayMode();
-        void ExitPlayMode();
 
         std::vector<GameObject*>& GetGameObjects() { return mGameObjects; }
 
@@ -42,8 +43,7 @@ namespace mts
         GameObject* FindGameObjectByUUID(const UUID& uuid);
         GameObject* FindGameObjectByName(const std::string& name);
 
-        void AddGameObject(GameObject* g) { mPendingGameObjects.push_back(g); }
-        void FlushPendingGameObjects();
+        void AddGameObject(GameObject* g);
 
         void DestroyGameObjects();
         void ClearGameObjects();
@@ -54,19 +54,9 @@ namespace mts
         void Deserialize(JsonValue const& jsonObj) override;
         void Serialize(JsonDocument& doc) const override;
 
-       protected:
-        virtual void OnInit() = 0;
-        virtual void OnUpdate() {}
-
-        virtual void OnEnterPlayMode() {}
-        virtual void OnExitPlayMode() {}
-
-       protected:
+       private:
         std::vector<GameObject*> mGameObjects;
         std::string mFilePath;
-
-       private:
-        std::vector<GameObject*> mPendingGameObjects;
         std::vector<GameObject*> mEditGameObjects;
     };
 

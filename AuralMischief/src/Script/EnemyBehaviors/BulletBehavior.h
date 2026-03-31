@@ -15,7 +15,7 @@ namespace mts
     class BulletBehavior: public ScriptBase
     {
     public:
-        void OnCreate() override;
+        void Start() override;
         void OnUpdate(float dt) override;
         void DeserializeFields(JsonValue const& fields) override;
         void SerializeFields(JsonDocument& out) const override;

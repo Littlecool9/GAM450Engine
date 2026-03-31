@@ -13,6 +13,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 #include "Engine/Scripting/ScriptBase.h"
 #include "Engine/Conductor/ConductorSystem.h"
+#include "Engine/UUID/UUID.h"
 
 #include <glm/common.hpp>
 #include <vector>
@@ -39,7 +40,10 @@ class PlayerController : public mts::ScriptBase
     };
 
    public:
-    void OnCreate() override;
+    void Init() override;
+    void Awake() override;
+    void Start() override;
+    void OnDisable() override;
     void OnUpdate(float dt) override;
     void OnFixedUpdate(float dt) override;
 
@@ -58,12 +62,11 @@ class PlayerController : public mts::ScriptBase
                    : val_from + glm::sign(val_to - val_from) * delta;
     }
 
-    //void Test();
-    void Init(mts::ConductorSystem& system, CameraController* cam);
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();
     void TriggerCameraVFX(bool isAction, bool inWindow);
     void TakeDamage(int damage);
+    void OnEnemyHit(float damage, glm::vec3 pos);
 
     SCRIPT_CLASS(PlayerController)
 
@@ -156,6 +159,8 @@ class PlayerController : public mts::ScriptBase
     CheckPoint* activatedCheckPoint = nullptr;
 
     // Camera VFX properties
+    mts::UUID mCameraUUID = mts::UUID::InvalidID;
+    mts::GameObject* mCameraGO = nullptr;  // inspector display cache; resolved via UUID
     CameraController* cam = nullptr;
     float mCamZoomSpeed = 0.5f;  // Quick zoom duration
 

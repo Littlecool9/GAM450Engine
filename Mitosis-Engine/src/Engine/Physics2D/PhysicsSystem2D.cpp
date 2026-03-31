@@ -9,6 +9,7 @@
 
 #include "pch.h"
 #include "PhysicsSystem2D.h"
+#include <unordered_set>
 #include "Collision2D.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
@@ -399,6 +400,23 @@ namespace mts::physics
 
     void PhysicsSystem2D::FireEvents()
     {
+        // Build the set of GOs alive this frame. Any GO not in this set has been
+        // deleted and its pointer is dangling — must not be touched.
+        std::unordered_set<GameObject*> liveGOs;
+        liveGOs.reserve(physicsBodies.size());
+        for (const auto& body : physicsBodies)
+            liveGOs.insert(body.go);
+
+        // Purge stale prevContacts entries so the exit-event loop never
+        // dereferences a freed pointer.
+        for (auto it = prevContacts.begin(); it != prevContacts.end();)
+        {
+            if (!liveGOs.count(it->first.a) || !liveGOs.count(it->first.b))
+                it = prevContacts.erase(it);
+            else
+                ++it;
+        }
+
         currContacts.clear();
 
         for (const ContactInfo& c : contactInfos)

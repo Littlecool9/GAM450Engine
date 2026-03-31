@@ -21,7 +21,7 @@ namespace mts
 class DamageNumberScript : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
+    void Init() override;
     void OnEnable() override;
     void OnUpdate(float dt) override;
     void DeserializeFields(mts::JsonValue const& fields) override;

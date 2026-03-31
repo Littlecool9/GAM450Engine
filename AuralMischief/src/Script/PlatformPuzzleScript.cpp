@@ -17,8 +17,15 @@
 #include "Engine/Serialization/JsonAbstraction.h"
 #include "Engine/UUID/UUID.h"
 
-void PlatformPuzzleScript::OnCreate()
+void PlatformPuzzleScript::Init()
 {
+}
+
+void PlatformPuzzleScript::Awake()
+{
+    RegisterToRhythmSystem();
+    if (mAutoActivate)
+        Activate();
 }
 
 void PlatformPuzzleScript::OnDisable()
@@ -154,15 +161,6 @@ void PlatformPuzzleScript::DeserializeFields(mts::JsonValue const& fields)
     }
 
     //ResolvePlatformReferences();
-    if (mAutoActivate)
-    {
-        RegisterToRhythmSystem();
-        Activate();
-    }
-    else
-    {
-        RegisterToRhythmSystem();
-    }
 }
 
 void PlatformPuzzleScript::SerializeFields(mts::JsonDocument& out) const

@@ -10,11 +10,9 @@
 #include "pch.h"
 #include "EnemyController.h"
 
-
-//#include "BarScaler.h"
+// #include "BarScaler.h"
 #include "../AttackHitboxScript.h"
 #include "../Player/PlayerController.h"
-#include "../../AuralMischiefScene.h"
 #include "EnemyActions/EnemyMoveToPlayerAction.h"
 #include "EnemyActions/EnemyPatrolAction.h"
 #include "EnemyActions/FlyingEnemyAttackAction.h"
@@ -22,7 +20,6 @@
 #include "EnemyActions/SlugEnemyAttackAction.h"
 #include "EnemyParameters/AggroRangeParam.h"
 #include "EnemyParameters/AttackCountdownParam.h"
-#include "EnemyParameters/PatrolRadius.h"
 #include "EnemyParameters/PlayerHealthRatioParam.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyActionList.h"
@@ -44,14 +41,21 @@ REGISTER_ENEMY_ACTION("FlyEnemy", mts::FlyingEnemyAttackAction);
 
 namespace mts
 {
-    void EnemyController::OnCreate()
+    void EnemyController::Init()
     {
         // todo: ActionList deserialization....
         curhp = maxhp;
-        auto* playerGO = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
-        GetGameObject()->GetComponent<mts::EnemyAgent>()->SetPlayerReference(playerGO);
         SetEnemyPlans(type);
         origin = GetGameObject()->GetComponent<Transform>()->GetPosition();
+    }
+
+    void EnemyController::Start()
+    {
+        auto* playerGO = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+        GetGameObject()->GetComponent<mts::EnemyAgent>()->SetPlayerReference(playerGO);
+        MTS_ASSERT(playerGO && "EnemyController could not find Player GameObject in scene");
+        if (playerGO)
+            mPlayerController = playerGO->GetScript<PlayerController>();
     }
 
     void EnemyController::OnUpdate(float dt)
@@ -75,11 +79,8 @@ namespace mts
                     AnimationSystem::States::Alerted);
                 const glm::vec2 enemyPos =
                     GetGameObject()->GetComponent<Transform>()->GetPosition();
-                auto p = GetGameObject()
-                             ->GetComponent<EnemyAgent>()
-                             ->GetPlayerReference();
+                auto p = GetGameObject()->GetComponent<EnemyAgent>()->GetPlayerReference();
                 const glm::vec2 playerPos = p->GetComponent<Transform>()->GetPosition();
-                   
 
                 const glm::vec2 toPlayer = playerPos - enemyPos;
                 const float dist =
@@ -139,20 +140,18 @@ namespace mts
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
                 mts::AIPlanner::GetPlannerById("SentryEnemy"));
         }
-
     }
 
     void EnemyController::DeserializeFields(mts::JsonValue const& fields)
     {
         if (fields.Has("EnemyType"))
         {
-            type = fields["EnemyType"].GetString("");       
-            SetEnemyPlans(type);
+            type = fields["EnemyType"].GetString("");        
         }
         auto& p = GetGameObject()->GetComponent<EnemyAgent>()->GetState().params;
         if (fields.Has("MoveSpeed"))
         {
-           mMoveSpeed = fields["MoveSpeed"].GetFloat();
+            mMoveSpeed = fields["MoveSpeed"].GetFloat();
         }
         if (fields.Has("PatrolRadius"))
         {
@@ -169,7 +168,8 @@ namespace mts
         {
             mAttackCooldown = fields["AttackCooldown"].GetFloat();
             p.emplace(mts::HashAction("AttackCooldown"), new mts::AttackCountdownParam());
-            static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))->SetCooldownTime(mAttackCooldown);
+            static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))
+                ->SetCooldownTime(mAttackCooldown);
         }
         if (fields.Has("HealthPoints"))
         {
@@ -220,6 +220,11 @@ namespace mts
             float damage = hitbox->GetDamage();
             if (!mIsInvincible)
                 curhp -= static_cast<int>(damage);
+            if (mPlayerController)
+            {
+                glm::vec3 pos = GetGameObject()->GetComponent<Transform>()->GetPosition();
+                mPlayerController->OnEnemyHit(damage, pos);
+            }
         }
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {
@@ -228,6 +233,4 @@ namespace mts
         }
     }
 
-
-}
-
+}  // namespace mts

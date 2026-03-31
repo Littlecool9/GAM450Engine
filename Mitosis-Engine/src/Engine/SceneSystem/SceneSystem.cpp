@@ -12,38 +12,45 @@
 #include "pch.h"
 #include "SceneSystem.h"
 #include "Scene.h"
-#include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Serialization/SerializationUtility.h"
+#include "Engine/Serialization/JsonAbstraction.h"
+#include "Engine/Serialization/FileManager.h"
+#include <filesystem>
 
 namespace mts
 {
-    std::vector<GameObject*> SceneSystem::dontDestroyObjects;
+    std::vector<std::unique_ptr<Scene>> SceneSystem::mOwnedScenes;
+    std::vector<std::string> SceneSystem::mRegisteredScenes;
+    int SceneSystem::mPendingSceneIndex = -1;
     Scene* SceneSystem::currentScene = nullptr;
-    Scene* SceneSystem::nextScene = nullptr;
+    bool SceneSystem::sInPlayMode = false;
     Delegate<> SceneSystem::onChangeSceneDelegate;
-    bool SceneSystem::isRestarting = false;
-    bool SceneSystem::isChangingScene = false;
 
-    void SceneSystem::Init(Scene* initialScene)
+    void SceneSystem::Init(const std::string& path)
     {
-        SetNextScene(initialScene);
-        UpdateCurrentScene();
+        auto scene = std::make_unique<Scene>();
+        SerializationUtility::DeserializeFromFile(scene.get(), path);
+        scene->SetFilePath(path);
+        currentScene = scene.get();
+        mOwnedScenes.push_back(std::move(scene));
+        currentScene->Init();
+    }
+
+    void SceneSystem::Awake()
+    {
+        MTS_ASSERT(currentScene != nullptr);
+        currentScene->Awake();
+    }
+
+    void SceneSystem::Start()
+    {
+        MTS_ASSERT(currentScene != nullptr);
+        currentScene->Start();
     }
 
     void SceneSystem::Update(float dt)
     {
         MTS_ASSERT(currentScene != nullptr);
-
-        if (isChangingScene)
-        {
-            UpdateCurrentScene();
-        }
-        else if (isRestarting)
-        {
-            currentScene->Init();
-            onChangeSceneDelegate.Invoke();
-        }
-
         currentScene->Update(dt);
     }
 
@@ -73,11 +80,10 @@ namespace mts
 
     void SceneSystem::Shutdown()
     {
-        for (auto obj : dontDestroyObjects)
-        {
-            delete obj;
-        }
-        dontDestroyObjects.clear();
+        mOwnedScenes.clear();
+        currentScene = nullptr;
+        mRegisteredScenes.clear();
+        mPendingSceneIndex = -1;
     }
 
     void SceneSystem::SaveScene(Scene* scene, const std::string& fileName)
@@ -91,65 +97,106 @@ namespace mts
         scene->SetFilePath(fileName);
     }
 
+    void SceneSystem::OpenScene(const std::string& path)
+    {
+        LoadScene(currentScene, path);
+        currentScene->Init();
+    }
+
+    bool SceneSystem::CreateScene(const std::string& path)
+    {
+        namespace fs = std::filesystem;
+        fs::create_directories(fs::path(FileManager::Resolve(path)).parent_path());
+        Scene empty;
+        return SerializationUtility::SerializeToFile(&empty, path);
+    }
+
     void SceneSystem::SceneCleanUp()
     {
         MTS_ASSERT(currentScene != nullptr);
-        currentScene->FlushPendingGameObjects();
         currentScene->DestroyGameObjects();
     }
 
-    // @brief: change the current scene if the next scene is set
-    // @brief: this design require this function must be called before the SceneManager::Update
-    void SceneSystem::UpdateCurrentScene()
+    // --- Scene registry ---
+
+    void SceneSystem::RegisterScene(const std::string& path)
     {
-        if (nextScene != nullptr)
+        mRegisteredScenes.push_back(path);
+    }
+
+    void SceneSystem::UnregisterScene(int index)
+    {
+        if (index < 0 || index >= static_cast<int>(mRegisteredScenes.size()))
+            return;
+        mRegisteredScenes.erase(mRegisteredScenes.begin() + index);
+    }
+
+    void SceneSystem::SwitchScene(int index)
+    {
+        if (index < 0 || index >= static_cast<int>(mRegisteredScenes.size()))
         {
-            // Delete the old scene before switching to the new one
-            delete currentScene;
-
-            currentScene = nextScene;
-            nextScene = nullptr;
-            currentScene->Init();
-            onChangeSceneDelegate.Invoke();
-
-            isRestarting = false;
-            isChangingScene = false;
-
-            // add dont destroy objects to the new scene
-            for (auto obj : dontDestroyObjects)
-                currentScene->AddGameObject(obj);
-            currentScene->FlushPendingGameObjects();
+            LOG_WARN("SceneSystem::SwitchScene — index {} out of range", index);
+            return;
         }
+        mPendingSceneIndex = index;
     }
 
-    // @brief: set the next scene to change to
-    // @brief: this is a public function allowing exterior systems to request scene changes
-    void SceneSystem::SetNextScene(Scene* newScene)
+    void SceneSystem::LoadRegistry(const std::string& path)
     {
-        nextScene = newScene;
-        if (typeid(newScene) == typeid(currentScene))
+        if (path.empty() || !FileManager::Exists(path))
+            return;
+
+        JsonDocument doc;
+        if (!doc.LoadFromFile(FileManager::Resolve(path)))
         {
-            isRestarting = true;
+            LOG_WARN("SceneSystem::LoadRegistry — failed to load {}", path);
+            return;
         }
-        else
-        {
-            isChangingScene = true;
-        }
+
+        JsonValue root = doc.Root();
+        if (!root.Has("scenes") || !root["scenes"].IsArray())
+            return;
+
+        JsonValue arr = root["scenes"];
+        mRegisteredScenes.clear();
+        for (size_t i = 0; i < arr.Size(); ++i)
+            mRegisteredScenes.push_back(arr[i].GetString());
     }
 
-    // Transfer the ownership of the object to the scene system
-    void SceneSystem::AddDontDestroyObject(GameObject* obj)
+    void SceneSystem::SaveRegistry(const std::string& path)
     {
-        obj->SetDontDestroy(true);
-        dontDestroyObjects.push_back(obj);
+        namespace fs = std::filesystem;
+        fs::create_directories(fs::path(FileManager::Resolve(path)).parent_path());
+
+        JsonDocument doc;
+        doc.BeginArray("scenes");
+        for (const auto& s : mRegisteredScenes)
+            doc.WriteString(s.c_str());
+        doc.EndArray();
+
+        if (!doc.SaveToFile(FileManager::Resolve(path)))
+            LOG_WARN("SceneSystem::SaveRegistry — failed to save {}", path);
     }
 
-    void SceneSystem::RemoveDontDestroyObject(GameObject* obj)
+    void SceneSystem::ProcessPendingSceneSwitch()
     {
-        obj->SetDontDestroy(false);
-        // mind the performance of this operation
-        dontDestroyObjects.erase(
-            std::remove(dontDestroyObjects.begin(), dontDestroyObjects.end(), obj),
-            dontDestroyObjects.end());
+        if (!sInPlayMode || mPendingSceneIndex < 0)
+            return;
+
+        MTS_ASSERT(currentScene != nullptr);
+
+        const std::string& targetPath = mRegisteredScenes[mPendingSceneIndex];
+        mPendingSceneIndex = -1;
+
+        currentScene->ClearGameObjects();
+        sInPlayMode = false;  // prevent AddGameObject from firing lifecycle on partially-deserialized GOs
+        SerializationUtility::DeserializeFromFile(currentScene, targetPath);
+        sInPlayMode = true;
+        currentScene->StartPlay();
+
+        // PhysicsLayer subscribes to this delegate and calls PhysicsSystem2D::Reset(),
+        // clearing stale prevContacts before the next FixedUpdate.
+        onChangeSceneDelegate.Invoke();
     }
+
 }  // namespace mts

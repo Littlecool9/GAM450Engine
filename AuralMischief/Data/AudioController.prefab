@@ -1,29 +1,24 @@
 {
-    "UUID": "40c174a0-ca6a-49ee-a74b-bd4ac43912f8",
+    "UUID": "c25a98e7-3bf0-41f4-abf8-08b43011d1d9",
     "Name": "AudioController",
     "Layer": 0,
     "Tags": [],
     "Components": [
         {
-            "Type": "Transform",
-            "Data": {
-                "Position": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "Scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "Rotation": 0.0
-            }
-        },
-        {
             "Type": "NativeScript",
             "Data": {
-                "Class": "AudioController"
+                "Class": "AudioController",
+                "Fields": {
+                    "MusicEventPath": "event:/Playable - BGM",
+                    "Bpm": 120.0,
+                    "BeatsPerBar": 4,
+                    "OffsetSec": 0.0,
+                    "MasterVolume": 1.0,
+                    "MusicVolume": 1.0,
+                    "SFXVolume": 1.0,
+                    "UIVolume": 1.0,
+                    "AmbienceVolume": 1.0
+                }
             }
         }
     ]

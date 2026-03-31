@@ -13,8 +13,9 @@
 class AudioController : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
-    void OnUpdate(float dt) override;
+    void Init() override;
+    void Awake() override;
+    void OnDisable() override;
 
     void DeserializeFields(mts::JsonValue const& fields) override;
     void SerializeFields(mts::JsonDocument& out) const override;
@@ -23,9 +24,14 @@ class AudioController : public mts::ScriptBase
     SCRIPT_CLASS(AudioController)
 
    private:
-    float mMasterVolume   = 1.0f;
-    float mMusicVolume    = 1.0f;
-    float mSFXVolume      = 1.0f;
-    float mUIVolume       = 1.0f;
+    float mMasterVolume = 1.0f;
+    float mMusicVolume = 1.0f;
+    float mSFXVolume = 1.0f;
+    float mUIVolume = 1.0f;
     float mAmbienceVolume = 1.0f;
+
+    std::string mMusicEventPath;
+    float mBpm = 120.0f;
+    int mBeatsPerBar = 4;
+    float mOffsetSec = 0.0f;
 };

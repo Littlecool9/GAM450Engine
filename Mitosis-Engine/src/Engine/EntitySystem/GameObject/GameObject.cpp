@@ -17,6 +17,7 @@
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
+#include "Engine/SceneSystem/SceneSystem.h"
 
 namespace mts
 {
@@ -46,6 +47,18 @@ namespace mts
 
     GameObject::~GameObject()
     {
+        // on destroy called first in case scripts have to do something with components
+        for (auto* nsc : m_scripts)
+        {
+            nsc->OnDestroy();
+        }
+        if (isActive)  // disable before destruction to trigger OnDisable events
+        {
+            for (auto* c : components)
+                if (c->IsEnabled())
+                    c->OnDisable();
+        }
+
         for (auto c : components)
             delete c;
     }
@@ -148,6 +161,9 @@ namespace mts
 
     void GameObject::Init()
     {
+        if (m_initialized)
+            return;
+        m_initialized = true;
         // Rebuild script cache before Init so scripts can query siblings
         m_scripts.clear();
         for (auto* c : components)
@@ -155,6 +171,42 @@ namespace mts
                 m_scripts.push_back(nsc);
 
         FOR_CONDITION_COMPONENTS(IsEnabled(), c->Init());
+    }
+
+    void GameObject::Awake()
+    {
+        for (auto* nsc : m_scripts)
+            nsc->Awake();
+    }
+
+    void GameObject::OnEnable()
+    {
+        for (auto* c : components)
+            if (c->IsEnabled())
+                c->OnEnable();
+    }
+
+    void GameObject::FireLiveComponentLifecycle(Component* c)
+    {
+        c->Init();
+        if (SceneSystem::IsInPlayMode() && isActive)
+        {
+            c->OnEnable();
+            if (auto* nsc = dynamic_cast<NativeScriptComponent*>(c))
+            {
+                nsc->Awake();
+                nsc->Start();  // direct call — new component, never started
+            }
+        }
+    }
+
+    void GameObject::Start()
+    {
+        if (!SceneSystem::IsInPlayMode() || m_startFired)
+            return;
+        m_startFired = true;
+        for (auto* nsc : m_scripts)
+            nsc->Start();
     }
 
     NativeScriptComponent* GameObject::AddNativeScript(const std::string& className)
@@ -174,6 +226,8 @@ namespace mts
         nsc->SetClassName(className);
         components.emplace_back(nsc);
         m_scripts.push_back(nsc);
+        if (m_initialized)
+            FireLiveComponentLifecycle(nsc);
         return nsc;
     }
 
@@ -226,9 +280,8 @@ namespace mts
         isActive = active;
         if (isActive)
         {
-            for (auto* c : components)
-                if (c->IsEnabled())
-                    c->OnEnable();
+            OnEnable();
+            Start();  // no-op if not in play mode or already fired
         }
         else
         {

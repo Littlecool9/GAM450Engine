@@ -42,7 +42,8 @@ namespace mts
         }
 
        protected:
-        virtual Scene* GetInitialScene() = 0;
+        virtual std::string& GetInitialScene() = 0;
+        virtual std::string& GetSceneRegistry() = 0;
         virtual void RegisterScripts() {};
         virtual std::vector<SplashScreenConfig> GetSplashScreens() { return {}; }
 

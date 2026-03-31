@@ -12,6 +12,7 @@
 
 #include "Engine/Renderer.h"
 #include "Engine/EntitySystem/Component/Camera/Camera.h"
+#include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
@@ -23,9 +24,55 @@
 
 #define MAIN_CAMERA_NAME "CameraObject"
 
-void CameraController::OnCreate()
+void CameraController::Init()
 {
     cachedCameraComponent = nullptr;  // Reset cache
+    GetAndInitCamera(mts::ConductorSystem::Get());
+}
+
+void CameraController::Start()
+{
+    if (mFollowTargetUUID.IsValid())
+    {
+        auto* scene = mts::SceneSystem::GetCurrentScene();
+        if (scene)
+        {
+            mFollowTargetGO = scene->FindGameObjectByUUID(mFollowTargetUUID);
+            if (mFollowTargetGO && mainCamera)
+            {
+                auto* targetTransform = mFollowTargetGO->GetComponent<mts::Transform>();
+                if (targetTransform)
+                {
+                    glm::vec3 pos = targetTransform->GetPosition();
+                    mainCamera->position = pos;
+                    glm::mat4 V(1.0f);
+                    V = glm::translate(V, -mainCamera->position);
+                    mainCamera->view = V;
+                    mainCamera->viewProj = mainCamera->proj * mainCamera->view;
+                }
+            }
+        }
+    }
+}
+
+void CameraController::DeserializeFields(mts::JsonValue const& fields)
+{
+    if (fields.Has("followTargetUUID"))
+        mFollowTargetUUID = mts::UUID::FromString(fields["followTargetUUID"].GetString());
+}
+
+void CameraController::SerializeFields(mts::JsonDocument& out) const
+{
+    if (mFollowTargetUUID.IsValid())
+        out.WriteString("followTargetUUID", mFollowTargetUUID.ToString().c_str());
+}
+
+void CameraController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
+{
+    fields.push_back({.name = "Follow Target",
+                      .type = mts::ScriptField::Type::GameObject,
+                      .ptr = {.go = &mFollowTargetGO},
+                      .uuid = &mFollowTargetUUID});
 }
 
 void CameraController::OnLateUpdate(float dt)

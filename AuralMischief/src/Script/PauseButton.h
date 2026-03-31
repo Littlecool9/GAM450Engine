@@ -22,7 +22,8 @@ class PauseButton : public mts::ScriptBase
    public:
     SCRIPT_CLASS(PauseButton)
 
-    void OnCreate() override;
+    void Init() override;
+    void Awake() override;
     void OnUpdate(float dt) override;
     void OnDisable() override;
 

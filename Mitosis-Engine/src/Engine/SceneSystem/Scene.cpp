@@ -13,24 +13,16 @@
 #include "Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/SceneSystem/SceneSystem.h"
 
 namespace mts
 {
     Scene::~Scene()
     {
-        for (auto g : mPendingGameObjects)
+        for (auto g : mGameObjects)
         {
             if (!g->GetDontDestroy())
                 delete g;
-        }
-        for (auto g : mGameObjects)
-        {
-            // Skip dontDestroy objects
-            if (g->GetDontDestroy())
-            {
-                continue;
-            }
-            delete g;
         }
         for (auto g : mEditGameObjects)
         {
@@ -41,68 +33,72 @@ namespace mts
 
     void Scene::Init()
     {
-        OnInit();
-        for (auto g : mGameObjects)
-        {
-            g->Init();
-        }
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            mGameObjects[i]->Init();
+    }
+
+    void Scene::Awake()
+    {
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->Awake();
+    }
+
+    void Scene::OnEnable()
+    {
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->OnEnable();
+    }
+
+    void Scene::Start()
+    {
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->Start();
+    }
+
+    void Scene::StartPlay()
+    {
+        Init();
+        Awake();
+        OnEnable();
+        Start();
     }
 
     void Scene::Update(float dt)
     {
-        OnUpdate();
-        for (auto g : mGameObjects)
-        {
-            if (g->IsActive())
-                g->Update(dt);
-        }
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->Update(dt);
     }
 
     void Scene::LateUpdate(float dt)
     {
-        for (auto g : mGameObjects)
-        {
-            if (g->IsActive())
-                g->LateUpdate(dt);
-        }
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->LateUpdate(dt);
     }
 
     void Scene::FixedUpdate(float dt)
     {
-        for (auto g : mGameObjects)
-            if (g->IsActive())
-                g->FixedUpdate(dt);
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->FixedUpdate(dt);
     }
 
     void Scene::Render()
     {
-        for (auto g : mGameObjects)
-        {
-            if (g->IsActive())
-                g->Render();
-        }
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->Render();
     }
 
     void Scene::DebugRender()
     {
-        for (auto g : mGameObjects)
-        {
-            if (g->IsActive())
-                g->DebugRender();
-        }
-    }
-
-    void Scene::EnterPlayMode()
-    {
-        for (auto* go : mGameObjects)
-            if (go->IsActive())
-                go->Init();
-        OnEnterPlayMode();
-    }
-
-    void Scene::ExitPlayMode()
-    {
-        OnExitPlayMode();
+        for (size_t i = 0, n = mGameObjects.size(); i < n; ++i)
+            if (mGameObjects[i]->IsActive())
+                mGameObjects[i]->DebugRender();
     }
 
     // Test purpose only, in gameplay will be replaced by the GameObjectFactory function
@@ -132,21 +128,20 @@ namespace mts
         return nullptr;
     }
 
-    void Scene::FlushPendingGameObjects()
+    void Scene::AddGameObject(GameObject* g)
     {
-        if (mPendingGameObjects.empty())
-            return;
-        mGameObjects.insert(mGameObjects.end(),
-                            mPendingGameObjects.begin(),
-                            mPendingGameObjects.end());
-        mPendingGameObjects.clear();
+        mGameObjects.push_back(g);
+        if (SceneSystem::IsInPlayMode())
+        {
+            g->Init();
+            g->Awake();
+            if (g->IsActive()) g->OnEnable();
+            if (g->IsActive()) g->Start();
+        }
     }
 
     void Scene::ClearGameObjects()
     {
-        for (auto* go : mPendingGameObjects)
-            delete go;
-        mPendingGameObjects.clear();
         for (auto* go : mGameObjects)
             delete go;
         mGameObjects.clear();
@@ -154,11 +149,6 @@ namespace mts
 
     void Scene::StashGameObjects()
     {
-        // Discard any pending play GOs — they were created during play and must not
-        // be stashed alongside edit GOs.
-        for (auto* go : mPendingGameObjects)
-            delete go;
-        mPendingGameObjects.clear();
         mEditGameObjects = std::move(mGameObjects);
         mGameObjects.clear();
     }
@@ -204,7 +194,6 @@ namespace mts
             auto go = GameObjectFactory::CreateEmptyGameObject(this);
             go->Deserialize(gv);
         }
-        FlushPendingGameObjects();
     }
 
     void Scene::Serialize(JsonDocument& doc) const

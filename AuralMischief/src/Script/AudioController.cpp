@@ -11,7 +11,7 @@
 #include "AudioController.h"
 #include "Engine/Audio/AudioManager.h"
 
-void AudioController::OnCreate()
+void AudioController::Init()
 {
     auto& audio = mts::AudioManager::Get();
     audio.SetCategoryVolume(mts::AudioCategory::Master, mMasterVolume);
@@ -21,14 +21,23 @@ void AudioController::OnCreate()
     audio.SetCategoryVolume(mts::AudioCategory::Ambience, mAmbienceVolume);
 }
 
-void AudioController::OnUpdate(float dt)
+void AudioController::Awake()
 {
-    auto& audio = mts::AudioManager::Get();
-    audio.SetCategoryVolume(mts::AudioCategory::Master, mMasterVolume);
-    audio.SetCategoryVolume(mts::AudioCategory::Music, mMusicVolume);
-    audio.SetCategoryVolume(mts::AudioCategory::SFX, mSFXVolume);
-    audio.SetCategoryVolume(mts::AudioCategory::UI, mUIVolume);
-    audio.SetCategoryVolume(mts::AudioCategory::Ambience, mAmbienceVolume);
+    if (!mMusicEventPath.empty())
+    {
+        mts::MusicTrack track;
+        track.trackId = "music";
+        track.eventId = mMusicEventPath;
+        track.bpm = mBpm;
+        track.beatsPerBar = mBeatsPerBar;
+        track.offsetSec = mOffsetSec;
+        mts::AudioManager::Get().StartMusic(track);
+    }
+}
+
+void AudioController::OnDisable()
+{
+    mts::AudioManager::Get().StopMusic();
 }
 
 void AudioController::DeserializeFields(mts::JsonValue const& fields)
@@ -43,6 +52,14 @@ void AudioController::DeserializeFields(mts::JsonValue const& fields)
         mUIVolume = fields["UIVolume"].GetFloat(mUIVolume);
     if (fields.Has("AmbienceVolume"))
         mAmbienceVolume = fields["AmbienceVolume"].GetFloat(mAmbienceVolume);
+    if (fields.Has("MusicEventPath"))
+        mMusicEventPath = fields["MusicEventPath"].GetString("");
+    if (fields.Has("Bpm"))
+        mBpm = fields["Bpm"].GetFloat(mBpm);
+    if (fields.Has("BeatsPerBar"))
+        mBeatsPerBar = fields["BeatsPerBar"].GetInt(mBeatsPerBar);
+    if (fields.Has("OffsetSec"))
+        mOffsetSec = fields["OffsetSec"].GetFloat(mOffsetSec);
 }
 
 void AudioController::SerializeFields(mts::JsonDocument& out) const
@@ -52,6 +69,10 @@ void AudioController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("SFXVolume", mSFXVolume);
     out.WriteFloat("UIVolume", mUIVolume);
     out.WriteFloat("AmbienceVolume", mAmbienceVolume);
+    out.WriteString("MusicEventPath", mMusicEventPath.c_str());
+    out.WriteFloat("Bpm", mBpm);
+    out.WriteInt("BeatsPerBar", mBeatsPerBar);
+    out.WriteFloat("OffsetSec", mOffsetSec);
 }
 
 void AudioController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -76,4 +97,14 @@ void AudioController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mAmbienceVolume},
                       .step = 0.05f});
+    fields.push_back(
+        {.name = "BPM", .type = mts::ScriptField::Type::Float, .ptr = {.f = &mBpm}, .step = 1.0f});
+    fields.push_back({.name = "Beats Per Bar",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mBeatsPerBar},
+                      .step = 1});
+    fields.push_back({.name = "Offset Sec",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mOffsetSec},
+                      .step = 0.01f});
 }

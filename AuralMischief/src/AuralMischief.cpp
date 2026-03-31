@@ -14,8 +14,10 @@
 #include "Script/PauseButton.h"
 #include "Script/DamageNumberScript.h"
 #include "Script/DamageNumberSpawner.h"
+#include "Script/RhythmSystemScript.h"
 #include "Script/EnemyBehaviors/BulletBehavior.h"
 #include "Script/BeatPulseScript.h"
+#include "Script/SceneSwitcherScript.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -24,22 +26,25 @@ mts::Application* mts::CreateApplication()
 
 AuralMischief::AuralMischief()
 {
-    m_scene = new AuralMischiefScene();
 }
 
 AuralMischief::~AuralMischief()
 {
-    delete m_scene;
 }
 
-mts::Scene* AuralMischief::GetInitialScene()
+std::string& AuralMischief::GetInitialScene()
 {
-    return m_scene;
+    return mInitialScene;
+}
+
+std::string& AuralMischief::GetSceneRegistry()
+{
+    return mSceneRegistry;
 }
 
 std::vector<mts::SplashScreenConfig> AuralMischief::GetSplashScreens()
 {
-    return mts::SplashScreen::LoadFromJson("Data/Splashscreen.json");
+    return mts::SplashScreen::LoadFromJson(mSplashScreenConfigPath);
 }
 
 void AuralMischief::RegisterScripts()
@@ -72,4 +77,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new mts::BulletBehavior(); });
     mts::ScriptFactory::RegisterScript(BeatPulseScript::StaticClassName(),
                                        []() { return new BeatPulseScript(); });
+    mts::ScriptFactory::RegisterScript(RhythmSystemScript::StaticClassName(),
+                                       []() { return new RhythmSystemScript(); });
+    mts::ScriptFactory::RegisterScript(SceneSwitcherScript::StaticClassName(),
+                                       []() { return new SceneSwitcherScript(); });
 }

@@ -195,7 +195,6 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\Player\PlayerParticleController.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\AuralMischief.h" />
-    <ClInclude Include="src\AuralMischiefScene.h" />
     <ClInclude Include="src\Script\AttackHitboxScript.h" />
     <ClInclude Include="src\Script\AudioController.h" />
     <ClInclude Include="src\Script\CameraController.h" />
@@ -236,6 +235,8 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
     <ClInclude Include="src\Script\Player\PlayerController.h" />
     <ClInclude Include="src\Script\RhythmSystem.h" />
+    <ClInclude Include="src\Script\RhythmSystemScript.h" />
+    <ClInclude Include="src\Script\SceneSwitcherScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Script\BeatPulseScript.cpp" />
@@ -245,7 +246,6 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\AuralMischief.cpp" />
-    <ClCompile Include="src\AuralMischiefScene.cpp" />
     <ClCompile Include="src\Script\AttackHitboxScript.cpp" />
     <ClCompile Include="src\Script\AudioController.cpp" />
     <ClCompile Include="src\Script\CameraController.cpp" />
@@ -286,6 +286,8 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
     <ClCompile Include="src\Script\Player\PlayerController.cpp" />
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
+    <ClCompile Include="src\Script\RhythmSystemScript.cpp" />
+    <ClCompile Include="src\Script\SceneSwitcherScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

@@ -22,7 +22,7 @@ namespace mts
 class MovablePlatform : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
+    void Init() override;
     void OnUpdate(float dt) override;
 
     void OnCollisionStay2D(const mts::Collision2D& collision) override;

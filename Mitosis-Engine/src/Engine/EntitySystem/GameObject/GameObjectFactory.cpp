@@ -57,8 +57,6 @@ namespace mts
         if (Scene* scene = SceneSystem::GetCurrentScene())
             scene->AddGameObject(newObj);
 
-        newObj->Init();
-
         return newObj;
     }
 
@@ -96,31 +94,6 @@ namespace mts
         }
         LOG_WARN("Archetype {} not found, trying to load from JSON", archetypeName);
         return nullptr;
-    }
-
-    GameObject* GameObjectFactory::Instantiate(const std::string& gameObjectName)
-    {
-        auto it = archetypes.find(gameObjectName);
-        if (it == archetypes.end())
-        {
-            std::string jsonPath = "Data/" + gameObjectName + ".prefab";
-            GameObject* archetype = BuildArchetypeFromJSON(jsonPath);
-            if (archetype)
-                it = archetypes.emplace(gameObjectName, archetype).first;
-        }
-
-        if (it != archetypes.end())
-        {
-            GameObject* newObj = new GameObject(*it->second);
-            newObj->RegenerateId();
-            if (Scene* scene = SceneSystem::GetCurrentScene())
-                scene->AddGameObject(newObj);
-            return newObj;
-        }
-
-        LOG_WARN("GameObject {} not found in archetypes or JSON, creating empty GameObject",
-                 gameObjectName);
-        return new GameObject();
     }
 
 }  // namespace mts

@@ -19,13 +19,14 @@ namespace mts
         CrawlEnemy,
         FlyEnemy,
         SentryEnemy
-        
+
     };
 
     class EnemyController : public ScriptBase
     {
        public:
-        void OnCreate() override;
+        void Init() override;
+        void Start() override;
         void OnUpdate(float dt) override;
         void DeserializeFields(JsonValue const& fields) override;
         void SerializeFields(JsonDocument& out) const override;
@@ -34,7 +35,7 @@ namespace mts
         void SetEnemyPlans(std::string name);
         glm::vec3 GetOriginPos() { return origin; }
         EnemyType GetEnemyType() { return enemyType; }
-        float GetMoveSpeed() {return mMoveSpeed;}
+        float GetMoveSpeed() { return mMoveSpeed; }
         float GetPatrolRadius() { return mPatrolRadius; }
         void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
         SCRIPT_CLASS(EnemyController)
@@ -51,6 +52,8 @@ namespace mts
         int curhp = 0;
         bool alerted = false;
         bool mIsInvincible = false;
+
+        PlayerController* mPlayerController = nullptr;
     };
 
-}
+}  // namespace mts

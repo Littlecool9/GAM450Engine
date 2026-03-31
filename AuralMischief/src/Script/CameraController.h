@@ -10,6 +10,7 @@
 
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"
+#include "Engine/UUID/UUID.h"
 #include <queue>
 
 namespace mts
@@ -22,8 +23,13 @@ namespace mts
 class CameraController : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
+    void Init() override;
+    void Start() override;
     void OnLateUpdate(float dt) override;
+
+    void DeserializeFields(mts::JsonValue const& fields) override;
+    void SerializeFields(mts::JsonDocument& out) const override;
+    void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
 
     void TriggerZoom(float zoomLevel, float speed);
     void TriggerShake(float duration, float intensity);
@@ -70,4 +76,8 @@ class CameraController : public mts::ScriptBase
 
     mts::CameraComponent* cachedCameraComponent = nullptr;
     static constexpr float ZOOM_EPSILON = 0.001f;
+
+    // Follow target
+    mts::UUID mFollowTargetUUID = mts::UUID::InvalidID;
+    mts::GameObject* mFollowTargetGO = nullptr;  // inspector display cache; resolved via UUID
 };

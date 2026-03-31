@@ -73,8 +73,9 @@ struct PlatformBehaviorConfig
 class PlatformPuzzleScript : public mts::ScriptBase
 {
    public:
-    void OnCreate() override;
-    void OnDisable() override; 
+    void Init() override;
+    void Awake() override;
+    void OnDisable() override;
 
     void DeserializeFields(mts::JsonValue const& fields) override;
     void SerializeFields(mts::JsonDocument& out) const override;

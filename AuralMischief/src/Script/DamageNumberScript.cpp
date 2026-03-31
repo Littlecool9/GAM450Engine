@@ -16,7 +16,7 @@
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include <algorithm>
 
-void DamageNumberScript::OnCreate()
+void DamageNumberScript::Init()
 {
     mTransform = GetGameObject()->GetComponent<mts::Transform>();
     mSprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();

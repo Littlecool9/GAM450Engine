@@ -59,7 +59,7 @@ namespace mts
         mLayerStack.PushLayer(std::make_unique<ResourceLayer>());
         mLayerStack.PushLayer(std::make_unique<RenderingLayer>(mWindow.get()));
         mLayerStack.PushLayer(std::make_unique<AudioLayer>());
-        mLayerStack.PushLayer(std::make_unique<SceneLayer>(GetInitialScene(), mCtx));
+        mLayerStack.PushLayer(std::make_unique<SceneLayer>(GetInitialScene(), GetSceneRegistry(), mCtx));
         mLayerStack.PushLayer(std::make_unique<PhysicsLayer>(mCtx));
         mLayerStack.PushLayer(std::make_unique<DebugRenderLayer>());
         mLayerStack.PushOverlay(std::make_unique<ImGuiLayer>(mWindow.get()));

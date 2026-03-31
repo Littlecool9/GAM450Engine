@@ -76,6 +76,9 @@ namespace mts
 
        public:
         virtual void Init();
+        virtual void Awake();     // play mode only, fired always before Start
+        virtual void OnEnable();  // fires each time GO becomes active (incl. play start)
+        virtual void Start();     // play mode only, fires on first activation
         virtual void Update(float dt);
         virtual void LateUpdate(float dt);
         virtual void FixedUpdate(float dt);
@@ -107,7 +110,9 @@ namespace mts
             {
                 if (GetComponent<T>() != nullptr)
                 {
-                    LOG_WARN("GameObject {} already has component of type {}", name, typeid(T).name());
+                    LOG_WARN("GameObject {} already has component of type {}",
+                             name,
+                             typeid(T).name());
                     return nullptr;
                 }
             }
@@ -139,6 +144,8 @@ namespace mts
             newComp->owner = this;
             if constexpr (std::is_same_v<T, NativeScriptComponent>)
                 m_scripts.push_back(static_cast<NativeScriptComponent*>(newComp));
+            if (m_initialized)
+                FireLiveComponentLifecycle(newComp);
             T* res = dynamic_cast<T*>(newComp);
 
             return res;
@@ -215,6 +222,9 @@ namespace mts
        private:
         friend class GameObjectFactory;
 
+        // Fires the full lifecycle for a component just added to an already-initialized GO.
+        void FireLiveComponentLifecycle(Component* c);
+
         bool isDeserialized = false;
 
         // GameObject properties
@@ -223,7 +233,9 @@ namespace mts
 
         bool dontDestroy = false;
         bool isActive = true;
-        bool isDead = false;  // in the queue for destruction;
+        bool isDead = false;  // in the queue for destruction
+        bool m_initialized = false;
+        bool m_startFired = false;  // true once Start() has been called in play mode
 
         // @brief: Name can be non-unique
         std::string name = "";

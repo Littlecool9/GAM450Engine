@@ -56,7 +56,7 @@ namespace mts
         jsonDoc.BeginObject("Data");
         jsonDoc.WriteString("Class", m_className.c_str());
 
-        if (m_hasFields & !m_fieldsJson.empty())
+        if (m_hasFields && !m_fieldsJson.empty())
         {
             const bool ok = jsonDoc.WriteRawJsonObject("Fields", m_fieldsJson);
             if (!ok)
@@ -91,6 +91,21 @@ namespace mts
             m_delegateWired = true;
         }
     }
+
+    void NativeScriptComponent::Awake()
+    {
+        MTS_ASSERT(m_created && "Script not initialized");
+        if (m_script)
+            m_script->Awake();
+    }
+
+    void NativeScriptComponent::Start()
+    {
+        MTS_ASSERT(m_created && "Script not initialized");
+        if (m_script)
+            m_script->Start();
+    }
+
     void NativeScriptComponent::EnsureCreated()
     {
         if (m_created)
@@ -128,10 +143,7 @@ namespace mts
             }
         }
 
-        m_script->OnCreate();
-
-        if (IsEnabled())
-            m_script->OnEnable();
+        m_script->Init();
     }
 
     void NativeScriptComponent::Update(float dt)
@@ -142,7 +154,9 @@ namespace mts
         EnsureCreated();
 
         if (m_script)
+        {
             m_script->OnUpdate(dt);
+        }
     }
 
     void NativeScriptComponent::LateUpdate(float dt)
@@ -163,6 +177,14 @@ namespace mts
     void NativeScriptComponent::DebugRender()
     {
         // no-op
+    }
+
+    void NativeScriptComponent::OnDestroy()
+    {
+        if (isEnabled)
+            OnDisable();
+        if (m_script)
+            m_script->OnDestroy();
     }
 
     void NativeScriptComponent::OnEnable()

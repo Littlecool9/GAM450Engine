@@ -15,6 +15,7 @@
 #include "Engine/Core/Editor/Panels/AssetPanel.h"
 #include "Engine/Core/Editor/Panels/LogPanel.h"
 #include "Engine/Core/Editor/Panels/ProfilerPanel.h"
+#include "Engine/Core/Editor/Panels/ScenesPanel.h"
 
 namespace mts
 {
@@ -43,6 +44,7 @@ namespace mts
         AssetPanel mAssets;
         LogPanel mLog;
         ProfilerPanel mProfiler;
+        ScenesPanel mScenes;
     };
 
 }  // namespace mts

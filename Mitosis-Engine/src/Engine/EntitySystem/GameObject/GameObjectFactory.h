@@ -31,9 +31,6 @@ namespace mts
        public:
         static void ShutdownFactory();
 
-        // Instantiate from archetype/prefabs, if not a archetype/prefab, it will create a new one
-        // from json file
-        static GameObject* Instantiate(const std::string& gameObjectName);
         // Return Empty GameObject
         static GameObject* CreateEmptyGameObject();
         static GameObject* CreateEmptyGameObject(Scene* scene);

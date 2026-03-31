@@ -1,0 +1,25 @@
+{
+    "GameObjects": [
+        {
+            "UUID": "f1deb31d-84f2-42d9-a057-3b6ecb8873b2",
+            "Name": "SceneSwitcherTest",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "SceneSwitcherScript"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "ef1a69c2-5b87-42a7-94bd-97c9faf91451",
+            "Name": "",
+            "Layer": 0,
+            "Tags": [],
+            "Components": []
+        }
+    ]
+}

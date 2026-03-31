@@ -56,12 +56,15 @@ namespace mts
         GameObject* GetGameObject() const { return owner; }
 
         // Lifecycle
-        virtual void OnCreate() {}
+        virtual void Init() {}   // once at scene load (edit or play). Cache own-GO component pointers here.
+        virtual void Awake() {}  // play mode only, fires before Start. Use for conductor subscriptions and singleton setup.
+        virtual void Start() {}  // play mode only, fires the first time the GO is activated. Use for cross-GO UUID resolve.
         virtual void OnUpdate(float /*dt*/) {}
         virtual void OnLateUpdate(float /*dt*/) {}
         virtual void OnFixedUpdate(float /*dt*/) {}
         virtual void OnEnable() {}
         virtual void OnDisable() {}
+        virtual void OnDestroy() {}  // play mode only — on destruction while in play.
 
         // Data-driven script fields
         virtual void DeserializeFields(JsonValue const& /*fields*/) {}

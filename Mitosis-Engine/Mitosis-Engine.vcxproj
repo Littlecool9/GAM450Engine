@@ -239,6 +239,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Engine\Core\Editor\Panels\ProfilerPanel.h" />
+    <ClInclude Include="src\Engine\Core\Editor\Panels\ScenesPanel.h" />
     <ClInclude Include="src\Engine\Core\Layer.h">
       <SubType>
       </SubType>
@@ -505,6 +506,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Engine\Core\Editor\Panels\ProfilerPanel.cpp" />
+    <ClCompile Include="src\Engine\Core\Editor\Panels\ScenesPanel.cpp" />
     <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
     <ClCompile Include="src\Engine\Conductor\ConductorSystem.cpp" />
     <ClCompile Include="src\Engine\AppSystem\AppSystem.cpp" />

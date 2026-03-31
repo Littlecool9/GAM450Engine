@@ -17,14 +17,17 @@
 
 namespace mts
 {
-    SceneLayer::SceneLayer(Scene* initialScene, EditorContext& ctx)
-        : Layer("SceneLayer"), mInitialScene(initialScene), mCtx(ctx)
+    SceneLayer::SceneLayer(const std::string& scenePath,
+                           const std::string& registryPath,
+                           EditorContext& ctx)
+        : Layer("SceneLayer"), mInitialScenePath(scenePath), mRegistryPath(registryPath), mCtx(ctx)
     {
     }
 
     void SceneLayer::OnAttach()
     {
-        SceneSystem::Init(mInitialScene);
+        SceneSystem::Init(mInitialScenePath);
+        SceneSystem::LoadRegistry(mRegistryPath);
         Layer::OnAttach();
     }
 
@@ -66,6 +69,8 @@ namespace mts
     void SceneLayer::OnEndFrame()
     {
         SceneSystem::SceneCleanUp();
+        if (mCtx.playState == PlayState::Play)
+            SceneSystem::ProcessPendingSceneSwitch();
     }
 
     void SceneLayer::OnEnterPlayMode()
@@ -73,17 +78,20 @@ namespace mts
         Scene* scene = SceneSystem::GetCurrentScene();
         // Capture current (possibly unsaved) edit state
         std::string snapshot = SerializationUtility::SerializeToString(scene);
-        // Preserve edit GOs untouched; deserialize fresh play GOs
+        // Preserve edit GOs untouched; deserialize fresh play GOs.
+        // Deserialize does a plain promote — no lifecycle fires during it.
         scene->StashGameObjects();
         SerializationUtility::DeserializeFromString(scene, snapshot);
-        scene->EnterPlayMode();
+        // Set play mode before StartPlay so Start() guard passes.
+        SceneSystem::SetInPlayMode(true);
+        scene->StartPlay();
     }
 
     void SceneLayer::OnExitPlayMode()
     {
         Scene* scene = SceneSystem::GetCurrentScene();
-        scene->ExitPlayMode();        // stop audio / custom teardown
         scene->ClearGameObjects();    // delete play GOs
         scene->RestoreGameObjects();  // restore pristine edit GOs (no deserialize)
+        SceneSystem::SetInPlayMode(false);
     }
 }  // namespace mts

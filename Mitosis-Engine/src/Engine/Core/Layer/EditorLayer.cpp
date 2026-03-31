@@ -213,8 +213,7 @@ namespace mts
             {
                 if (!scene->GetFilePath().empty())
                 {
-                    SceneSystem::LoadScene(scene, scene->GetFilePath());
-                    scene->Init();
+                    SceneSystem::OpenScene(scene->GetFilePath());
                 }
             }
             if (isPlaying)
@@ -271,6 +270,7 @@ namespace mts
             ImGui::DockBuilderDockWindow("Assets", bottom);
             ImGui::DockBuilderDockWindow("Log", bottom);
             ImGui::DockBuilderDockWindow("Profiler", bottom);
+            ImGui::DockBuilderDockWindow("Scenes", bottom);
             ImGui::DockBuilderFinish(dockId);
         }
 
@@ -312,6 +312,7 @@ namespace mts
         mAssets.Draw(scene, mCtx);
         mLog.Draw(scene, mCtx);
         mProfiler.Draw(dt);
+        mScenes.Draw(mCtx);
 
         // Viewport interaction and gizmo (Edit mode only)
         if (mCtx.playState == PlayState::Edit)

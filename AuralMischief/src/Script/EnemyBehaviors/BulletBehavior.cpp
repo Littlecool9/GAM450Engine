@@ -15,6 +15,8 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
 
 namespace mts
 {

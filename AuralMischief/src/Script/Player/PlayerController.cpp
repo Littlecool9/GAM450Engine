@@ -19,6 +19,7 @@
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Resource/Texture.h"
+#include "Engine/EntitySystem/Component/UITransform.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
 #include "Engine/Conductor/ConductorSystem.h"
@@ -366,6 +367,18 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
         mAltTextureResource = fields["altTextureResource"].GetString(mAltTextureResource);
         altTexture = mts::ResourceManager::GetTexture(mAltTextureResource);
     }
+    if (fields.Has("maxHP"))
+        mMaxHP = fields["maxHP"].GetInt(mMaxHP);
+    if (fields.Has("fullHeartFrame"))
+        mFullHeartFrame = fields["fullHeartFrame"].GetInt(mFullHeartFrame);
+    if (fields.Has("emptyHeartFrame"))
+        mEmptyHeartFrame = fields["emptyHeartFrame"].GetInt(mEmptyHeartFrame);
+    if (fields.Has("hpStartX"))
+        mHPStartX = fields["hpStartX"].GetFloat(mHPStartX);
+    if (fields.Has("hpStartY"))
+        mHPStartY = fields["hpStartY"].GetFloat(mHPStartY);
+    if (fields.Has("hpSpacing"))
+        mHPSpacing = fields["hpSpacing"].GetFloat(mHPSpacing);
 }
 
 void PlayerController::SerializeFields(mts::JsonDocument& out) const
@@ -394,6 +407,12 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("camZoomSpeed", mCamZoomSpeed);
     out.WriteString("defaultTextureResource", mDefaultTextureResource);
     out.WriteString("altTextureResource", mAltTextureResource);
+    out.WriteInt("maxHP", mMaxHP);
+    out.WriteInt("fullHeartFrame", mFullHeartFrame);
+    out.WriteInt("emptyHeartFrame", mEmptyHeartFrame);
+    out.WriteFloat("hpStartX", mHPStartX);
+    out.WriteFloat("hpStartY", mHPStartY);
+    out.WriteFloat("hpSpacing", mHPSpacing);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -492,6 +511,30 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mCamZoomSpeed},
                       .step = 0.1f});
+    fields.push_back({.name = "maxHP",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mMaxHP},
+                      .step = 1});
+    fields.push_back({.name = "fullHeartFrame",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mFullHeartFrame},
+                      .step = 1});
+    fields.push_back({.name = "emptyHeartFrame",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mEmptyHeartFrame},
+                      .step = 1});
+    fields.push_back({.name = "hpStartX",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPStartX},
+                      .step = 0.1f});
+    fields.push_back({.name = "hpStartY",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPStartY},
+                      .step = 0.1f});
+    fields.push_back({.name = "hpSpacing",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPSpacing},
+                      .step = 0.1f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)
@@ -520,6 +563,7 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
         iFramesTimer = iFrames;
         glm::vec2 hitDir = -collision.normal;
         queuedDash = [this, hitDir]() { Dash(hitDir, true, enemyKnockback); };
+        TakeDamage(1);
     }
 }
 
@@ -548,7 +592,8 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
     else
         dashDir = inputDir;
 
-    dashDir = glm::vec2(dashDir.x, 0);
+    dashDir = glm::vec2(dashDir.x, dashDir.y/1.5f);
+    
     // Multiply dash speed if hit on beat
     float adjustedDashSpeed = inWindow ? mDashSpeed * mDashBeatBoost : mDashSpeed;
 
@@ -738,12 +783,38 @@ void PlayerController::OnBar(mts::BeatInfo info)
 {
 }
 
-void PlayerController::OnEnemyHit(float damage, glm::vec3 pos)
+void PlayerController::RefreshHeartVisuals()
 {
-    if (!mSpawner)
-        mSpawner = GetGameObject()->GetScript<DamageNumberSpawner>();
-    if (mSpawner)
-        mSpawner->Spawn(damage, pos);
+    for (int i = 0; i < mMaxHP && i < static_cast<int>(mHearts.size()); ++i)
+    {
+        auto* sr = mHearts[i]->GetComponent<mts::SpriteRenderer>();
+        if (sr)
+            sr->SetFrame(i < mCurrentHP ? mFullHeartFrame : mEmptyHeartFrame);
+    }
+}
+
+void PlayerController::TakeDamage(int damage)
+{
+    if (mCurrentHP <= 0)
+        return;
+
+    mCurrentHP -= damage;
+    if (mCurrentHP < 0)
+        mCurrentHP = 0;
+
+    LOG_INFO("[PlayerController] TakeDamage: {} damage, HP now {}/{}", damage, mCurrentHP, mMaxHP);
+    RefreshHeartVisuals();
+
+    if (mCurrentHP <= 0)
+    {
+        LOG_INFO("[PlayerController] Player died!");
+        ReturnToCheckPoint();
+        mCurrentHP = mMaxHP;
+        dashTimer = -1.0f;
+        attackTimer = -1.0f;
+        isAttacking = false;
+        RefreshHeartVisuals();
+    }
 }
 
 void PlayerController::Init(mts::ConductorSystem& system, CameraController* cam)
@@ -751,4 +822,38 @@ void PlayerController::Init(mts::ConductorSystem& system, CameraController* cam)
     mBeatSubId = system.onBeat.Subscribe([this](mts::BeatInfo info) { OnBeat(info); });
     mBarSubId = system.onBar.Subscribe([this](mts::BeatInfo info) { OnBar(info); });
     this->cam = cam;
+
+    // HP system initialization
+    mCurrentHP = mMaxHP;
+
+    // Collect existing "HP" GameObjects from the scene
+    mHearts.clear();
+    mts::Scene* scene = mts::SceneSystem::GetCurrentScene();
+    for (auto* go : scene->GetGameObjects())
+    {
+        if (go->GetName() == "HP")
+            mHearts.push_back(go);
+    }
+
+    // Spawn additional hearts from prefab if needed
+    while (static_cast<int>(mHearts.size()) < mMaxHP)
+    {
+        mts::GameObject* heart =
+            mts::GameObjectFactory::CreateFromArchetype("Data/HP.prefab");
+        mHearts.push_back(heart);
+    }
+
+    // Deactivate surplus hearts
+    for (int i = mMaxHP; i < static_cast<int>(mHearts.size()); ++i)
+        mHearts[i]->SetActive(false);
+
+    // Position all active hearts and set to full
+    for (int i = 0; i < mMaxHP; ++i)
+    {
+        mHearts[i]->SetActive(true);
+        if (auto* uiTr = mHearts[i]->GetComponent<mts::UITransform>())
+            uiTr->SetPosition(glm::vec3(mHPStartX + i * mHPSpacing, mHPStartY, 0.0f));
+        if (auto* sr = mHearts[i]->GetComponent<mts::SpriteRenderer>())
+            sr->SetFrame(mFullHeartFrame);
+    }
 }

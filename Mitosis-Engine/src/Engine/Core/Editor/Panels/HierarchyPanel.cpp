@@ -44,6 +44,12 @@ namespace mts
         {
             if (!go || go->IsDead())
                 continue;
+            // skipping tilemap colliders since they should not directly editable and populate the
+            // hierarchy with too many entries.
+            if (std::any_of(go->GetTags().begin(), go->GetTags().end(),
+                            [](const auto& tag) { return tag == "TilemapCollider"; }))
+                continue;
+
 
             const UUID id = go->GetId();
             uint64_t combined = id.High() ^ (id.Low() << 1);

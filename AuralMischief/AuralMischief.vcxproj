@@ -201,7 +201,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\CameraController.h" />
     <ClInclude Include="src\Script\DamageNumberScript.h" />
     <ClInclude Include="src\Script\DamageNumberSpawner.h" />
-    <ClInclude Include="src\Script\ButtonTest.h" />
+    <ClInclude Include="src\Script\PauseButton.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\BulletBehavior.h">
       <SubType>
@@ -238,6 +238,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\RhythmSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Script\BeatPulseScript.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\Player\PlayerParticleController.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -250,7 +251,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\CameraController.cpp" />
     <ClCompile Include="src\Script\DamageNumberScript.cpp" />
     <ClCompile Include="src\Script\DamageNumberSpawner.cpp" />
-    <ClCompile Include="src\Script\ButtonTest.cpp" />
+    <ClCompile Include="src\Script\PauseButton.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\BulletBehavior.cpp">
       <SubType>

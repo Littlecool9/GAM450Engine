@@ -346,6 +346,22 @@ namespace mts
         mBackend->SetBusPaused(GetBusPath(category), paused);
     }
 
+    void AudioManager::PauseAll() const
+    {
+        if (!EnsureInitOrWarn("PauseAll"))
+            return;
+
+        mBackend->SetBusPaused(GetBusPath(AudioCategory::Master), true);
+    }
+
+    void AudioManager::ResumeAll() const
+    {
+        if (!EnsureInitOrWarn("ResumeAll"))
+            return;
+
+        mBackend->SetBusPaused(GetBusPath(AudioCategory::Master), false);
+    }
+
     AudioHandle AudioManager::StartSnapshot(const std::string& snapshotEventId) const
     {
         if (!EnsureInitOrWarn("StartSnapshot"))

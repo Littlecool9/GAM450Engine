@@ -1,0 +1,47 @@
+{
+    "UUID": "89b77109-b451-4af7-923f-f2ca44eb28a9",
+    "Name": "HP",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Position": [
+                    5.0,
+                    3.0,
+                    0.0
+                ],
+                "Scale": [
+                    3.0,
+                    3.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 67,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/UIHeart.tex",
+                "MeshResource": "Data/Resources/14x7MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "BeatPulseScript"
+            }
+        }
+    ]
+}

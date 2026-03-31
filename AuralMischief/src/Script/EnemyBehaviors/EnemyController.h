@@ -51,8 +51,6 @@ namespace mts
         int curhp = 0;
         bool alerted = false;
         bool mIsInvincible = false;
-
-        PlayerController* mPlayerController = nullptr;
     };
 
 }

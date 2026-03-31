@@ -347,4 +347,23 @@ namespace mts
         nameToTag.emplace(newName, tag);
         return true;
     }
+    bool Tag::operator==(const std::string& name) const
+    {
+        return TagRegistry::GetName(*this) == name;
+    }
+
+    bool Tag::operator!=(const std::string& name) const
+    {
+        return TagRegistry::GetName(*this) != name;
+    }
+
+    bool Tag::operator==(const char* name) const
+    {
+        return TagRegistry::GetName(*this) == name;
+    }
+
+    bool Tag::operator!=(const char* name) const
+    {
+        return TagRegistry::GetName(*this) != name;
+    }
 }  // namespace mts

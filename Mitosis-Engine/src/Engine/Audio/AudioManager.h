@@ -98,6 +98,8 @@ namespace mts
         void SetCategoryVolume(AudioCategory category, float volume01) const;
         float GetCategoryVolume(AudioCategory category) const;
         void SetCategoryPaused(AudioCategory category, bool paused) const;
+        void PauseAll() const;
+        void ResumeAll() const;
 
         // --- Snapshots (engine-level wrapper) ---
         AudioHandle StartSnapshot(const std::string& snapshotEventId) const;

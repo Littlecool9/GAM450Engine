@@ -14,19 +14,26 @@
 namespace mts
 {
     class Button;
+    class AudioManager;
 }
 
-class ButtonTest : public mts::ScriptBase
+class PauseButton : public mts::ScriptBase
 {
    public:
-    SCRIPT_CLASS(ButtonTest)
+    SCRIPT_CLASS(PauseButton)
 
     void OnCreate() override;
+    void OnUpdate(float dt) override;
     void OnDisable() override;
 
    private:
+    void TogglePause();
+
+    mts::AudioManager* mAudio{nullptr};
     mts::Button* mButton{nullptr};
     mts::Delegate<>::Id mClickId{0};
     mts::Delegate<>::Id mHoverEnterId{0};
     mts::Delegate<>::Id mHoverExitId{0};
+    bool mPausedByThis{false};
+    float mStoredTimeScale{1.0f};
 };

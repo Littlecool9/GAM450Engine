@@ -29,6 +29,11 @@ namespace mts
     {
         uint32_t id;
         bool operator==(const Tag&) const = default;
+
+        bool operator==(const std::string& name) const;
+        bool operator!=(const std::string& name) const;
+        bool operator==(const char* name) const;
+        bool operator!=(const char* name) const;
     };
 
     class TagRegistry

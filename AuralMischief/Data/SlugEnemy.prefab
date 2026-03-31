@@ -10,13 +10,13 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    13.050000190734863,
-                    7.849999904632568,
+                    46.849998474121094,
+                    21.350000381469727,
                     0.0
                 ],
                 "Scale": [
-                    3.0,
-                    3.0,
+                    5.0,
+                    5.0,
                     1.0
                 ],
                 "Rotation": 0.0
@@ -59,7 +59,7 @@
                     1.0
                 ],
                 "Alpha": 1.0,
-                "FrameIndex": 1,
+                "FrameIndex": 6,
                 "ParallaxFactorX": 1.0,
                 "RenderLayer": 1,
                 "TextureResource": "Data/Resources/SlugEnemyTexture.tex",

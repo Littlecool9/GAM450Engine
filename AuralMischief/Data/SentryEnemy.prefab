@@ -1,5 +1,5 @@
 {
-    "UUID": "755d0af4-c804-425c-8d70-9acdf1275bfc",
+    "UUID": "87c10920-19bf-4870-978f-696c66edf436",
     "Name": "SentryEnemy",
     "Layer": 0,
     "Tags": [
@@ -10,8 +10,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    16.75,
-                    9.5,
+                    168.5500030517578,
+                    33.79999923706055,
                     0.0
                 ],
                 "Scale": [
@@ -46,7 +46,7 @@
                 "AngularVelocity": 0.0,
                 "LinearDamping": 0.0,
                 "AngularDamping": 0.0,
-                "GravityScale": 0.0,
+                "GravityScale": 1.0,
                 "BodyType": 1
             }
         },
@@ -157,9 +157,10 @@
                 "Fields": {
                     "EnemyType": "Sentry",
                     "MoveSpeed": 1.5,
-                    "PatrolRadius": 2.0,
+                    "PatrolRadius": 5.0,
                     "AggroRange": 9.0,
-                    "AttackCooldown": 5.0
+                    "AttackCooldown": 5.0,
+                    "IsInvincible": false
                 }
             }
         },

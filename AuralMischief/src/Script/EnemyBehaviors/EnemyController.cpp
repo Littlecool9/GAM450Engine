@@ -48,11 +48,8 @@ namespace mts
     {
         // todo: ActionList deserialization....
         curhp = maxhp;
-
         auto* playerGO = SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
         GetGameObject()->GetComponent<mts::EnemyAgent>()->SetPlayerReference(playerGO);
-        if (playerGO)
-            mPlayerController = playerGO->GetScript<PlayerController>();
         SetEnemyPlans(type);
         origin = GetGameObject()->GetComponent<Transform>()->GetPosition();
     }
@@ -223,11 +220,6 @@ namespace mts
             float damage = hitbox->GetDamage();
             if (!mIsInvincible)
                 curhp -= static_cast<int>(damage);
-            if (mPlayerController)
-            {
-                glm::vec3 pos = GetGameObject()->GetComponent<Transform>()->GetPosition();
-                mPlayerController->OnEnemyHit(damage, pos);
-            }
         }
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {

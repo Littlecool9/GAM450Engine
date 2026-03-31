@@ -51,3 +51,4 @@ imgui.ini
 # ===============================
 .vscode/
 .prettierrc
+.claude/

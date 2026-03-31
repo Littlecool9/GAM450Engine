@@ -15,6 +15,7 @@
 #include "Engine/Conductor/ConductorSystem.h"
 
 #include <glm/common.hpp>
+#include <vector>
 
 class AttackHitboxScript;
 class CameraController;
@@ -62,7 +63,7 @@ class PlayerController : public mts::ScriptBase
     void SetCheckPoint(CheckPoint*);
     void ReturnToCheckPoint();
     void TriggerCameraVFX(bool isAction, bool inWindow);
-    void OnEnemyHit(float damage, glm::vec3 pos);
+    void TakeDamage(int damage);
 
     SCRIPT_CLASS(PlayerController)
 
@@ -71,6 +72,7 @@ class PlayerController : public mts::ScriptBase
     void Jump(bool inWindow);
     void Attack(bool inWindow, bool isChargeAttack);
     void SpawnAttackHitbox(float damage, float scaleX, float scaleY);
+    void RefreshHeartVisuals();
 
     glm::vec2 currVelocity{0.0f, 0.0f};
     std::function<void()> queuedDash = nullptr;
@@ -156,6 +158,16 @@ class PlayerController : public mts::ScriptBase
     // Camera VFX properties
     CameraController* cam = nullptr;
     float mCamZoomSpeed = 0.5f;  // Quick zoom duration
+
+    // HP system
+    int mMaxHP = 3;
+    int mFullHeartFrame = 67;
+    int mEmptyHeartFrame = 39;
+    float mHPStartX = 5.0f;
+    float mHPStartY = 3.0f;
+    float mHPSpacing = 2.2f;
+    int mCurrentHP = 3;
+    std::vector<mts::GameObject*> mHearts;
 
     // Conductor event handlers
     void OnBeat(mts::BeatInfo info);

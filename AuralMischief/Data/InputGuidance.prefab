@@ -1,0 +1,41 @@
+{
+    "UUID": "bcfea507-5e81-458a-a8c0-6bcbf64eabc1",
+    "Name": "InputGuidance",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    7.0,
+                    8.649999618530273,
+                    0.0
+                ],
+                "Scale": [
+                    0.800000011920929,
+                    0.800000011920929,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 177,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/KeyboardUITexture.tex",
+                "MeshResource": "Data/Resources/16x16MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

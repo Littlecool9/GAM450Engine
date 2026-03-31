@@ -11,10 +11,11 @@
 #include "Script/PlatformPuzzleScript.h"
 #include "Script/EnemyBehaviors/EnemyController.h"
 #include "Script/AudioController.h"
-#include "Script/ButtonTest.h"
+#include "Script/PauseButton.h"
 #include "Script/DamageNumberScript.h"
 #include "Script/DamageNumberSpawner.h"
 #include "Script/EnemyBehaviors/BulletBehavior.h"
+#include "Script/BeatPulseScript.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -61,12 +62,14 @@ void AuralMischief::RegisterScripts()
                                        []() { return new mts::EnemyController(); });
     mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
                                        []() { return new AudioController(); });
-    mts::ScriptFactory::RegisterScript(ButtonTest::StaticClassName(),
-                                       []() { return new ButtonTest(); });
+    mts::ScriptFactory::RegisterScript(PauseButton::StaticClassName(),
+                                       []() { return new PauseButton(); });
     mts::ScriptFactory::RegisterScript(DamageNumberScript::StaticClassName(),
                                        []() { return new DamageNumberScript(); });
     mts::ScriptFactory::RegisterScript(DamageNumberSpawner::StaticClassName(),
                                        []() { return new DamageNumberSpawner(); });
     mts::ScriptFactory::RegisterScript(mts::BulletBehavior::StaticClassName(),
                                        []() { return new mts::BulletBehavior(); });
+    mts::ScriptFactory::RegisterScript(BeatPulseScript::StaticClassName(),
+                                       []() { return new BeatPulseScript(); });
 }

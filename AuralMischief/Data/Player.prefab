@@ -194,9 +194,15 @@
           "jumpBeatBoost": 1.0,
           "dashRhythmLock": false,
           "jumpRhythmLock": false,
-          "camZoomSpeed": 0.5,
           "defaultTextureResource": "Data/Resources/PlayerTexture.tex",
           "altTextureResource": "Data/Resources/PlayerTextureAlt.tex"
+          "camZoomSpeed": 0.5,
+          "maxHP": 3,
+          "fullHeartFrame": 67,
+          "emptyHeartFrame": 0,
+          "hpStartX": 5.0,
+          "hpStartY": 3.0,
+          "hpSpacing": 2.2
         }
       }
     }

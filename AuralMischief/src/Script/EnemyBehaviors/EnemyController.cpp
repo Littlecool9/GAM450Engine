@@ -19,6 +19,7 @@
 #include "EnemyActions/EnemyPatrolAction.h"
 #include "EnemyActions/FlyingEnemyAttackAction.h"
 #include "EnemyActions/SentryEnemyAttackAction.h"
+#include "EnemyActions/SlugEnemyAttackAction.h"
 #include "EnemyParameters/AggroRangeParam.h"
 #include "EnemyParameters/AttackCountdownParam.h"
 #include "EnemyParameters/PatrolRadius.h"
@@ -32,8 +33,11 @@
 #include "Engine/SceneSystem/SceneSystem.h"
 
 REGISTER_ENEMY_ACTION("SlugEnemy", mts::EnemyPatrolAction);
+REGISTER_ENEMY_ACTION("SlugEnemy", mts::SlugEnemyAttackAction);
+
 REGISTER_ENEMY_ACTION("SentryEnemy", mts::EnemyPatrolAction);
 REGISTER_ENEMY_ACTION("SentryEnemy", mts::SentryEnemyAttackAction);
+
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyPatrolAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyMoveToPlayerAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::FlyingEnemyAttackAction);
@@ -57,10 +61,15 @@ namespace mts
     {
         if (!mIsInvincible && curhp <= 0)
         {
-            GetGameObject()->Destroy();
+            GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+                AnimationSystem::States::Death);
+            if ( GetGameObject()->GetComponent<Animation>()->GetIsDone())
+            {
+                GetGameObject()->Destroy();
+            }
         }
-
-        if (GetGameObject()->GetComponent<EnemyAgent>()->GetState().GetDistanceToPlayer() <= mAggroRange)
+        auto a = GetGameObject()->GetComponent<EnemyAgent>();
+        if (a->GetState().GetDistanceToPlayer() <= mAggroRange && !a->GetState().GetInAction())
         {
             if (!alerted)
             {
@@ -88,6 +97,16 @@ namespace mts
                     GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
                 }
             }
+            else
+            {
+                if (GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() ==
+                        AnimationSystem::States::Alerted &&
+                    GetGameObject()->GetComponent<Animation>()->GetIsDone())
+                {
+                    GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+                        AnimationSystem::States::Idle);
+                }
+            }
         }
         else
         {
@@ -104,19 +123,20 @@ namespace mts
 
     void EnemyController::SetEnemyPlans(std::string name)
     {
-        if (name == "Crawl")
+        if (name == "SlugEnemy")
         {
+            LOG_INFO("Set to slug");
             enemyType = EnemyType::CrawlEnemy;
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
                 mts::AIPlanner::GetPlannerById("SlugEnemy"));
         }
-        else if (name == "Fly")
+        else if (name == "FlyEnemy")
         {
             enemyType = EnemyType::FlyEnemy;
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
                 mts::AIPlanner::GetPlannerById("FlyEnemy"));
         }
-        else if (name == "Sentry")
+        else if (name == "SentryEnemy")
         {
             enemyType = EnemyType::SentryEnemy;
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
@@ -129,7 +149,8 @@ namespace mts
     {
         if (fields.Has("EnemyType"))
         {
-            type = fields["EnemyType"].GetString("");        
+            type = fields["EnemyType"].GetString("");       
+            SetEnemyPlans(type);
         }
         auto& p = GetGameObject()->GetComponent<EnemyAgent>()->GetState().params;
         if (fields.Has("MoveSpeed"))
@@ -143,6 +164,7 @@ namespace mts
         if (fields.Has("AggroRange"))
         {
             mAggroRange = fields["AggroRange"].GetFloat();
+            LOG_INFO("Setting aggro range: {}", mAggroRange);
             p.emplace(mts::HashAction("AggroRange"), new mts::AggroRangeParam());
             p.at(HashAction("AggroRange"))->SetValue(mAggroRange);
         }
@@ -152,7 +174,13 @@ namespace mts
             p.emplace(mts::HashAction("AttackCooldown"), new mts::AttackCountdownParam());
             static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))->SetCooldownTime(mAttackCooldown);
         }
+        if (fields.Has("HealthPoints"))
+        {
+            maxhp = fields["HealthPoints"].GetInt();
+            curhp = maxhp;
+        }
         p.emplace(mts::HashAction("PlayerHealthRatio"), new mts::PlayerHealthRatioParam());
+        p.at(HashAction("PlayerHealthRatio"))->SetValue(1.0f);
         if (fields.Has("IsInvincible"))
             mIsInvincible = fields["IsInvincible"].GetBool(false);
     }

@@ -1,5 +1,5 @@
 {
-    "UUID": "b140d63d-6f21-4d50-b068-bad81f405c33",
+    "UUID": "a4799054-7bb6-46c8-a1cf-7291eb70fb7c",
     "Name": "SlugEnemy",
     "Layer": 0,
     "Tags": [
@@ -15,8 +15,8 @@
                     0.0
                 ],
                 "Scale": [
-                    3,
-                    3,
+                    3.0,
+                    3.0,
                     1.0
                 ],
                 "Rotation": 0.0
@@ -25,11 +25,11 @@
         {
             "Type": "BoxCollider2D",
             "Data": {
-                "Width": 0.13,
-                "Height": 0.15,
+                "Width": 0.12999999523162842,
+                "Height": 0.15000000596046448,
                 "Offset": [
                     0.0,
-                    -0.05000000074505806
+                    -0.4000000059604645
                 ],
                 "IsTrigger": 0
             }
@@ -83,15 +83,28 @@
             "Data": {
                 "States": [
                     {
+                        "State": 0,
+                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 1,
+                        "FrameCount": 5,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.05999999865889549,
+                        "IsRunning": 0,
+                        "IsLooping": 1
+                    },
+                    {
                         "State": 1,
                         "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 16,
-                        "FrameCount": 2,
+                        "FrameIndex": 12,
+                        "FrameCount": 4,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.06,
+                        "FrameDuration": 0.05999999865889549,
                         "IsRunning": 0,
                         "IsLooping": 1
                     },
@@ -101,10 +114,10 @@
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 8,
-                        "FrameCount": 7,
+                        "FrameIndex": 6,
+                        "FrameCount": 6,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.06,
+                        "FrameDuration": 0.05999999865889549,
                         "IsRunning": 0,
                         "IsLooping": 1
                     },
@@ -114,23 +127,23 @@
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 17,
-                        "FrameCount": 2,
+                        "FrameIndex": 16,
+                        "FrameCount": 3,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.06,
+                        "FrameDuration": 0.11999999731779099,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
-                                        {
+                    {
                         "State": 7,
                         "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 27,
-                        "FrameCount": 17,
+                        "FrameIndex": 22,
+                        "FrameCount": 14,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.06,
+                        "FrameDuration": 0.11999999731779099,
                         "IsRunning": 0,
                         "IsLooping": 0
                     }
@@ -145,7 +158,8 @@
                     "MoveSpeed": 1.5,
                     "PatrolRadius": 2.0,
                     "AggroRange": 5.0,
-                    "AttackCooldown": 5.0
+                    "AttackCooldown": 5.0,
+                    "EnemyType": "SlugEnemy"
                 }
             }
         },

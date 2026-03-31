@@ -19,6 +19,8 @@
 #include <fmt/base.h>
 
 #include "../EnemyController.h"
+#include "Engine/EntitySystem/Component/Animation.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 #include "Engine/Helpers/Random.h"
 
 namespace mts
@@ -43,8 +45,6 @@ namespace mts
     void EnemyPatrolAction::OnBeginning(EnemyAgent& agent)
     {
 
-        agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-            AnimationSystem::States::Walking);
 
         LOG_INFO("Patrolling!");
 
@@ -67,54 +67,117 @@ namespace mts
     {
         if (!agent)
             return Invalid;
-        //LOG_INFO("Update action ptr = {}", static_cast<void*>(this));
-        auto s = agent->GetState();
+        auto o = agent->GetGameObject();
+        if (o->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Alerted && !o->GetComponent<Animation>()->GetIsDone())
+        {
+            return OnGoing;  // wait until alerted animation is done before moving
+        }
+        else
+        {
+            agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+                AnimationSystem::States::Walking);
+        }
+        auto* go = agent->GetGameObject();
+        if (!go)
+            return Invalid;
+
+        auto* controller = go->GetScript<EnemyController>();
+        auto* transform = go->GetComponent<Transform>();
+        auto* sprite = go->GetComponent<SpriteRenderer>();
+        auto* rb = go->GetComponent<RigidBody2D>();
+
+        if (!controller || !transform || !sprite || !rb)
+            return Invalid;
+
+        EnemyState s = agent->GetState();
+
+        // Stop patrolling once player is close enough
         auto it = s.params.find(HashAction("AggroRange"));
         if (it != s.params.end() && it->second != nullptr)
         {
-            auto* p = it->second;
-
-            if (s.GetDistanceToPlayer() <= std::get<float>(p->GetValue()))
+            const float aggroRange = std::get<float>(it->second->GetValue());
+            if (s.GetDistanceToPlayer() <= aggroRange)
             {
+                rb->SetVelocity({0.0f, rb->GetVelocity().y});
                 return Success;
             }
         }
-        glm::vec3 origin = agent->GetGameObject()->GetScript<EnemyController>()->GetOriginPos();
-        glm::vec3 pos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();
-        
-        float x = pos.x;
 
-        int facing = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
+        const glm::vec3 origin3 = controller->GetOriginPos();
+        const glm::vec3 pos3 = transform->GetPosition();
 
-        // Move
-        float spd = agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
-        x += static_cast<float>(facing) * spd * dt;
+        const float originX = origin3.x;
+        const float x = pos3.x;
+        const float spd = controller->GetMoveSpeed();
+        const float patrolRadius = controller->GetPatrolRadius();
 
-        // Distance from origin
-        float dist = x - origin.x;
+        // true = facing left, false = facing right
+        bool flipX = sprite->GetFlipX();
+        int facing = flipX ? -1 : 1;
 
-        // Flip direction if beyond radius
-        if (dist > agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius())
+        const float distFromOrigin = x - originX;
+
+        float desiredVelX = 0.0f;
+
+        // If outside patrol range, walk back toward actual origin first
+        if (std::abs(distFromOrigin) > patrolRadius)
         {
-            x = origin.x + agent->GetGameObject()
-                               ->GetScript<EnemyController>()
-                               ->GetPatrolRadius();  // clamp (prevents overshoot)
-            facing = -1;
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
+            if (distFromOrigin > 0.0f)
+            {
+                // too far right -> go left toward origin
+                facing = -1;
+                sprite->SetFlipX(true);
+            }
+            else
+            {
+                // too far left -> go right toward origin
+                facing = 1;
+                sprite->SetFlipX(false);
+            }
+
+            desiredVelX = static_cast<float>(facing) * spd;
+
+            // stop once close enough to origin to avoid oscillation
+            const float stopThreshold = 0.05f;
+            if (std::abs(distFromOrigin) <= stopThreshold)
+            {
+                desiredVelX = 0.0f;
+            }
         }
-        else if (dist < -agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius())
+        else
         {
-            x = origin.x - agent->GetGameObject()->GetScript<EnemyController>()->GetPatrolRadius();
-            facing = 1;
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
+            // Normal patrol inside patrol zone
+            desiredVelX = static_cast<float>(facing) * spd;
+
+            // Predict next x using velocity * dt so we can flip before crossing too far
+            const float nextX = x + desiredVelX * dt;
+            const float nextDist = nextX - originX;
+
+            if (nextDist > patrolRadius)
+            {
+                facing = -1;
+                sprite->SetFlipX(true);
+                desiredVelX = -spd;
+            }
+            else if (nextDist < -patrolRadius)
+            {
+                facing = 1;
+                sprite->SetFlipX(false);
+                desiredVelX = spd;
+            }
         }
-        pos.x = x;
-        if (agent->GetGameObject()->GetScript<EnemyController>()->GetEnemyType() ==
-            EnemyType::FlyEnemy)
+
+        // Preserve Y velocity if using gravity / vertical motion
+        rb->SetVelocity({desiredVelX, rb->GetVelocity().y});
+
+        // For flying enemies, keep them on their patrol Y
+        if (controller->GetEnemyType() == EnemyType::FlyEnemy)
         {
-            pos.y = origin.y;
+            glm::vec3 correctedPos = transform->GetPosition();
+            correctedPos.y = origin3.y;
+            transform->SetPosition(correctedPos);
         }
-        agent->GetGameObject()->GetComponent<Transform>()->SetPosition(pos);
+
         return OnGoing;
     }
 

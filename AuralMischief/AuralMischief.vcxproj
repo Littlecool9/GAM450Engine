@@ -191,6 +191,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
     <ClInclude Include="src\Script\Player\PlayerParticleController.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\AuralMischief.h" />
@@ -237,6 +238,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\RhythmSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\Player\PlayerParticleController.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

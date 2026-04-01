@@ -28,13 +28,9 @@ Rahul
 		[x] On-beat attack sound
 		[x] Off-beat attack sound
 
-[-] On-beat and Off-beat attack overlays
+[x] On-beat and Off-beat attack overlays
 
-[-] Full BGM development
 [-] Tileset arrangement
-[-] Boss BGM
-	[-] Transitional phases, phase 1 -> transitional phase BGM -> Phase 2
-	[-] for transitional phase bgm, refer to discord message
 
 Sumin
 -----
@@ -43,14 +39,12 @@ Sumin
 	[x] Damage math
 	[x] Displaying damage on attacks
 [x] UI system framework
-[-] All systems review (lower priority)
-[-] Unit tests for all modules (lower priority)
 
 Josh
 ----
 [x] Player statemachine polish
-[-] Light attack on glow beat (trigger on glow)
-[-] Heavy attack on glow beat (hold and release on glow)
+[x] Light attack on glow beat (trigger on glow)
+[x] Heavy attack on glow beat (hold and release on glow)
 	[-] On-beat validation effect
 	[-] Off-beat validation effect
 [-] Particle effects on attack
@@ -61,7 +55,7 @@ Jackey
 ------
 [x] Level design polish
 [-] Camera movement polish
-[-] Camera post processing
+[-] Camera post processing (adding shaders to the camera)
 [-] UI system
 	[-] Main menu, In-game pause
 

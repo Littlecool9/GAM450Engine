@@ -33,6 +33,7 @@
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
 
 REGISTER_ENEMY_ACTION("SlugEnemy", mts::EnemyPatrolAction);
 REGISTER_ENEMY_ACTION("SlugEnemy", mts::SlugEnemyAttackAction);

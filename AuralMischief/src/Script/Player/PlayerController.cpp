@@ -49,6 +49,8 @@ void PlayerController::Init()
     mSpawner = GetGameObject()->GetScript<DamageNumberSpawner>();
 
     defaultGravityScale = rb->GetGravityScale();
+
+    InitHP();
 }
 
 void PlayerController::Awake()
@@ -91,15 +93,15 @@ void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    float upStrength = mts::Input::IsKeyDown(mts::Key::Up) ? 1.0f : 0.0f;
-    float downStrength = mts::Input::IsKeyDown(mts::Key::Down) ? 1.0f : 0.0f;
-    float leftStrength = mts::Input::IsKeyDown(mts::Key::Left) ? 1.0f : 0.0f;
-    float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) ? 1.0f : 0.0f;
+    float upStrength = mts::Input::IsKeyDown(mts::Key::Up) || mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
+    float downStrength = mts::Input::IsKeyDown(mts::Key::Down) || mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
+    float leftStrength = mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
+    float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
     glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
     bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift);
-    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z);
-    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::Z);
+    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z) || mts::Input::IsKeyPressed(mts::Key::J);
+    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::Z) || mts::Input::IsKeyReleased(mts::Key::J);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
@@ -291,8 +293,8 @@ void PlayerController::OnFixedUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left);
-    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right);
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A);
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D);
 
     // Get facing direction
     float moveDir = 0.0f;
@@ -457,6 +459,12 @@ void PlayerController::SerializeFields(mts::JsonDocument& out) const
     out.WriteFloat("camZoomSpeed", mCamZoomSpeed);
     out.WriteString("defaultTextureResource", mDefaultTextureResource);
     out.WriteString("altTextureResource", mAltTextureResource);
+    out.WriteInt("maxHP", mMaxHP);
+    out.WriteInt("fullHeartFrame", mFullHeartFrame);
+    out.WriteInt("emptyHeartFrame", mEmptyHeartFrame);
+    out.WriteFloat("hpStartX", mHPStartX);
+    out.WriteFloat("hpStartY", mHPStartY);
+    out.WriteFloat("hpSpacing", mHPSpacing);
 }
 
 void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -554,6 +562,30 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     fields.push_back({.name = "camZoomSpeed",
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mCamZoomSpeed},
+                      .step = 0.1f});
+    fields.push_back({.name = "maxHP",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mMaxHP},
+                      .step = 1});
+    fields.push_back({.name = "fullHeartFrame",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mFullHeartFrame},
+                      .step = 1});
+    fields.push_back({.name = "emptyHeartFrame",
+                      .type = mts::ScriptField::Type::Int,
+                      .ptr = {.i = &mEmptyHeartFrame},
+                      .step = 1});
+    fields.push_back({.name = "hpStartX",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPStartX},
+                      .step = 0.1f});
+    fields.push_back({.name = "hpStartY",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPStartY},
+                      .step = 0.1f});
+    fields.push_back({.name = "hpSpacing",
+                      .type = mts::ScriptField::Type::Float,
+                      .ptr = {.f = &mHPSpacing},
                       .step = 0.1f});
 }
 
@@ -832,9 +864,12 @@ void PlayerController::RefreshHeartVisuals()
 {
     for (int i = 0; i < mMaxHP && i < static_cast<int>(mHearts.size()); ++i)
     {
+        LOG_INFO("Refreshing heart {}: current HP {}, max HP {}", i, mCurrentHP, mMaxHP);
         auto* sr = mHearts[i]->GetComponent<mts::SpriteRenderer>();
         if (sr)
+        {
             sr->SetFrame(i < mCurrentHP ? mFullHeartFrame : mEmptyHeartFrame);
+        }
     }
 }
 
@@ -866,4 +901,40 @@ void PlayerController::OnEnemyHit(float damage, glm::vec3 pos)
 {
     if (mSpawner)
         mSpawner->Spawn(damage, pos);
+}
+
+void PlayerController::InitHP()
+{
+    // HP system initialization
+    mCurrentHP = mMaxHP;
+
+    // Collect existing "HP" GameObjects from the scene
+    mHearts.clear();
+    mts::Scene* scene = mts::SceneSystem::GetCurrentScene();
+    for (auto* go : scene->GetGameObjects())
+    {
+        if (go->GetName() == "HP")
+            mHearts.push_back(go);
+    }
+
+    // Spawn additional hearts from prefab if needed
+    while (static_cast<int>(mHearts.size()) < mMaxHP)
+    {
+        mts::GameObject* heart = mts::GameObjectFactory::CreateFromArchetype("Data/HP.prefab");
+        mHearts.push_back(heart);
+    }
+
+    // Deactivate surplus hearts
+    for (int i = mMaxHP; i < static_cast<int>(mHearts.size()); ++i)
+        mHearts[i]->SetActive(false);
+
+    // Position all active hearts and set to full
+    for (int i = 0; i < mMaxHP; ++i)
+    {
+        mHearts[i]->SetActive(true);
+        if (auto* uiTr = mHearts[i]->GetComponent<mts::UITransform>())
+            uiTr->SetPosition(glm::vec3(mHPStartX + i * mHPSpacing, mHPStartY, 0.0f));
+        if (auto* sr = mHearts[i]->GetComponent<mts::SpriteRenderer>())
+            sr->SetFrame(mFullHeartFrame);
+    }
 }

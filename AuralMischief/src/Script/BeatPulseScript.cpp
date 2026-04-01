@@ -77,18 +77,12 @@ void BeatPulseScript::DeserializeFields(mts::JsonValue const& fields)
         mAmplitude = fields["Amplitude"].GetFloat(mAmplitude);
     if (fields.Has("Decay"))
         mDecay = fields["Decay"].GetFloat(mDecay);
-    if (fields.Has("XPos"))
-        mXPos = fields["XPos"].GetFloat(mXPos);
-    if (fields.Has("YPos"))
-        mYPos = fields["YPos"].GetFloat(mYPos);
 }
 
 void BeatPulseScript::SerializeFields(mts::JsonDocument& out) const
 {
     out.WriteFloat("Amplitude", mAmplitude);
     out.WriteFloat("Decay", mDecay);
-    out.WriteFloat("XPos", mXPos);
-    out.WriteFloat("YPos", mYPos);
 }
 
 void BeatPulseScript::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -101,12 +95,4 @@ void BeatPulseScript::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mDecay},
                       .step = 0.5f});
-    fields.push_back({.name = "XPos",
-                      .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mXPos},
-                      .step = 0.01f});
-    fields.push_back({.name = "YPos",
-                      .type = mts::ScriptField::Type::Float,
-                      .ptr = {.f = &mYPos},
-                      .step = 0.01f});
 }

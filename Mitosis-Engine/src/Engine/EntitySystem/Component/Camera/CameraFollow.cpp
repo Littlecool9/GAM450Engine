@@ -20,7 +20,7 @@ namespace mts
         : ObjectToFollow(nullptr),
           MaxAccel(1.0f),
           Interpolant(1.0f),
-          SpeedLimit(0.0f),
+          Velocity(0.0f),
           CameraOffset(0.0f)
     {
     }
@@ -29,7 +29,7 @@ namespace mts
           ObjectToFollow(nullptr),
           MaxAccel(1.0f),
           Interpolant(1.0f),
-          SpeedLimit(0.0f),
+          Velocity(0.0f),
           CameraOffset(0.0f)
     {
     }
@@ -95,6 +95,12 @@ namespace mts
     {
         Interpolant = interpolant;
     }
+    void CameraFollow::SetSpeedLimit(float v)
+    {
+        float len = glm::length(Velocity);
+        if (len > 0.0001f)
+            Velocity = (Velocity / len) * v;
+    }
     void CameraFollow::FollowTarget(float dt)
     {
         if (!ObjectToFollow || dt <= 0.0f)
@@ -107,33 +113,49 @@ namespace mts
         glm::vec3 target = ObjectToFollow->GetPosition() + CameraOffset;
         glm::vec2 toTarget(target.x - cur.x, target.y - cur.y);
         float dist = glm::length(toTarget);
+
         if (dist < 0.0001f)
+        {
+            Velocity = glm::vec2(0.0f);
             return;
+        }
 
-        glm::vec2 step = toTarget * (Interpolant * dt);
+        // Desired velocity: exponential-decay style, speed proportional to distance
+        glm::vec2 desiredVelocity = toTarget * Interpolant;
 
-        float maxStep = SpeedLimit * dt;
-        float stepLen = glm::length(step);
-        if (stepLen > maxStep)
-            step = (step / stepLen) * maxStep;
+        // Compute needed change in velocity (acceleration)
+        glm::vec2 accel = desiredVelocity - Velocity;
+        float accelMag = glm::length(accel);
 
-        // Prevent overshoot
+        // Clamp acceleration to MaxAccel
+        float maxAccelThisFrame = MaxAccel * dt;
+        if (accelMag > maxAccelThisFrame && accelMag > 0.0001f)
+        {
+            accel = (accel / accelMag) * maxAccelThisFrame;
+        }
+
+        // Apply acceleration to get new velocity
+        Velocity += accel;
+
+        // Compute movement step
+        glm::vec2 step = Velocity * dt;
+
+        // Overshoot guard: don't move past the target
         if (glm::length(step) > dist)
+        {
             step = toTarget;
+            Velocity = toTarget / dt;
+        }
 
-        glm::vec3 oldPos = cur;
-        transform->SetPosition(oldPos + glm::vec3(step, 0.0f));  // preserves Z
-
-        // Update SpeedLimit (velocity cap) for next frame
-        float moved = glm::length(transform->GetPosition() - oldPos);
-        float vel = moved / dt;
-        SpeedLimit = vel + (MaxAccel * dt);
+        // Apply movement (preserve Z)
+        transform->SetPosition(cur + glm::vec3(step, 0.0f));
     }
     Component* CameraFollow::Clone(GameObject* newOwner) const
     {
         CameraFollow* c = new CameraFollow(*this);
         c->InitFromClone(newOwner);
         c->ObjectToFollow = ObjectToFollow;
+        c->Velocity = glm::vec2(0.0f);
         return c;
     }
 }  // namespace mts

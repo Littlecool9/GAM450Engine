@@ -35,9 +35,6 @@ class BeatPulseScript : public mts::ScriptBase
     float mAmplitude = 0.25f;  // A  — peak overshoot above 1.0
     float mDecay = 10.0f;      // k  — decay speed (higher = faster return)
 
-    float mXPos = 0.0f;
-    float mYPos = 0.0f;
-
     float mTimer = 0.0f;
     bool mAnimating = false;
 };

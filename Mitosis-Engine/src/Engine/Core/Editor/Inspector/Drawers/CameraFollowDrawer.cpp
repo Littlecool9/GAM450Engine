@@ -102,9 +102,8 @@ namespace mts
             if (ImGui::DragFloat("Interpolant", &interp, 0.05f))
                 cf->SetInterpolant(interp);
 
-            float speedLimit = cf->GetSpeedLimit();
-            if (ImGui::DragFloat("Speed Limit", &speedLimit, 0.05f))
-                cf->SetSpeedLimit(speedLimit);
+            float currentSpeed = cf->GetSpeedLimit();
+            ImGui::Text("Current Speed: %.2f", currentSpeed);
 
             glm::vec3 offset = cf->GetCameraOffset();
             if (ImGui::DragFloat3("Camera Offset", &offset.x, 0.05f))

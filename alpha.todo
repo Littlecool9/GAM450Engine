@@ -55,7 +55,7 @@ Jackey
 ------
 [x] Level design polish
 [-] Camera movement polish
-[-] Camera post processing (adding shaders to the camera)
+[x] Camera post processing (adding shaders to the camera)
 [-] UI system
 	[-] Main menu, In-game pause
 

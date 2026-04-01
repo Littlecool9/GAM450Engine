@@ -76,6 +76,7 @@ class PlayerController : public mts::ScriptBase
     void Attack(bool inWindow, bool isChargeAttack);
     void SpawnAttackHitbox(float damage, float scaleX, float scaleY, PlayerParticleController::ParticleType type);
     void RefreshHeartVisuals();
+    void InitHP();
 
     glm::vec2 currVelocity{0.0f, 0.0f};
     std::function<void()> queuedDash = nullptr;

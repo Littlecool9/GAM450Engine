@@ -20,11 +20,16 @@ void PauseButton::Init()
 {
     mButton = GetGameObject()->GetComponent<mts::Button>();
     if (!mButton)
+    {
         LOG_WARN("PauseButton: no Button component found on '{}'",
                  GetGameObject()->GetName().c_str());
+        return;
+    }
     mAudio = &mts::AudioManager::Get();
     if (!mAudio->isInitialized())
+    {
         LOG_WARN("PauseButton: AudioManager not initialized");
+    }
 }
 
 void PauseButton::Awake()

@@ -36,9 +36,9 @@ namespace mts
         void      SetTargetId(UUID id)        { mTargetId = id; }
         float     GetMaxAcceleration()  const { return MaxAccel; }
         float     GetInterpolant()      const { return Interpolant; }
-        float     GetSpeedLimit()       const { return SpeedLimit; }
+        float     GetSpeedLimit()       const { return glm::length(Velocity); }
         glm::vec3 GetCameraOffset()     const { return CameraOffset; }
-        void      SetSpeedLimit(float v)       { SpeedLimit = v; }
+        void      SetSpeedLimit(float v);
         void      SetCameraOffset(glm::vec3 v) { CameraOffset = v; }
 
        private:
@@ -49,7 +49,8 @@ namespace mts
         // Percentage of distance to interpolate over one second
         float Interpolant;
 
-        float SpeedLimit;
+        // Persistent velocity vector (units/second, 2D)
+        glm::vec2 Velocity;
         glm::vec3 CameraOffset;
     };
 

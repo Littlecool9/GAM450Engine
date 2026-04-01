@@ -9,7 +9,7 @@
             "Data": {
                 "Class": "AudioController",
                 "Fields": {
-                    "MusicEventPath": "event:/Playable - BGM",
+                    "MusicEventPath": "event:/lvl1_bgm",
                     "Bpm": 120.0,
                     "BeatsPerBar": 4,
                     "OffsetSec": 0.0,

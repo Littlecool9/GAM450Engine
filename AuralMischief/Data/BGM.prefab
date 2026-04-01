@@ -31,7 +31,7 @@
     {
       "Type": "AudioEmitter",
       "Data": {
-        "EventId": "event:/Playable - BGM",
+        "EventId": "event:/lvl1_bgm",
         "PositionOffset": [
           0.0,
           0.0

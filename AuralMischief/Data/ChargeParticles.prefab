@@ -1,0 +1,71 @@
+{
+    "UUID": "6bbb578c-1ce8-498b-ace8-7365f8aad749",
+    "Name": "ChargeParticles",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "ParticleEmitter",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    0.8999999761581421,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "TextureResource": "Data/Resources/ParticlesTexture.tex",
+                "MeshResource": "Data/Resources/1x6MeshResource.mesh",
+                "FrameIndex": -1,
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                "Scale": [
+                    0.0,
+                    0.0
+                ],
+                "ParticleScaleMin": [
+                    0.30000001192092896,
+                    0.30000001192092896
+                ],
+                "ParticleScaleMax": [
+                    0.699999988079071,
+                    0.699999988079071
+                ],
+                "Acceleration": [
+                    0.0,
+                    0.0
+                ],
+                "DirectionRange": [
+                    0.0,
+                    6.28000020980835
+                ],
+                "EmitRate": 30.0,
+                "EmitMax": 250,
+                "LifetimeMin": 0.30000000298023224,
+                "LifetimeMax": 0.40000001192092896,
+                "SpeedMin": 3.0,
+                "SpeedMax": 5.0,
+                "RotationSpeedMin": 0.20000000298023224,
+                "RotationSpeedMax": 0.4000000059604645,
+                "RotationMin": 0.0,
+                "RotationMax": 0.0,
+                "OneShot": false,
+                "IsRunning": false
+            }
+        }
+    ]
+}

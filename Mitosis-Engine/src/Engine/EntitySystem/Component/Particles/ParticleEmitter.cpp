@@ -118,7 +118,7 @@ namespace mts
             cmd.texture = mTexture;
             cmd.mesh = mMesh;
             cmd.model = T * R * S;
-            cmd.uvOffset = mUvOffset;
+            cmd.uvOffset = particle.uvOffset;
             cmd.tintColor = mTintColor;
             cmd.alpha = mAlpha * (particle.lifetime / mLifetimeMin);
             cmd.sortKey = emitterZ;
@@ -175,12 +175,10 @@ namespace mts
         }
 
         // Read in starting frame index
-        int frameIndex = 0;
         if (jsonObj.Has("FrameIndex"))
         {
-            frameIndex = jsonObj["FrameIndex"].GetInt(frameIndex);
+            mFrameIndex = jsonObj["FrameIndex"].GetInt(mFrameIndex);
         }
-        SetFrame(frameIndex);
 
         // Read in shader resource
         auto shaderResourcePath = "";
@@ -222,9 +220,9 @@ namespace mts
         if (jsonObj.Has("RotationMax"))
             mRotationMax = jsonObj["RotationMax"].GetFloat(mRotationMax);
         if (jsonObj.Has("OneShot"))
-            mOneShot = jsonObj["OneShot"].GetInt(mOneShot);
+            mOneShot = jsonObj["OneShot"].GetBool(mOneShot);
         if (jsonObj.Has("IsRunning"))
-            mIsRunning = jsonObj["IsRunning"].GetInt(mIsRunning);
+            mIsRunning = jsonObj["IsRunning"].GetBool(mIsRunning);
 
         if (mContainer != nullptr)
             delete mContainer;
@@ -266,21 +264,18 @@ namespace mts
         doc.WriteFloat("RotationMin", mRotationMin);
         doc.WriteFloat("RotationMax", mRotationMax);
 
-        doc.WriteInt("OneShot", mOneShot ? 1 : 0);
-        doc.WriteInt("IsRunning", mIsRunning ? 1 : 0);
+        doc.WriteBool("OneShot", mOneShot);
+        doc.WriteBool("IsRunning", mIsRunning);
 
         doc.EndObject();
     }
 
-    void ParticleEmitter::SetFrame(int frameIndex)
+    void ParticleEmitter::SetFrame(int frameIndex, Particle* particle)
     {
-        // Set member variable
-        mFrameIndex = frameIndex;
-
         // Calculate texture offset
-        mUvOffset = {
-            (1.0f / static_cast<float>(mNumCols)) * static_cast<float>(mFrameIndex % mNumCols),
-            (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(mFrameIndex / mNumCols)};
+        particle->uvOffset = {
+            (1.0f / static_cast<float>(mNumCols)) * static_cast<float>(frameIndex % mNumCols),
+            (1.0f / static_cast<float>(mNumRows)) * static_cast<int>(frameIndex / mNumCols)};
     }
 
     void ParticleEmitter::EmitParticle()
@@ -290,6 +285,15 @@ namespace mts
         Particle* particle = mContainer->AllocateParticle();
         if (particle)
         {
+            if (mFrameIndex >= 0 && mFrameIndex < mNumRows * mNumCols)
+            {
+                SetFrame(mFrameIndex, particle);
+            }
+            else
+            {
+                SetFrame(Random::Range(0, mNumRows * mNumCols - 1), particle);    
+            }
+
             // Set random lifetime between min and max
             particle->lifetime = Random::Range(mLifetimeMin, mLifetimeMax);
 

@@ -74,7 +74,7 @@ class PlayerController : public mts::ScriptBase
     void Dash(glm::vec2 inputDir, bool inWindow, float speedScale);
     void Jump(bool inWindow);
     void Attack(bool inWindow, bool isChargeAttack);
-    void SpawnAttackHitbox(float damage, float scaleX, float scaleY);
+    void SpawnAttackHitbox(float damage, float scaleX, float scaleY, PlayerParticleController::ParticleType type);
     void RefreshHeartVisuals();
 
     glm::vec2 currVelocity{0.0f, 0.0f};

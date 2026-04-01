@@ -178,7 +178,7 @@ void PlayerController::OnUpdate(float dt)
     {
         if (attackHeldLength < 0.35f)
         {
-            if (!mAttackRhythmLock || (mAttackRhythmLock && inWindow))
+            if (!isAttacking)
             {
                 Attack(inWindow, false);
             }
@@ -274,6 +274,17 @@ void PlayerController::OnUpdate(float dt)
             sprite->SetTexture(defaultTexture);
         chargeFlashTimer = -1.0f;
     }
+
+    if (isCharging)
+    {
+        particleController.UpdateParticlePositions(transform->GetPosition());
+        particleController.StartParticleEmitter(PlayerParticleController::CHARGE);
+    }
+    else
+    {
+        particleController.StopParticleEmitter(PlayerParticleController::CHARGE);
+    }
+    //particleController.UpdateParticlePositions(transform->GetPosition());
 }
 
 void PlayerController::OnFixedUpdate(float dt)
@@ -595,8 +606,8 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
 {
     glm::vec2 dashDir{0.0f, 0.0f};
     // If not holding a direction, use direction character is facing (left or right)
-    // if (inputDir == glm::vec2(0))
-    if (inputDir.x == 0)
+    if (inputDir == glm::vec2(0))
+    //if (inputDir.x == 0)
         facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
     else
         dashDir = inputDir;
@@ -637,9 +648,10 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
     if (isChargeAttack)
     {
         // On beat charge attack
-        if (inWindow && numBeatsCharged == 4)
+        if (inWindow && numBeatsCharged >= 4)
         {
-            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOnBeatHeavyDamage, 3.0f, 2.5f); };
+            queuedAttackSpawn = [this]()
+            { SpawnAttackHitbox(mOnBeatHeavyDamage, 3.0f, 2.5f, PlayerParticleController::ON_BEAT_HEAVY); };
             LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
                      numBeatsCharged,
                      mOnBeatHeavyDamage);
@@ -647,7 +659,13 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         // Off beat charge attack
         else
         {
-            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOffBeatHeavyDamage, 3.0f, 2.5f); };
+            queuedAttackSpawn = [this]()
+            {
+                SpawnAttackHitbox(mOffBeatHeavyDamage,
+                                  3.0f,
+                                  2.5f,
+                                  PlayerParticleController::OFF_BEAT_HEAVY);
+            };
             LOG_INFO("Heavy attacked {} beat, held for {} beats, dealt {} damage",
                      inWindow ? "on" : "off",
                      numBeatsCharged,
@@ -666,11 +684,23 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         // On beat light attack
         if (inWindow)
         {
-            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOnBeatLightDamage, 3.0f, 1.2f); };
+            queuedAttackSpawn = [this]()
+            {
+                SpawnAttackHitbox(mOnBeatLightDamage,
+                                  3.0f,
+                                  1.2f,
+                                  PlayerParticleController::ON_BEAT_LIGHT);
+            };
         }
         else
         {
-            queuedAttackSpawn = [this]() { SpawnAttackHitbox(mOffBeatLightDamage, 3.0f, 1.2f); };
+            queuedAttackSpawn = [this]()
+            {
+                SpawnAttackHitbox(mOffBeatLightDamage,
+                                  3.0f,
+                                  1.2f,
+                                  PlayerParticleController::OFF_BEAT_LIGHT);
+            };
         }
         LOG_INFO("Light attacked {} beat", inWindow ? "on" : "off");
 
@@ -687,7 +717,10 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
     attackTimer = mAttackCooldown;
 }
 
-void PlayerController::SpawnAttackHitbox(float damage, float scaleX, float scaleY)
+void PlayerController::SpawnAttackHitbox(float damage,
+                                         float scaleX,
+                                         float scaleY,
+                                         PlayerParticleController::ParticleType type)
 {
     if (!attackHitbox)
     {
@@ -701,20 +734,25 @@ void PlayerController::SpawnAttackHitbox(float damage, float scaleX, float scale
     if (!attackHitboxTransform)
         return;
     glm::vec2 hitBoxPos = transform->GetPosition();
+    glm::vec2 particlePos = transform->GetPosition();
     if (facingDir == LEFT)
     {
         hitBoxPos.x -= mAttackHitboxOffsetX;
+        particlePos.x -= scaleX * mAttackHitboxOffsetX;
         attackHitboxDirection = LEFT;
     }
     else if (facingDir == RIGHT)
     {
         hitBoxPos.x += mAttackHitboxOffsetX;
+        particlePos.x += scaleX * mAttackHitboxOffsetX;
         attackHitboxDirection = RIGHT;
     }
     attackHitboxTransform->SetPosition(hitBoxPos);
     attackHitboxTransform->SetScale(glm::vec3(scaleX, scaleY, 0.0f));
     // Set damage of hitbox
     attackHitboxScript->SetDamage(damage);
+
+    particleController.SpawnParticleEmitter(type, particlePos);
 }
 
 void PlayerController::SetCheckPoint(CheckPoint* checkPoint)

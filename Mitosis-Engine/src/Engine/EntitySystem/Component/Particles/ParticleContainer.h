@@ -25,6 +25,7 @@ namespace mts
 
         // Particle specific variables
         float lifetime{0.0f};
+        glm::vec2 uvOffset{0.0f, 0.0f};
     };
 
 

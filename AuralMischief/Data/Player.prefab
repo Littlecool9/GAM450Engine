@@ -195,14 +195,14 @@
           "dashRhythmLock": false,
           "jumpRhythmLock": false,
           "defaultTextureResource": "Data/Resources/PlayerTexture.tex",
-          "altTextureResource": "Data/Resources/PlayerTextureAlt.tex"
+          "altTextureResource": "Data/Resources/PlayerTextureAlt.tex",
           "camZoomSpeed": 0.5,
           "maxHP": 3,
           "fullHeartFrame": 67,
-          "emptyHeartFrame": 0,
-          "hpStartX": 5.0,
-          "hpStartY": 3.0,
-          "hpSpacing": 2.2
+          "emptyHeartFrame": 39,
+          "hpStartX": 2.1500000953674316,
+          "hpStartY": 1.399999976158142,
+          "hpSpacing": 1.7000000476837158
         }
       }
     }

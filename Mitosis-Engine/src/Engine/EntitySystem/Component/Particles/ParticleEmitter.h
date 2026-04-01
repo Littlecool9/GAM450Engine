@@ -41,7 +41,7 @@ namespace mts
         void SubmitRenderCommand() const override;
         
 
-        void SetFrame(int frameIndex);
+        void SetFrame(int frameIndex, Particle* particle);
         void EmitParticle();
         void ForEachParticle(std::function<void(Particle& particle, float dt)> const& lambda,
                              float dt);
@@ -50,6 +50,8 @@ namespace mts
         void SetAcceleration(glm::vec2 v) { mAcceleration = v; }
 
         void ToggleEmitter() { mIsRunning ^= true; }
+        void StartEmitter() { mIsRunning = true; }
+        void StopEmitter() { mIsRunning = false; }
         Component* Clone(GameObject* newOwner) const override;
 
         Mesh* GetMesh() const { return mMesh; }
@@ -104,7 +106,6 @@ namespace mts
         Shader* mShader{nullptr};
         float mAlpha{1.0f};
         glm::vec3 mTintColor{1.0f, 1.0f, 1.0f};
-        glm::vec2 mUvOffset{0.0f, 0.0f};
         int mNumRows = 1;
         int mNumCols = 1;
         int mFrameIndex = 0;

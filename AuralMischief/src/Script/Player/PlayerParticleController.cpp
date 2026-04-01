@@ -15,16 +15,12 @@
 
 PlayerParticleController::PlayerParticleController()
 {
-    chargeParticlesObject = mts::GameObjectFactory::CreateFromArchetype("Data/ChargeParticles.prefab");
-    chargeParticlesObject->SetActive(false);
-    chargeParticles = chargeParticlesObject->GetComponent<mts::ParticleEmitter>();
+    
 }
 
 PlayerParticleController::~PlayerParticleController()
 {
-    if (chargeParticlesObject)
-        chargeParticlesObject->Destroy();
-    chargeParticlesObject = nullptr;
+
 }
 
 // Player calls this with its position each frame to keep
@@ -42,12 +38,21 @@ void PlayerParticleController::UpdateParticlePositions(glm::vec2 pos)
 // Starts a particle emitter of given type
 void PlayerParticleController::StartParticleEmitter(ParticleType type)
 {
+    if (!chargeParticlesObject)
+    {
+        chargeParticlesObject =
+            mts::GameObjectFactory::CreateFromArchetype("Data/ChargeParticles.prefab");
+        if (chargeParticlesObject)
+        {
+            chargeParticles = chargeParticlesObject->GetComponent<mts::ParticleEmitter>();
+        }
+    }
+
     switch (type)
     {
         case CHARGE:
-            chargeParticlesObject->SetActive(true);
             if (chargeParticles)
-                chargeParticles->ToggleEmitter();
+                chargeParticles->StartEmitter();
             break;
         default:
             break;
@@ -60,9 +65,8 @@ void PlayerParticleController::StopParticleEmitter(ParticleType type)
     switch (type)
     {
         case CHARGE:
-            chargeParticlesObject->SetActive(false);
             if (chargeParticles)
-                chargeParticles->ToggleEmitter();
+                chargeParticles->StopEmitter();
             break;
         default:
             break;
@@ -79,27 +83,24 @@ void PlayerParticleController::SpawnParticleEmitter(ParticleType type, glm::vec2
         case ON_BEAT_LIGHT:
             particleObject =
                 mts::GameObjectFactory::CreateFromArchetype("Data/OnBeatLightParticles.prefab");
-            transform = particleObject->GetComponent<mts::Transform>();
             break;
         case OFF_BEAT_LIGHT:
             particleObject =
                 mts::GameObjectFactory::CreateFromArchetype("Data/OffBeatLightParticles.prefab");
-            transform = particleObject->GetComponent<mts::Transform>();
             break;
         case ON_BEAT_HEAVY:
             particleObject =
                 mts::GameObjectFactory::CreateFromArchetype("Data/OnBeatHeavyParticles.prefab");
-            transform = particleObject->GetComponent<mts::Transform>();
             break;
         case OFF_BEAT_HEAVY:
             particleObject =
                 mts::GameObjectFactory::CreateFromArchetype("Data/OffBeatHeavyParticles.prefab");
-            transform = particleObject->GetComponent<mts::Transform>();
             break;
         default:
             break;
     }
-
+    if (particleObject)
+        transform = particleObject->GetComponent<mts::Transform>();
     if (transform)
         transform->SetPosition(pos);
 }

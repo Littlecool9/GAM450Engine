@@ -1,0 +1,43 @@
+{
+  "Name": "OnBeatLightParticles",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "ParticleEmitter",
+      "Data": {
+        "MeshResource": "Data/Resources/1x6MeshResource.mesh",
+        "TextureResource": "Data/Resources/ParticlesTexture.tex",
+        "FrameIndex": -1,
+        "TintColor": [ 1.0, 0.9, 1.0, 1.0 ],
+        "Scale": [ 1.0, 1.0 ],
+        "ParticleScaleMin": [ 0.5, 0.5 ],
+        "ParticleScaleMax": [ 0.8, 0.8 ],
+        "Acceleration": [0.0, -10.0],
+        "EmitRate": 250.0,
+        "EmitMax": 25,
+        "LifetimeMin": 0.4,
+        "LifetimeMax": 0.5,
+        "SpeedMin": 8.0,
+        "SpeedMax": 9.0,
+        "RotationSpeedMin": 0.2,
+        "RotationSpeedMax": 0.4,
+        "OneShot": true
+      }
+    }
+  ]
+}

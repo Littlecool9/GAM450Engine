@@ -10043,7 +10043,8 @@
                         "IsActive": 1,
                         "NearPlane": -1.0,
                         "FarPlane": 1.0,
-                        "OrthoSize": 7.0
+                        "OrthoSize": 7.0,
+                        "PostProcessing": []
                     }
                 },
                 {

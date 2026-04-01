@@ -31,7 +31,8 @@
             "AngularVelocity": 0,
             "LinearDamping": 0,
             "AngularDamping": 0,
-            "GravityScale": 0
+            "GravityScale": 0,
+            "BodyType": 1
             }
         },
         {

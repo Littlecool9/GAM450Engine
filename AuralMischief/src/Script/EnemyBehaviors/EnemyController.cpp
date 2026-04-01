@@ -13,6 +13,7 @@
 // #include "BarScaler.h"
 #include "../AttackHitboxScript.h"
 #include "../Player/PlayerController.h"
+
 #include "EnemyActions/EnemyMoveToPlayerAction.h"
 #include "EnemyActions/EnemyPatrolAction.h"
 #include "EnemyActions/FlyingEnemyAttackAction.h"
@@ -26,7 +27,10 @@
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
-#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
+
+#include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 
@@ -63,6 +67,7 @@ namespace mts
     {
         if (!mIsInvincible && curhp <= 0)
         {
+
             LOG_INFO("Enemy ded");
             GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
@@ -81,10 +86,11 @@ namespace mts
 
 
         auto a = GetGameObject()->GetComponent<EnemyAgent>();
-        if (a->GetState().GetDistanceToPlayer() <= mAggroRange && !a->GetState().GetInAction())
+        if (a->GetState().GetDistanceToPlayer() <= mAggroRange)
         {
             if (!alerted)
             {
+                LOG_INFO("Player entered aggro range");
                 alerted = true;
                 GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                     AnimationSystem::States::Alerted);
@@ -108,11 +114,15 @@ namespace mts
             }
 
         }
-        else if (a->GetState().GetDistanceToPlayer() > mAggroRange)
+        else
         {
-
-            alerted = false;
-
+            if (alerted)
+            {
+                LOG_INFO("Player left aggro range, going back to idle");
+                alerted = false;
+                GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+                    AnimationSystem::States::Walking);
+            }
         }
     }
 

@@ -70,6 +70,7 @@ namespace mts
         auto o = agent->GetGameObject();
         if (o->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Alerted && !o->GetComponent<Animation>()->GetIsDone())
         {
+            //LOG_INFO("Alerting b4 patrol");
             return OnGoing;  // wait until alerted animation is done before moving
         }
         else

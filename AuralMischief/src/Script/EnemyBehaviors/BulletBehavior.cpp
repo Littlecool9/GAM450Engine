@@ -11,13 +11,14 @@
 #include "BulletBehavior.h"
 
 #include "../Player/PlayerController.h"
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
-
+#include "../AttackHitboxScript.h"
 namespace mts
 {
     void BulletBehavior::Start()
@@ -79,9 +80,30 @@ namespace mts
     {
         if (collision.other->GetGameObject()->GetName() == "Player")
         {
-            //GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
-            GetGameObject()->SetActive(false);  
-           // GetGameObject()->Destroy();
+            collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(
+                static_cast<int>(dmg));
+            mDestroy = true;
+            return;
         }
+        auto* hitbox = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
+        if (collision.other->GetGameObject()->HasTag("AttackHitBox"))
+        {
+            mts::AudioManager& audio = mts::AudioManager::Get();
+            if (audio.IsInBeatWindow(0.1f, 0.1f))
+            {
+                LOG_INFO("Bullet hit by attack, destroyed");
+                mDestroy = true;
+                //GetGameObject()->Destroy();
+            }
+            else
+            {
+                LOG_INFO("Bullet hit by attack but not in beat window, not destroyed");
+            }
+        }
+        else
+        {
+            LOG_INFO("Not hitbox");
+        }
+
     }
 }  // namespace mts

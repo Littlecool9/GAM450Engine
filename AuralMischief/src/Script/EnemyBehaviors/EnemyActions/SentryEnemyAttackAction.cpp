@@ -49,7 +49,10 @@ namespace mts
             float mul =
                 agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
             b->GetComponent<Transform>()->SetPosition(
-                agent.GetGameObject()->GetComponent<Transform>()->GetPosition());
+                agent.GetGameObject()->GetComponent<Transform>()->GetPosition() + glm::vec3{0.3f * mul, -1.f,0});
+            b->GetComponent<Transform>()->SetRotation(b->GetComponent<Transform>()->GetRotation() +
+                                                      0.785398 * mul);
+
             b->GetComponent<SpriteRenderer>()->SetFlipX(
                 agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX());
             b->GetScript<BulletBehavior>()->SetDirection(glm::vec2(1.0f, 0.0f) * mul);
@@ -63,7 +66,7 @@ namespace mts
         glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() -
                         agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
 
-        ConductorSystem& cs = ConductorSystem::Get();
+
         if (agent.GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Attack1)
         {
             agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
@@ -71,12 +74,7 @@ namespace mts
         }
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Attack1);
-        mConductorSubId = cs.onBeat.Subscribe(
-            [this, &agent](mts::BeatInfo info)
-            {
-                if (info.isHalfBeat)
-                    FireBullet(agent);
-            });
+
         LOG_INFO("EnemyAttackAction: Attacking player!", );
     }
 
@@ -97,28 +95,38 @@ namespace mts
         {
             return Invalid;
         }
-
-        if (totalTime >=
-            std::get<float>(agent->GetState().params.at(HashAction("AttackCooldown"))->GetValue()))
+        const float aggroRange =
+            std::get<float>(agent->GetState().params.at(HashAction("AggroRange"))->GetValue());
+        const float distToPlayer = agent->GetState().GetDistanceToPlayer();
+        if (distToPlayer > aggroRange)
         {
-            // cooldown after attack
-            agent->GetState()
-                .params.at(HashAction("AttackCooldown"))
-                ->SetValue(static_cast<AttackCountdownParam*>(
-                               agent->GetState().params.at(HashAction("AttackCooldown")))
-                               ->GetCooldownTime());
+            LOG_INFO("out of range");
             agent->GetState().SetInAction(false);
-            //auto a = agent->GetGameObject()->GetComponent<Animation>();
-            //a->AnimationPlay(a->GetStartFrame(), 0, 0, false);
-            //agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-            //    AnimationSystem::States::Alerted);
-            LOG_INFO("Finished Firing");
             return Success;
         }
-        else
-        {
-            return OnGoing;
-        }
+
+        ConductorSystem& cs = ConductorSystem::Get();
+        mConductorSubId = cs.onBeat.Subscribe(
+            [this, &agent](mts::BeatInfo info)
+            {
+                if (info.isHalfBeat)
+                    FireBullet(*agent);
+            });
+        // cooldown after attack
+        agent->GetState()
+            .params.at(HashAction("AttackCooldown"))
+            ->SetValue(static_cast<AttackCountdownParam*>(
+                           agent->GetState().params.at(HashAction("AttackCooldown")))
+                           ->GetCooldownTime());
+        agent->GetState().SetInAction(false);
+        //auto a = agent->GetGameObject()->GetComponent<Animation>();
+        //a->AnimationPlay(a->GetStartFrame(), 0, 0, false);
+        //agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+        //    AnimationSystem::States::Alerted);
+        LOG_INFO("Finished Firing");
+        return Success;
+
+
     }
 
     void SentryEnemyAttackAction::OnEnd(EnemyAgent& agent, EnemyActionResult result)

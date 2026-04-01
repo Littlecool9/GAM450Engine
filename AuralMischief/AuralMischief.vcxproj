@@ -191,6 +191,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Script\BeatPulseScript.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
     <ClInclude Include="src\Script\Player\PlayerParticleController.h" />
     <ClInclude Include="src\pch.h" />

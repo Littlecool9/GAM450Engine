@@ -24,6 +24,7 @@
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/BoxCollider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/Physics2D/Collision2D.h"
@@ -62,13 +63,23 @@ namespace mts
     {
         if (!mIsInvincible && curhp <= 0)
         {
+            LOG_INFO("Enemy ded");
+            GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
+            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
             GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Death);
             if ( GetGameObject()->GetComponent<Animation>()->GetIsDone())
             {
                 GetGameObject()->Destroy();
             }
+            else
+            {
+                LOG_INFO("anim not done");
+            }
+            return;
         }
+
+
         auto a = GetGameObject()->GetComponent<EnemyAgent>();
         if (a->GetState().GetDistanceToPlayer() <= mAggroRange && !a->GetState().GetInAction())
         {
@@ -95,27 +106,13 @@ namespace mts
                     GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
                 }
             }
-            else
-            {
-                if (GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() ==
-                        AnimationSystem::States::Alerted &&
-                    GetGameObject()->GetComponent<Animation>()->GetIsDone())
-                {
-                    GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-                        AnimationSystem::States::Idle);
-                }
-            }
+
         }
-        else
+        else if (a->GetState().GetDistanceToPlayer() > mAggroRange)
         {
+
             alerted = false;
-            if (GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() ==
-                    AnimationSystem::States::Alerted &&
-                GetGameObject()->GetComponent<Animation>()->GetIsDone())
-            {
-                GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-                    AnimationSystem::States::Idle);
-            }
+
         }
     }
 
@@ -123,7 +120,6 @@ namespace mts
     {
         if (name == "SlugEnemy")
         {
-            LOG_INFO("Set to slug");
             enemyType = EnemyType::CrawlEnemy;
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
                 mts::AIPlanner::GetPlannerById("SlugEnemy"));
@@ -139,6 +135,12 @@ namespace mts
             enemyType = EnemyType::SentryEnemy;
             GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
                 mts::AIPlanner::GetPlannerById("SentryEnemy"));
+        }
+        else if (name == "BossEnemy")
+        {
+            enemyType = EnemyType::BossEnemy;
+            GetGameObject()->GetComponent<mts::EnemyAgent>()->Initialize(
+                mts::AIPlanner::GetPlannerById("BossEnemy"));
         }
     }
 
@@ -171,6 +173,19 @@ namespace mts
             static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))
                 ->SetCooldownTime(mAttackCooldown);
         }
+        if (fields.Has("Attack2Cooldown"))
+        {
+            mAttack2Cooldown = fields["Attack2Cooldown"].GetFloat();
+            p.emplace(mts::HashAction("Attack2Cooldown"), new mts::AttackCountdownParam());
+            static_cast<AttackCountdownParam*>(p.at(HashAction("Attack2Cooldown")))->SetCooldownTime(mAttack2Cooldown);
+        }
+        if (fields.Has("Attack3Cooldown"))
+        {
+            mAttack3Cooldown = fields["Attack3Cooldown"].GetFloat();
+            p.emplace(mts::HashAction("Attack3Cooldown"), new mts::AttackCountdownParam());
+            static_cast<AttackCountdownParam*>(p.at(HashAction("Attack3Cooldown")))->SetCooldownTime(mAttack3Cooldown);
+        }
+
         if (fields.Has("HealthPoints"))
         {
             maxhp = fields["HealthPoints"].GetInt();
@@ -208,6 +223,17 @@ namespace mts
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAttackCooldown},
                           .step = 0.1f});
+        fields.push_back({.name = "Attack2Cooldown",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mAttack2Cooldown},
+                          .step = 0.1f});
+        fields.push_back({.name = "Attack3Cooldown",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mAttack3Cooldown},
+                          .step = 0.1f});
+        fields.push_back({.name = "HealthPoints",
+                          .type = mts::ScriptField::Type::Int, .ptr = {.i = &maxhp}});
+
         fields.push_back({.name = "IsInvincible",
                           .type = mts::ScriptField::Type::Bool,
                           .ptr = {.b = &mIsInvincible}});
@@ -217,9 +243,12 @@ namespace mts
         auto* hitbox = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
         if (hitbox)
         {
+            LOG_INFO("hit");
             float damage = hitbox->GetDamage();
             if (!mIsInvincible)
                 curhp -= static_cast<int>(damage);
+            LOG_INFO("cur hp {}, is invin: {}", curhp, mIsInvincible);
+
             if (mPlayerController)
             {
                 glm::vec3 pos = GetGameObject()->GetComponent<Transform>()->GetPosition();

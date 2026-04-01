@@ -32,7 +32,9 @@ namespace mts
             Attack1,
             Attack2,
             Alerted,
-            Death
+            Death,
+            Attack3,
+            Hit
         };
 
         struct Info

@@ -81,16 +81,15 @@ namespace mts
             LOG_INFO("still alerting");
             return OnGoing;  // wait until alerted animation is done before moving
         }
-        else
-        {
-            agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-                AnimationSystem::States::Attack1);
-        }
+
+        agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+            AnimationSystem::States::Attack1);
 
         auto sprite = o->GetComponent<SpriteRenderer>();
         auto rb = o->GetComponent<RigidBody2D>();
         if (!sprite || !rb)
         {
+            LOG_INFO("Missing components");
             agent->GetState().SetInAction(false);
             return Invalid;
         }

@@ -18,7 +18,8 @@ namespace mts
     {
         CrawlEnemy,
         FlyEnemy,
-        SentryEnemy
+        SentryEnemy,
+        BossEnemy
 
     };
 
@@ -41,13 +42,15 @@ namespace mts
         SCRIPT_CLASS(EnemyController)
 
        private:
-        EnemyType enemyType;
+        EnemyType enemyType = EnemyType::CrawlEnemy;
         glm::vec3 origin;
         std::string type;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;
         float mAggroRange = 5.f;
         float mAttackCooldown = 5.f;
+        float mAttack2Cooldown = 5.f;
+        float mAttack3Cooldown = 5.f;
         int maxhp = 2;
         int curhp = 0;
         bool alerted = false;

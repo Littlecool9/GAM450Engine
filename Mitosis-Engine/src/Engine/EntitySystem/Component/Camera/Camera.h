@@ -11,6 +11,7 @@
 
 #include <glm/ext/matrix_float4x4.hpp>
 #include "Engine/EntitySystem/Component/Component.h"
+#include "Engine/Renderer/PostProcessStack.h"
 
 namespace mts
 {
@@ -38,9 +39,15 @@ namespace mts
         // Smaller = zoomed in, larger = zoomed out.
         float orthoSize;
 
+        // Post-processing effect stack
+        PostProcessStack& GetPostProcessStack() { return mPostProcessStack; }
+        const PostProcessStack& GetPostProcessStack() const { return mPostProcessStack; }
+
        private:
         glm::mat4 BuildView2D();
         glm::mat4 BuildProjFromViewport() const;
+
+        PostProcessStack mPostProcessStack;
     };
 
 }  // namespace mts

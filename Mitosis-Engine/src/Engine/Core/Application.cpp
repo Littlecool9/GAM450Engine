@@ -124,15 +124,24 @@ namespace mts
                 if (layer->IsEnabled())
                     layer->OnRender();
             }
-            Renderer::Flush();  // Execute Render commands
-            Renderer::EndFrame();
+
+            // Split rendering: scene → post-process → UI
+            Renderer::BeginSceneRender();  // Bind FBO if post-processing active
+            Renderer::FlushScene();        // Opaque + transparent
 
             if (mInDebugView)
             {
                 for (auto& layer : mLayerStack)
                     if (layer->IsEnabled())
-                        layer->OnDebugRender();
+                        layer->OnDebugRender(); 
+            }
 
+            Renderer::EndSceneRender();  // Execute post-processing, blit to screen
+            Renderer::FlushUI();         // UI on top, always to default FB
+            Renderer::EndFrame();
+
+            if (mInDebugView)
+            {
                 fps.Update(dt);
 
                 imgui->Begin();

@@ -15,6 +15,7 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/Renderer.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Serialization/JsonAbstraction.h"
 
 namespace mts
 {
@@ -44,6 +45,10 @@ namespace mts
         {
             orthoSize = jsonObj["OrthoSize"].GetFloat(orthoSize);
         }
+        if (jsonObj.Has("PostProcessing") && jsonObj["PostProcessing"].IsArray())
+        {
+            mPostProcessStack.Deserialize(jsonObj["PostProcessing"]);
+        }
     }
     void CameraComponent::Serialize(JsonDocument& doc) const
     {
@@ -54,6 +59,7 @@ namespace mts
         doc.WriteFloat("NearPlane", nearPlane);
         doc.WriteFloat("FarPlane", farPlane);
         doc.WriteFloat("OrthoSize", orthoSize);
+        mPostProcessStack.Serialize(doc);
 
         doc.EndObject();
     }
@@ -105,11 +111,39 @@ namespace mts
         cam.valid = true;
 
         Renderer::SetActiveCamera(cam);
+        Renderer::SetPostProcessStack(
+            mPostProcessStack.HasActiveEffects() ? &mPostProcessStack : nullptr);
     }
 
     Component* CameraComponent::Clone(GameObject* newOwner) const
     {
-        CameraComponent* c = new CameraComponent(*this);
+        CameraComponent* c = new CameraComponent();
+        c->isActive = isActive;
+        c->nearPlane = nearPlane;
+        c->farPlane = farPlane;
+        c->orthoSize = orthoSize;
+
+        // Deep-copy post-process effects via serialize/deserialize round-trip
+        if (mPostProcessStack.HasActiveEffects() || !mPostProcessStack.GetEffects().empty())
+        {
+            JsonDocument doc;
+            doc.BeginObject();
+            mPostProcessStack.Serialize(doc);
+            doc.EndObject();
+
+            std::string json;
+            if (doc.SaveToString(json))
+            {
+                JsonDocument cloneDoc;
+                if (cloneDoc.LoadFromString(json))
+                {
+                    JsonValue root = cloneDoc.Root();
+                    if (root.Has("PostProcessing"))
+                        c->mPostProcessStack.Deserialize(root["PostProcessing"]);
+                }
+            }
+        }
+
         c->InitFromClone(newOwner);
         return c;
     }

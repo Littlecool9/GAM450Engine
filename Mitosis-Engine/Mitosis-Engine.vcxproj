@@ -388,6 +388,9 @@
     <ClInclude Include="src\Engine\Physics2D\PhysicsCommand2D.h" />
     <ClInclude Include="src\Engine\Physics2D\PhysicsSystem2D.h" />
     <ClInclude Include="src\Engine\Renderer.h" />
+    <ClInclude Include="src\Engine\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Engine\Renderer\PostProcessEffect.h" />
+    <ClInclude Include="src\Engine\Renderer\PostProcessStack.h" />
     <ClInclude Include="src\Engine\Resource\Mesh.h" />
     <ClInclude Include="src\Engine\Resource\ResourceManager.h" />
     <ClInclude Include="src\Engine\Resource\Shader.h" />
@@ -616,6 +619,9 @@
     <ClCompile Include="src\Engine\Memory\MemoryManager.cpp" />
     <ClCompile Include="src\Engine\Physics2D\PhysicsSystem2D.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\PostProcessEffect.cpp" />
+    <ClCompile Include="src\Engine\Renderer\PostProcessStack.cpp" />
     <ClCompile Include="src\Engine\Resource\Mesh.cpp" />
     <ClCompile Include="src\Engine\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\Engine\Resource\Shader.cpp" />

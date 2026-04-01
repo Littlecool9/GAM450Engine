@@ -10,6 +10,7 @@ namespace mts
     class Mesh;
     class Texture;
     class Shader;
+    class PostProcessStack;
 
     struct Viewport
     {
@@ -106,19 +107,38 @@ namespace mts
         static void ClearGameViewport();
         static Viewport GetGameViewport();
 
+        // --- Post-processing ---
+        static void SetPostProcessStack(PostProcessStack* stack);
+        static PostProcessStack* GetPostProcessStack();
+
         // Frame-based rendering API: collect, sort, and draw render commands
         static void BeginFrame();
 
         static void Submit(const RenderCommand& cmd);
 
-        // Execute all render commands and clear the command queue
+        // Bind the scene FBO if post-processing is active. Call before FlushScene().
+        static void BeginSceneRender();
+
+        // Sort and draw opaque + transparent commands (scene only, no UI).
+        static void FlushScene();
+
+        // Execute post-processing and blit to default framebuffer.
+        // Call after all scene/debug rendering is done.
+        static void EndSceneRender();
+
+        // Sort and draw screen-space UI commands (to default FB).
+        static void FlushUI();
+
+        // Convenience: BeginSceneRender + FlushScene + EndSceneRender + FlushUI.
         static void Flush();
 
         static void EndFrame();
 
        private:
         static RenderCamera ActiveCamera;
+        static PostProcessStack* s_postProcessStack;
         static Viewport targetViewport;
+        static int s_windowW;
         static int s_windowH;
         static AspectMode s_aspectMode;
         static float s_customX;

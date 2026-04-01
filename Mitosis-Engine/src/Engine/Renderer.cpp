@@ -4,6 +4,7 @@
 #include "EntitySystem/Component/Transform.h"
 #include "EntitySystem/Component/SpriteRenderer.h"
 #include "EntitySystem/Component/Particles/ParticleEmitter.h"
+#include "Renderer/PostProcessStack.h"
 #include "Input/Input.h"
 
 #include <algorithm>
@@ -11,8 +12,10 @@
 
 namespace mts
 {
+    int Renderer::s_windowW = 0;
     int Renderer::s_windowH = 0;
     RenderCamera Renderer::ActiveCamera{};
+    PostProcessStack* Renderer::s_postProcessStack = nullptr;
     Viewport Renderer::targetViewport{};
     AspectMode Renderer::s_aspectMode = AspectMode::Free;
     float Renderer::s_customX = 16.0f;
@@ -102,6 +105,7 @@ namespace mts
 
     void Renderer::SetWindowSize(int w, int h)
     {
+        s_windowW = w;
         s_windowH = h;
     }
 
@@ -197,6 +201,16 @@ namespace mts
         ScreenSpaceCommands.clear();
     }
 
+    void Renderer::SetPostProcessStack(PostProcessStack* stack)
+    {
+        s_postProcessStack = stack;
+    }
+
+    PostProcessStack* Renderer::GetPostProcessStack()
+    {
+        return s_postProcessStack;
+    }
+
     void Renderer::Submit(const RenderCommand& cmd)
     {
         if (cmd.isUI)
@@ -207,9 +221,22 @@ namespace mts
             OpaqueCommands.push_back(cmd);
     }
 
-    void Renderer::Flush()
+    void Renderer::BeginSceneRender()
     {
-        // 1. Sort the commands from front to back for opaque and back to front for transparent
+        PostProcessStack* pp = s_postProcessStack;
+        if (pp && pp->HasActiveEffects())
+        {
+            Viewport gv = GetGameViewport();
+            int w = gv.valid ? gv.w : s_windowW;
+            int h = gv.valid ? gv.h : s_windowH;
+            if (w > 0 && h > 0)
+                pp->BindSceneTarget(w, h);
+        }
+    }
+
+    void Renderer::FlushScene()
+    {
+        // Sort opaque front-to-back, transparent back-to-front
         std::sort(OpaqueCommands.begin(),
                   OpaqueCommands.end(),
                   [](const RenderCommand& a, const RenderCommand& b)
@@ -219,28 +246,45 @@ namespace mts
                   [](const RenderCommand& a, const RenderCommand& b)
                   { return a.sortKey < b.sortKey; });
 
-        // Store GL states before rendering for for restoring
+        // Store GL states for restoring
         blendEnabled = glIsEnabled(GL_BLEND);
         depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
         depthMaskEnabled = GL_TRUE;
 
-        // 2. Render opaque objects
+        // Render opaque objects
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         for (const auto& cmd : OpaqueCommands)
             ExecuteCommand(cmd);
 
-        // 3. Render transparent objects
+        // Render transparent objects
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_DEPTH_TEST);
         glDepthMask(GL_FALSE);
-
         for (const auto& cmd : TransparentCommands)
             ExecuteCommand(cmd);
+    }
 
-        // 4. Render screen-space (HUD) objects last, on top of everything
+    void Renderer::EndSceneRender()
+    {
+        PostProcessStack* pp = s_postProcessStack;
+        if (pp && pp->HasActiveEffects())
+        {
+            Viewport gv = GetGameViewport();
+            int vpX = gv.valid ? gv.x : 0;
+            int vpY = gv.valid ? gv.y : 0;
+            int vpW = gv.valid ? gv.w : s_windowW;
+            int vpH = gv.valid ? gv.h : s_windowH;
+            if (vpW > 0 && vpH > 0)
+                pp->Execute(vpX, vpY, vpW, vpH);
+        }
+    }
+
+    void Renderer::FlushUI()
+    {
+        // Render screen-space (HUD) objects last, on top of everything
         std::sort(ScreenSpaceCommands.begin(),
                   ScreenSpaceCommands.end(),
                   [](const RenderCommand& a, const RenderCommand& b)
@@ -250,6 +294,14 @@ namespace mts
         glDisable(GL_DEPTH_TEST);
         for (const auto& cmd : ScreenSpaceCommands)
             ExecuteCommand(cmd);
+    }
+
+    void Renderer::Flush()
+    {
+        BeginSceneRender();
+        FlushScene();
+        EndSceneRender();
+        FlushUI();
     }
 
     void Renderer::EndFrame()

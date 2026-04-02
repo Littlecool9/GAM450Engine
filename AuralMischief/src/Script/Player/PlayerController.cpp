@@ -99,7 +99,7 @@ void PlayerController::OnUpdate(float dt)
     float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
     glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
-    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift);
+    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift) || mts::Input::IsKeyPressed(mts::Key::K);
     bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z) || mts::Input::IsKeyPressed(mts::Key::J);
     bool attackReleased = mts::Input::IsKeyReleased(mts::Key::Z) || mts::Input::IsKeyReleased(mts::Key::J);
 
@@ -578,15 +578,15 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     fields.push_back({.name = "hpStartX",
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mHPStartX},
-                      .step = 0.1f});
+                      .step = 0.01f});
     fields.push_back({.name = "hpStartY",
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mHPStartY},
-                      .step = 0.1f});
+                      .step = 0.01f});
     fields.push_back({.name = "hpSpacing",
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mHPSpacing},
-                      .step = 0.1f});
+                      .step = 0.01f});
 }
 
 void PlayerController::OnCollisionEnter2D(const mts::Collision2D& collision)

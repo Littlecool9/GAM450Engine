@@ -59,12 +59,16 @@ namespace mts
 
     glm::vec2 Renderer::MouseToUISpace()
     {
-        Viewport gv   = GetGameViewport();
+        Viewport gv = GetGameViewport();
+        // When viewport is invalid (play mode, no editor), fall back to full window at origin 0,0
+        float gvX = gv.valid ? static_cast<float>(gv.x) : 0.0f;
+        float gvY = gv.valid ? static_cast<float>(gv.y) : 0.0f;
+        float gvW = gv.valid ? static_cast<float>(gv.w) : static_cast<float>(s_windowW);
+        float gvH = gv.valid ? static_cast<float>(gv.h) : static_cast<float>(s_windowH);
         // gv.y is OpenGL bottom-relative; use s_windowH to recover the viewport's top in GLFW space
-        float gvH     = gv.valid ? static_cast<float>(gv.h) : static_cast<float>(s_windowH);
-        float vpLocalX = Input::GetMouseX() - static_cast<float>(gv.x);
-        float vpLocalY = Input::GetMouseY() - (static_cast<float>(s_windowH) - static_cast<float>(gv.y) - gvH);
-        return {vpLocalX / PixelsPerUnit, vpLocalY / PixelsPerUnit};
+        float vpLocalX = Input::GetMouseX() - gvX;
+        float vpLocalY = Input::GetMouseY() - (static_cast<float>(s_windowH) - gvY - gvH);
+        return {vpLocalX / gvW, vpLocalY / gvH};
     }
 
     glm::vec2 Renderer::WorldToScreen(glm::vec3 worldPos)

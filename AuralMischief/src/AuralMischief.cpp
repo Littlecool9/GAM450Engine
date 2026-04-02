@@ -18,6 +18,8 @@
 #include "Script/EnemyBehaviors/BulletBehavior.h"
 #include "Script/BeatPulseScript.h"
 #include "Script/SceneSwitcherScript.h"
+#include "Script/MainMenuButton.h"
+#include "Script/FadeInScript.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -81,4 +83,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new RhythmSystemScript(); });
     mts::ScriptFactory::RegisterScript(SceneSwitcherScript::StaticClassName(),
                                        []() { return new SceneSwitcherScript(); });
+    mts::ScriptFactory::RegisterScript(MainMenuButton::StaticClassName(),
+                                       []() { return new MainMenuButton(); });
+    mts::ScriptFactory::RegisterScript(FadeInScript::StaticClassName(),
+                                       []() { return new FadeInScript(); });
 }

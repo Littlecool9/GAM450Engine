@@ -1,6 +1,7 @@
 {
     "scenes": [
         "Data/Scenes/CurrentScene.scene",
-        "Data/Scenes/TestScene.scene"
+        "Data/Scenes/TestScene.scene",
+        "Data/Scenes/MainMenu.scene"
     ]
 }

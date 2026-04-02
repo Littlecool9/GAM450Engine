@@ -33,8 +33,15 @@ namespace mts
         glm::vec3 scale = uit->GetScale();
         glm::vec2 mouse = Renderer::MouseToUISpace();
 
-        float halfW = scale.x * 0.5f;
-        float halfH = scale.y * 0.5f;
+        // Convert scale from UI units to normalized viewport fraction
+        Viewport gv = Renderer::GetGameViewport();
+        float vpW = (gv.valid ? static_cast<float>(gv.w)
+                               : static_cast<float>(Renderer::GetWindowWidth())) / PixelsPerUnit;
+        float vpH = (gv.valid ? static_cast<float>(gv.h)
+                               : static_cast<float>(Renderer::GetWindowHeight())) / PixelsPerUnit;
+
+        float halfW = (scale.x / vpW) * 0.5f;
+        float halfH = (scale.y / vpH) * 0.5f;
 
         bool inside = mouse.x >= pos.x - halfW && mouse.x <= pos.x + halfW
                    && mouse.y >= pos.y - halfH && mouse.y <= pos.y + halfH;

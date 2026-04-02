@@ -35,10 +35,10 @@ namespace mts
         }
         if (open && !removed)
         {
-            ImGui::TextDisabled("(screen-space, pixels)");
+            ImGui::TextDisabled("(screen-space, normalized 0-1)");
 
             glm::vec3 pos = tr->GetPosition();
-            if (ImGui::DragFloat3("Position", &pos.x, 0.05f))
+            if (ImGui::DragFloat3("Position", &pos.x, 0.01f))
                 tr->SetPosition(pos);
 
             glm::vec3 scale = tr->GetScale();

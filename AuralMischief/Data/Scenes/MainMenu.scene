@@ -1,0 +1,176 @@
+{
+  "GameObjects": [
+    {
+      "UUID": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "Name": "MainMenuBackground",
+      "Layer": 1,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [
+              0,
+              0,
+              0
+            ],
+            "Scale": [
+              19,
+              10,
+              1
+            ],
+            "Rotation": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1,
+              1,
+              1
+            ],
+            "Alpha": 1,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1,
+            "RenderLayer": -10,
+            "TextureResource": "Data/Resources/MainMenuBackground.tex",
+            "MeshResource": "Data/Resources/1x20MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Animation",
+          "Data": {
+            "FrameIndex": 0,
+            "FrameCount": 20,
+            "FrameDelay": 0.5,
+            "FrameDuration": 0.05000000074505806,
+            "IsRunning": 1,
+            "IsLooping": 1
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "Name": "StartButton",
+      "Layer": 2,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Position": [
+              0.5,
+              0.6800000071525574,
+              0
+            ],
+            "Scale": [
+              4,
+              1,
+              1
+            ],
+            "Rotation": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              0.9349857568740845,
+              0.9446018934249878,
+              1
+            ],
+            "Alpha": 0.8479999899864197,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0,
+            "RenderLayer": 0,
+            "TextureResource": "Data/Resources/MainMenuButton.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MainMenuButton"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "Name": "MainCamera",
+      "Layer": 1,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [
+              0,
+              0,
+              0
+            ],
+            "Scale": [
+              1,
+              1,
+              1
+            ],
+            "Rotation": 0
+          }
+        },
+        {
+          "Type": "Camera",
+          "Data": {
+            "IsActive": 1,
+            "NearPlane": -1,
+            "FarPlane": 1,
+            "OrthoSize": 5,
+            "PostProcessing": []
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "d4e5f6a7-b8c9-0123-defa-234567890123",
+      "Name": "FadeOverlay",
+      "Layer": 2,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Position": [0, 0, 0],
+            "Scale": [100, 100, 1],
+            "Rotation": 0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [0, 0, 0],
+            "Alpha": 1,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0,
+            "RenderLayer": 100,
+            "TextureResource": "Engine/Resources/DefaultTextureResource.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "FadeInScript"
+          }
+        }
+      ]
+    }
+  ]
+}

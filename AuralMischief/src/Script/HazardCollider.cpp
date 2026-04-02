@@ -27,6 +27,7 @@ void HazardCollider::OnCollisionEnter2D(const mts::Collision2D& collision)
 		{
             LOG_INFO("Player hit hazard, returning to checkpoint");
             playerScript->ReturnToCheckPoint();
+            playerScript->TakeDamage(1);
 		}
 	}
 }

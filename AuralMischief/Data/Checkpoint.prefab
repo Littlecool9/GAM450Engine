@@ -1,5 +1,5 @@
 {
-    "UUID": "1428702e-47cb-4b5d-bd8b-6a91ea2a6699",
+    "UUID": "1caf9fdf-dde9-4cb1-939e-7d62bb7a2c63",
     "Name": "Checkpoint",
     "Layer": 0,
     "Tags": [],
@@ -8,8 +8,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    15.199999809265137,
-                    9.0,
+                    49.95000076293945,
+                    8.0,
                     0.0
                 ],
                 "Scale": [
@@ -24,18 +24,34 @@
             "Type": "BoxCollider2D",
             "Data": {
                 "Width": 1.0,
-                "Height": 4.0,
+                "Height": 2.0,
                 "Offset": [
                     0.0,
                     0.0
                 ],
-                "IsTrigger": 0
+                "IsTrigger": 1
             }
         },
         {
             "Type": "NativeScript",
             "Data": {
                 "Class": "CheckPoint"
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
             }
         }
     ]

@@ -1,5 +1,5 @@
 {
-    "UUID": "e945a8c5-ddae-4975-9b32-d43cfd458a43",
+    "UUID": "22f8a3b6-058d-42f3-a9d6-d87f01ff1033",
     "Name": "Hazard",
     "Layer": 0,
     "Tags": [],
@@ -8,8 +8,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    36.0,
-                    5.5,
+                    95.80000305175781,
+                    17.0,
                     0.0
                 ],
                 "Scale": [
@@ -29,13 +29,29 @@
         {
             "Type": "BoxCollider2D",
             "Data": {
-                "Width": 21.649999618530273,
+                "Width": 39.0,
                 "Height": 1.0,
                 "Offset": [
                     0.0,
                     0.0
                 ],
                 "IsTrigger": 0
+            }
+        },
+        {
+            "Type": "RigidBody2D",
+            "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                    0.0,
+                    0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
             }
         }
     ]

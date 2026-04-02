@@ -78,8 +78,8 @@ namespace mts
         // Returns the current mouse position in world space.
         // Handles viewport offset and Y-flip internally — safe to call from any component.
         static glm::vec2 MouseToWorld();
-        // Returns the current mouse position in UI space (screen units).
-        // (0,0) = top-left of game viewport, Y-down, 1 unit = PixelsPerUnit px.
+        // Returns the current mouse position in normalized UI space.
+        // (0,0) = top-left of game viewport, (1,1) = bottom-right.
         // Matches the coordinate system used by UITransform.
         static glm::vec2 MouseToUISpace();
         // Get the info of viewport in screen scale, unit is pixel
@@ -100,6 +100,8 @@ namespace mts
         // MouseToWorld / MouseToUISpace can bridge GLFW-top-relative mouse coords
         // to the OpenGL-bottom-relative game viewport stored in targetViewport.
         static void SetWindowSize(int w, int h);
+        static int  GetWindowWidth()  { return s_windowW; }
+        static int  GetWindowHeight() { return s_windowH; }
 
         // Provide the available screen region; Renderer applies aspect constraint and stores
         // result.

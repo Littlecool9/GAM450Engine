@@ -39,6 +39,7 @@ namespace mts
         float GetMoveSpeed() { return mMoveSpeed; }
         float GetPatrolRadius() { return mPatrolRadius; }
         void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
+        void MarkDead() { curhp = 0; }
         SCRIPT_CLASS(EnemyController)
 
        private:
@@ -55,7 +56,9 @@ namespace mts
         int curhp = 0;
         bool alerted = false;
         bool mIsInvincible = false;
-
+        bool deathAnimFirstTime = true;
+        float mExplosionRadiusMultiplier = 5;
+        float mTimeTillExplode = 1;
         PlayerController* mPlayerController = nullptr;
     };
 

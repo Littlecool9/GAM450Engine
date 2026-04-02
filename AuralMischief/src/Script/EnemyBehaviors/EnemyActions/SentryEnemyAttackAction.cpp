@@ -15,6 +15,7 @@
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "../EnemyParameters/AttackCountdownParam.h"
 #include "Engine/EntitySystem/Component/Animation.h"
+#include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 namespace mts
@@ -95,6 +96,7 @@ namespace mts
         {
             return Invalid;
         }
+        agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
         const float aggroRange =
             std::get<float>(agent->GetState().params.at(HashAction("AggroRange"))->GetValue());
         const float distToPlayer = agent->GetState().GetDistanceToPlayer();
@@ -107,7 +109,7 @@ namespace mts
 
         ConductorSystem& cs = ConductorSystem::Get();
         mConductorSubId = cs.onBeat.Subscribe(
-            [this, &agent](mts::BeatInfo info)
+            [this, agent](mts::BeatInfo info)
             {
                 if (info.isHalfBeat)
                     FireBullet(*agent);

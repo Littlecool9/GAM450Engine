@@ -155,11 +155,12 @@
             "Data": {
                 "Class": "EnemyController",
                 "Fields": {
-                    "EnemyType": "Sentry",
+                    "EnemyType": "SentryEnemy",
                     "MoveSpeed": 1.5,
                     "PatrolRadius": 5.0,
                     "AggroRange": 9.0,
                     "AttackCooldown": 5.0,
+                    "HealthPoints": 9,
                     "IsInvincible": false
                 }
             }

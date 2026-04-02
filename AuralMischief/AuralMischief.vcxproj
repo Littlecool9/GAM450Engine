@@ -191,6 +191,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actions\ColliderScaleAction.h" />
     <ClInclude Include="src\Script\BeatPulseScript.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
     <ClInclude Include="src\Script\FadeInScript.h" />
@@ -242,6 +243,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\SceneSwitcherScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Actions\ColliderScaleAction.cpp" />
     <ClCompile Include="src\Script\BeatPulseScript.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\FadeInScript.cpp" />

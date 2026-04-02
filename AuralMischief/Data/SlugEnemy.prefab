@@ -143,7 +143,7 @@
                         "FrameIndex": 22,
                         "FrameCount": 14,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.11999999731779099,
+                        "FrameDuration": 0.238,
                         "IsRunning": 0,
                         "IsLooping": 0
                     }
@@ -159,6 +159,7 @@
                     "PatrolRadius": 2.0,
                     "AggroRange": 5.0,
                     "AttackCooldown": 5.0,
+                    "HealthPoints": 7,
                     "EnemyType": "SlugEnemy"
                 }
             }

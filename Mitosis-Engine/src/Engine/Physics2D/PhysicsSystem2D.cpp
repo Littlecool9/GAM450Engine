@@ -676,9 +676,45 @@ namespace mts::physics
 
         outNormalAtoB = bestAxis;
         outPenetration = minOverlap;
-        // contact point: point on A's surface toward B, backed off by half penetration
-        float projA = ProjectAxis(a, bestAxis);
-        outContactPoint = a.c + bestAxis * (projA - outPenetration * 0.5f);
+
+        // Collect vertices of A inside B and vice versa, then average for contact point.
+        // Handles corner-edge (1 vertex), edge-face (2), and face-face (4) correctly.
+        constexpr float kTol = 1e-3f;
+        glm::vec2 contactSum(0.0f);
+        int contactCount = 0;
+
+        const glm::vec2 aCorners[4] = {
+            a.c + a.r * a.h.x + a.u * a.h.y,
+            a.c - a.r * a.h.x + a.u * a.h.y,
+            a.c - a.r * a.h.x - a.u * a.h.y,
+            a.c + a.r * a.h.x - a.u * a.h.y,
+        };
+        const glm::vec2 bCorners[4] = {
+            b.c + b.r * b.h.x + b.u * b.h.y,
+            b.c - b.r * b.h.x + b.u * b.h.y,
+            b.c - b.r * b.h.x - b.u * b.h.y,
+            b.c + b.r * b.h.x - b.u * b.h.y,
+        };
+
+        auto insideOBB = [](const glm::vec2& p, const OBB& o, float tol) {
+            const glm::vec2 d = p - o.c;
+            return std::abs(glm::dot(d, o.r)) <= o.h.x + tol
+                && std::abs(glm::dot(d, o.u)) <= o.h.y + tol;
+        };
+
+        for (const auto& v : aCorners)
+            if (insideOBB(v, b, kTol)) { contactSum += v; ++contactCount; }
+        for (const auto& v : bCorners)
+            if (insideOBB(v, a, kTol)) { contactSum += v; ++contactCount; }
+
+        if (contactCount > 0)
+            outContactPoint = contactSum / float(contactCount);
+        else
+        {
+            // Fallback for exactly-touching / zero-penetration cases
+            float projA = ProjectAxis(a, bestAxis);
+            outContactPoint = a.c + bestAxis * (projA - outPenetration * 0.5f);
+        }
         return true;
     }
 

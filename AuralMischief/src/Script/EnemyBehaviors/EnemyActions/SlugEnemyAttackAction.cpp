@@ -103,8 +103,11 @@ namespace mts
         const float distToPlayer = agent->GetState().GetDistanceToPlayer();
         const float aggroRange =
             std::get<float>(agent->GetState().params.at(HashAction("AggroRange"))->GetValue());
-
-
+        if (distToPlayer <= 1.5f)
+        {
+            o->GetScript<EnemyController>()->MarkDead();
+            return Success;
+        }
         const glm::vec2 myPos = o->GetComponent<Transform>()->GetPosition();
         const glm::vec2 playerPos = agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();
 

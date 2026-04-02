@@ -22,6 +22,7 @@
 #include "EnemyParameters/AggroRangeParam.h"
 #include "EnemyParameters/AttackCountdownParam.h"
 #include "EnemyParameters/PlayerHealthRatioParam.h"
+#include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
@@ -29,7 +30,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
-
+#include "../../Actions/ColliderScaleAction.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
@@ -71,9 +72,43 @@ namespace mts
 
             LOG_INFO("Enemy ded");
             GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
+            GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
+
+            if (mTimeTillExplode > 0 && enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
+            {
+                mTimeTillExplode -= dt;
+                return;
+            }
+
             GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Death);
+            // blow up hitbox for crawl enemy
+            if (enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
+            {
+                GetGameObject()->GetComponent<BoxCollider2D>()->SetIsTrigger(true);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
+                auto a = GetGameObject()->GetComponent<ActionList>();
+                auto anim = GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
+                glm::vec2 newSize =
+                    GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize() * mExplosionRadiusMultiplier;
+                a->AddAction(new ColliderScaleAction(newSize,
+                                                     GetGameObject(),
+                                                     1,
+                                                     anim * 1.f,
+                                                     anim * 1,
+                                                     true,
+                                                     BaseAction::EaseType::Linear));
+                a->AddAction(new ColliderScaleAction(glm::vec2(0),
+                                                     GetGameObject(),
+                                                     1,
+                                                     anim,
+                                                     anim * 2,
+                                                     true,
+                                                     BaseAction::EaseType::Linear));
+                deathAnimFirstTime = false;
+            }
+
             if ( GetGameObject()->GetComponent<Animation>()->GetIsDone())
             {
                 GetGameObject()->Destroy();
@@ -84,7 +119,10 @@ namespace mts
             }
             return;
         }
-
+        if (enemyType == EnemyType::SentryEnemy && alerted)
+        {
+            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
+        }
 
         auto a = GetGameObject()->GetComponent<EnemyAgent>();
         if (a->GetState().GetDistanceToPlayer() <= mAggroRange)
@@ -202,6 +240,14 @@ namespace mts
             maxhp = fields["HealthPoints"].GetInt();
             curhp = maxhp;
         }
+        if (fields.Has("Explosion Radius"))
+        {
+            mExplosionRadiusMultiplier = fields["Explosion Radius"].GetFloat();
+        }
+        if (fields.Has("Explosion Timer"))
+        {
+            mTimeTillExplode = fields["Explosion Timer"].GetFloat();
+        }
         p.emplace(mts::HashAction("PlayerHealthRatio"), new mts::PlayerHealthRatioParam());
         p.at(HashAction("PlayerHealthRatio"))->SetValue(1.0f);
         if (fields.Has("IsInvincible"))
@@ -215,6 +261,8 @@ namespace mts
         out.WriteFloat("AggroRange", mAggroRange);
         out.WriteFloat("AttackCooldown", mAttackCooldown);
         out.WriteBool("IsInvincible", mIsInvincible);
+        out.WriteFloat("Explosion Radius", mExplosionRadiusMultiplier);
+        out.WriteFloat("Explosion Timer", mTimeTillExplode);
     }
     void EnemyController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     {
@@ -248,6 +296,14 @@ namespace mts
         fields.push_back({.name = "IsInvincible",
                           .type = mts::ScriptField::Type::Bool,
                           .ptr = {.b = &mIsInvincible}});
+        fields.push_back({.name = "Explosion Radius",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mExplosionRadiusMultiplier},
+                          .step = 0.1f});
+        fields.push_back({.name = "Explosion Timer",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mTimeTillExplode},
+                          .step = 0.1f});
     }
     void EnemyController::OnCollisionEnter2D(const mts::Collision2D& collision)
     {
@@ -266,8 +322,46 @@ namespace mts
                 mPlayerController->OnEnemyHit(damage, pos);
             }
         }
+        if (collision.other->GetGameObject()->HasTag("Player") && curhp <= 0)
+        {
+            collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(1);
+        }
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {
+            auto* box = GetGameObject()->GetComponent<mts::BoxCollider2D>();
+            if (!box)
+                return;
+
+            const glm::vec2 contact = collision.contactPoint;
+            const glm::vec2 center = box->GetCenter();
+
+            LOG_INFO(
+                "collision with {}, normal at {}, {}, contact point {}, {}, penetration : {}, "
+                "center : {}, {}",
+                collision.other->GetGameObject()->GetName(),
+                collision.normal.x,
+                collision.normal.y,
+                collision.contactPoint.x,
+                collision.contactPoint.y,
+                collision.penetration,
+                center.x,
+                center.y);
+
+            auto boxHalf = box->GetHalfExtents();
+            const float bottom = center.y - boxHalf.y;
+
+            const float cutoff = bottom + boxHalf.y * 0.25;
+
+            if (contact.y <= cutoff)
+                return;
+
+            LOG_INFO(
+                "{} bumped into wall, bottom = {} ; local size {}; contact at y = {}, cutoff {}",
+                this->GetGameObject()->GetName(),
+                bottom,
+                boxHalf.y,
+                contact.y,
+                cutoff);
             GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(
                 !GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX());
         }

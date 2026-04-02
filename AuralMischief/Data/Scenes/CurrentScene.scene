@@ -10629,34 +10629,6 @@
             ]
         },
         {
-            "UUID": "a9e2987b-21d6-4067-81e0-6df05235fab9",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "a73a4b87-4d52-4d3f-807f-17be2fc104eb",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "3a0af197-a2da-4d67-9134-f8fbe49d5837",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "28881c37-0773-4622-9991-fc28c30b8020",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
             "UUID": "2497eeae-98e3-4fb7-93f2-107f96362e4a",
             "Name": "Checkpoint",
             "Layer": 0,
@@ -10715,20 +10687,6 @@
             ]
         },
         {
-            "UUID": "1376f364-3592-4249-ad66-09188f026fb0",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "93364215-2566-468c-9ec7-31d73640367b",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
             "UUID": "f1014891-ab33-4b17-a214-514860595fe1",
             "Name": "RhythmSystem",
             "Layer": 0,
@@ -10741,13 +10699,6 @@
                     }
                 }
             ]
-        },
-        {
-            "UUID": "563508f6-c71e-4582-84fb-b55b799a389f",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
         },
         {
             "UUID": "5f3080d3-1170-457a-8323-5b30e7339e02",
@@ -11300,6 +11251,12 @@
                         "AngularDamping": 0.0,
                         "GravityScale": 0.0,
                         "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "EndPointScript"
                     }
                 }
             ]

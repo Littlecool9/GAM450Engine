@@ -17,6 +17,7 @@
 #include "Script/RhythmSystemScript.h"
 #include "Script/EnemyBehaviors/BulletBehavior.h"
 #include "Script/BeatPulseScript.h"
+#include "Script/EndPointScript.h"
 #include "Script/SceneSwitcherScript.h"
 #include "Script/Player/PlayerAudioController.h"
 #include "Script/MainMenuButton.h"
@@ -90,4 +91,6 @@ void AuralMischief::RegisterScripts()
                                        []() { return new MainMenuButton(); });
     mts::ScriptFactory::RegisterScript(FadeInScript::StaticClassName(),
                                        []() { return new FadeInScript(); });
+    mts::ScriptFactory::RegisterScript(EndPointScript::StaticClassName(),
+                                       []() { return new EndPointScript(); });
 }

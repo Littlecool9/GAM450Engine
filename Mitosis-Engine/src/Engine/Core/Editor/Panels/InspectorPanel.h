@@ -30,6 +30,7 @@ namespace mts
         InspectorRegistry mRegistry;
         UUID         mCachedId = UUID::InvalidID;
         GameObject*  mCachedGO = nullptr;
+        Scene*       mCachedScene = nullptr;
         float        mFontScale = 1.3f;
     };
 

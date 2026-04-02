@@ -75,9 +75,10 @@ namespace mts
             return;
         }
 
-        if (ctx.selected != mCachedId || (mCachedGO && mCachedGO->IsDead()))
+        if (ctx.selected != mCachedId || scene != mCachedScene || (mCachedGO && mCachedGO->IsDead()))
         {
             mCachedId = ctx.selected;
+            mCachedScene = scene;
             mCachedGO = scene->FindGameObjectByUUID(ctx.selected);
         }
         auto go = mCachedGO;

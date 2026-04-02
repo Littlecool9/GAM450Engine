@@ -29,6 +29,7 @@ void CheckPoint::OnCollisionEnter2D(mts::Collision2D const& collision)
             return;
         }
         playerScript->SetCheckPoint(this);
+        playerScript->Heal(5);
     }
 }
 

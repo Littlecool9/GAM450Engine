@@ -52,6 +52,10 @@ namespace mts
             if (ImGui::DragFloat2("Offset", &off.x, 0.05f))
                 box->SetOffset(off);
 
+            bool isTrigger = box->IsTrigger();
+            if (ImGui::Checkbox("Is Trigger", &isTrigger))
+                box->SetIsTrigger(isTrigger);
+
             // Debug info (read-only)
             glm::vec2 half = box->GetHalfExtents();
             ImGui::Text("Half Extents: (%.3f, %.3f)", half.x, half.y);

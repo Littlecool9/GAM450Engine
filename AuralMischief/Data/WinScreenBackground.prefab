@@ -1,0 +1,41 @@
+{
+    "UUID": "3bd5734b-97ba-499a-964e-d1f1d3e08995",
+    "Name": "WinScreenBackground",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Position": [
+                    0.5199999809265137,
+                    0.4000000059604645,
+                    0.0
+                ],
+                "Scale": [
+                    20.0,
+                    20.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/WinScreenTexture.tex",
+                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

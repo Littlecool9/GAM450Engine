@@ -94,21 +94,29 @@ void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    float upStrength = mts::Input::IsKeyDown(mts::Key::Up) || mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
-    float downStrength = mts::Input::IsKeyDown(mts::Key::Down) || mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
-    float leftStrength = mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
-    float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
+    float upStrength =
+        mts::Input::IsKeyDown(mts::Key::Up) || mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
+    float downStrength =
+        mts::Input::IsKeyDown(mts::Key::Down) || mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
+    float leftStrength =
+        mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
+    float rightStrength =
+        mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
     glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
-    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift) || mts::Input::IsKeyPressed(mts::Key::K);
-    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::Z) || mts::Input::IsKeyPressed(mts::Key::J);
-    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::Z) || mts::Input::IsKeyReleased(mts::Key::J);
+    bool dashPressed =
+        mts::Input::IsKeyPressed(mts::Key::LeftShift) || mts::Input::IsKeyPressed(mts::Key::K);
+    bool attackPressed =
+        mts::Input::IsKeyPressed(mts::Key::Z) || mts::Input::IsKeyPressed(mts::Key::J);
+    bool attackReleased =
+        mts::Input::IsKeyReleased(mts::Key::Z) || mts::Input::IsKeyReleased(mts::Key::J);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
     bool inWindow = audio.IsInBeatWindow(mHitWindowEarlyEdge, mHitWindowLateEdge);
 
-    if (!mPlayerAudio) mPlayerAudio = GetGameObject()->GetScript<PlayerAudioController>();
+    if (!mPlayerAudio)
+        mPlayerAudio = GetGameObject()->GetScript<PlayerAudioController>();
 
     // Reset dash count if on ground and dash cooldown is done
     if (isGrounded && dashTimer < 0.0f)
@@ -294,7 +302,7 @@ void PlayerController::OnUpdate(float dt)
     {
         particleController.StopParticleEmitter(PlayerParticleController::CHARGE);
     }
-    //particleController.UpdateParticlePositions(transform->GetPosition());
+    // particleController.UpdateParticlePositions(transform->GetPosition());
 }
 
 void PlayerController::OnFixedUpdate(float dt)
@@ -571,10 +579,8 @@ void PlayerController::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Float,
                       .ptr = {.f = &mCamZoomSpeed},
                       .step = 0.1f});
-    fields.push_back({.name = "maxHP",
-                      .type = mts::ScriptField::Type::Int,
-                      .ptr = {.i = &mMaxHP},
-                      .step = 1});
+    fields.push_back(
+        {.name = "maxHP", .type = mts::ScriptField::Type::Int, .ptr = {.i = &mMaxHP}, .step = 1});
     fields.push_back({.name = "fullHeartFrame",
                       .type = mts::ScriptField::Type::Int,
                       .ptr = {.i = &mFullHeartFrame},
@@ -647,7 +653,7 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
     glm::vec2 dashDir{0.0f, 0.0f};
     // If not holding a direction, use direction character is facing (left or right)
     if (inputDir == glm::vec2(0))
-    //if (inputDir.x == 0)
+        // if (inputDir.x == 0)
         facingDir == LEFT ? dashDir = {-1.0f, 0.0f} : dashDir = {1.0f, 0.0f};
     else
         dashDir = inputDir;
@@ -695,7 +701,12 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         if (inWindow && numBeatsCharged >= 4)
         {
             queuedAttackSpawn = [this]()
-            { SpawnAttackHitbox(mOnBeatHeavyDamage, 3.0f, 2.5f, PlayerParticleController::ON_BEAT_HEAVY); };
+            {
+                SpawnAttackHitbox(mOnBeatHeavyDamage,
+                                  3.0f,
+                                  2.5f,
+                                  PlayerParticleController::ON_BEAT_HEAVY);
+            };
             LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
                      numBeatsCharged,
                      mOnBeatHeavyDamage);
@@ -912,13 +923,13 @@ void PlayerController::TakeDamage(int damage)
     if (mCurrentHP <= 0)
     {
         LOG_INFO("[PlayerController] Player died!");
-        ReturnToCheckPoint();
-        mCurrentHP = mMaxHP;
-        dashTimer = -1.0f;
-        attackTimer = -1.0f;
-        isAttacking = false;
-        RefreshHeartVisuals();
+        mts::SceneSystem::SwitchScene(3);
     }
+}
+
+void PlayerController::Heal(int healAmount)
+{
+    mCurrentHP = std::min(mCurrentHP + healAmount, mMaxHP);
 }
 
 void PlayerController::OnEnemyHit(float damage, glm::vec3 pos)

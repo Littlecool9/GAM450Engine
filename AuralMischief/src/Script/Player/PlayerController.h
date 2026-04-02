@@ -67,6 +67,7 @@ class PlayerController : public mts::ScriptBase
     void ReturnToCheckPoint();
     void TriggerCameraVFX(bool isAction, bool inWindow);
     void TakeDamage(int damage);
+    void Heal(int healAmount);
     void OnEnemyHit(float damage, glm::vec3 pos);
 
     SCRIPT_CLASS(PlayerController)
@@ -75,7 +76,10 @@ class PlayerController : public mts::ScriptBase
     void Dash(glm::vec2 inputDir, bool inWindow, float speedScale);
     void Jump(bool inWindow);
     void Attack(bool inWindow, bool isChargeAttack);
-    void SpawnAttackHitbox(float damage, float scaleX, float scaleY, PlayerParticleController::ParticleType type);
+    void SpawnAttackHitbox(float damage,
+                           float scaleX,
+                           float scaleY,
+                           PlayerParticleController::ParticleType type);
     void RefreshHeartVisuals();
     void InitHP();
 
@@ -111,7 +115,8 @@ class PlayerController : public mts::ScriptBase
     int mDashMax = 1;                  // Max number of dashes before recharge
     float mDashCooldown = 0.2f;        // Length of dash state
 
-    float mAttackDelay = 0.0f;          // Attack delay will delay the spawned attack hitbox to allow it to line up with animation
+    float mAttackDelay = 0.0f;  // Attack delay will delay the spawned attack hitbox to allow it to
+                                // line up with animation
     float mAttackCooldown = 0.5f;
     float mOffBeatLightDamage = 1.0f;
     float mOnBeatLightDamage = 3.0f;

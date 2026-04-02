@@ -1,0 +1,241 @@
+{
+    "GameObjects": [
+        {
+            "UUID": "e08e60cb-55de-4ce1-aaae-1928c4a916c5",
+            "Name": "Background",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5299999713897705,
+                            -0.1599999964237213
+                        ],
+                        "Scale": [
+                            35.0,
+                            20.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            0.2848435640335083,
+                            0.2848435640335083
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/main_menu_no_bg_tex.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e918e715-e993-467c-b528-69332b535dd8",
+            "Name": "Main Menu",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.6600000262260437,
+                            0.0
+                        ],
+                        "Scale": [
+                            4.599999904632568,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/Text_main_menu.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "SceneSwitcherScript",
+                        "Fields": {
+                            "SceneIndex": 1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "6b93e255-952e-43fa-ad6d-57459d8f72ac",
+            "Name": "Replay",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.550000011920929,
+                            0.0
+                        ],
+                        "Scale": [
+                            3.200000047683716,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/Text_replay.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "SceneSwitcherScript",
+                        "Fields": {
+                            "SceneIndex": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "775a80c3-f62e-4063-8756-4f7a284a6ddf",
+            "Name": "Title",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            8.75,
+                            1.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/Text_signal_lost.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "98b86d2f-0d18-419c-8590-11bfd3021895",
+            "Name": "FadeOverlay",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            100.0,
+                            100.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Engine/Resources/DefaultTextureResource.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "FadeInScript"
+                    }
+                }
+            ]
+        }
+    ]
+}

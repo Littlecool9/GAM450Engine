@@ -8,6 +8,7 @@
  */
 
 #pragma once
+#include "PlayerAudioController.h"
 #include "PlayerParticleController.h"
 #include "Engine/EntitySystem/Component/AnimationSystem.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
@@ -146,6 +147,7 @@ class PlayerController : public mts::ScriptBase
     bool isAttacking = false;
     bool isCharging = false;
     int numBeatsCharged = 1;
+    bool chargeComplete = false;
     bool attackAnimType = true;  // keeps track of if previous attack animation was 1st or 2nd (used
                                  // to alternate animations)
     float iFrames = 0.8f;
@@ -153,6 +155,8 @@ class PlayerController : public mts::ScriptBase
     float enemyKnockback = 0.7f;
     float timeSinceLastBeat = 0.0f;
     Direction facingDir = RIGHT;
+
+    PlayerAudioController* mPlayerAudio = nullptr;
 
     DamageNumberSpawner* mSpawner = nullptr;
 

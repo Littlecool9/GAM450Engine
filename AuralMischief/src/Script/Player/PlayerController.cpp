@@ -30,6 +30,7 @@
 #include "../CameraController.h"
 #include "../AttackHitboxScript.h"
 #include "../DamageNumberSpawner.h"
+#include "Engine/Helpers/Random.h"
 #include "Engine/Resource/ResourceManager.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
@@ -106,6 +107,8 @@ void PlayerController::OnUpdate(float dt)
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
     bool inWindow = audio.IsInBeatWindow(mHitWindowEarlyEdge, mHitWindowLateEdge);
+
+    if (!mPlayerAudio) mPlayerAudio = GetGameObject()->GetScript<PlayerAudioController>();
 
     // Reset dash count if on ground and dash cooldown is done
     if (isGrounded && dashTimer < 0.0f)
@@ -190,13 +193,18 @@ void PlayerController::OnUpdate(float dt)
             Attack(inWindow, true);
         }
         isCharging = false;
+        chargeComplete = false;
         numBeatsCharged = 1;
         attackHeldLength = -1.0f;
     }
 
-    if (attackHeldLength > 0.35f)
+    if (attackHeldLength > 0.35f && !isCharging)
     {
         isCharging = true;
+    }
+    if (numBeatsCharged >= 4 && !chargeComplete)
+    {
+        chargeComplete = true;
     }
 
     if (attackHeldLength > -1.0f && attackTimer < 0.0f)
@@ -653,6 +661,8 @@ void PlayerController::Dash(glm::vec2 inputDir, bool inWindow, float speedScale)
     --dashCount;
     dashTimer = mDashCooldown;
     currentDashDir = dashDir;
+    if (mPlayerAudio)
+        mPlayerAudio->PlayOneShotSound(PlayerAudioController::DASH);
 }
 
 void PlayerController::Jump(bool inWindow)
@@ -673,6 +683,8 @@ void PlayerController::Jump(bool inWindow)
             currVelocity.x += mDashSpeed * 0.2f;
     }
     dashCount = mDashMax;
+    if (mPlayerAudio)
+        mPlayerAudio->PlayOneShotSound(PlayerAudioController::EVADE);
 }
 
 void PlayerController::Attack(bool inWindow, bool isChargeAttack)
@@ -687,6 +699,9 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
             LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
                      numBeatsCharged,
                      mOnBeatHeavyDamage);
+            if (mPlayerAudio)
+                mPlayerAudio->PlayOneShotSound(
+                    static_cast<PlayerAudioController::SFX>(mts::Random::Range(0, 4)));
         }
         // Off beat charge attack
         else
@@ -702,6 +717,9 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
                      inWindow ? "on" : "off",
                      numBeatsCharged,
                      mOffBeatHeavyDamage);
+            if (mPlayerAudio)
+                mPlayerAudio->PlayOneShotSound(
+                    static_cast<PlayerAudioController::SFX>(mts::Random::Range(0, 4)));
         }
         anim->ChangeState(mts::AnimationSystem::States::Attack2);
 
@@ -723,6 +741,9 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
                                   1.2f,
                                   PlayerParticleController::ON_BEAT_LIGHT);
             };
+            if (mPlayerAudio)
+                mPlayerAudio->PlayOneShotSound(
+                    static_cast<PlayerAudioController::SFX>(mts::Random::Range(0, 4)));
         }
         else
         {
@@ -733,6 +754,9 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
                                   1.2f,
                                   PlayerParticleController::OFF_BEAT_LIGHT);
             };
+            if (mPlayerAudio)
+                mPlayerAudio->PlayOneShotSound(
+                    static_cast<PlayerAudioController::SFX>(mts::Random::Range(0, 4)));
         }
         LOG_INFO("Light attacked {} beat", inWindow ? "on" : "off");
 

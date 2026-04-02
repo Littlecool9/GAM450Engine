@@ -60,9 +60,9 @@ namespace mts
         }
         mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.bank");
         mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/Master.strings.bank");
-        mAudio->AddBankToGroup(BankGroup::Music, "Assets/Audio/Desktop/BGM.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/BGM.bank");
+        mAudio->AddBankToGroup(BankGroup::Core, "Assets/Audio/Desktop/SFX.bank");
         mAudio->LoadBankGroup(BankGroup::Core);
-        mAudio->LoadBankGroup(BankGroup::Music);
 
         mConductor = std::make_unique<ConductorSystem>();
         ConductorSystem::SetInstance(mConductor.get());

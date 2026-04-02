@@ -1,5 +1,5 @@
 {
-  "Name": "OnBeatLightParticles",
+  "Name": "OffBeatLightParticles",
   "Components": [
     {
       "Type": "Transform",
@@ -29,11 +29,11 @@
         "ParticleScaleMax": [ 0.7, 0.7 ],
         "Acceleration": [0.0, -10.0],
         "EmitRate": 100.0,
-        "EmitMax": 15,
+        "EmitMax": 10,
         "LifetimeMin": 0.2,
         "LifetimeMax": 0.3,
-        "SpeedMin": 5.0,
-        "SpeedMax": 8.0,
+        "SpeedMin": 2.0,
+        "SpeedMax": 3.0,
         "RotationSpeedMin": 0.2,
         "RotationSpeedMax": 0.4,
         "OneShot": true

@@ -1,5 +1,5 @@
 {
-  "Name": "OnBeatLightParticles",
+  "Name": "OffBeatHeavyParticles",
   "Components": [
     {
       "Type": "Transform",

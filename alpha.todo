@@ -2,16 +2,16 @@ The hero character has a guitar that is the primary weapon for attack. The sword
 
 Rahul
 -----
-[-] Slug Enemy
-	[-] SFX
+[x] Slug Enemy
+	[x] SFX
 	[x] Spritesheet
 	
 [-] Drone Enemy
 	[-] SFX
-	[-] Spritesheet
+	[x] Spritesheet
 
-[-] Sentry Enemy
-	[-] SFX
+[x] Sentry Enemy
+	[x] SFX
 	[x] Spritesheet
 	[x] Missile
 	

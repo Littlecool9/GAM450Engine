@@ -11049,15 +11049,15 @@
                     "Data": {
                         "Class": "AudioController",
                         "Fields": {
-                            "MasterVolume": 0.10000000149011612,
-                            "MusicVolume": 1,
-                            "SFXVolume": 1,
-                            "UIVolume": 1,
-                            "AmbienceVolume": 1,
+                            "MasterVolume": 0.05000000074505806,
+                            "MusicVolume": 1.0,
+                            "SFXVolume": 2.0,
+                            "UIVolume": 1.0,
+                            "AmbienceVolume": 1.0,
                             "MusicEventPath": "event:/lvl1_bgm",
-                            "Bpm": 120,
+                            "Bpm": 120.0,
                             "BeatsPerBar": 4,
-                            "OffsetSec": 0
+                            "OffsetSec": 0.0
                         }
                     }
                 }

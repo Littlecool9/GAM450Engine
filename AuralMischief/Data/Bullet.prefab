@@ -65,6 +65,17 @@
             }
         },
         {
+            "Type": "Animation",
+            "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 0,
+                "FrameDelay": 0.0,
+                "FrameDuration": 0.0,
+                "IsRunning": 0,
+                "IsLooping": 0
+            }
+        },
+        {
             "Type": "AnimationSystem",
             "Data": {
                 "States": [
@@ -89,7 +100,7 @@
             "Data": {
                 "Class": "BulletBehavior",
                 "Fields": {
-                    "BulletSpeed": 3,
+                    "BulletSpeed": 4,
                     "Lifetime": 7.0,
                 }
             }

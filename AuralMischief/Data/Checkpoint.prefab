@@ -1,5 +1,5 @@
 {
-    "UUID": "1caf9fdf-dde9-4cb1-939e-7d62bb7a2c63",
+    "UUID": "1428702e-47cb-4b5d-bd8b-6a91ea2a6699",
     "Name": "Checkpoint",
     "Layer": 0,
     "Tags": [],
@@ -8,13 +8,13 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    49.95000076293945,
-                    8.0,
+                    40.0,
+                    8.5,
                     0.0
                 ],
                 "Scale": [
                     1.0,
-                    1.0,
+                    3.0,
                     1.0
                 ],
                 "Rotation": 0.0
@@ -24,7 +24,7 @@
             "Type": "BoxCollider2D",
             "Data": {
                 "Width": 1.0,
-                "Height": 2.0,
+                "Height": 1.0,
                 "Offset": [
                     0.0,
                     0.0
@@ -52,6 +52,23 @@
                 "AngularDamping": 0.0,
                 "GravityScale": 0.0,
                 "BodyType": 0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    0.19138562679290771,
+                    0.2912713885307312,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 47,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/OtherSprite.tex",
+                "MeshResource": "Data/Resources/14x7MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
             }
         }
     ]

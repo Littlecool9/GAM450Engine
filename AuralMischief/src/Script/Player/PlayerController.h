@@ -67,8 +67,9 @@ class PlayerController : public mts::ScriptBase
     void ReturnToCheckPoint();
     void TriggerCameraVFX(bool isAction, bool inWindow);
     void TakeDamage(int damage);
-    void Heal(int healAmount);
+    void Heal(int hp);
     void OnEnemyHit(float damage, glm::vec3 pos);
+    int GetMaxHP() const { return mMaxHP; }
 
     SCRIPT_CLASS(PlayerController)
 

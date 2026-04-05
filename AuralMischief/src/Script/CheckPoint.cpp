@@ -29,7 +29,8 @@ void CheckPoint::OnCollisionEnter2D(mts::Collision2D const& collision)
             return;
         }
         playerScript->SetCheckPoint(this);
-        playerScript->Heal(5);
+        playerScript->Heal(
+            playerScript->GetMaxHP());  // Heal player to full on checkpoint activation
     }
 }
 

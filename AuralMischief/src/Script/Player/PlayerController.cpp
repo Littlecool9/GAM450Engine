@@ -932,6 +932,17 @@ void PlayerController::Heal(int healAmount)
     mCurrentHP = std::min(mCurrentHP + healAmount, mMaxHP);
 }
 
+void PlayerController::Heal(int amount)
+{
+    if (mCurrentHP >= mMaxHP)
+        return;
+    mCurrentHP += amount;
+    if (mCurrentHP > mMaxHP)
+        mCurrentHP = mMaxHP;
+    LOG_INFO("[PlayerController] Heal: {} HP, HP now {}/{}", amount, mCurrentHP, mMaxHP);
+    RefreshHeartVisuals();
+}
+
 void PlayerController::OnEnemyHit(float damage, glm::vec3 pos)
 {
     if (mSpawner)

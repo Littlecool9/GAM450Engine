@@ -927,11 +927,6 @@ void PlayerController::TakeDamage(int damage)
     }
 }
 
-void PlayerController::Heal(int healAmount)
-{
-    mCurrentHP = std::min(mCurrentHP + healAmount, mMaxHP);
-}
-
 void PlayerController::Heal(int amount)
 {
     if (mCurrentHP >= mMaxHP)

@@ -1,7 +1,7 @@
 {
-    "UUID": "98859e0d-4861-4399-b51b-8e8210ea7867",
+    "UUID": "8abd59a8-ef58-479d-bcd3-fbd5f889adb3",
     "Name": "MovablePlatform",
-    "Layer": 0,
+    "Layer": 1,
     "Tags": [
         "PlatformPuzzle1"
     ],
@@ -10,8 +10,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    97.1500015258789,
-                    11.699999809265137,
+                    22.5,
+                    39.70000076293945,
                     0.0
                 ],
                 "Scale": [

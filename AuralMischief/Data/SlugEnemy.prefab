@@ -1,5 +1,5 @@
 {
-    "UUID": "a4799054-7bb6-46c8-a1cf-7291eb70fb7c",
+    "UUID": "2eb9befb-0986-44df-a9c6-8ec048cbb44e",
     "Name": "SlugEnemy",
     "Layer": 0,
     "Tags": [
@@ -10,8 +10,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    46.849998474121094,
-                    21.350000381469727,
+                    120.9000015258789,
+                    11.300000190734863,
                     0.0
                 ],
                 "Scale": [
@@ -29,7 +29,7 @@
                 "Height": 0.15000000596046448,
                 "Offset": [
                     0.0,
-                    -0.4000000059604645
+                    -0.6499999761581421
                 ],
                 "IsTrigger": 0
             }
@@ -84,7 +84,6 @@
                 "States": [
                     {
                         "State": 0,
-                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
@@ -97,7 +96,6 @@
                     },
                     {
                         "State": 1,
-                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
@@ -110,7 +108,6 @@
                     },
                     {
                         "State": 4,
-                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
@@ -123,7 +120,6 @@
                     },
                     {
                         "State": 6,
-                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
@@ -136,14 +132,13 @@
                     },
                     {
                         "State": 7,
-                        "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
                         "MeshResource": "Data/Resources/6x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
                         "FrameIndex": 22,
                         "FrameCount": 14,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.238,
+                        "FrameDuration": 0.23800000548362732,
                         "IsRunning": 0,
                         "IsLooping": 0
                     }

@@ -3,6 +3,7 @@
         "Data/Scenes/CurrentScene.scene",
         "Data/Scenes/MainMenu.scene",
         "Data/Scenes/WinScreen.scene",
-        "Data/Scenes/LoseScreen.scene"
+        "Data/Scenes/LoseScreen.scene",
+        "Data/Scenes/Level2Scene.scene"
     ]
 }

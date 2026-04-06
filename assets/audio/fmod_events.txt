@@ -42,6 +42,8 @@ event:/boss_moan_01
 event:/boss_moan_02
 event:/boss_moan_03
 
+event:/fuse
+
 ----
 BGM:
 ----

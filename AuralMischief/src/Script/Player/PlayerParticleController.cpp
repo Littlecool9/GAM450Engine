@@ -73,7 +73,10 @@ void PlayerParticleController::StopParticleEmitter(ParticleType type)
     }
 }
 
-void PlayerParticleController::SpawnParticleEmitter(ParticleType type, glm::vec2 pos)
+void PlayerParticleController::SpawnParticleEmitter(ParticleType type,
+                                                    glm::vec2 posParticle,
+                                                    ParticleTiming timing,
+                                                    glm::vec2 posTiming)
 {
     mts::Transform* transform = nullptr;
     mts::GameObject* particleObject = nullptr;
@@ -102,5 +105,29 @@ void PlayerParticleController::SpawnParticleEmitter(ParticleType type, glm::vec2
     if (particleObject)
         transform = particleObject->GetComponent<mts::Transform>();
     if (transform)
-        transform->SetPosition(pos);
+        transform->SetPosition(posParticle);
+
+    mts::Transform* timingTransform = nullptr;
+    mts::GameObject* timingParticleObject = nullptr;
+    switch (timing)
+    {
+        case EARLY:
+            timingParticleObject =
+                mts::GameObjectFactory::CreateFromArchetype("Data/EarlyHitParticle.prefab");
+            break;
+        case PERFECT:
+            timingParticleObject =
+                mts::GameObjectFactory::CreateFromArchetype("Data/PerfectHitParticle.prefab");
+            break;
+        case LATE:
+            timingParticleObject =
+                mts::GameObjectFactory::CreateFromArchetype("Data/LateHitParticle.prefab");
+            break;
+        default:
+            break;
+    }
+    if (timingParticleObject)
+        timingTransform = timingParticleObject->GetComponent<mts::Transform>();
+    if (timingTransform)
+        timingTransform->SetPosition(posTiming);
 }

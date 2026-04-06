@@ -695,17 +695,23 @@ void PlayerController::Jump(bool inWindow)
 
 void PlayerController::Attack(bool inWindow, bool isChargeAttack)
 {
+    PlayerParticleController::ParticleTiming timing = PlayerParticleController::EARLY;
+    if (inWindow)
+        timing = PlayerParticleController::PERFECT;
+    else if (mts::AudioManager::Get().IsInBeatWindow(mHitWindowLateEdge, 0.25f))
+        timing = PlayerParticleController::LATE;
+
     if (isChargeAttack)
     {
         // On beat charge attack
         if (inWindow && numBeatsCharged >= 4)
         {
-            queuedAttackSpawn = [this]()
+            queuedAttackSpawn = [this, timing]()
             {
                 SpawnAttackHitbox(mOnBeatHeavyDamage,
                                   3.0f,
                                   2.5f,
-                                  PlayerParticleController::ON_BEAT_HEAVY);
+                                  PlayerParticleController::ON_BEAT_HEAVY, timing);
             };
             LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
                      numBeatsCharged,
@@ -717,12 +723,12 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         // Off beat charge attack
         else
         {
-            queuedAttackSpawn = [this]()
+            queuedAttackSpawn = [this, timing]()
             {
                 SpawnAttackHitbox(mOffBeatHeavyDamage,
                                   3.0f,
                                   2.5f,
-                                  PlayerParticleController::OFF_BEAT_HEAVY);
+                                  PlayerParticleController::OFF_BEAT_HEAVY, timing);
             };
             LOG_INFO("Heavy attacked {} beat, held for {} beats, dealt {} damage",
                      inWindow ? "on" : "off",
@@ -745,12 +751,12 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         // On beat light attack
         if (inWindow)
         {
-            queuedAttackSpawn = [this]()
+            queuedAttackSpawn = [this, timing]()
             {
                 SpawnAttackHitbox(mOnBeatLightDamage,
                                   3.0f,
                                   1.2f,
-                                  PlayerParticleController::ON_BEAT_LIGHT);
+                                  PlayerParticleController::ON_BEAT_LIGHT, timing);
             };
             if (mPlayerAudio)
                 mPlayerAudio->PlayOneShotSound(
@@ -758,12 +764,12 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         }
         else
         {
-            queuedAttackSpawn = [this]()
+            queuedAttackSpawn = [this, timing]()
             {
                 SpawnAttackHitbox(mOffBeatLightDamage,
                                   3.0f,
                                   1.2f,
-                                  PlayerParticleController::OFF_BEAT_LIGHT);
+                                  PlayerParticleController::OFF_BEAT_LIGHT, timing);
             };
             if (mPlayerAudio)
                 mPlayerAudio->PlayOneShotSound(
@@ -787,7 +793,8 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
 void PlayerController::SpawnAttackHitbox(float damage,
                                          float scaleX,
                                          float scaleY,
-                                         PlayerParticleController::ParticleType type)
+                                         PlayerParticleController::ParticleType type,
+                                         PlayerParticleController::ParticleTiming timing)
 {
     if (!attackHitbox)
     {
@@ -819,7 +826,11 @@ void PlayerController::SpawnAttackHitbox(float damage,
     // Set damage of hitbox
     attackHitboxScript->SetDamage(damage);
 
-    particleController.SpawnParticleEmitter(type, particlePos);
+    particleController.SpawnParticleEmitter(
+        type,
+        particlePos,
+        timing,
+        glm::vec2(transform->GetPosition().x, transform->GetPosition().y + 0.5f));
 }
 
 void PlayerController::SetCheckPoint(CheckPoint* checkPoint)

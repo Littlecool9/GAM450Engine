@@ -1,0 +1,44 @@
+{
+  "Name": "PerfectHitParticle",
+  "Components": [
+    {
+      "Type": "Transform",
+      "Data": {
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Rotation": 0.0
+      }
+    },
+    {
+      "Type": "ParticleEmitter",
+      "Data": {
+        "MeshResource": "Data/Resources/1x3MeshResource.mesh",
+        "TextureResource": "Data/Resources/HitTimingParticles.tex",
+        "FrameIndex": 1,
+        "TintColor": [ 1.0, 1.0, 1.0, 1.0 ],
+        "Scale": [ 0.0, 0.0 ],
+        "ParticleScaleMin": [ 1.5, 1.5 ],
+        "ParticleScaleMax": [ 1.5, 1.5 ],
+        "Acceleration": [ 0.0, -1.0 ],
+        "EmitRate": 100.0,
+        "EmitMax": 1,
+        "DirectionRange": [ 1.571, 1.571 ],
+        "LifetimeMin": 1.0,
+        "LifetimeMax": 1.0,
+        "SpeedMin": 2.0,
+        "SpeedMax": 2.0,
+        "RotationSpeedMin": 0.0,
+        "RotationSpeedMax": 0.0,
+        "OneShot": true
+      }
+    }
+  ]
+}

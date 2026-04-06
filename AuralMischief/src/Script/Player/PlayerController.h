@@ -80,7 +80,8 @@ class PlayerController : public mts::ScriptBase
     void SpawnAttackHitbox(float damage,
                            float scaleX,
                            float scaleY,
-                           PlayerParticleController::ParticleType type);
+                           PlayerParticleController::ParticleType type,
+                           PlayerParticleController::ParticleTiming timing);
     void RefreshHeartVisuals();
     void InitHP();
 

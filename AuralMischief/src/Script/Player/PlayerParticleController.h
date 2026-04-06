@@ -24,6 +24,14 @@ public:
         DASH
     };
 
+    enum ParticleTiming
+    {
+        NONE = 0,
+        EARLY,
+        PERFECT,
+        LATE
+    };
+
     PlayerParticleController();
     ~PlayerParticleController();
 
@@ -38,7 +46,10 @@ public:
     void StopParticleEmitter(ParticleType type);
 
     // Spawns a one-shot particle emitter at a given position
-    void SpawnParticleEmitter(ParticleType type, glm::vec2 pos);
+    void SpawnParticleEmitter(ParticleType type,
+                              glm::vec2 posParticle,
+                              ParticleTiming timing,
+                              glm::vec2 posTiming);
 
 private:
 

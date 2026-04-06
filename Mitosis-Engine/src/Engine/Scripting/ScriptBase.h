@@ -29,6 +29,10 @@ namespace mts
             Float,
             Int,
             Bool,
+            Vec2,
+            Vec3,
+            Color,
+            String,
             GameObject,
             Component
         };
@@ -39,6 +43,9 @@ namespace mts
             float* f;
             int* i;
             bool* b;
+            glm::vec2* v2;
+            glm::vec3* v3;
+            std::string* s;
             GameObject** go;
             Component** comp;
         } ptr{};
@@ -56,9 +63,12 @@ namespace mts
         GameObject* GetGameObject() const { return owner; }
 
         // Lifecycle
-        virtual void Init() {}   // once at scene load (edit or play). Cache own-GO component pointers here.
-        virtual void Awake() {}  // play mode only, fires before Start. Use for conductor subscriptions and singleton setup.
-        virtual void Start() {}  // play mode only, fires the first time the GO is activated. Use for cross-GO UUID resolve.
+        virtual void Init() {
+        }  // once at scene load (edit or play). Cache own-GO component pointers here.
+        virtual void Awake() {}  // play mode only, fires before Start. Use for conductor
+                                 // subscriptions and singleton setup.
+        virtual void Start() {}  // play mode only, fires the first time the GO is activated. Use
+                                 // for cross-GO UUID resolve.
         virtual void OnUpdate(float /*dt*/) {}
         virtual void OnLateUpdate(float /*dt*/) {}
         virtual void OnFixedUpdate(float /*dt*/) {}

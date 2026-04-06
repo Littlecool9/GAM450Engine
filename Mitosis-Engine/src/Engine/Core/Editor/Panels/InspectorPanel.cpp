@@ -26,6 +26,7 @@
 #include "Engine/Core/Editor/Inspector/Drawers/ParticleEmitterDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/RigidBody2DDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/SpriteRendererDrawer.h"
+#include "Engine/Core/Editor/Inspector/Drawers/TilemapDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/TransformDrawer.h"
 #include "Engine/Core/Editor/Inspector/Drawers/UITransformDrawer.h"
 #include "Engine/EntitySystem/Component/ActionList.h"
@@ -75,7 +76,8 @@ namespace mts
             return;
         }
 
-        if (ctx.selected != mCachedId || scene != mCachedScene || (mCachedGO && mCachedGO->IsDead()))
+        if (ctx.selected != mCachedId || scene != mCachedScene ||
+            (mCachedGO && mCachedGO->IsDead()))
         {
             mCachedId = ctx.selected;
             mCachedScene = scene;
@@ -267,5 +269,6 @@ namespace mts
         mRegistry.Add<ParticleEmitterDrawer>();
         mRegistry.Add<ActionListDrawer>();
         mRegistry.Add<ButtonDrawer>();
+        mRegistry.Add<TilemapDrawer>();
     }
 }  // namespace mts

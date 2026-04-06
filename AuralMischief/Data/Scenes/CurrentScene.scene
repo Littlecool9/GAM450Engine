@@ -9316,6 +9316,22 @@
                             ]
                         ]
                     }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "TilemapBeatFlash",
+                        "Fields": {
+                            "FlashColor": [
+                                0.8740349411964417,
+                                0.8633803129196167,
+                                0.8633803129196167
+                            ],
+                            "FlashDuration": 0.119999997317791,
+                            "BeatInterval": 1,
+                            "HoldTint": true
+                        }
+                    }
                 }
             ]
         },
@@ -10422,36 +10438,36 @@
                     "Data": {
                         "Class": "PlayerController",
                         "Fields": {
-                            "moveSpeed": 5,
-                            "jumpSpeed": 17,
-                            "dashSpeed": 23,
-                            "friction": 80,
-                            "acceleration": 40,
-                            "deceleration": 15,
-                            "turnSpeed": 100,
-                            "dashDeceleration": 100,
+                            "moveSpeed": 5.0,
+                            "jumpSpeed": 17.0,
+                            "dashSpeed": 23.0,
+                            "friction": 80.0,
+                            "acceleration": 40.0,
+                            "deceleration": 15.0,
+                            "turnSpeed": 100.0,
+                            "dashDeceleration": 100.0,
                             "dashCooldown": 0.25,
                             "dashMax": 1,
                             "attackCooldown": 0.5,
-                            "attackDelay": 0,
-                            "offBeatLightDamage": 1,
-                            "onBeatLightDamage": 3,
-                            "offBeatHeavyDamage": 2,
-                            "onBeatHeavyDamage": 8,
+                            "attackDelay": 0.0,
+                            "offBeatLightDamage": 1.0,
+                            "onBeatLightDamage": 3.0,
+                            "offBeatHeavyDamage": 2.0,
+                            "onBeatHeavyDamage": 8.0,
                             "attackHitboxOffsetX": 0.5,
-                            "dashBeatBoost": 1,
-                            "jumpBeatBoost": 1,
+                            "dashBeatBoost": 1.0,
+                            "jumpBeatBoost": 1.0,
                             "dashRhythmLock": false,
                             "jumpRhythmLock": false,
+                            "camZoomSpeed": 0.5,
                             "defaultTextureResource": "Data/Resources/PlayerTexture.tex",
                             "altTextureResource": "Data/Resources/PlayerTextureAlt.tex",
-                            "camZoomSpeed": 0.5,
                             "maxHP": 5,
                             "fullHeartFrame": 67,
                             "emptyHeartFrame": 39,
-                            "hpStartX": 0.1,
-                            "hpStartY": 0.13,
-                            "hpSpacing": 0.05
+                            "hpStartX": 0.10000000149011612,
+                            "hpStartY": 0.12999999523162842,
+                            "hpSpacing": 0.05000000074505806
                         }
                     }
                 },

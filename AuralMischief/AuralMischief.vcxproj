@@ -246,6 +246,10 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\RhythmSystem.h" />
     <ClInclude Include="src\Script\RhythmSystemScript.h" />
     <ClInclude Include="src\Script\SceneSwitcherScript.h" />
+    <ClInclude Include="src\Script\TilemapBeatFlash.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Actions\ColliderScaleAction.cpp" />
@@ -305,6 +309,10 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
     <ClCompile Include="src\Script\RhythmSystemScript.cpp" />
     <ClCompile Include="src\Script\SceneSwitcherScript.cpp" />
+    <ClCompile Include="src\Script\TilemapBeatFlash.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

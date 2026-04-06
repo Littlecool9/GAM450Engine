@@ -85,7 +85,7 @@ namespace mts::Tilemap
             // default UV and tint for now
             // possible extension for per-chunk or even per-tile variation if needed
             cmd.uvOffset = glm::vec2(0.0f, 0.0f);
-            cmd.tintColor = glm::vec3(1.0f, 1.0f, 1.0f);
+            cmd.tintColor = mTintColor;
             cmd.alpha = 1.0f;
 
             // sort the render command based on the world z position of the chunk

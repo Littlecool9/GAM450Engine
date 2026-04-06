@@ -47,12 +47,7 @@ namespace mts::Tilemap
     class Tilemap : public Component, public ISubmitRenderCommand
     {
        public:
-        Tilemap()
-            : mChunkLoader(),
-              mChunkManager(this, mChunkLoader),
-              mRenderer(this)
-        {
-        }
+        Tilemap() : mChunkLoader(), mChunkManager(this, mChunkLoader), mRenderer(this) {}
 
         ~Tilemap();
 
@@ -86,8 +81,7 @@ namespace mts::Tilemap
         ChunkPos WorldToChunkPos(const glm::vec3& worldPos);
         glm::vec3 ChunkPosToWorldPos(const ChunkPos& chunkPos) const;
         bool IsValidChunkPos(const ChunkPos& chunkPos) const;
-        void LoadRenderData(const std::string& texturePath,
-                            const std::string& shaderPath);
+        void LoadRenderData(const std::string& texturePath, const std::string& shaderPath);
         ChunkRenderData& GetChunkRenderData() { return mChunkRenderData; }
         bool IsValidTilePosition(int x, int y) const;
         glm::vec2 GetLeftBottomWorldPos() const { return mLeftBottomWorldPos; }
@@ -98,6 +92,9 @@ namespace mts::Tilemap
                                              mts::PixelsPerUnit;
         }
 
+        void SetTintColor(glm::vec3 c) { mTintColor = c; }
+        glm::vec3 GetTintColor() const { return mTintColor; }
+
         bool testflag = true;
 
        private:
@@ -105,14 +102,22 @@ namespace mts::Tilemap
         ChunkManager mChunkManager;
         ChunkLoader mChunkLoader;
 
+        glm::vec3 mTintColor = {1.0f, 1.0f, 1.0f};
+
         // @brief: Call whenever tileGrid is structurally changed (rows/columns added or rebuilt).
         // Marks the cached extents stale so GetGridPixelWidthRangeInWorldSpace /
         // GetGridPixelHeightRangeInWorldSpace recompute on next access.
-        void InvalidateGridCache() { mCachedMaxWidth = -1; mCachedGridHeight = -1; }
+        void InvalidateGridCache()
+        {
+            mCachedMaxWidth = -1;
+            mCachedGridHeight = -1;
+        }
 
         std::vector<std::vector<TileID>> tileGrid;  // 2D grid representing tile IDs
-        mutable int mCachedMaxWidth = -1;    // -1 = dirty; updated lazily by GetGridPixelWidthRangeInWorldSpace
-        mutable int mCachedGridHeight = -1;  // -1 = dirty; updated lazily by GetGridPixelHeightRangeInWorldSpace
+        mutable int mCachedMaxWidth =
+            -1;  // -1 = dirty; updated lazily by GetGridPixelWidthRangeInWorldSpace
+        mutable int mCachedGridHeight =
+            -1;  // -1 = dirty; updated lazily by GetGridPixelHeightRangeInWorldSpace
         std::vector<std::string>
             tilesetSources;  // List of tileset texture sources used in the tilemap
         std::unordered_map<int, std::set<TileID>>

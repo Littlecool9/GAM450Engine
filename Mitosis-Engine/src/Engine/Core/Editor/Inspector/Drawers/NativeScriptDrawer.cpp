@@ -11,6 +11,7 @@
 #include "NativeScriptDrawer.h"
 
 #include <imgui.h>
+#include <imgui_stdlib.h>
 
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Scripting/NativeScriptComponent.h"
@@ -75,6 +76,26 @@ namespace mts
                                 if (ImGui::Checkbox(field.name, field.ptr.b))
                                     changed = true;
                                 break;
+                            case ScriptField::Type::Vec2:
+                                if (ImGui::DragFloat2(field.name, &field.ptr.v2->x, field.step))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::Vec3:
+                                if (ImGui::DragFloat3(field.name, &field.ptr.v3->x, field.step))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::Color:
+                                if (ImGui::ColorEdit3(field.name, &field.ptr.v3->x))
+                                    changed = true;
+                                break;
+                            case ScriptField::Type::String:
+                            {
+                                std::string& str = *field.ptr.s;
+                                if (ImGui::InputText(field.name, &str, ImGuiInputTextFlags_None))
+                                    changed = true;
+                            }
+                            break;
+
                             case ScriptField::Type::GameObject:
                             {
                                 Scene* scene = SceneSystem::GetCurrentScene();

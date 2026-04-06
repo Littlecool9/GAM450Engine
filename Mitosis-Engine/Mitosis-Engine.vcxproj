@@ -145,6 +145,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Core\Application.h" />
+    <ClInclude Include="src\Engine\Core\Editor\Inspector\Drawers\TilemapDrawer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="src\Engine\Core\SplashScreen.h" />
     <ClInclude Include="src\Engine\Core\Editor\EditorContext.h">
       <SubType>
@@ -423,6 +427,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Core\Application.cpp" />
+    <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\TilemapDrawer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="src\Engine\Core\SplashScreen.cpp" />
     <ClCompile Include="src\Engine\Core\Editor\Inspector\Drawers\BoxCollider2DDrawer.cpp">
       <SubType>

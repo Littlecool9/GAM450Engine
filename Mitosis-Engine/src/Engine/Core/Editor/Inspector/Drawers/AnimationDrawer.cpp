@@ -68,6 +68,8 @@ namespace mts
 
             if (ImGui::Button("Stop"))
                 anim->AnimationStop();
+            if (ImGui::Button("Start"))
+                anim->AnimationPlay(startFrame, frameCount, frameDuration, isLooping);
         }
 
         ImGui::PopID();

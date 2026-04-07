@@ -30,6 +30,8 @@
 #include "../CameraController.h"
 #include "../AttackHitboxScript.h"
 #include "../DamageNumberSpawner.h"
+#include "../EnemyBehaviors/BulletBehavior.h"
+#include "../EnemyBehaviors/EnemyController.h"
 #include "Engine/Helpers/Random.h"
 #include "Engine/Resource/ResourceManager.h"
 #include "Engine/SceneSystem/SceneSystem.h"
@@ -625,6 +627,22 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
     }
     if (collision.other->GetGameObject()->HasTag("Enemy") && iFramesTimer < 0.0f)
     {
+        auto o = collision.other->GetGameObject();
+        if (o->GetScript<mts::BulletBehavior>())
+        {
+            if (collision.other->GetGameObject()->GetScript<mts::BulletBehavior>()->GetIsDying())
+            {
+                return;
+            }
+        }
+        if (o->GetScript<mts::EnemyController>())
+        {
+            if (o->GetScript<mts::EnemyController>()->IsDying() && o->GetScript<mts::EnemyController>()->GetEnemyType() != mts::EnemyType::CrawlEnemy)
+            {
+                LOG_INFO("Collided with dead enemy that isng slug");
+                return;
+            }
+        }
         LOG_INFO("hit by enemy with normal {}, {}", collision.normal.x, collision.normal.y);
         iFramesTimer = iFrames;
         glm::vec2 hitDir = -collision.normal;

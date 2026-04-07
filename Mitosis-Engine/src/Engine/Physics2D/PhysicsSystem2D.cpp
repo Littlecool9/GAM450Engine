@@ -185,6 +185,11 @@ namespace mts::physics
 
             if (!rb || !tr)
                 continue;
+            // Skip if physics components are disabled
+            if (!rb->IsEnabled())
+                continue;
+            if (col && !col->IsEnabled())
+                col = nullptr;  // treat as no collider
             PhysicsBody p{};
             p.rb = rb;
             p.col = col;

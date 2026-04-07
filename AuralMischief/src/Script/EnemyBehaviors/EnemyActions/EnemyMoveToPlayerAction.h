@@ -1,7 +1,7 @@
 /**
  * @file EnemyMoveToPlayerAction.h
- * @author 
- * 
+ * @author
+ *
  * @brief // TODO: Add a brief description of this header
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -13,7 +13,7 @@
 
 namespace mts
 {
-    class EnemyMoveToPlayerAction: public BaseEnemyAction
+    class EnemyMoveToPlayerAction : public BaseEnemyAction
     {
        public:
         bool IsAvailable(const EnemyState& state,
@@ -21,20 +21,21 @@ namespace mts
         float GetEstimatedTimeCost(const EnemyState& state,
                                    const EnemyPreference& preferences) const override;
 
-        EnemyState GetExpectedNextState(const EnemyState& state, const EnemyPreference& preferences) const override;
+        EnemyState GetExpectedNextState(const EnemyState& state,
+                                        const EnemyPreference& preferences) const override;
         void OnBeginning(EnemyAgent& agent) override;
 
         EnemyActionResult Update(EnemyAgent* agent, float dt, float totalTime) override;
 
         void OnEnd(EnemyAgent& agent, EnemyActionResult result) override;
+
        private:
-        std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
+        std::unordered_map<EnemyGoal, float> InternalHeuristic(
+            const EnemyState& state,
             const EnemyPreference& preference) override;
 
-
-        float mStopDistance = 2.f;  // how close is “arrived”
-        float mGiveUpTime = 3.0f;    // fail if cannot reach in time
-        float mMoveSpeed = 1.50f;     // units/sec
+        float mGiveUpTime = 3.0f;  // fail if cannot reach in time
+        float mMoveSpeed = 1.50f;  // units/sec
     };
 
 }  // namespace mts

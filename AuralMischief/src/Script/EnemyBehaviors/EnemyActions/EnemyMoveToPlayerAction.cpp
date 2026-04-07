@@ -22,63 +22,71 @@ namespace mts
     bool EnemyMoveToPlayerAction::IsAvailable(const EnemyState& state,
                                               const EnemyPreference& /*preferences*/) const
     {
-        float dis =  std::get<float>(state.params.at(HashAction("AggroRange"))->GetValue());
-        float toPlayer = state.GetDistanceToPlayer();
-        if (state.GetInAction() || state.GetDistanceToPlayer() >= dis || state.GetDistanceToPlayer() <= mStopDistance)
+        float dis = std::get<float>(state.params.at(HashAction("AttackRange"))->GetValue());
+
+        if (state.GetInAction() || abs(state.GetVectorToPlayer().x) <= dis)
             return false;
 
         return true;
     }
 
-    float EnemyMoveToPlayerAction::GetEstimatedTimeCost(const EnemyState& state,
-                                                        const EnemyPreference& /*preferences*/) const
+    float EnemyMoveToPlayerAction::GetEstimatedTimeCost(
+        const EnemyState& state,
+        const EnemyPreference& /*preferences*/) const
     {
         // Simple heuristic: time = distance / speed, using the distance to player from state
         return state.GetDistanceToPlayer() / mMoveSpeed;
     }
 
-    EnemyState EnemyMoveToPlayerAction::GetExpectedNextState(const EnemyState& state,
-                                                      const EnemyPreference& /*preferences*/) const
+    EnemyState EnemyMoveToPlayerAction::GetExpectedNextState(
+        const EnemyState& state,
+        const EnemyPreference& /*preferences*/) const
     {
         EnemyState newState = state;
-        // We expect to be close to the player after moving towards them, so we can set distance to a low value
-        newState.SetDistanceToPlayer(mStopDistance * 0.5f);  // expected to be within stop distance
+        // We expect to be close to the player after moving towards them, so we can set distance to
+        // a low value
+        newState.SetDistanceToPlayer(0.5f);  // expected to be within attack range
         return newState;
     }
 
     void EnemyMoveToPlayerAction::OnBeginning(EnemyAgent& agent)
     {
         LOG_INFO("Chasing!");
-        agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(AnimationSystem::States::Walking);
+        agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
+            AnimationSystem::States::Walking);
     }
 
-    EnemyActionResult EnemyMoveToPlayerAction::Update(EnemyAgent* agent,
-                                                      float dt,
-                                                      float totalTime) 
+    EnemyActionResult EnemyMoveToPlayerAction::Update(EnemyAgent* agent, float dt, float totalTime)
     {
         if (!agent)
             return Invalid;
 
-        //Get positions
+        // Get positions
 
-        const glm::vec2 enemyPos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();         
-        const glm::vec2 playerPos = agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();  
+        const glm::vec2 enemyPos = agent->GetGameObject()->GetComponent<Transform>()->GetPosition();
+        const glm::vec2 playerPos =
+            agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();
 
         const glm::vec2 toPlayer = playerPos - enemyPos;
-        const float dist = agent->GetState().GetDistanceToPlayer();
+        const float xDist = std::abs(toPlayer.x);
 
-        //check if arrived
-        if (dist <= mStopDistance)
+        const float attackRange =
+            agent->GetGameObject()->GetScript<EnemyController>()->GetAttackRange();
+
+        // check if arrived
+        if (abs(agent->GetState().GetVectorToPlayer().x) <= attackRange)
         {
+            LOG_INFO("arrived, Distance x to player: {}", agent->GetState().GetVectorToPlayer().x);
             // Stop movement when reached
-            agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));  // TODO: replace
+            agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
+                glm::vec2(0));  // TODO: replace
 
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Idle);
             return Success;
         }
 
-        //give up if too long
+        // give up if too long
         if (totalTime >= mGiveUpTime)
         {
             // Stop movement on failure too
@@ -90,8 +98,9 @@ namespace mts
             return Failed;
         }
 
-        //Move toward player (simple steering)
-        glm::vec2 dir = (dist > 0.0001f) ? (toPlayer / dist) : glm::vec2{0.0f, 0.0f};
+        // Move toward player (simple steering)
+        float fullDist = glm::length(toPlayer);
+        glm::vec2 dir = (fullDist > 0.0001f) ? (toPlayer / fullDist) : glm::vec2{0.0f, 0.0f};
         if (dir.x < 0)
         {
             agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
@@ -100,9 +109,10 @@ namespace mts
         {
             agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
         }
-        const glm::vec2 vel = dir * agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
+        const glm::vec2 vel =
+            dir * agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
         agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
-            glm::vec2{vel.x, agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y});  
+            glm::vec2{vel.x, agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y});
 
         return OnGoing;
     }
@@ -111,11 +121,10 @@ namespace mts
         const EnemyState& state,
         const EnemyPreference& preference)
     {
-        // Heuristic: moving towards the player increases player elimination and decreases self preservation
-        return {
-            {EnemyGoal::PlayerElimination, 0.3f * preference[EnemyGoal::PlayerElimination]},
-            {EnemyGoal::SelfPreservation, -0.5f * preference[EnemyGoal::SelfPreservation]}
-        };
+        // Heuristic: moving towards the player increases player elimination and decreases self
+        // preservation
+        return {{EnemyGoal::PlayerElimination, 0.3f * preference[EnemyGoal::PlayerElimination]},
+                {EnemyGoal::SelfPreservation, -0.5f * preference[EnemyGoal::SelfPreservation]}};
     }
     void EnemyMoveToPlayerAction::OnEnd(EnemyAgent& agent, EnemyActionResult /*result*/)
     {

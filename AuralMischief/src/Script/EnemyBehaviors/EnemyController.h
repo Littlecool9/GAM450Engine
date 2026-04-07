@@ -40,15 +40,21 @@ namespace mts
         float GetPatrolRadius() { return mPatrolRadius; }
         void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
         void MarkDead() { curhp = 0; }
+        void TakeDamage(int dmg);
+        bool IsDying() const { return mDying; }
+        float GetAggroRange() { return mAggroRange; }
+        float GetAttackRange() { return mAttackRange; }
         SCRIPT_CLASS(EnemyController)
 
        private:
         EnemyType enemyType = EnemyType::CrawlEnemy;
         glm::vec3 origin;
         std::string type;
+        bool mDying = false;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;
         float mAggroRange = 5.f;
+        float mAttackRange = 1.f;
         float mAttackCooldown = 5.f;
         float mAttack2Cooldown = 5.f;
         float mAttack3Cooldown = 5.f;

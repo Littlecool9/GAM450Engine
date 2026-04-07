@@ -54,9 +54,9 @@ namespace mts
             b->GetComponent<Transform>()->SetRotation(b->GetComponent<Transform>()->GetRotation() +
                                                       0.785398 * mul);
 
-            b->GetComponent<SpriteRenderer>()->SetFlipX(
-                agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX());
+            b->GetComponent<SpriteRenderer>()->SetFlipX(true);
             b->GetScript<BulletBehavior>()->SetDirection(glm::vec2(1.0f, 0.0f) * mul);
+            b->GetScript<BulletBehavior>()->SetHoming(true);
         }
         ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
     }
@@ -64,9 +64,6 @@ namespace mts
     void SentryEnemyAttackAction::OnBeginning(EnemyAgent& agent)
     {
         agent.GetState().SetInAction(true);
-        glm::vec3 dir = agent.GetPlayerReference()->GetComponent<mts::Transform>()->GetPosition() -
-                        agent.GetGameObject()->GetComponent<Transform>()->GetPosition();
-
 
         if (agent.GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Attack1)
         {
@@ -121,10 +118,7 @@ namespace mts
                            agent->GetState().params.at(HashAction("AttackCooldown")))
                            ->GetCooldownTime());
         agent->GetState().SetInAction(false);
-        //auto a = agent->GetGameObject()->GetComponent<Animation>();
-        //a->AnimationPlay(a->GetStartFrame(), 0, 0, false);
-        //agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-        //    AnimationSystem::States::Alerted);
+
         LOG_INFO("Finished Firing");
         return Success;
 
@@ -135,7 +129,7 @@ namespace mts
     {
         if (result == Failed)
         {
-            //ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             agent.GetState().SetInAction(false);
             LOG_INFO("Attack Failed, unsubscribing from beat");
         }

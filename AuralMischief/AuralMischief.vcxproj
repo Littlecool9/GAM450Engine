@@ -198,6 +198,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClInclude>
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.h" />
     <ClInclude Include="src\Script\FadeInScript.h" />
     <ClInclude Include="src\Script\MainMenuButton.h" />
     <ClInclude Include="src\Script\Player\PlayerAudioController.h" />
@@ -259,6 +260,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.cpp" />
     <ClCompile Include="src\Script\Player\PlayerAudioController.cpp" />
     <ClCompile Include="src\Script\FadeInScript.cpp" />
     <ClCompile Include="src\Script\MainMenuButton.cpp" />

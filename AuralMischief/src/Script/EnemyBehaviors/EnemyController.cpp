@@ -31,6 +31,7 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "../../Actions/ColliderScaleAction.h"
+#include "EnemyParameters/AttackRangeParam.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
@@ -65,13 +66,26 @@ namespace mts
             mPlayerController = playerGO->GetScript<PlayerController>();
     }
 
+    void EnemyController::TakeDamage(int dmg)
+    {
+        if (mIsInvincible)
+            return;
+        curhp -= dmg;
+        LOG_INFO("Enemy took damage, current hp: {}", curhp);
+        if (curhp <= 0)
+        {
+            curhp = 0;
+            LOG_INFO("Enemy died");
+        }
+    }
+
     void EnemyController::OnUpdate(float dt)
     {
         if (!mIsInvincible && curhp <= 0)
         {
 
             LOG_INFO("Enemy ded");
-            GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
+            mDying = true;
             GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
 
@@ -108,15 +122,20 @@ namespace mts
                                                      BaseAction::EaseType::Linear));
                 deathAnimFirstTime = false;
             }
+            else
+            {
+                GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
+            }
 
             if ( GetGameObject()->GetComponent<Animation>()->GetIsDone())
             {
                 GetGameObject()->Destroy();
             }
-            else
-            {
-                LOG_INFO("anim not done");
-            }
+            //else
+            //{
+            //    LOG_INFO("anim not done");
+            //}
             return;
         }
         if (enemyType == EnemyType::SentryEnemy && alerted)
@@ -215,24 +234,31 @@ namespace mts
             p.emplace(mts::HashAction("AggroRange"), new mts::AggroRangeParam());
             p.at(HashAction("AggroRange"))->SetValue(mAggroRange);
         }
+        if (fields.Has("AttackRange"))
+        {
+            mAttackRange = fields["AttackRange"].GetFloat();
+            p.emplace(mts::HashAction("AttackRange"), new AttackRangeParam());
+            p.at(HashAction("AttackRange"))->SetValue(mAttackRange);
+        }
         if (fields.Has("AttackCooldown"))
         {
             mAttackCooldown = fields["AttackCooldown"].GetFloat();
             p.emplace(mts::HashAction("AttackCooldown"), new mts::AttackCountdownParam());
-            static_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))
+            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("AttackCooldown")))
                 ->SetCooldownTime(mAttackCooldown);
         }
         if (fields.Has("Attack2Cooldown"))
         {
             mAttack2Cooldown = fields["Attack2Cooldown"].GetFloat();
             p.emplace(mts::HashAction("Attack2Cooldown"), new mts::AttackCountdownParam());
-            static_cast<AttackCountdownParam*>(p.at(HashAction("Attack2Cooldown")))->SetCooldownTime(mAttack2Cooldown);
+            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("Attack2Cooldown")))->SetCooldownTime(mAttack2Cooldown);
         }
         if (fields.Has("Attack3Cooldown"))
         {
             mAttack3Cooldown = fields["Attack3Cooldown"].GetFloat();
             p.emplace(mts::HashAction("Attack3Cooldown"), new mts::AttackCountdownParam());
-            static_cast<AttackCountdownParam*>(p.at(HashAction("Attack3Cooldown")))->SetCooldownTime(mAttack3Cooldown);
+            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("Attack3Cooldown")))
+                ->SetCooldownTime(mAttack3Cooldown);
         }
 
         if (fields.Has("HealthPoints"))
@@ -322,7 +348,7 @@ namespace mts
                 mPlayerController->OnEnemyHit(damage, pos);
             }
         }
-        if (collision.other->GetGameObject()->HasTag("Player") && curhp <= 0)
+        if (collision.other->GetGameObject()->HasTag("Player") && (curhp <= 0 || !mDying))
         {
             collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(1);
         }
@@ -335,18 +361,6 @@ namespace mts
             const glm::vec2 contact = collision.contactPoint;
             const glm::vec2 center = box->GetCenter();
 
-            LOG_INFO(
-                "collision with {}, normal at {}, {}, contact point {}, {}, penetration : {}, "
-                "center : {}, {}",
-                collision.other->GetGameObject()->GetName(),
-                collision.normal.x,
-                collision.normal.y,
-                collision.contactPoint.x,
-                collision.contactPoint.y,
-                collision.penetration,
-                center.x,
-                center.y);
-
             auto boxHalf = box->GetHalfExtents();
             const float bottom = center.y - boxHalf.y;
 
@@ -355,13 +369,6 @@ namespace mts
             if (contact.y <= cutoff)
                 return;
 
-            LOG_INFO(
-                "{} bumped into wall, bottom = {} ; local size {}; contact at y = {}, cutoff {}",
-                this->GetGameObject()->GetName(),
-                bottom,
-                boxHalf.y,
-                contact.y,
-                cutoff);
             GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(
                 !GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX());
         }

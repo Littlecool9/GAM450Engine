@@ -30,6 +30,7 @@ namespace mts
 
         void FireBullet(EnemyAgent& agent);
 
+
        private:
         std::unordered_map<EnemyGoal, float> InternalHeuristic(
             const EnemyState& state,

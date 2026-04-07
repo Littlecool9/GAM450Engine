@@ -27,7 +27,7 @@ namespace mts
         const EnemyPreference& preferences) const
     {
         EnemyState newState = state;
-        // TODO: update once player gameobject has stats
+
         newState.SetPlayerHealthLeftRatio(0.3f);
         return newState;
     }

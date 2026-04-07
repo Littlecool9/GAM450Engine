@@ -35,15 +35,16 @@ namespace mts
        public:
 
         float GetDistanceToPlayer() const { return mDistanceToPlayer; }
+        glm::vec2 GetVectorToPlayer() const { return mVectorToPlayer; }
         void SetDistanceToPlayer(float distance) { mDistanceToPlayer = distance; }
-
+        void SetVectorToPlayer(const glm::vec2& vector) { mVectorToPlayer = vector; }
         int GetEnemyHealth() const { return mEnemyHealth; }
         void SetEnemyHealth(int health) { mEnemyHealth = health; }
         float GetPlayerHealthLeftRatio() const { return mPlayerHealthLeftRatio; }
         void SetPlayerHealthLeftRatio(float ratio) { mPlayerHealthLeftRatio = ratio; }
         bool GetInAction() const { return mInAction; }
         void SetInAction(bool inAction) { mInAction = inAction; }
-
+        
         AnimationSystem::States GetCurrentPlayerState() const { return mCurrentPlayerState; }
         void SetCurrentPlayerState(AnimationSystem::States state) { mCurrentPlayerState = state; }
         float GetPlayerEliminationScore(EnemyPreference preference, float baseMultiplier) const;
@@ -55,7 +56,7 @@ namespace mts
         float mPlayerHealthLeftRatio = 0.0f;
 
         float mDistanceToPlayer = 0.0f;
-
+        glm::vec2 mVectorToPlayer{0.0f, 0.0f};
         bool mInAction = false;
         int mEnemyHealth = 0;
         AnimationSystem::States mCurrentPlayerState = AnimationSystem::States::Idle;

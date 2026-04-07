@@ -91,6 +91,19 @@
                         "FrameDuration": 0.33,
                         "IsRunning": 0,
                         "IsLooping": 1
+                    },
+                    {
+                        "State": 7,
+                        "TextureResource": "Data/Resources/ExplosionTexture.tex",
+                        "MeshResource": "Data/Resources/4x4MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 0,
+                        "FrameCount": 15,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.1,
+                        "IsRunning": 0,
+                        "IsLooping": 0
                     }
                 ]
             }

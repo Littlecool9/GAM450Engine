@@ -23,6 +23,7 @@
 #include "Script/Player/PlayerAudioController.h"
 #include "Script/MainMenuButton.h"
 #include "Script/FadeInScript.h"
+#include "Script/BeatBarController.h"
 #include "Script/TilemapBeatFlash.h"
 
 mts::Application* mts::CreateApplication()
@@ -97,6 +98,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new FadeInScript(); });
     mts::ScriptFactory::RegisterScript(EndPointScript::StaticClassName(),
                                        []() { return new EndPointScript(); });
+    mts::ScriptFactory::RegisterScript(BeatBarController::StaticClassName(),
+                                       []() { return new BeatBarController(); });
     mts::ScriptFactory::RegisterScript(TilemapBeatFlash::StaticClassName(),
                                        []() { return new TilemapBeatFlash(); });
 }

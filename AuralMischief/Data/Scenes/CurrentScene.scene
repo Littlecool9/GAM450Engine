@@ -9316,22 +9316,6 @@
                             ]
                         ]
                     }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "TilemapBeatFlash",
-                        "Fields": {
-                            "FlashColor": [
-                                0.8740349411964417,
-                                0.8633803129196167,
-                                0.8633803129196167
-                            ],
-                            "FlashDuration": 0.119999997317791,
-                            "BeatInterval": 1,
-                            "HoldTint": true
-                        }
-                    }
                 }
             ]
         },
@@ -10115,34 +10099,6 @@
             ]
         },
         {
-            "UUID": "a9e2987b-21d6-4067-81e0-6df05235fab9",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "a73a4b87-4d52-4d3f-807f-17be2fc104eb",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "3a0af197-a2da-4d67-9134-f8fbe49d5837",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "28881c37-0773-4622-9991-fc28c30b8020",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
             "UUID": "2497eeae-98e3-4fb7-93f2-107f96362e4a",
             "Name": "Checkpoint",
             "Layer": 0,
@@ -10201,20 +10157,6 @@
             ]
         },
         {
-            "UUID": "1376f364-3592-4249-ad66-09188f026fb0",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "93364215-2566-468c-9ec7-31d73640367b",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
             "UUID": "f1014891-ab33-4b17-a214-514860595fe1",
             "Name": "RhythmSystem",
             "Layer": 0,
@@ -10224,41 +10166,6 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "RhythmSystemScript"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "563508f6-c71e-4582-84fb-b55b799a389f",
-            "Name": "",
-            "Layer": 0,
-            "Tags": [],
-            "Components": []
-        },
-        {
-            "UUID": "5f3080d3-1170-457a-8323-5b30e7339e02",
-            "Name": "SceneSwitcherTest",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "SceneSwitcherScript"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "839bb5c1-de2d-4ab4-b27e-80f212beb9e8",
-            "Name": "SceneSwitcherTest",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "SceneSwitcherScript"
                     }
                 }
             ]
@@ -14623,6 +14530,71 @@
                 },
                 {
                     "Type": "ActionList"
+                }
+            ]
+        },
+        {
+            "UUID": "997e02a4-483a-409e-b2b7-1dee40987775",
+            "Name": "EnemyAudioController",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "EnemyAudioController",
+                        "Fields": {}
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "98615498-80c6-4755-8685-04ed7a8956e9",
+            "Name": "Beatline",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5,
+                            0.10000000149011612
+                        ],
+                        "Scale": [
+                            20.0,
+                            11.25,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "BeatBarController",
+                        "Fields": {
+                            "BarCount": 4,
+                            "AlphaFadeDistance": 0.05
+                        }
+                    }
                 }
             ]
         }

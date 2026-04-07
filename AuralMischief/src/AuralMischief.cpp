@@ -10,6 +10,7 @@
 #include "Script/HazardCollider.h"
 #include "Script/PlatformPuzzleScript.h"
 #include "Script/EnemyBehaviors/EnemyController.h"
+#include "Script/EnemyBehaviors/EnemyAudioController.h"
 #include "Script/AudioController.h"
 #include "Script/PauseButton.h"
 #include "Script/DamageNumberScript.h"
@@ -70,6 +71,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new PlatformPuzzleScript(); });
     mts::ScriptFactory::RegisterScript(mts::EnemyController::StaticClassName(),
                                        []() { return new mts::EnemyController(); });
+    mts::ScriptFactory::RegisterScript(EnemyAudioController::StaticClassName(),
+                                       []() { return new EnemyAudioController(); });
     mts::ScriptFactory::RegisterScript(AudioController::StaticClassName(),
                                        []() { return new AudioController(); });
     mts::ScriptFactory::RegisterScript(PauseButton::StaticClassName(),

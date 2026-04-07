@@ -22,7 +22,10 @@ namespace mts
     bool EnemyMoveToPlayerAction::IsAvailable(const EnemyState& state,
                                               const EnemyPreference& /*preferences*/) const
     {
-        float dis = std::get<float>(state.params.at(HashAction("AttackRange"))->GetValue());
+        auto it = state.params.find(HashAction("AttackRange"));
+        if (it == state.params.end())
+            return false;
+        float dis = std::get<float>(it->second->GetValue());
 
         if (state.GetInAction() || abs(state.GetVectorToPlayer().x) <= dis)
             return false;

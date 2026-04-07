@@ -9,8 +9,10 @@
 
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"
+#include "Engine/Audio/AudioTypes.h"
 
 class PlayerController;
+class EnemyAudioController;
 
 namespace mts
 {
@@ -63,9 +65,12 @@ namespace mts
         bool alerted = false;
         bool mIsInvincible = false;
         bool deathAnimFirstTime = true;
+        bool mDeathBeepPlayed = false;
+        mts::AudioHandle mFuseHandle{};
         float mExplosionRadiusMultiplier = 5;
         float mTimeTillExplode = 1;
         PlayerController* mPlayerController = nullptr;
+        EnemyAudioController* mAudioController = nullptr;
     };
 
 }  // namespace mts

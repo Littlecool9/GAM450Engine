@@ -47,11 +47,8 @@ namespace mts
     class AudioManager
     {
        public:
-
         static AudioManager& Get() { return *sManager; }
         static void SetManager(AudioManager* mgr) { sManager = mgr; }
-
-
 
         AudioManager();
         ~AudioManager();
@@ -83,7 +80,7 @@ namespace mts
         // --- Playback ---
         AudioHandle Play(const AudioEventId& eventId) const;                   // Non-spatial
         AudioHandle Play2D(const AudioEventId& eventId, glm::vec2 pos) const;  // Spatial 2D (Z=0)
-        void Stop(AudioHandle h, StopMode mode) const;
+        void Stop(AudioHandle h, StopMode mode = StopMode::Immediate) const;
         void Release(AudioHandle h) const;
         bool IsPlaying(AudioHandle h) const;
         // One-shot helpers
@@ -114,7 +111,7 @@ namespace mts
         int GetBeatIndex() const { return mBeatIndex; }
         float GetBeatPhase01() const { return mBeatPhase; }
         bool IsInBeatWindow(float earlySec, float lateSec) const;
-        int  GetBeatsPerBar() const { return mCurrentTrack.beatsPerBar; }
+        int GetBeatsPerBar() const { return mCurrentTrack.beatsPerBar; }
         bool IsMusicPlaying() const { return mMusicPlaying; }
 
        private:

@@ -117,6 +117,7 @@ namespace mts
 
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {
+            mts::AudioManager::Get().Play("event:/explosion");
             BeginDeath();
             return;
         }
@@ -126,6 +127,8 @@ namespace mts
         {
             collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(
                 static_cast<int>(dmg));
+            //mts::AudioManager::Get().PlayOneShot("event:/explosion");
+            mts::AudioManager::Get().Play("event:/explosion");
             BeginDeath();
             return;
         }

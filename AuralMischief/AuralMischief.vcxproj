@@ -227,6 +227,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyAudioController.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyController.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AggroRangeParam.h">
       <SubType>
@@ -291,6 +292,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyAudioController.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyController.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AggroRangeParam.cpp">
       <SubType>

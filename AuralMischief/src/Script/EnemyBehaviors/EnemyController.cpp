@@ -13,6 +13,7 @@
 // #include "BarScaler.h"
 #include "../AttackHitboxScript.h"
 #include "../Player/PlayerController.h"
+#include "EnemyAudioController.h"
 
 #include "EnemyActions/EnemyMoveToPlayerAction.h"
 #include "EnemyActions/EnemyPatrolAction.h"
@@ -64,6 +65,17 @@ namespace mts
         MTS_ASSERT(playerGO && "EnemyController could not find Player GameObject in scene");
         if (playerGO)
             mPlayerController = playerGO->GetScript<PlayerController>();
+
+        auto* audioGO =
+            SceneSystem::GetCurrentScene()->FindGameObjectByName("EnemyAudioController");
+        if (audioGO)
+            mAudioController = audioGO->GetScript<EnemyAudioController>();
+
+        // Pre-warm alerted=true so frame-1 OnUpdate doesn't fire alert sounds while
+        // EnemyAgent distance is still at its default of 0. Enemies outside real aggro
+        // range self-correct to alerted=false once the agent computes the real distance
+        // (the false→true transition is what triggers the sound, not true→false).
+        alerted = true;
     }
 
     void EnemyController::TakeDamage(int dmg)
@@ -83,7 +95,6 @@ namespace mts
     {
         if (!mIsInvincible && curhp <= 0)
         {
-
             LOG_INFO("Enemy ded");
             mDying = true;
             GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
@@ -91,6 +102,11 @@ namespace mts
 
             if (mTimeTillExplode > 0 && enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
             {
+                if (!mDeathBeepPlayed)
+                {
+                    if (mAudioController) mFuseHandle = mAudioController->PlaySlugBeep();
+                    mDeathBeepPlayed = true;
+                }
                 mTimeTillExplode -= dt;
                 return;
             }
@@ -100,12 +116,13 @@ namespace mts
             // blow up hitbox for crawl enemy
             if (enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
             {
+                if (mAudioController) mAudioController->PlaySlugExplode(mFuseHandle);
                 GetGameObject()->GetComponent<BoxCollider2D>()->SetIsTrigger(true);
                 GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
                 auto a = GetGameObject()->GetComponent<ActionList>();
                 auto anim = GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
-                glm::vec2 newSize =
-                    GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize() * mExplosionRadiusMultiplier;
+                glm::vec2 newSize = GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize() *
+                                    mExplosionRadiusMultiplier;
                 a->AddAction(new ColliderScaleAction(newSize,
                                                      GetGameObject(),
                                                      1,
@@ -124,11 +141,16 @@ namespace mts
             }
             else
             {
+                if (enemyType == EnemyType::FlyEnemy && deathAnimFirstTime)
+                {
+                    if (mAudioController) mAudioController->PlayFlyExplode();
+                    deathAnimFirstTime = false;
+                }
                 GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
                 GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
             }
 
-            if ( GetGameObject()->GetComponent<Animation>()->GetIsDone())
+            if (GetGameObject()->GetComponent<Animation>()->GetIsDone())
             {
                 GetGameObject()->Destroy();
             }
@@ -150,6 +172,8 @@ namespace mts
             {
                 LOG_INFO("Player entered aggro range");
                 alerted = true;
+                if (mAudioController)
+                    mAudioController->PlayAlertSound(enemyType);
                 GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                     AnimationSystem::States::Alerted);
                 const glm::vec2 enemyPos =
@@ -170,7 +194,6 @@ namespace mts
                     GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
                 }
             }
-
         }
         else
         {
@@ -216,7 +239,7 @@ namespace mts
     {
         if (fields.Has("EnemyType"))
         {
-            type = fields["EnemyType"].GetString("");        
+            type = fields["EnemyType"].GetString("");
         }
         auto& p = GetGameObject()->GetComponent<EnemyAgent>()->GetState().params;
         if (fields.Has("MoveSpeed"))
@@ -316,8 +339,8 @@ namespace mts
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAttack3Cooldown},
                           .step = 0.1f});
-        fields.push_back({.name = "HealthPoints",
-                          .type = mts::ScriptField::Type::Int, .ptr = {.i = &maxhp}});
+        fields.push_back(
+            {.name = "HealthPoints", .type = mts::ScriptField::Type::Int, .ptr = {.i = &maxhp}});
 
         fields.push_back({.name = "IsInvincible",
                           .type = mts::ScriptField::Type::Bool,
@@ -341,6 +364,9 @@ namespace mts
             if (!mIsInvincible)
                 curhp -= static_cast<int>(damage);
             LOG_INFO("cur hp {}, is invin: {}", curhp, mIsInvincible);
+
+            if (mAudioController)
+                mAudioController->PlayHitSound(enemyType);
 
             if (mPlayerController)
             {

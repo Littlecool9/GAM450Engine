@@ -1,0 +1,31 @@
+{
+    "UUID": "c3d7a1f2-84b0-4e5c-9f6a-2d1e8b034c71",
+    "Name": "EnemyAudioController",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "EnemyAudioController",
+                "Fields": {}
+            }
+        }
+    ]
+}

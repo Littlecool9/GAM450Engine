@@ -401,11 +401,11 @@ void PlayerController::DeserializeFields(mts::JsonValue const& fields)
     if (fields.Has("offBeatLightDamage"))
         mOffBeatLightDamage = fields["offBeatLightDamage"].GetFloat(mOffBeatLightDamage);
     if (fields.Has("onBeatLightDamage"))
-        mOffBeatLightDamage = fields["onBeatLightDamage"].GetFloat(mOnBeatLightDamage);
+        mOnBeatLightDamage = fields["onBeatLightDamage"].GetFloat(mOnBeatLightDamage);
     if (fields.Has("offBeatHeavyDamage"))
         mOffBeatHeavyDamage = fields["offBeatHeavyDamage"].GetFloat(mOffBeatHeavyDamage);
     if (fields.Has("onBeatHeavyDamage"))
-        mOffBeatHeavyDamage = fields["onBeatHeavyDamage"].GetFloat(mOnBeatHeavyDamage);
+        mOnBeatHeavyDamage = fields["onBeatHeavyDamage"].GetFloat(mOnBeatHeavyDamage);
     if (fields.Has("attackHitboxOffsetX"))
         mAttackHitboxOffsetX = fields["attackHitboxOffsetX"].GetFloat(mAttackHitboxOffsetX);
     if (fields.Has("dashBeatBoost"))

@@ -76,8 +76,12 @@ namespace mts
     bool FlyingEnemyAttackAction::IsAvailable(const EnemyState& state,
                                               const EnemyPreference& preferences) const
     {
-        float dis = std::get<float>(state.params.at(HashAction("AttackRange"))->GetValue());
-        float cd = std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue());
+        auto rangeIt = state.params.find(HashAction("AttackRange"));
+        auto cdIt = state.params.find(HashAction("AttackCooldown"));
+        if (rangeIt == state.params.end() || cdIt == state.params.end())
+            return false;
+        float dis = std::get<float>(rangeIt->second->GetValue());
+        float cd = std::get<float>(cdIt->second->GetValue());
         if (state.GetInAction() || cd > 0 || abs(state.GetVectorToPlayer().x) > dis)
         {
             return false;

@@ -59,6 +59,7 @@ namespace mts
             b->GetComponent<Transform>()->SetPosition(
                 agent.GetGameObject()->GetComponent<Transform>()->GetPosition());
             // Point downward
+            b->GetComponent<SpriteRenderer>()->SetFlipX(true);
             b->GetComponent<Transform>()->SetRotation(glm::half_pi<float>());
             b->GetScript<BulletBehavior>()->SetDirection(glm::vec2(0.0f, -1.0f));
             b->GetScript<BulletBehavior>()->SetHoming(false);

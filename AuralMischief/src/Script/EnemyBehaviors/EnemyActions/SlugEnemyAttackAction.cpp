@@ -15,6 +15,7 @@
 #include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include "../EnemyParameters/AttackCountdownParam.h"
+
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
 
@@ -22,9 +23,8 @@
 namespace mts
 {
 
-    EnemyState SlugEnemyAttackAction::GetExpectedNextState(
-        const EnemyState& state,
-        const EnemyPreference& preferences) const
+    EnemyState SlugEnemyAttackAction::GetExpectedNextState(const EnemyState& state,
+                                                           const EnemyPreference& preferences) const
     {
         EnemyState newState = state;
 
@@ -33,7 +33,7 @@ namespace mts
     }
 
     float SlugEnemyAttackAction::GetEstimatedTimeCost(const EnemyState& state,
-                                                        const EnemyPreference& preferences) const
+                                                      const EnemyPreference& preferences) const
     {
         return 2.f;
     }
@@ -46,14 +46,16 @@ namespace mts
     }
 
     bool SlugEnemyAttackAction::IsAvailable(const EnemyState& state,
-                                              const EnemyPreference& preferences) const
+                                            const EnemyPreference& preferences) const
     {
         float dis = std::get<float>(state.params.at(HashAction("AggroRange"))->GetValue());
         float toPlayer = state.GetDistanceToPlayer();
 
         if (state.GetInAction() || state.GetDistanceToPlayer() >= dis)
         {
-            LOG_INFO("not available currently in action: {}; distance to player: {}", state.GetInAction(), state.GetDistanceToPlayer());
+            LOG_INFO("not available currently in action: {}; distance to player: {}",
+                     state.GetInAction(),
+                     state.GetDistanceToPlayer());
             return false;
         }
 
@@ -63,7 +65,7 @@ namespace mts
 
     EnemyActionResult SlugEnemyAttackAction::Update(EnemyAgent* agent, float dt, float totalTime)
     {
-        //LOG_INFO("Updating SlugEnemyAttackAction, time in action: {}", totalTime);
+        // LOG_INFO("Updating SlugEnemyAttackAction, time in action: {}", totalTime);
         if (!agent)
         {
             return Invalid;
@@ -78,7 +80,7 @@ namespace mts
         auto anim = o->GetComponent<AnimationSystem>();
         if (anim && anim->GetCurrentState() == AnimationSystem::States::Alerted && !anim->IsDone())
         {
-            LOG_INFO("still alerting");
+            LOG_INFO("Alerting");
             return OnGoing;  // wait until alerted animation is done before moving
         }
 
@@ -105,15 +107,17 @@ namespace mts
             std::get<float>(agent->GetState().params.at(HashAction("AggroRange"))->GetValue());
         if (distToPlayer <= 1.5f)
         {
-            o->GetScript<EnemyController>()->MarkDead();
+            o->GetScript<EnemyController>()->Explode();
             return Success;
         }
         const glm::vec2 myPos = o->GetComponent<Transform>()->GetPosition();
-        const glm::vec2 playerPos = agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();
+        const glm::vec2 playerPos =
+            agent->GetPlayerReference()->GetComponent<Transform>()->GetPosition();
 
         const float toPlayerX = playerPos.x - myPos.x;
 
-        const bool facingAwayFromPlayer = (flipX && toPlayerX > 0.0f) || (!flipX && toPlayerX < 0.0f);
+        const bool facingAwayFromPlayer =
+            (flipX && toPlayerX > 0.0f) || (!flipX && toPlayerX < 0.0f);
 
         if (distToPlayer > aggroRange && facingAwayFromPlayer)
         {
@@ -123,14 +127,13 @@ namespace mts
         }
 
         return OnGoing;
-        
     }
 
     void SlugEnemyAttackAction::OnEnd(EnemyAgent& agent, EnemyActionResult result)
     {
         if (result == Failed)
         {
-            //ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+            // ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             agent.GetState().SetInAction(false);
             LOG_INFO("Attack Failed, unsubscribing from beat");
         }

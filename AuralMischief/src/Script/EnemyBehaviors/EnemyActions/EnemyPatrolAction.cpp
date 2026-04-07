@@ -44,10 +44,7 @@ namespace mts
 
     void EnemyPatrolAction::OnBeginning(EnemyAgent& agent)
     {
-
-
         LOG_INFO("Patrolling!");
-
     }
 
     float EnemyPatrolAction::GetEstimatedTimeCost(const EnemyState& state,
@@ -68,9 +65,11 @@ namespace mts
         if (!agent)
             return Invalid;
         auto o = agent->GetGameObject();
-        if (o->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Alerted && !o->GetComponent<Animation>()->GetIsDone())
+        if (o->GetComponent<AnimationSystem>()->GetCurrentState() ==
+                AnimationSystem::States::Alerted &&
+            !o->GetComponent<Animation>()->GetIsDone())
         {
-            //LOG_INFO("Alerting b4 patrol");
+            // LOG_INFO("Alerting b4 patrol");
             return OnGoing;  // wait until alerted animation is done before moving
         }
         else
@@ -99,6 +98,7 @@ namespace mts
             const float aggroRange = std::get<float>(it->second->GetValue());
             if (s.GetDistanceToPlayer() <= aggroRange)
             {
+                controller->SetDesiredVelocity(glm::vec2(0.0f));
                 rb->SetVelocity({0.0f, rb->GetVelocity().y});
                 return Success;
             }
@@ -169,6 +169,7 @@ namespace mts
         }
 
         // Preserve Y velocity if using gravity / vertical motion
+        controller->SetDesiredVelocity(glm::vec2{desiredVelX, 0.0f});
         rb->SetVelocity({desiredVelX, rb->GetVelocity().y});
 
         // For flying enemies, keep them on their patrol Y

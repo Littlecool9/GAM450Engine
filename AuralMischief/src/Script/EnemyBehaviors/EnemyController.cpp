@@ -34,6 +34,7 @@
 #include "../../Actions/ColliderScaleAction.h"
 #include "EnemyParameters/AttackRangeParam.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
@@ -52,7 +53,6 @@ namespace mts
 {
     void EnemyController::Init()
     {
-        // todo: ActionList deserialization....
         curhp = maxhp;
         SetEnemyPlans(type);
         origin = GetGameObject()->GetComponent<Transform>()->GetPosition();
@@ -70,6 +70,14 @@ namespace mts
             SceneSystem::GetCurrentScene()->FindGameObjectByName("EnemyAudioController");
         if (audioGO)
             mAudioController = audioGO->GetScript<EnemyAudioController>();
+        else
+        {
+            auto o = GameObjectFactory::CreateFromArchetype("Data/EnemyAudioController.prefab");
+            if (o)
+            {
+                mAudioController = o->GetScript<EnemyAudioController>();
+            }
+        }
 
         // Pre-warm alerted=true so frame-1 OnUpdate doesn't fire alert sounds while
         // EnemyAgent distance is still at its default of 0. Enemies outside real aggro
@@ -82,6 +90,9 @@ namespace mts
     {
         if (mIsInvincible)
             return;
+        if (mDying)
+            return;
+
         curhp -= dmg;
         LOG_INFO("Enemy took damage, current hp: {}", curhp);
         if (curhp <= 0)
@@ -91,78 +102,181 @@ namespace mts
         }
     }
 
+    void EnemyController::Explode()
+    {
+        if (mDying)
+            return;  // already dying from other cause, don't explode
+
+        mShouldExplode = true;
+        // curhp = 0;
+        LOG_INFO("Enemy exploding");
+    }
+
     void EnemyController::OnUpdate(float dt)
     {
+        // --- CrawlEnemy explosion sequence (runs independently of hp) ---
+        if (enemyType == EnemyType::CrawlEnemy && mShouldExplode)
+        {
+            auto* animSys = GetGameObject()->GetComponent<AnimationSystem>();
+            auto* anim = GetGameObject()->GetComponent<Animation>();
+            auto* sprite = GetGameObject()->GetComponent<SpriteRenderer>();
+
+            // If fading out (killed during Attack2 wind-up), just fade and destroy
+            if (mFadingOut)
+            {
+                GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
+                float alpha = sprite->GetAlpha();
+                alpha -= dt * 2.0f;
+                if (alpha <= 0.0f)
+                {
+                    GetGameObject()->Destroy();
+                }
+                else
+                {
+                    sprite->SetAlpha(alpha);
+                }
+                return;
+            }
+
+            auto currentState = animSys->GetCurrentState();
+
+            // Step 1: Play Attack2 animation first
+            if (currentState != AnimationSystem::States::Attack2 &&
+                currentState != AnimationSystem::States::Death)
+            {
+                animSys->ChangeState(AnimationSystem::States::Attack2);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
+                if (!mDeathBeepPlayed)
+                {
+                    if (mAudioController)
+                    {
+                        mFuseHandle = mAudioController->PlaySlugBeep();
+                        LOG_INFO("Playing slug beep with handle {}", mFuseHandle.value);
+                    }
+                    mDeathBeepPlayed = true;
+                }
+                return;
+            }
+
+            // Step 2: Wait for Attack2 to finish
+            if (currentState == AnimationSystem::States::Attack2)
+            {
+                if (anim->GetIsDone())
+                    mAttack2Done = true;
+
+                // Check if killed during Attack2 wind-up — cancel explosion, fade out
+                if (!mIsInvincible && curhp <= 0)
+                {
+                    mShouldExplode = false;
+                    mFadingOut = true;
+                    mDying = true;
+
+                    return;
+                }
+
+                if (!mAttack2Done)
+                    return;
+
+                // Attack2 done, fall through to fuse/explode
+            }
+
+            // Step 3: Fuse timer
+            if (currentState != AnimationSystem::States::Death)
+            {
+                if (mTimeTillExplode > 0 && deathAnimFirstTime)
+                {
+                    mTimeTillExplode -= dt;
+                    return;
+                }
+
+                // Step 4: Explode — switch to Death animation and scale up collider
+                mDying = true;
+                curhp = 0;
+                GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
+                animSys->ChangeState(AnimationSystem::States::Death);
+                if (deathAnimFirstTime)
+                {
+                    if (mAudioController)
+                        mAudioController->PlaySlugExplode(mFuseHandle);
+                    // GetGameObject()->GetComponent<BoxCollider2D>()->SetIsTrigger(true);
+                    // GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
+                    auto a = GetGameObject()->GetComponent<ActionList>();
+                    auto frameDur = anim->GetFrameDuration();
+                    glm::vec2 newSize =
+                        GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize() *
+                        mExplosionRadiusMultiplier;
+                    a->AddAction(new ColliderScaleAction(newSize,
+                                                         GetGameObject(),
+                                                         1,
+                                                         frameDur * 1.f,
+                                                         frameDur * 1,
+                                                         true,
+                                                         BaseAction::EaseType::Linear));
+                    a->AddAction(new ColliderScaleAction(glm::vec2(0),
+                                                         GetGameObject(),
+                                                         1,
+                                                         frameDur,
+                                                         frameDur * 2,
+                                                         true,
+                                                         BaseAction::EaseType::Linear));
+                    deathAnimFirstTime = false;
+                }
+            }
+            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
+            // Wait for Death animation to finish, then destroy
+            if (anim->GetIsDone())
+            {
+                GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
+                GetGameObject()->Destroy();
+            }
+            return;
+        }
+
+        // --- Normal death (non-explosion, or non-CrawlEnemy) ---
         if (!mIsInvincible && curhp <= 0)
         {
-            LOG_INFO("Enemy ded");
             mDying = true;
             GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
 
-            if (mTimeTillExplode > 0 && enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
+            // CrawlEnemy killed without explosion — fade out
+            if (enemyType == EnemyType::CrawlEnemy)
             {
-                if (!mDeathBeepPlayed)
+                auto* sprite = GetGameObject()->GetComponent<SpriteRenderer>();
+                GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
+                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
+                float alpha = sprite->GetAlpha();
+                alpha -= dt * 2.0f;
+                if (alpha <= 0.0f)
                 {
-                    if (mAudioController) mFuseHandle = mAudioController->PlaySlugBeep();
-                    mDeathBeepPlayed = true;
+                    GetGameObject()->Destroy();
                 }
-                mTimeTillExplode -= dt;
+                else
+                {
+                    sprite->SetAlpha(alpha);
+                }
                 return;
             }
 
+            // Non-CrawlEnemy death
             GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Death);
-            // blow up hitbox for crawl enemy
-            if (enemyType == EnemyType::CrawlEnemy && deathAnimFirstTime)
+            if (enemyType == EnemyType::FlyEnemy && deathAnimFirstTime)
             {
-                if (mAudioController) mAudioController->PlaySlugExplode(mFuseHandle);
-                GetGameObject()->GetComponent<BoxCollider2D>()->SetIsTrigger(true);
-                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
-                auto a = GetGameObject()->GetComponent<ActionList>();
-                auto anim = GetGameObject()->GetComponent<Animation>()->GetFrameDuration();
-                glm::vec2 newSize = GetGameObject()->GetComponent<BoxCollider2D>()->GetLocalSize() *
-                                    mExplosionRadiusMultiplier;
-                a->AddAction(new ColliderScaleAction(newSize,
-                                                     GetGameObject(),
-                                                     1,
-                                                     anim * 1.f,
-                                                     anim * 1,
-                                                     true,
-                                                     BaseAction::EaseType::Linear));
-                a->AddAction(new ColliderScaleAction(glm::vec2(0),
-                                                     GetGameObject(),
-                                                     1,
-                                                     anim,
-                                                     anim * 2,
-                                                     true,
-                                                     BaseAction::EaseType::Linear));
+                if (mAudioController)
+                    mAudioController->PlayFlyExplode();
                 deathAnimFirstTime = false;
             }
-            else
-            {
-                if (enemyType == EnemyType::FlyEnemy && deathAnimFirstTime)
-                {
-                    if (mAudioController) mAudioController->PlayFlyExplode();
-                    deathAnimFirstTime = false;
-                }
-                GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
-                GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
-            }
+            GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
+            GetGameObject()->GetComponent<RigidBody2D>()->SetEnabled(false);
 
             if (GetGameObject()->GetComponent<Animation>()->GetIsDone())
             {
                 GetGameObject()->Destroy();
             }
-            //else
-            //{
-            //    LOG_INFO("anim not done");
-            //}
             return;
-        }
-        if (enemyType == EnemyType::SentryEnemy && alerted)
-        {
-            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
         }
 
         auto a = GetGameObject()->GetComponent<EnemyAgent>();
@@ -199,11 +313,25 @@ namespace mts
         {
             if (alerted)
             {
-                LOG_INFO("Player left aggro range, going back to idle");
                 alerted = false;
                 GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                     AnimationSystem::States::Walking);
             }
+        }
+    }
+
+    void EnemyController::OnFixedUpdate(float)
+    {
+        if (enemyType == EnemyType::FlyEnemy)
+        {
+            glm::vec2 velocity = GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity();
+            velocity.x = mDesiredVelocity.x;
+            velocity.y = 0;
+            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(velocity);
+        }
+        if (enemyType == EnemyType::SentryEnemy && alerted)
+        {
+            GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
         }
     }
 
@@ -274,7 +402,8 @@ namespace mts
         {
             mAttack2Cooldown = fields["Attack2Cooldown"].GetFloat();
             p.emplace(mts::HashAction("Attack2Cooldown"), new mts::AttackCountdownParam());
-            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("Attack2Cooldown")))->SetCooldownTime(mAttack2Cooldown);
+            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("Attack2Cooldown")))
+                ->SetCooldownTime(mAttack2Cooldown);
         }
         if (fields.Has("Attack3Cooldown"))
         {
@@ -359,11 +488,12 @@ namespace mts
         auto* hitbox = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
         if (hitbox)
         {
-            LOG_INFO("hit");
+            // LOG_INFO("hit");
             float damage = hitbox->GetDamage();
+            // LOG_INFO("before hit cur hp {}, is invin: {}", curhp, mIsInvincible);
             if (!mIsInvincible)
-                curhp -= static_cast<int>(damage);
-            LOG_INFO("cur hp {}, is invin: {}", curhp, mIsInvincible);
+                TakeDamage(damage);
+            /*LOG_INFO("cur hp {}, is invin: {}", curhp, mIsInvincible);*/
 
             if (mAudioController)
                 mAudioController->PlayHitSound(enemyType);
@@ -374,7 +504,8 @@ namespace mts
                 mPlayerController->OnEnemyHit(damage, pos);
             }
         }
-        if (collision.other->GetGameObject()->HasTag("Player") && (curhp <= 0 || !mDying))
+        if (collision.other->GetGameObject()->HasTag("Player") &&
+            enemyType == EnemyType::CrawlEnemy && (curhp <= 0 || !mDying))
         {
             collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(1);
         }

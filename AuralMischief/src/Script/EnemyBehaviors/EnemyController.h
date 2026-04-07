@@ -31,6 +31,7 @@ namespace mts
         void Init() override;
         void Start() override;
         void OnUpdate(float dt) override;
+        void OnFixedUpdate(float) override;
         void DeserializeFields(JsonValue const& fields) override;
         void SerializeFields(JsonDocument& out) const override;
         void OnCollisionEnter2D(const Collision2D& collision) override;
@@ -44,8 +45,11 @@ namespace mts
         void MarkDead() { curhp = 0; }
         void TakeDamage(int dmg);
         bool IsDying() const { return mDying; }
+        bool IsExploding() const { return mShouldExplode; }
+        void Explode();
         float GetAggroRange() { return mAggroRange; }
         float GetAttackRange() { return mAttackRange; }
+        void SetDesiredVelocity(glm::vec2 vel) { mDesiredVelocity = vel; }
         SCRIPT_CLASS(EnemyController)
 
        private:
@@ -53,6 +57,9 @@ namespace mts
         glm::vec3 origin;
         std::string type;
         bool mDying = false;
+        bool mShouldExplode = false;
+        bool mFadingOut = false;
+        bool mAttack2Done = false;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;
         float mAggroRange = 5.f;
@@ -71,6 +78,7 @@ namespace mts
         float mTimeTillExplode = 1;
         PlayerController* mPlayerController = nullptr;
         EnemyAudioController* mAudioController = nullptr;
+        glm::vec2 mDesiredVelocity{0.0f, 0.0f};
     };
 
 }  // namespace mts

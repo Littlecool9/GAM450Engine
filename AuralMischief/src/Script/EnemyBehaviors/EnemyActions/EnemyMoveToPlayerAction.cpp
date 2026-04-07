@@ -81,6 +81,8 @@ namespace mts
         {
             LOG_INFO("arrived, Distance x to player: {}", agent->GetState().GetVectorToPlayer().x);
             // Stop movement when reached
+            agent->GetGameObject()->GetScript<EnemyController>()->SetDesiredVelocity(
+                glm::vec2(0.0f));
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
                 glm::vec2(0));  // TODO: replace
 
@@ -93,6 +95,8 @@ namespace mts
         if (totalTime >= mGiveUpTime)
         {
             // Stop movement on failure too
+            agent->GetGameObject()->GetScript<EnemyController>()->SetDesiredVelocity(
+                glm::vec2(0.0f));
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
 
             agent->GetState().SetInAction(false);
@@ -114,6 +118,8 @@ namespace mts
         }
         const glm::vec2 vel =
             dir * agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();
+        agent->GetGameObject()->GetScript<EnemyController>()->SetDesiredVelocity(
+            glm::vec2{vel.x, 0.0f});
         agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
             glm::vec2{vel.x, agent->GetGameObject()->GetComponent<RigidBody2D>()->GetVelocity().y});
 

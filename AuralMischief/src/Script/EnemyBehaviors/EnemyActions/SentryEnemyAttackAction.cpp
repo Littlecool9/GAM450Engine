@@ -47,15 +47,14 @@ namespace mts
         GameObject* b = GameObjectFactory::CreateFromArchetype("Data/Bullet.prefab");
         if (b)
         {
-            float mul =
-                agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
+            float mul = agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
             b->GetComponent<Transform>()->SetPosition(
-                agent.GetGameObject()->GetComponent<Transform>()->GetPosition() + glm::vec3{0.3f * mul, -1.f,0});
-            b->GetComponent<Transform>()->SetRotation(b->GetComponent<Transform>()->GetRotation() +
-                                                      0.785398 * mul);
+                agent.GetGameObject()->GetComponent<Transform>()->GetPosition() +
+                glm::vec3{0.3f * mul, 0.3f, 0});
 
             b->GetComponent<SpriteRenderer>()->SetFlipX(true);
-            b->GetScript<BulletBehavior>()->SetDirection(glm::vec2(1.0f, 0.0f) * mul);
+            // Fire upward at 45 degrees so the bullet arcs over toward the player
+            b->GetScript<BulletBehavior>()->SetDirection(glm::normalize(glm::vec2(mul, 1.0f)));
             b->GetScript<BulletBehavior>()->SetHoming(true);
         }
         ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
@@ -65,7 +64,8 @@ namespace mts
     {
         agent.GetState().SetInAction(true);
 
-        if (agent.GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() == AnimationSystem::States::Attack1)
+        if (agent.GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() ==
+            AnimationSystem::States::Attack1)
         {
             agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Alerted);
@@ -80,7 +80,9 @@ namespace mts
                                               const EnemyPreference& preferences) const
     {
         float cd = std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue());
-        if (state.GetInAction() || cd > 0 || state.GetDistanceToPlayer() > std::get<float>(state.params.at(HashAction("AggroRange"))->GetValue()))
+        if (state.GetInAction() || cd > 0 ||
+            state.GetDistanceToPlayer() >
+                std::get<float>(state.params.at(HashAction("AggroRange"))->GetValue()))
         {
             return false;
         }
@@ -121,8 +123,6 @@ namespace mts
 
         LOG_INFO("Finished Firing");
         return Success;
-
-
     }
 
     void SentryEnemyAttackAction::OnEnd(EnemyAgent& agent, EnemyActionResult result)

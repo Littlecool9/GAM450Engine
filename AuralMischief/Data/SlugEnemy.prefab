@@ -1,5 +1,5 @@
 {
-    "UUID": "2eb9befb-0986-44df-a9c6-8ec048cbb44e",
+    "UUID": "c9c79526-68af-4eb0-92ef-ec3c77c6769c",
     "Name": "SlugEnemy",
     "Layer": 0,
     "Tags": [
@@ -10,8 +10,8 @@
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    120.9000015258789,
-                    11.300000190734863,
+                    10.0,
+                    10.0,
                     0.0
                 ],
                 "Scale": [
@@ -29,7 +29,7 @@
                 "Height": 0.15000000596046448,
                 "Offset": [
                     0.0,
-                    -0.6499999761581421
+                    0.0
                 ],
                 "IsTrigger": 0
             }
@@ -63,7 +63,7 @@
                 "ParallaxFactorX": 1.0,
                 "RenderLayer": 1,
                 "TextureResource": "Data/Resources/SlugEnemyTexture.tex",
-                "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                 "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
             }
         },
@@ -84,59 +84,71 @@
                 "States": [
                     {
                         "State": 0,
-                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 1,
-                        "FrameCount": 5,
+                        "FrameIndex": 0,
+                        "FrameCount": 8,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.05999999865889549,
+                        "FrameDuration": 0.1,
                         "IsRunning": 0,
                         "IsLooping": 1
                     },
                     {
                         "State": 1,
-                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 12,
+                        "FrameIndex": 13,
                         "FrameCount": 4,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.05999999865889549,
+                        "FrameDuration": 0.1,
                         "IsRunning": 0,
                         "IsLooping": 1
                     },
                     {
                         "State": 4,
-                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 6,
-                        "FrameCount": 6,
+                        "FrameIndex": 8,
+                        "FrameCount": 4,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.05999999865889549,
+                        "FrameDuration": 0.1,
                         "IsRunning": 0,
                         "IsLooping": 1
                     },
                     {
+                        "State": 5,
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
+                        "ShaderResource": "",
+                        "HasAnimation": 1,
+                        "FrameIndex": 18,
+                        "FrameCount": 7,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.16,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    },
+                    {
                         "State": 6,
-                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
                         "FrameIndex": 16,
-                        "FrameCount": 3,
+                        "FrameCount": 2,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.11999999731779099,
+                        "FrameDuration": 0.5,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
                     {
                         "State": 7,
-                        "MeshResource": "Data/Resources/6x6MeshResource.mesh",
+                        "MeshResource": "Data/Resources/7x6MeshResource.mesh",
                         "ShaderResource": "",
                         "HasAnimation": 1,
-                        "FrameIndex": 22,
-                        "FrameCount": 14,
+                        "FrameIndex": 26,
+                        "FrameCount": 10,
                         "FrameDelay": 0.0,
                         "FrameDuration": 0.23800000548362732,
                         "IsRunning": 0,

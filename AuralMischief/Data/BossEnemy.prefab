@@ -100,7 +100,7 @@
                         "ShaderResource": "Data/Resources/EnemyShader.shader",
                         "HasAnimation": 1,
                         "FrameIndex": 4,
-                        "FrameCount": 6,
+                        "FrameCount": 5,
                         "FrameDelay": 0.0,
                         "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
@@ -138,7 +138,7 @@
                         "FrameIndex": 19,
                         "FrameCount": 10,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.2142857164144516,
+                        "FrameDuration": 0.1071428582072258,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -150,7 +150,7 @@
                         "FrameIndex": 29,
                         "FrameCount": 8,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.2142857164144516,
+                        "FrameDuration": 0.1071428582072258,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -186,7 +186,7 @@
                         "FrameIndex": 29,
                         "FrameCount": 17,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.2142857164144516,
+                        "FrameDuration": 0.1071428582072258,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },

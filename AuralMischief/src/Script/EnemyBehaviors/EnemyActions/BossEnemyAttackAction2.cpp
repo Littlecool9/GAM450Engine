@@ -182,6 +182,7 @@ namespace mts
     {
         if (result == Failed)
         {
+            agent.GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
             ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             // agent.GetState().SetInAction(false);
             agent.GetState().SetInAction(false);

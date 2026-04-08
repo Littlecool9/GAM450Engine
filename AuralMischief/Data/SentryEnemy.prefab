@@ -158,7 +158,7 @@
                     "EnemyType": "SentryEnemy",
                     "MoveSpeed": 1.5,
                     "PatrolRadius": 5.0,
-                    "AggroRange": 9.0,
+                    "AggroRange": 7.0,
                     "AttackCooldown": 5.0,
                     "HealthPoints": 9,
                     "IsInvincible": false

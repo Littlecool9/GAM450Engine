@@ -91,8 +91,7 @@ namespace mts
         auto* anim = agent->GetGameObject()->GetComponent<Animation>();
         if (!mHasLunged && totalTime >= anim->GetFrameDuration() * 4.f)
         {
-            agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
-                glm::vec2{0, 0});
+            agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
             mHasLunged = true;
             bool flipX = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX();
             float dir = flipX ? -1.0f : 1.0f;
@@ -286,6 +285,7 @@ namespace mts
     {
         if (result == Failed)
         {
+            agent.GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
             ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             // agent.GetState().SetInAction(false);
             agent.GetState().SetInAction(false);

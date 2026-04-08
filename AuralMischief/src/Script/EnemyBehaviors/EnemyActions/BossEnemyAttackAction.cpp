@@ -67,7 +67,7 @@ namespace mts
             });
 
         // debug
-        LOG_INFO("EnemyAttackAction: Attacking player!", );
+        //LOG_INFO("EnemyAttackAction: Attacking player!", );
     }
 
     bool BossEnemyAttackAction::IsAvailable(const EnemyState& state,
@@ -181,6 +181,7 @@ namespace mts
     {
         if (result == Failed)
         {
+            agent.GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
             ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
             agent.GetState().SetInAction(false);
             LOG_INFO("Attack Failed, unsubscribing from beat");

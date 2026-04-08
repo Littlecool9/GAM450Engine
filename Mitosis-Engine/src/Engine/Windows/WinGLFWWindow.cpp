@@ -188,6 +188,41 @@ namespace mts
         SetVsync(windowData.VSync);
     }
 
+    void WinGLFWwindow::SetFullscreen(bool fullscreen)
+    {
+        if (mIsFullscreen == fullscreen)
+            return;
+
+        if (fullscreen)
+        {
+            glfwGetWindowPos(window, &mWindowedX, &mWindowedY);
+            mWindowedWidth = windowData.Width;
+            mWindowedHeight = windowData.Height;
+
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            glfwSetWindowMonitor(window,
+                                 monitor,
+                                 0,
+                                 0,
+                                 mode->width,
+                                 mode->height,
+                                 mode->refreshRate);
+        }
+        else
+        {
+            glfwSetWindowMonitor(window,
+                                 nullptr,
+                                 mWindowedX,
+                                 mWindowedY,
+                                 mWindowedWidth,
+                                 mWindowedHeight,
+                                 0);
+        }
+
+        mIsFullscreen = fullscreen;
+    }
+
     void WinGLFWwindow::SetVsync(bool enable)
     {
         if (enable)

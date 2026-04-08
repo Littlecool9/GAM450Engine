@@ -59,7 +59,8 @@ namespace mts
         mLayerStack.PushLayer(std::make_unique<ResourceLayer>());
         mLayerStack.PushLayer(std::make_unique<RenderingLayer>(mWindow.get()));
         mLayerStack.PushLayer(std::make_unique<AudioLayer>());
-        mLayerStack.PushLayer(std::make_unique<SceneLayer>(GetInitialScene(), GetSceneRegistry(), mCtx));
+        mLayerStack.PushLayer(
+            std::make_unique<SceneLayer>(GetInitialScene(), GetSceneRegistry(), mCtx));
         mLayerStack.PushLayer(std::make_unique<PhysicsLayer>(mCtx));
         mLayerStack.PushLayer(std::make_unique<DebugRenderLayer>());
         mLayerStack.PushOverlay(std::make_unique<ImGuiLayer>(mWindow.get()));
@@ -100,6 +101,16 @@ namespace mts
                 if (layer->IsEnabled())
                     layer->OnUpdate(dt);
             }
+
+            if (Input::IsKeyPressed(Key::Grave))
+            {
+                mInDebugView = !mInDebugView;
+                if (!mInDebugView)
+                    Renderer::ClearGameViewport();
+            }
+            if (Input::IsKeyPressed(Key::A))
+                AppSystem::Get().ToggleFullscreen();
+
             for (auto& layer : mLayerStack)
             {
                 if (layer->IsEnabled())
@@ -133,7 +144,7 @@ namespace mts
             {
                 for (auto& layer : mLayerStack)
                     if (layer->IsEnabled())
-                        layer->OnDebugRender(); 
+                        layer->OnDebugRender();
             }
 
             Renderer::EndSceneRender();  // Execute post-processing, blit to screen
@@ -198,6 +209,13 @@ namespace mts
                 return true;
             });
 
+        dispatcher.Dispatch<AppToggleFullscreenRequestEvent>(
+            [this](AppToggleFullscreenRequestEvent& ev)
+            {
+                mWindow->SetFullscreen(!mWindow->IsFullscreen());
+                return true;
+            });
+
         // Dispatch to layers in reverse order (overlays first)
         for (auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it)
         {
@@ -207,13 +225,6 @@ namespace mts
 
             if (e.Handled)  // if your Event has Handled flag
                 break;
-        }
-
-        if (Input::IsKeyPressed(Key::Grave))
-        {
-            mInDebugView = !mInDebugView;
-            if (!mInDebugView)
-                Renderer::ClearGameViewport();
         }
     }
 

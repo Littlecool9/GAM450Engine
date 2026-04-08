@@ -20,4 +20,12 @@ namespace mts
         MTS_EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
+    class AppToggleFullscreenRequestEvent : public Event
+    {
+       public:
+        AppToggleFullscreenRequestEvent() = default;
+        MTS_EVENT_CLASS_TYPE(AppToggleFullscreenRequest)
+        MTS_EVENT_CLASS_CATEGORY(EventCategoryApplication)
+    };
+
 }  // namespace mts

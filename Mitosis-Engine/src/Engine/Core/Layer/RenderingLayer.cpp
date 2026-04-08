@@ -45,10 +45,14 @@ namespace mts
     void RenderingLayer::OnBeginFrame()
     {
         auto gv = Renderer::GetGameViewport();
-        if (gv.valid)
-            glViewport(gv.x, gv.y, gv.w, gv.h);
-        else
-            glViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
+        if (!gv.valid)
+        {
+            // Standalone mode: apply aspect constraint against the full window.
+            // EditorLayer overrides this every frame when the editor is visible.
+            Renderer::SetAvailableViewport(0, 0, mWindow->GetWidth(), mWindow->GetHeight());
+            gv = Renderer::GetGameViewport();
+        }
+        glViewport(gv.x, gv.y, gv.w, gv.h);
     }
 
     void RenderingLayer::OnRender()
@@ -76,8 +80,14 @@ namespace mts
     {
         // TODO: Notify the render swap chain, etc.
 
-        glViewport(0, 0, static_cast<GLsizei>(e.GetWidth()), static_cast<GLsizei>(e.GetHeight()));
         Renderer::SetWindowSize(e.GetWidth(), e.GetHeight());
+        // Recompute the letterboxed viewport for the new window size.
+        // In editor mode EditorLayer will override this the same frame.
+        Renderer::SetAvailableViewport(0, 0,
+                                       static_cast<int>(e.GetWidth()),
+                                       static_cast<int>(e.GetHeight()));
+        auto gv = Renderer::GetGameViewport();
+        glViewport(gv.x, gv.y, gv.w, gv.h);
 
         LOG_INFO("Resize -> {}x{}", e.GetWidth(), e.GetHeight());
         return false;  // Allow others to react as well

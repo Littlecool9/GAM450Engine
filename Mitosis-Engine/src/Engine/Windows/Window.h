@@ -32,6 +32,8 @@ namespace mts
         virtual bool GetVsync() const = 0;
 
         virtual void SetVsync(bool enable) = 0;
+        virtual void SetFullscreen(bool fullscreen) = 0;
+        virtual bool IsFullscreen() const = 0;
 
         // TODO : Move this to Renderer if we ever have one later
         virtual void ClearScreen() = 0;

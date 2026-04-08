@@ -29,4 +29,13 @@ namespace mts
         }
     }
 
+    void AppSystem::ToggleFullscreen()
+    {
+        if (sEventCallback)
+        {
+            AppToggleFullscreenRequestEvent e;
+            sEventCallback(e);
+        }
+    }
+
 }  // namespace mts

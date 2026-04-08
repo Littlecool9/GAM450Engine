@@ -24,6 +24,8 @@ namespace mts
         bool GetVsync() const override { return windowData.VSync; }
 
         void SetVsync(bool enable) override;
+        void SetFullscreen(bool fullscreen) override;
+        bool IsFullscreen() const override { return mIsFullscreen; }
 
         void ClearScreen() override;
 
@@ -54,6 +56,10 @@ namespace mts
 
         WindowData windowData;
         GLFWwindow* window = nullptr;
+
+        bool mIsFullscreen   = false;
+        int  mWindowedX      = 100, mWindowedY      = 100;
+        int  mWindowedWidth  = 1600, mWindowedHeight = 900;
     };
 
 }  // namespace mts

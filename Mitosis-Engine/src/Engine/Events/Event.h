@@ -34,7 +34,8 @@ namespace mts
         UIButtonClicked,
 
         // App
-        AppQuitRequest
+        AppQuitRequest,
+        AppToggleFullscreenRequest
     };
 
     enum EventCategory

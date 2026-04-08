@@ -17,7 +17,7 @@ namespace mts
     RenderCamera Renderer::ActiveCamera{};
     PostProcessStack* Renderer::s_postProcessStack = nullptr;
     Viewport Renderer::targetViewport{};
-    AspectMode Renderer::s_aspectMode = AspectMode::Free;
+    AspectMode Renderer::s_aspectMode = AspectMode::R16x9;
     float Renderer::s_customX = 16.0f;
     float Renderer::s_customY = 9.0f;
     std::vector<RenderCommand> Renderer::OpaqueCommands;

@@ -18,6 +18,8 @@ namespace mts
 
         /// Request the application to quit.
         void Quit();
+        /// Request the application to toggle fullscreen/windowed mode.
+        void ToggleFullscreen();
         void SetEventCallback(const EventCallbackFn& callback) { sEventCallback = callback; }
 
        private:

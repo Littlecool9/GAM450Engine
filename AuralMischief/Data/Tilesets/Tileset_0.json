@@ -1,8 +1,8 @@
 {
   "Name": "Tileset",
   "TilesetId": 1,
-  "AtlasTileCountPerRow": 12.0,
-  "AtlasTileCountPerCol": 19.0,
+  "AtlasTileCountPerRow": 18.0,
+  "AtlasTileCountPerCol": 18.0,
   "TilePixelWidth": 80,
   "TilePixelHeight": 80,
   "Comment": "32ppu is the default, so the tile size is 1x1 in world space",
@@ -11,8 +11,8 @@
     {
       "TileID": 1,
       "Name": "LavaBlock",
-      "IndexX": 2,
-      "IndexY": 15,
+      "IndexX": 11,
+      "IndexY": 1,
 
       "Tag": "Hazard",
       "IsCollidable": false
@@ -20,8 +20,8 @@
     {
       "TileID": 2,
       "Name": "Lava",
-      "IndexX": 2,
-      "IndexY": 14,
+      "IndexX": 11,
+      "IndexY": 0,
 
       "Tag": "Hazard",
       "IsCollidable": false
@@ -29,7 +29,7 @@
     {
       "TileID": 3,
       "Name": "Up_Ground_1",
-      "IndexX": 5,
+      "IndexX": 2,
       "IndexY": 0,
 
       "Tag": "Tile",
@@ -38,7 +38,7 @@
     {
       "TileID": 4,
       "Name": "Up_Ground_2",
-      "IndexX": 6,
+      "IndexX": 3,
       "IndexY": 0,
 
       "Tag": "Tile",
@@ -46,8 +46,8 @@
     },
     {
       "TileID": 5,
-      "Name": "Up_Ground_4",
-      "IndexX": 7,
+      "Name": "Up_Ground_3",
+      "IndexX": 4,
       "IndexY": 0,
 
       "Tag": "Tile",
@@ -56,7 +56,7 @@
     {
       "TileID": 6,
       "Name": "Up_Ground_4",
-      "IndexX": 8,
+      "IndexX": 5,
       "IndexY": 0,
 
       "Tag": "Tile",
@@ -65,7 +65,7 @@
     {
       "TileID": 7,
       "Name": "Up_Ground_5",
-      "IndexX": 9,
+      "IndexX": 6,
       "IndexY": 0,
 
       "Tag": "Tile",
@@ -74,7 +74,7 @@
     {
       "TileID": 8,
       "Name": "Dirt",
-      "IndexX": 8,
+      "IndexX": 5,
       "IndexY": 2,
 
       "Tag": "Tile",
@@ -92,7 +92,7 @@
     {
       "TileID": 10,
       "Name": "Bottom_Left_Corner",
-      "IndexX": 10,
+      "IndexX": 7,
       "IndexY": 1,
 
       "Tag": "Tile",
@@ -101,8 +101,8 @@
     {
       "TileID": 11,
       "Name": "Top_Right_Corner",
-      "IndexX": 1,
-      "IndexY": 12,
+      "IndexX": 7,
+      "IndexY": 7,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -110,8 +110,8 @@
     {
       "TileID": 12,
       "Name": "Top_Left_Corner",
-      "IndexX": 10, 
-      "IndexY": 12,
+      "IndexX": 1, 
+      "IndexY": 7,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -119,7 +119,7 @@
     {
       "TileID": 13,
       "Name": "Left_Wall_1",
-      "IndexX": 11,
+      "IndexX": 8,
       "IndexY": 2,
 
       "Tag": "Tile",
@@ -128,7 +128,7 @@
     {
         "TileID": 14,
         "Name": "Left_Wall_2",
-        "IndexX": 11,
+        "IndexX": 8,
         "IndexY": 3,
   
         "Tag": "Tile",
@@ -137,7 +137,7 @@
     {
         "TileID": 15,
         "Name": "Left_Wall_3",
-        "IndexX": 11,
+        "IndexX": 8,
         "IndexY": 4,
   
         "Tag": "Tile",
@@ -146,7 +146,7 @@
     {
         "TileID": 16,
         "Name": "Left_Wall_4",
-        "IndexX": 11,
+        "IndexX": 8,
         "IndexY": 5,
   
         "Tag": "Tile",
@@ -155,7 +155,7 @@
     {
         "TileID": 17,
         "Name": "Left_Wall_5",
-        "IndexX": 11,
+        "IndexX": 8,
         "IndexY": 6,
   
         "Tag": "Tile",
@@ -166,7 +166,7 @@
         "TileID": 18,
         "Name": "Right_Wall_1",
         "IndexX": 0,
-        "IndexY": 3,
+        "IndexY": 2,
   
         "Tag": "Tile",
         "IsCollidable": true
@@ -175,7 +175,7 @@
       "TileID": 19,
       "Name": "Right_Wall_2",
       "IndexX": 0,
-      "IndexY": 4,
+      "IndexY": 3,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -184,7 +184,7 @@
       "TileID": 20,
       "Name": "Right_Wall_3",
       "IndexX": 0,
-      "IndexY": 5,
+      "IndexY": 4,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -193,7 +193,7 @@
       "TileID": 21,
       "Name": "Right_Wall_4",
       "IndexX": 0,
-      "IndexY": 6,
+      "IndexY": 5,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -202,9 +202,90 @@
       "TileID": 22,
       "Name": "Right_Wall_5",
       "IndexX": 0,
-      "IndexY": 7,
+      "IndexY": 6,
 
       "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 23,
+      "Name": "Down_Ceiling_1",
+      "IndexX": 2,
+      "IndexY": 9,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 24,
+      "Name": "Down_Ceiling_2",
+      "IndexX": 3,
+      "IndexY": 9,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 25,
+      "Name": "Down_Ceiling_3",
+      "IndexX": 4,
+      "IndexY": 9,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 26,
+      "Name": "Down_Ceiling_4",
+      "IndexX": 5,
+      "IndexY": 9,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 27,
+      "Name": "Down_Ceiling_5",
+      "IndexX": 6,
+      "IndexY": 9,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 28,
+      "Name": "Random_Decoration_1",
+      "IndexX": 2,
+      "IndexY": 9,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 29,
+      "Name": "Random_Decoration_2",
+      "IndexX": 0,
+      "IndexY": 12,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 30,
+      "Name": "Random_Decoration_3",
+      "IndexX": 8,
+      "IndexY": 12,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 31,
+      "Name": "Random_Decoration_4",
+      "IndexX": 4,
+      "IndexY": 17,
+
+      "Tag": "Decoration",
       "IsCollidable": true
     }
   ]

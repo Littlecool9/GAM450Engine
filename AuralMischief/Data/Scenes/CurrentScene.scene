@@ -10182,8 +10182,8 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            4.099999904632568,
-                            9.350000381469727,
+                            20.049999237060547,
+                            35.45000076293945,
                             0.0
                         ],
                         "Scale": [
@@ -10734,237 +10734,6 @@
                         "MeshResource": "Data/Resources/16x16MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
-                }
-            ]
-        },
-        {
-            "UUID": "831adaef-8546-47b3-aaa6-237d6c7dbec5",
-            "Name": "BossEnemy",
-            "Layer": 0,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            46.5,
-                            35.650001525878906,
-                            0.0
-                        ],
-                        "Scale": [
-                            11.0,
-                            5.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 0.12999999523162842,
-                        "Height": 0.5,
-                        "Offset": [
-                            -2.049999952316284,
-                            -0.8500000238418579
-                        ],
-                        "IsTrigger": 0
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 0.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 3.0,
-                        "BodyType": 1
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 1,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 1,
-                        "TextureResource": "Data/Resources/BossEnemyTexture.tex",
-                        "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                        "ShaderResource": "Data/Resources/EnemyShader.shader"
-                    }
-                },
-                {
-                    "Type": "Animation",
-                    "Data": {
-                        "FrameIndex": 0,
-                        "FrameCount": 0,
-                        "FrameDelay": 0.0,
-                        "FrameDuration": 0.0,
-                        "IsRunning": 0,
-                        "IsLooping": 0
-                    }
-                },
-                {
-                    "Type": "AnimationSystem",
-                    "Data": {
-                        "States": [
-                            {
-                                "State": 0,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 0,
-                                "FrameCount": 12,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 1,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 5,
-                                "FrameCount": 8,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
-                                "IsRunning": 0,
-                                "IsLooping": 1
-                            },
-                            {
-                                "State": 2,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 13,
-                                "FrameCount": 3,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 3,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 16,
-                                "FrameCount": 3,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 4,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 19,
-                                "FrameCount": 10,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 5,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 29,
-                                "FrameCount": 8,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 6,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 0,
-                                "FrameCount": 5,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 7,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 48,
-                                "FrameCount": 5,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 8,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 37,
-                                "FrameCount": 9,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            },
-                            {
-                                "State": 9,
-                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
-                                "ShaderResource": "Data/Resources/EnemyShader.shader",
-                                "HasAnimation": 1,
-                                "FrameIndex": 46,
-                                "FrameCount": 2,
-                                "FrameDelay": 0.0,
-                                "FrameDuration": 0.1071428582072258,
-                                "IsRunning": 0,
-                                "IsLooping": 0
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "EnemyController",
-                        "Fields": {
-                            "MoveSpeed": 1.5,
-                            "PatrolRadius": 2.0,
-                            "AggroRange": 8.0,
-                            "AttackCooldown": 5.0,
-                            "Attack2Cooldown": 5.0,
-                            "Attack3Cooldown": 5.0,
-                            "EnemyType": "BossEnemy"
-                        }
-                    }
-                },
-                {
-                    "Type": "EnemyAgent",
-                    "Data": {
-                        "Plan Name": "BossEnemy"
-                    }
-                },
-                {
-                    "Type": "ActionList"
                 }
             ]
         },
@@ -14759,6 +14528,242 @@
                             "AlphaFadeDistance": 0.05
                         }
                     }
+                }
+            ]
+        },
+        {
+            "UUID": "ddfd0cc9-a0b2-4e8e-818b-4d123d9b2347",
+            "Name": "BossEnemy",
+            "Layer": 0,
+            "Tags": [
+                "Enemy"
+            ],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            47.79999923706055,
+                            35.400001525878906,
+                            0.0
+                        ],
+                        "Scale": [
+                            11.0,
+                            5.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 0.12999999523162842,
+                        "Height": 0.5,
+                        "Offset": [
+                            0.05000000074505806,
+                            -0.699999988079071
+                        ],
+                        "IsTrigger": 0
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 0.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 3.0,
+                        "BodyType": 1
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 1,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 1,
+                        "TextureResource": "Data/Resources/BossEnemyTexture.tex",
+                        "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                        "ShaderResource": "Data/Resources/EnemyShader.shader"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 0,
+                        "FrameCount": 0,
+                        "FrameDelay": 0.0,
+                        "FrameDuration": 0.0,
+                        "IsRunning": 0,
+                        "IsLooping": 0
+                    }
+                },
+                {
+                    "Type": "AnimationSystem",
+                    "Data": {
+                        "States": [
+                            {
+                                "State": 0,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 0,
+                                "FrameCount": 12,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 1,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 4,
+                                "FrameCount": 6,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 1
+                            },
+                            {
+                                "State": 2,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 13,
+                                "FrameCount": 3,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 3,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 16,
+                                "FrameCount": 3,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 4,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 19,
+                                "FrameCount": 10,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 5,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 29,
+                                "FrameCount": 8,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 6,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 0,
+                                "FrameCount": 3,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 7,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 48,
+                                "FrameCount": 5,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 8,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 29,
+                                "FrameCount": 17,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            },
+                            {
+                                "State": 9,
+                                "MeshResource": "Data/Resources/8x7MeshResource.mesh",
+                                "ShaderResource": "Data/Resources/EnemyShader.shader",
+                                "HasAnimation": 1,
+                                "FrameIndex": 46,
+                                "FrameCount": 2,
+                                "FrameDelay": 0.0,
+                                "FrameDuration": 0.2142857164144516,
+                                "IsRunning": 0,
+                                "IsLooping": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "EnemyController",
+                        "Fields": {
+                            "MoveSpeed": 1.5,
+                            "PatrolRadius": 2.0,
+                            "AggroRange": 8.0,
+                            "AttackCooldown": 3.5,
+                            "Attack2Cooldown": 4.6,
+                            "Attack3Cooldown": 6.0,
+                            "DodgeCooldown": 6.0,
+                            "AttackRange": 4.0,
+                            "HealthPoints": 30,
+                            "EnemyType": "BossEnemy"
+                        }
+                    }
+                },
+                {
+                    "Type": "EnemyAgent",
+                    "Data": {
+                        "Plan Name": "BossEnemy"
+                    }
+                },
+                {
+                    "Type": "ActionList"
                 }
             ]
         }

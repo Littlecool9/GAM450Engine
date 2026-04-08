@@ -12,11 +12,11 @@
 
 namespace mts
 {
-    class EnemyAttackAction2 : public BaseEnemyAction
+    class BossEnemyAttackAction : public BaseEnemyAction
     {
        public:
-        EnemyAttackAction2() = default;
-        ~EnemyAttackAction2() override = default;
+        BossEnemyAttackAction() = default;
+        ~BossEnemyAttackAction() override = default;
 
         EnemyState GetExpectedNextState(const EnemyState& state,
                                         const EnemyPreference& preferences) const override;
@@ -31,9 +31,12 @@ namespace mts
         void FireBullet(EnemyAgent& agent);
 
        private:
-        std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
+        std::unordered_map<EnemyGoal, float> InternalHeuristic(
+            const EnemyState& state,
             const EnemyPreference& preference) override;
-        glm::vec2 size;
+
+        bool mHasLunged = false;
+        bool mHitboxSpawned = false;
         uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 

@@ -1,15 +1,17 @@
 {
-    "UUID": "4d15cf4e-3a6c-4cf2-9836-b7ea3d23c90d",
+    "UUID": "ddfd0cc9-a0b2-4e8e-818b-4d123d9b2347",
     "Name": "BossEnemy",
     "Layer": 0,
-    "Tags": [],
+    "Tags": [
+        "Enemy"
+    ],
     "Components": [
         {
             "Type": "Transform",
             "Data": {
                 "Position": [
-                    12.550000190734863,
-                    9.149999618530273,
+                    47.79999923706055,
+                    35.400001525878906,
                     0.0
                 ],
                 "Scale": [
@@ -26,8 +28,8 @@
                 "Width": 0.12999999523162842,
                 "Height": 0.5,
                 "Offset": [
-                    -2.049999952316284,
-                    -0.8500000238418579
+                    0.05000000074505806,
+                    -0.699999988079071
                 ],
                 "IsTrigger": 0
             }
@@ -97,8 +99,8 @@
                         "MeshResource": "Data/Resources/8x7MeshResource.mesh",
                         "ShaderResource": "Data/Resources/EnemyShader.shader",
                         "HasAnimation": 1,
-                        "FrameIndex": 5,
-                        "FrameCount": 8,
+                        "FrameIndex": 4,
+                        "FrameCount": 6,
                         "FrameDelay": 0.0,
                         "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
@@ -136,7 +138,7 @@
                         "FrameIndex": 19,
                         "FrameCount": 10,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -148,7 +150,7 @@
                         "FrameIndex": 29,
                         "FrameCount": 8,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -158,9 +160,9 @@
                         "ShaderResource": "Data/Resources/EnemyShader.shader",
                         "HasAnimation": 1,
                         "FrameIndex": 0,
-                        "FrameCount": 5,
+                        "FrameCount": 3,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -172,7 +174,7 @@
                         "FrameIndex": 48,
                         "FrameCount": 5,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -181,10 +183,10 @@
                         "MeshResource": "Data/Resources/8x7MeshResource.mesh",
                         "ShaderResource": "Data/Resources/EnemyShader.shader",
                         "HasAnimation": 1,
-                        "FrameIndex": 37,
-                        "FrameCount": 9,
+                        "FrameIndex": 29,
+                        "FrameCount": 17,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     },
@@ -196,7 +198,7 @@
                         "FrameIndex": 46,
                         "FrameCount": 2,
                         "FrameDelay": 0.0,
-                        "FrameDuration": 0.1071428582072258,
+                        "FrameDuration": 0.2142857164144516,
                         "IsRunning": 0,
                         "IsLooping": 0
                     }
@@ -211,9 +213,12 @@
                     "MoveSpeed": 1.5,
                     "PatrolRadius": 2.0,
                     "AggroRange": 8.0,
-                    "AttackCooldown": 5.0,
-                    "Attack2Cooldown": 5.0,
-                    "Attack3Cooldown": 5.0,
+                    "AttackCooldown": 3.5,
+                    "Attack2Cooldown": 4.6,
+                    "Attack3Cooldown": 6.0,
+                    "DodgeCooldown": 6.0,
+                    "AttackRange": 4.0,
+                    "HealthPoints": 30,
                     "EnemyType": "BossEnemy"
                 }
             }

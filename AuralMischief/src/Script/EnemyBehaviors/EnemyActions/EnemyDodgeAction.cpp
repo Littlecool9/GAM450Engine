@@ -13,16 +13,16 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/Component/Transform.h"
-#include "params/DodgeCountdownParam.h"
+#include "../EnemyParameters//AttackCountdownParam.h"
 
 namespace mts
 {
     bool EnemyDodgeAction::IsAvailable(const EnemyState& state,
                                        const EnemyPreference& /*preferences*/) const
     {
-        if (std::get<float>(state.params.at(HashAction("DodgeCountdown"))->GetValue()) > 0 ||
+        if (std::get<float>(state.params.at(HashAction("DodgeCooldown"))->GetValue()) > 0 ||
             state.GetDistanceToPlayer() > 6 ||
-            state.GetCurrentPlayerState() != AnimationSystem::States::Attack1)
+            (state.GetCurrentPlayerState() != AnimationSystem::States::Attack1 && state.GetCurrentPlayerState() != AnimationSystem::States::Attack2))
         {
             return false;
         }
@@ -59,12 +59,12 @@ namespace mts
             agent->GetState().SetInAction(false);
             // apply dodge cooldown
             agent->GetState()
-                .params.at(HashAction("DodgeCountdown"))
-                ->SetValue(static_cast<DodgeCountdownParam*>(
-                               agent->GetState().params.at(HashAction("DodgeCountdown")))
+                .params.at(HashAction("DodgeCooldown"))
+                ->SetValue(dynamic_cast<AttackCountdownParam*>(
+                               agent->GetState().params.at(HashAction("DodgeCooldown")))
                                ->GetCooldownTime());
             agent->GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
-                AnimationSystem::States::Idle);
+                AnimationSystem::States::Walking);
             return Success;
         }
 
@@ -83,9 +83,9 @@ namespace mts
     {
         EnemyState newState = state;
         newState
-            .params.at(HashAction("DodgeCountdown"))
-            ->SetValue(static_cast<DodgeCountdownParam*>(
-                           newState.params.at(HashAction("DodgeCountdown")))
+            .params.at(HashAction("DodgeCooldown"))
+            ->SetValue(dynamic_cast<AttackCountdownParam*>(
+                           newState.params.at(HashAction("DodgeCooldown")))
                            ->GetCooldownTime());
         
         return newState;
@@ -95,9 +95,9 @@ namespace mts
     {
         // Set dodge cooldown
         agent.GetState()
-            .params.at(HashAction("DodgeCountdown"))
-            ->SetValue(static_cast<DodgeCountdownParam*>(
-                           agent.GetState().params.at(HashAction("DodgeCountdown")))
+            .params.at(HashAction("DodgeCooldown"))
+            ->SetValue(dynamic_cast<AttackCountdownParam*>(
+                           agent.GetState().params.at(HashAction("DodgeCooldown")))
                            ->GetCooldownTime());
     }
 

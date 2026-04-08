@@ -50,6 +50,21 @@ namespace mts
         float GetAggroRange() { return mAggroRange; }
         float GetAttackRange() { return mAttackRange; }
         void SetDesiredVelocity(glm::vec2 vel) { mDesiredVelocity = vel; }
+
+        // Attack hitbox management — per-attack storage
+        // Attack1
+        void SetAtk1Hitbox(GameObject* hb) { mAtk1Hitbox = hb; }
+        GameObject* GetAtk1Hitbox() const { return mAtk1Hitbox; }
+        // Attack2
+        void SetAtk2Hitbox(GameObject* hb) { mAtk2Hitbox = hb; }
+        GameObject* GetAtk2Hitbox() const { return mAtk2Hitbox; }
+        // Attack3
+        void SetAtk3Hitbox(GameObject* hb) { mAtk3Hitbox = hb; }
+        GameObject* GetAtk3Hitbox() const { return mAtk3Hitbox; }
+        void SetAtk3HitboxFront2(GameObject* hb) { mAtk3HitboxFront2 = hb; }
+        GameObject* GetAtk3HitboxFront2() const { return mAtk3HitboxFront2; }
+        void SetAtk3HitboxBehind(GameObject* hb) { mAtk3HitboxBehind = hb; }
+        GameObject* GetAtk3HitboxBehind() const { return mAtk3HitboxBehind; }
         SCRIPT_CLASS(EnemyController)
 
        private:
@@ -67,6 +82,7 @@ namespace mts
         float mAttackCooldown = 5.f;
         float mAttack2Cooldown = 5.f;
         float mAttack3Cooldown = 5.f;
+        float mDodgeCooldown = 5.f;
         int maxhp = 2;
         int curhp = 0;
         bool alerted = false;
@@ -79,6 +95,11 @@ namespace mts
         PlayerController* mPlayerController = nullptr;
         EnemyAudioController* mAudioController = nullptr;
         glm::vec2 mDesiredVelocity{0.0f, 0.0f};
+        GameObject* mAtk1Hitbox = nullptr;
+        GameObject* mAtk2Hitbox = nullptr;
+        GameObject* mAtk3Hitbox = nullptr;
+        GameObject* mAtk3HitboxFront2 = nullptr;
+        GameObject* mAtk3HitboxBehind = nullptr;
     };
 
 }  // namespace mts

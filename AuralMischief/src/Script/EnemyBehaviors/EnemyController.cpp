@@ -32,6 +32,10 @@
 #include "Engine/EntitySystem/Component/PhysicsComponents/RigidBody2D.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "../../Actions/ColliderScaleAction.h"
+#include "EnemyActions/BossEnemyAttackAction.h"
+#include "EnemyActions/BossEnemyAttackAction2.h"
+#include "EnemyActions/BossEnemyAttackAction3.h"
+#include "EnemyActions/EnemyDodgeAction.h"
 #include "EnemyParameters/AttackRangeParam.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
@@ -48,6 +52,13 @@ REGISTER_ENEMY_ACTION("SentryEnemy", mts::SentryEnemyAttackAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyPatrolAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::EnemyMoveToPlayerAction);
 REGISTER_ENEMY_ACTION("FlyEnemy", mts::FlyingEnemyAttackAction);
+
+REGISTER_ENEMY_ACTION("BossEnemy", mts::BossEnemyAttackAction);
+REGISTER_ENEMY_ACTION("BossEnemy", mts::BossEnemyAttackAction2);
+REGISTER_ENEMY_ACTION("BossEnemy", mts::EnemyMoveToPlayerAction);
+REGISTER_ENEMY_ACTION("BossEnemy", mts::BossEnemyAttackAction3)
+REGISTER_ENEMY_ACTION("BossEnemy", mts::EnemyDodgeAction)
+
 
 namespace mts
 {
@@ -114,7 +125,7 @@ namespace mts
 
     void EnemyController::OnUpdate(float dt)
     {
-        // --- CrawlEnemy explosion sequence (runs independently of hp) ---
+
         if (enemyType == EnemyType::CrawlEnemy && mShouldExplode)
         {
             auto* animSys = GetGameObject()->GetComponent<AnimationSystem>();
@@ -141,7 +152,6 @@ namespace mts
 
             auto currentState = animSys->GetCurrentState();
 
-            // Step 1: Play Attack2 animation first
             if (currentState != AnimationSystem::States::Attack2 &&
                 currentState != AnimationSystem::States::Death)
             {
@@ -159,13 +169,12 @@ namespace mts
                 return;
             }
 
-            // Step 2: Wait for Attack2 to finish
             if (currentState == AnimationSystem::States::Attack2)
             {
                 if (anim->GetIsDone())
                     mAttack2Done = true;
 
-                // Check if killed during Attack2 wind-up — cancel explosion, fade out
+                // Check if killed during Attack2 wind-up explosion, fade out
                 if (!mIsInvincible && curhp <= 0)
                 {
                     mShouldExplode = false;
@@ -178,10 +187,10 @@ namespace mts
                 if (!mAttack2Done)
                     return;
 
-                // Attack2 done, fall through to fuse/explode
+                // Attack2 done, to fuse/explode
             }
 
-            // Step 3: Fuse timer
+            //Fuse timer
             if (currentState != AnimationSystem::States::Death)
             {
                 if (mTimeTillExplode > 0 && deathAnimFirstTime)
@@ -190,7 +199,7 @@ namespace mts
                     return;
                 }
 
-                // Step 4: Explode — switch to Death animation and scale up collider
+                //switch to Death animation and scale up collider
                 mDying = true;
                 curhp = 0;
                 GetGameObject()->GetComponent<EnemyAgent>()->SetEnabled(false);
@@ -224,7 +233,7 @@ namespace mts
                 }
             }
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
-            // Wait for Death animation to finish, then destroy
+            //Wait for death animation to finish, then destroy
             if (anim->GetIsDone())
             {
                 GetGameObject()->GetComponent<BoxCollider2D>()->SetEnabled(false);
@@ -234,7 +243,7 @@ namespace mts
             return;
         }
 
-        // --- Normal death (non-explosion, or non-CrawlEnemy) ---
+        //normal death
         if (!mIsInvincible && curhp <= 0)
         {
             mDying = true;
@@ -260,7 +269,7 @@ namespace mts
                 return;
             }
 
-            // Non-CrawlEnemy death
+            // non CrawlEnemy death
             GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                 AnimationSystem::States::Death);
             if (enemyType == EnemyType::FlyEnemy && deathAnimFirstTime)
@@ -412,7 +421,13 @@ namespace mts
             dynamic_cast<AttackCountdownParam*>(p.at(HashAction("Attack3Cooldown")))
                 ->SetCooldownTime(mAttack3Cooldown);
         }
-
+        if (fields.Has("DodgeCooldown"))
+        {
+            mDodgeCooldown = fields["DodgeCooldown"].GetFloat();
+            p.emplace(mts::HashAction("DodgeCooldown"), new mts::AttackCountdownParam());
+            dynamic_cast<AttackCountdownParam*>(p.at(HashAction("DodgeCooldown")))
+                ->SetCooldownTime(mDodgeCooldown);
+        }
         if (fields.Has("HealthPoints"))
         {
             maxhp = fields["HealthPoints"].GetInt();
@@ -486,7 +501,7 @@ namespace mts
     void EnemyController::OnCollisionEnter2D(const mts::Collision2D& collision)
     {
         auto* hitbox = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
-        if (hitbox)
+        if (hitbox && hitbox->GetTeam() == AttackHitboxScript::Team::Player)
         {
             // LOG_INFO("hit");
             float damage = hitbox->GetDamage();

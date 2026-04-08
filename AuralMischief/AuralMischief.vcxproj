@@ -198,6 +198,10 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction2.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction3.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyDodgeAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.h" />
     <ClInclude Include="src\Script\FadeInScript.h" />
@@ -262,6 +266,10 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction2.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction3.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyDodgeAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.cpp" />
     <ClCompile Include="src\Script\Player\PlayerAudioController.cpp" />

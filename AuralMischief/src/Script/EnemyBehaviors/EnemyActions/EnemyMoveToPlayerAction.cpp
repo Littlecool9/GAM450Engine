@@ -110,11 +110,11 @@ namespace mts
         glm::vec2 dir = (fullDist > 0.0001f) ? (toPlayer / fullDist) : glm::vec2{0.0f, 0.0f};
         if (dir.x < 0)
         {
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
         }
         else
         {
-            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(true);
+            agent->GetGameObject()->GetComponent<SpriteRenderer>()->SetFlipX(false);
         }
         const glm::vec2 vel =
             dir * agent->GetGameObject()->GetScript<EnemyController>()->GetMoveSpeed();

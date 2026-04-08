@@ -625,7 +625,8 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
             isGrounded = true;
         }
     }
-    if (collision.other->GetGameObject()->HasTag("Enemy") && iFramesTimer < 0.0f)
+    auto a = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
+    if ((collision.other->GetGameObject()->HasTag("Enemy") || (a && a->GetTeam() == AttackHitboxScript::Team::Enemy)) && iFramesTimer < 0.0f)
     {
         auto o = collision.other->GetGameObject();
         if (o->GetScript<mts::BulletBehavior>())
@@ -645,8 +646,13 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
         }
         LOG_INFO("hit by enemy with normal {}, {}", collision.normal.x, collision.normal.y);
         iFramesTimer = iFrames;
-        glm::vec2 hitDir = -collision.normal;
+        glm::vec2 hitDir = a ? a->GetDirection() : -collision.normal;
         queuedDash = [this, hitDir]() { Dash(hitDir, true, enemyKnockback); };
+        if (a)
+        {
+            TakeDamage(static_cast<int>(a->GetDamage()));
+            return;
+        }
         TakeDamage(1);
     }
 }

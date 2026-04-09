@@ -83,8 +83,8 @@
     {
       "TileID": 9,
       "Name": "Bottom_Right_Corner",
-      "IndexX": 1,
-      "IndexY": 1,
+      "IndexX": 8,
+      "IndexY": 7,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -92,8 +92,8 @@
     {
       "TileID": 10,
       "Name": "Bottom_Left_Corner",
-      "IndexX": 7,
-      "IndexY": 1,
+      "IndexX": 0,
+      "IndexY": 7,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -101,8 +101,8 @@
     {
       "TileID": 11,
       "Name": "Top_Right_Corner",
-      "IndexX": 7,
-      "IndexY": 7,
+      "IndexX": 8, 
+      "IndexY": 1,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -110,8 +110,8 @@
     {
       "TileID": 12,
       "Name": "Top_Left_Corner",
-      "IndexX": 1, 
-      "IndexY": 7,
+      "IndexX": 0, 
+      "IndexY": 1,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -211,7 +211,7 @@
       "TileID": 23,
       "Name": "Down_Ceiling_1",
       "IndexX": 2,
-      "IndexY": 9,
+      "IndexY": 8,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -220,7 +220,7 @@
       "TileID": 24,
       "Name": "Down_Ceiling_2",
       "IndexX": 3,
-      "IndexY": 9,
+      "IndexY": 8,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -229,7 +229,7 @@
       "TileID": 25,
       "Name": "Down_Ceiling_3",
       "IndexX": 4,
-      "IndexY": 9,
+      "IndexY": 8,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -238,7 +238,7 @@
       "TileID": 26,
       "Name": "Down_Ceiling_4",
       "IndexX": 5,
-      "IndexY": 9,
+      "IndexY": 8,
 
       "Tag": "Tile",
       "IsCollidable": true
@@ -247,7 +247,79 @@
       "TileID": 27,
       "Name": "Down_Ceiling_5",
       "IndexX": 6,
+      "IndexY": 8,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 28,
+      "Name": "Random_Decoration_1",
+      "IndexX": 2,
       "IndexY": 9,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 29,
+      "Name": "Random_Decoration_2",
+      "IndexX": 0,
+      "IndexY": 12,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 30,
+      "Name": "Random_Decoration_3",
+      "IndexX": 8,
+      "IndexY": 12,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 31,
+      "Name": "Random_Decoration_4",
+      "IndexX": 4,
+      "IndexY": 17,
+
+      "Tag": "Decoration",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 32,
+      "Name": "Inner_Bottom_Right_Corner",
+      "IndexX": 1,
+      "IndexY": 1,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 33,
+      "Name": "Inner_Bottom_Left_Corner",
+      "IndexX": 7,
+      "IndexY": 1,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 34,
+      "Name": "Inner_Top_Right_Corner",
+      "IndexX": 1,
+      "IndexY": 7,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 35,
+      "Name": "Inner_Top_Left_Corner",
+      "IndexX": 7, 
+      "IndexY": 7,
 
       "Tag": "Tile",
       "IsCollidable": true

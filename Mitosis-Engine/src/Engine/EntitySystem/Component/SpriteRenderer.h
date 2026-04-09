@@ -16,6 +16,7 @@
 #include "Engine/Resource/Shader.h"
 #include "Engine/Resource/Texture.h"
 #include "Engine/Interfaces/ISubmitRenderCommand.h"
+#include <string>
 
 namespace mts
 {
@@ -62,6 +63,18 @@ namespace mts
         void SetCols(int c);
         glm::vec3 GetTintColor() const { return mTintColor; }
 
+        void SetText(const std::string& text)
+        {
+            mText = text;
+            mHasText = true;
+        }
+        void ClearText()
+        {
+            mText.clear();
+            mHasText = false;
+        }
+        const std::string& GetText() const { return mText; }
+        bool HasText() const { return mHasText; }
 
        private:
         Mesh* mMesh = nullptr;
@@ -80,7 +93,13 @@ namespace mts
         // Parallax factor for horizontal movement:
         // 0 locks the sprite to the camera (HUD-style, ignores camera movement),
         // 1 makes the sprite move normally in world space (no parallax effect).
-        float mParallaxFactorX = 1.0f; 
+        float mParallaxFactorX = 1.0f;
+
+        int mRenderLayer = 0;
+
+        // Zero-terminated string used to display sprite text.
+        std::string mText;
+        bool mHasText = false;
     };
 
 }  // namespace mts

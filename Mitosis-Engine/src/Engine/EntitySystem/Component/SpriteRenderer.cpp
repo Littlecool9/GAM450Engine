@@ -107,6 +107,13 @@ namespace mts
             shaderResourcePath = jsonObj["ShaderResource"].GetString(shaderResourcePath);
         }
         mShader = ResourceManager::GetShader(shaderResourcePath);
+
+        // Read in text string (for sprite text rendering)
+        if (jsonObj.Has("Text"))
+        {
+            mText = jsonObj["Text"].GetString("");
+            mHasText = !mText.empty();
+        }
     }
 
     void SpriteRenderer::SetCols(int c)
@@ -149,6 +156,9 @@ namespace mts
         else
             doc.WriteString("ShaderResource", "");
 
+        if (mHasText)
+            doc.WriteString("Text", mText.c_str());
+
         doc.EndObject();
     }
 
@@ -169,13 +179,14 @@ namespace mts
         if (auto* uit = GetGameObject()->GetComponent<UITransform>())
         {
             model = uit->GetLocalMatrix();
-            isUI  = true;
+            isUI = true;
         }
         else if (auto* tr = GetGameObject()->GetComponent<Transform>())
         {
             model = tr->GetLocalMatrix();
         }
-        else return;
+        else
+            return;
 
         if (mFlipX)
             model *= glm::scale(glm::mat4(1.0f), {-1, 1, 1});
@@ -206,27 +217,74 @@ namespace mts
                                   1.0f);
         }
 
-        // set shader uniforms
-        mShader->SetMatrix4("model", model);
-        mShader->SetMatrix4("viewProj", viewProj);
-        mShader->SetVector2f("uvOffset", mUvOffset);
-        mShader->SetVector3f("tintColor", mTintColor);
-        mShader->SetFloat("alpha", mAlpha);
+        if (mHasText)
+        {
 
-        RenderCommand cmd;
-        cmd.shader          = mShader;
-        cmd.texture         = mTexture;
-        cmd.mesh            = mMesh;
-        cmd.model           = model;
-        cmd.uvOffset        = mUvOffset;
-        cmd.tintColor       = mTintColor;
-        cmd.alpha           = mAlpha;
-        cmd.sortKey         = static_cast<float>(mRenderLayer);
-        cmd.hasAlpha        = mHasTextureAlpha;
-        cmd.parallaxFactorX = mParallaxFactorX;
-        cmd.isUI            = isUI;
+            glm::mat4 currentModel = model;
 
-        Renderer::Submit(cmd);
+
+            float charAdvance = 1.0f;
+            if (auto* tr = GetGameObject()->GetComponent<Transform>())
+                charAdvance = tr->GetScale().x;
+
+            for (const char ch : mText)
+            {
+                int glyphIndex = static_cast<int>(ch) - static_cast<int>(' ');
+
+
+                glm::vec2 glyphUv = {(1.0f / static_cast<float>(mNumCols)) *
+                                         static_cast<float>(glyphIndex % mNumCols),
+                                     (1.0f / static_cast<float>(mNumRows)) *
+                                         static_cast<int>(glyphIndex / mNumCols)};
+
+                mShader->SetMatrix4("model", currentModel);
+                mShader->SetMatrix4("viewProj", viewProj);
+                mShader->SetVector2f("uvOffset", glyphUv);
+                mShader->SetVector3f("tintColor", mTintColor);
+                mShader->SetFloat("alpha", mAlpha);
+
+                RenderCommand cmd;
+                cmd.shader = mShader;
+                cmd.texture = mTexture;
+                cmd.mesh = mMesh;
+                cmd.model = currentModel;
+                cmd.uvOffset = glyphUv;
+                cmd.tintColor = mTintColor;
+                cmd.alpha = mAlpha;
+                cmd.sortKey = static_cast<float>(mRenderLayer);
+                cmd.hasAlpha = mHasTextureAlpha;
+                cmd.parallaxFactorX = mParallaxFactorX;
+                cmd.isUI = isUI;
+
+                Renderer::Submit(cmd);
+
+                currentModel = glm::translate(currentModel, glm::vec3(charAdvance, 0.0f, 0.0f));
+            }
+        }
+        else
+        {
+            // Normal single-sprite rendering
+            mShader->SetMatrix4("model", model);
+            mShader->SetMatrix4("viewProj", viewProj);
+            mShader->SetVector2f("uvOffset", mUvOffset);
+            mShader->SetVector3f("tintColor", mTintColor);
+            mShader->SetFloat("alpha", mAlpha);
+
+            RenderCommand cmd;
+            cmd.shader = mShader;
+            cmd.texture = mTexture;
+            cmd.mesh = mMesh;
+            cmd.model = model;
+            cmd.uvOffset = mUvOffset;
+            cmd.tintColor = mTintColor;
+            cmd.alpha = mAlpha;
+            cmd.sortKey = static_cast<float>(mRenderLayer);
+            cmd.hasAlpha = mHasTextureAlpha;
+            cmd.parallaxFactorX = mParallaxFactorX;
+            cmd.isUI = isUI;
+
+            Renderer::Submit(cmd);
+        }
     }
 
     void SpriteRenderer::SetFrame(int frameIndex)

@@ -1,0 +1,41 @@
+{
+    "UUID": "69949e01-bc16-4f63-a4d7-2e6e83cf7281",
+    "Name": "text",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    4.0,
+                    14.949999809265137,
+                    0.0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/SpriteText.tex",
+                "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                "Text": "Lorem ipsum"
+            }
+        }
+    ]
+}

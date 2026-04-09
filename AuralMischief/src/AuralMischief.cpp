@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "AuralMischief.h"
 
-#include "Engine/Scripting/ScriptFactory.h"
 #include "Script/AttackHitboxScript.h"
 #include "Script/CameraController.h"
 #include "Script/CheckPoint.h"
@@ -31,6 +30,7 @@
 #include "Script/ResumeButton.h"
 #include "Script/ReturnToMainMenuButton.h"
 
+#include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
 #include "Engine/SceneSystem/SceneSystem.h"
@@ -161,7 +161,6 @@ void AuralMischief::OnUpdate(float dt)
 
     if (mCheatsEnabled)
     {
-
         if (mts::Input::IsKeyPressed(mts::Key::F1))
         {
             // Go to title
@@ -233,7 +232,8 @@ void AuralMischief::OnUpdate(float dt)
         }
 
         // When cheats are on, spawn UI indicator
-        mts::GameObject* cheatsText = mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("CheatsText");
+        mts::GameObject* cheatsText =
+            mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("CheatsText");
         if (!cheatsText)
             mts::GameObjectFactory::CreateFromArchetype("Data/CheatsText.prefab");
     }

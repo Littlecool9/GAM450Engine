@@ -17,21 +17,26 @@ namespace mts
     class AudioManager;
 }
 
+class PauseMenuPanel;
+
 class PauseButton : public mts::ScriptBase
 {
    public:
     SCRIPT_CLASS(PauseButton)
 
-    void Init() override;
     void Awake() override;
     void OnUpdate(float dt) override;
     void OnDisable() override;
 
-   private:
+    // Public so other UI scripts (e.g. the Resume button on the pause menu)
+    // can route through the same pause/unpause code path as ESC and the
+    // header pause icon.
     void TogglePause();
 
+   private:
     mts::AudioManager* mAudio{nullptr};
     mts::Button* mButton{nullptr};
+    PauseMenuPanel* mMenuPanel{nullptr};
     mts::Delegate<>::Id mClickId{0};
     mts::Delegate<>::Id mHoverEnterId{0};
     mts::Delegate<>::Id mHoverExitId{0};

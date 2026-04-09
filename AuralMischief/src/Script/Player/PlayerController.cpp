@@ -96,22 +96,15 @@ void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    float upStrength =
-        mts::Input::IsKeyDown(mts::Key::Up) || mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
-    float downStrength =
-        mts::Input::IsKeyDown(mts::Key::Down) || mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
-    float leftStrength =
-        mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
-    float rightStrength =
-        mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
+    float upStrength = mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
+    float downStrength = mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
+    float leftStrength = mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
+    float rightStrength = mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
     glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space);
-    bool dashPressed =
-        mts::Input::IsKeyPressed(mts::Key::LeftShift) || mts::Input::IsKeyPressed(mts::Key::K);
-    bool attackPressed =
-        mts::Input::IsKeyPressed(mts::Key::Z) || mts::Input::IsKeyPressed(mts::Key::J);
-    bool attackReleased =
-        mts::Input::IsKeyReleased(mts::Key::Z) || mts::Input::IsKeyReleased(mts::Key::J);
+    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::K);
+    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::J);
+    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::J);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
@@ -336,8 +329,8 @@ void PlayerController::OnFixedUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left) || mts::Input::IsKeyDown(mts::Key::A);
-    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right) || mts::Input::IsKeyDown(mts::Key::D);
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::A);
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::D);
 
     // Get facing direction
     float moveDir = 0.0f;

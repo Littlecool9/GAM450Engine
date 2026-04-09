@@ -10,14 +10,24 @@
 #include "pch.h"
 #include "PauseButton.h"
 
+#include "PauseMenuPanel.h"
+
 #include "Engine/EntitySystem/Component/Button.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
+#include "Engine/SceneSystem/Scene.h"
+#include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Time/Time.h"
 
-void PauseButton::Init()
+void PauseButton::Awake()
 {
+    if (!mMenuPanel)
+    {
+        LOG_WARN(
+            "PauseButton: PauseMenuPanel not found in scene — pause menu "
+            "will not be shown");
+    }
     mButton = GetGameObject()->GetComponent<mts::Button>();
     if (!mButton)
     {
@@ -30,10 +40,11 @@ void PauseButton::Init()
     {
         LOG_WARN("PauseButton: AudioManager not initialized");
     }
-}
-
-void PauseButton::Awake()
-{
+    if (auto* scene = mts::SceneSystem::GetCurrentScene())
+    {
+        if (auto* panelGO = scene->FindGameObjectByName("PauseMenuPanel"))
+            mMenuPanel = panelGO->GetScript<PauseMenuPanel>();
+    }
     if (mButton)
         mClickId = mButton->mOnClick.Subscribe([this]() { TogglePause(); });
 }
@@ -54,6 +65,8 @@ void PauseButton::OnDisable()
         mts::Time::SetTimeScale(restore);
         if (mAudio)
             mAudio->ResumeAll();
+        if (mMenuPanel)
+            mMenuPanel->SetVisible(false);
         mPausedByThis = false;
     }
 
@@ -76,6 +89,8 @@ void PauseButton::TogglePause()
         LOG_INFO("PauseButton: game paused");
         if (mAudio)
             mAudio->PauseAll();
+        if (mMenuPanel)
+            mMenuPanel->SetVisible(true);
         return;
     }
 
@@ -85,6 +100,8 @@ void PauseButton::TogglePause()
     {
         mAudio->ResumeAll();  // In case any audio was paused by the time scale change
     }
+    if (mMenuPanel)
+        mMenuPanel->SetVisible(false);
     mPausedByThis = false;
     LOG_INFO("PauseButton: game resumed (timeScale={})", restore);
 }

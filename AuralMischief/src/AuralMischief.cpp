@@ -25,6 +25,11 @@
 #include "Script/FadeInScript.h"
 #include "Script/BeatBarController.h"
 #include "Script/TilemapBeatFlash.h"
+#include "Script/PauseMenuPanel.h"
+#include "Script/PauseMenuNavigator.h"
+#include "Script/VolumeStepButton.h"
+#include "Script/ResumeButton.h"
+#include "Script/ReturnToMainMenuButton.h"
 
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
@@ -109,6 +114,16 @@ void AuralMischief::RegisterScripts()
                                        []() { return new BeatBarController(); });
     mts::ScriptFactory::RegisterScript(TilemapBeatFlash::StaticClassName(),
                                        []() { return new TilemapBeatFlash(); });
+    mts::ScriptFactory::RegisterScript(PauseMenuPanel::StaticClassName(),
+                                       []() { return new PauseMenuPanel(); });
+    mts::ScriptFactory::RegisterScript(VolumeStepButton::StaticClassName(),
+                                       []() { return new VolumeStepButton(); });
+    mts::ScriptFactory::RegisterScript(ResumeButton::StaticClassName(),
+                                       []() { return new ResumeButton(); });
+    mts::ScriptFactory::RegisterScript(ReturnToMainMenuButton::StaticClassName(),
+                                       []() { return new ReturnToMainMenuButton(); });
+    mts::ScriptFactory::RegisterScript(PauseMenuNavigator::StaticClassName(),
+                                       []() { return new PauseMenuNavigator(); });
 }
 
 void AuralMischief::OnUpdate(float dt)

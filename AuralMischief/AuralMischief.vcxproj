@@ -253,6 +253,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\RhythmSystem.h" />
     <ClInclude Include="src\Script\RhythmSystemScript.h" />
     <ClInclude Include="src\Script\SceneSwitcherScript.h" />
+    <ClInclude Include="src\Script\PauseMenuPanel.h" />
+    <ClInclude Include="src\Script\PauseMenuNavigator.h" />
+    <ClInclude Include="src\Script\VolumeStepButton.h" />
+    <ClInclude Include="src\Script\ResumeButton.h" />
+    <ClInclude Include="src\Script\ReturnToMainMenuButton.h" />
     <ClInclude Include="src\Script\TilemapBeatFlash.h">
       <SubType>
       </SubType>
@@ -323,6 +328,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
     <ClCompile Include="src\Script\RhythmSystemScript.cpp" />
     <ClCompile Include="src\Script\SceneSwitcherScript.cpp" />
+    <ClCompile Include="src\Script\PauseMenuPanel.cpp" />
+    <ClCompile Include="src\Script\PauseMenuNavigator.cpp" />
+    <ClCompile Include="src\Script\VolumeStepButton.cpp" />
+    <ClCompile Include="src\Script\ResumeButton.cpp" />
+    <ClCompile Include="src\Script\ReturnToMainMenuButton.cpp" />
     <ClCompile Include="src\Script\TilemapBeatFlash.cpp">
       <SubType>
       </SubType>

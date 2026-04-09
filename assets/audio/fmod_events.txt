@@ -16,6 +16,7 @@ event:/hero_land_hard
 event:/hero_land_soft
 event:/hero_wall_jump
 event:/hero_wall_slide
+event:/player_damaged
 
 event:/hero_guitar_charge_complete
 event:/hero_guitar_charge_complete_vibration

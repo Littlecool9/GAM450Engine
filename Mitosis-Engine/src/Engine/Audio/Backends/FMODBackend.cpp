@@ -131,7 +131,7 @@ namespace mts
         m = nullptr;
     }
 
-    //new function that communicates with file manager
+    // new function that communicates with file manager
     bool FMODBackend::LoadBankBytes(const std::string& bankKey,
                                     const std::vector<std::uint8_t>& bytes)
     {
@@ -153,15 +153,27 @@ namespace mts
 
         FMOD::Studio::Bank* bank = nullptr;
 
-        FMOD_RESULT r = m->studio->loadBankMemory(mem,len,FMOD_STUDIO_LOAD_MEMORY,  FMOD_STUDIO_LOAD_BANK_NORMAL,&bank);
+        FMOD_RESULT r = m->studio->loadBankMemory(mem,
+                                                  len,
+                                                  FMOD_STUDIO_LOAD_MEMORY,
+                                                  FMOD_STUDIO_LOAD_BANK_NORMAL,
+                                                  &bank);
 
         if (r != FMOD_OK || !bank)
         {
-            LOG_ERROR("[FMODBackend] loadBankMemory failed. key='{}' size={} err='{}'", bankKey,bytes.size(), FMOD_ErrorString(r));
+            LOG_ERROR("[FMODBackend] loadBankMemory failed. key='{}' size={} err='{}'",
+                      bankKey,
+                      bytes.size(),
+                      FMOD_ErrorString(r));
             return false;
         }
 
         m->banks[bankKey] = bank;
+
+        // Flush so the bank's string table is committed synchronously before returning.
+        // Without this, getBus() for non-master paths returns null until the next studio->update().
+        m->studio->flushCommands();
+
         bank->loadSampleData();
         return true;
     }

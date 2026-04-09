@@ -3960,6 +3960,30 @@
           "Type": "ActionList"
         }
       ]
-    }
+    },
+    {
+            "UUID": "09c4b96b-717e-4d4a-be2c-9ef4453751bb",
+            "Name": "LevelEndTeleport",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            131.5500030517578,
+                            36.099998474121094,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                }
+            ]
+        }
   ]
 }

@@ -188,6 +188,14 @@ void PlayerController::OnUpdate(float dt)
     if (attackPressed)
     {
         attackHeldLength = 0.0f;
+
+        if (inWindow)
+            wasOnBeat = PlayerParticleController::PERFECT;
+        else if (mts::AudioManager::Get().IsInBeatWindow(mHitWindowLateEdge, 0.25f))
+            wasOnBeat = PlayerParticleController::LATE;
+        else
+            wasOnBeat = PlayerParticleController::EARLY;
+
     }
     else if (attackReleased)
     {
@@ -305,6 +313,23 @@ void PlayerController::OnUpdate(float dt)
         particleController.StopParticleEmitter(PlayerParticleController::CHARGE);
     }
     // particleController.UpdateParticlePositions(transform->GetPosition());
+
+    if (godModeOn)
+    {
+        // When god mode is on, spawn UI indicator
+        mts::GameObject* godModeText =
+            mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("GodModeText");
+        if (!godModeText)
+            mts::GameObjectFactory::CreateFromArchetype("Data/GodModeText.prefab");
+    }
+    else
+    {
+        // When god mode is off, remove UI indicator
+        mts::GameObject* godModeText =
+            mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("GodModeText");
+        if (godModeText)
+            godModeText->Destroy();
+    }
 }
 
 void PlayerController::OnFixedUpdate(float dt)
@@ -773,14 +798,15 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
     else
     {
         // On beat light attack
-        if (inWindow)
+        if (wasOnBeat == PlayerParticleController::PERFECT)
         {
-            queuedAttackSpawn = [this, timing]()
+            queuedAttackSpawn = [this]()
             {
                 SpawnAttackHitbox(mOnBeatLightDamage,
                                   3.0f,
                                   1.2f,
-                                  PlayerParticleController::ON_BEAT_LIGHT, timing);
+                                  PlayerParticleController::ON_BEAT_LIGHT,
+                                  wasOnBeat);
             };
             if (mPlayerAudio)
                 mPlayerAudio->PlayOneShotSound(
@@ -788,12 +814,13 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
         }
         else
         {
-            queuedAttackSpawn = [this, timing]()
+            queuedAttackSpawn = [this]()
             {
                 SpawnAttackHitbox(mOffBeatLightDamage,
                                   3.0f,
                                   1.2f,
-                                  PlayerParticleController::OFF_BEAT_LIGHT, timing);
+                                  PlayerParticleController::OFF_BEAT_LIGHT,
+                                  wasOnBeat);
             };
             if (mPlayerAudio)
                 mPlayerAudio->PlayOneShotSound(
@@ -848,7 +875,10 @@ void PlayerController::SpawnAttackHitbox(float damage,
     attackHitboxTransform->SetPosition(hitBoxPos);
     attackHitboxTransform->SetScale(glm::vec3(scaleX, scaleY, 0.0f));
     // Set damage of hitbox
-    attackHitboxScript->SetDamage(damage);
+    if (godModeOn)
+        attackHitboxScript->SetDamage(damage*10);
+    else
+        attackHitboxScript->SetDamage(damage);
 
     particleController.SpawnParticleEmitter(
         type,
@@ -945,7 +975,7 @@ void PlayerController::RefreshHeartVisuals()
 
 void PlayerController::TakeDamage(int damage)
 {
-    if (mCurrentHP <= 0)
+    if (mCurrentHP <= 0 || (godModeOn && damage < 100))
         return;
 
     mCurrentHP -= damage;

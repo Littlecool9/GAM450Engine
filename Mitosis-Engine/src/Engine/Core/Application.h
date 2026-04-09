@@ -46,6 +46,7 @@ namespace mts
         virtual std::string& GetSceneRegistry() = 0;
         virtual void RegisterScripts() {};
         virtual std::vector<SplashScreenConfig> GetSplashScreens() { return {}; }
+        virtual void OnUpdate(float dt) {};
 
        private:
         void CloseWindow();

@@ -108,8 +108,10 @@ namespace mts
                 if (!mInDebugView)
                     Renderer::ClearGameViewport();
             }
-            if (Input::IsKeyPressed(Key::A))
+            if (Input::IsKeyPressed(Key::F11))
                 AppSystem::Get().ToggleFullscreen();
+
+            this->OnUpdate(dt);
 
             for (auto& layer : mLayerStack)
             {

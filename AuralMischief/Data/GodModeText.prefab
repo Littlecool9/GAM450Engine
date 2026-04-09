@@ -1,0 +1,41 @@
+{
+    "UUID": "07728d85-75ec-4563-8cf6-5791f082d0ed",
+    "Name": "GodModeText",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Position": [
+                    0.8600000143051147,
+                    0.949999988079071,
+                    0.0
+                ],
+                "Scale": [
+                    1.25,
+                    0.5,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/GodModeText.tex",
+                "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

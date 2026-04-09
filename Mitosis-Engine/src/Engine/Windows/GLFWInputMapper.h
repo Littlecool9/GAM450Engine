@@ -26,6 +26,10 @@ namespace mts
             if (glfwKey >= GLFW_KEY_0 && glfwKey <= GLFW_KEY_9)
                 return static_cast<Key>(static_cast<int>(Key::D0) + (glfwKey - GLFW_KEY_0));
 
+            // Function Keys
+            if (glfwKey >= GLFW_KEY_F1 && glfwKey <= GLFW_KEY_F12)
+                return static_cast<Key>(static_cast<int>(Key::F1) + (glfwKey - GLFW_KEY_F1));
+
             switch (glfwKey)
             {
                 case GLFW_KEY_SPACE:

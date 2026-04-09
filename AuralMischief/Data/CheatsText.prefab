@@ -1,0 +1,41 @@
+{
+    "UUID": "ce4356f6-8d14-4699-a6d8-7c3bd01052e7",
+    "Name": "CheatsText",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Position": [
+                    0.9599999785423279,
+                    0.949999988079071,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    0.5,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/CheatsText.tex",
+                "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

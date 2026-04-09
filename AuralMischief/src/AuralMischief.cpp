@@ -26,6 +26,13 @@
 #include "Script/BeatBarController.h"
 #include "Script/TilemapBeatFlash.h"
 
+#include "Engine/Audio/AudioManager.h"
+#include "Engine/Input/Input.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+
 mts::Application* mts::CreateApplication()
 {
     return new AuralMischief();
@@ -102,4 +109,117 @@ void AuralMischief::RegisterScripts()
                                        []() { return new BeatBarController(); });
     mts::ScriptFactory::RegisterScript(TilemapBeatFlash::StaticClassName(),
                                        []() { return new TilemapBeatFlash(); });
+}
+
+void AuralMischief::OnUpdate(float dt)
+{
+    if (mts::Input::IsKeyPressed(mts::Key::C))
+    {
+        if (mts::Input::IsKeyDown(mts::Key::LeftShift) && mts::Input::IsKeyDown(mts::Key::LeftCtrl))
+        {
+            mCheatsEnabled = !mCheatsEnabled;
+        }
+        if (!mCheatsEnabled)
+        {
+            // When cheats are off, remove UI indicator
+            mts::GameObject* cheatsText =
+                mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("CheatsText");
+            if (cheatsText)
+                cheatsText->Destroy();
+        }
+    }
+
+    if (mts::Input::IsKeyPressed(mts::Key::M))
+    {
+        // Toggle mute music
+        if (!mMusicMuted)
+        {
+            mMusicVolume = mts::AudioManager::Get().GetCategoryVolume(mts::AudioCategory::Music);
+            mts::AudioManager::Get().SetCategoryVolume(mts::AudioCategory::Music, 0.0f);
+        }
+        else
+        {
+            mts::AudioManager::Get().SetCategoryVolume(mts::AudioCategory::Music, mMusicVolume);
+        }
+        mMusicMuted = !mMusicMuted;
+    }
+
+    if (mCheatsEnabled)
+    {
+
+        if (mts::Input::IsKeyPressed(mts::Key::F1))
+        {
+            // Go to title
+            mts::SceneSystem::SwitchScene(1);
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F2))
+        {
+            // Go to level 1
+            mts::SceneSystem::SwitchScene(0);
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F3))
+        {
+            // Go to level 2
+            mts::SceneSystem::SwitchScene(4);
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F4))
+        {
+            // Go to credits
+            // TODO add correct scene index
+            mts::SceneSystem::SwitchScene(0);
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F5))
+        {
+            // Toggle god mode
+            mts::GameObject* player =
+                mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+            if (player)
+            {
+                PlayerController* playerController = player->GetScript<PlayerController>();
+                if (playerController)
+                {
+                    playerController->ToggleGodMode();
+                }
+            }
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F6))
+        {
+            // Kill player
+            mts::GameObject* player =
+                mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+            if (player)
+            {
+                PlayerController* playerController = player->GetScript<PlayerController>();
+                if (playerController)
+                {
+                    playerController->TakeDamage(10000);
+                }
+            }
+        }
+        if (mts::Input::IsKeyPressed(mts::Key::F7))
+        {
+            // Jump to end of level (if applicable)
+            mts::GameObject* player =
+                mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("Player");
+            if (player)
+            {
+                mts::GameObject* levelEnd =
+                    mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("LevelEndTeleport");
+                if (levelEnd)
+                {
+                    mts::Transform* playerTransform = player->GetComponent<mts::Transform>();
+                    mts::Transform* levelEndTransform = levelEnd->GetComponent<mts::Transform>();
+                    if (playerTransform && levelEndTransform)
+                    {
+                        playerTransform->SetPosition(levelEndTransform->GetPosition());
+                    }
+                }
+            }
+        }
+
+        // When cheats are on, spawn UI indicator
+        mts::GameObject* cheatsText = mts::SceneSystem::GetCurrentScene()->FindGameObjectByName("CheatsText");
+        if (!cheatsText)
+            mts::GameObjectFactory::CreateFromArchetype("Data/CheatsText.prefab");
+    }
 }

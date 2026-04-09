@@ -20,7 +20,7 @@ namespace mts
     {
         // Default bus paths (FMOD-style)
         mBusPaths[AudioCategory::Master] = "bus:/";
-        mBusPaths[AudioCategory::Music] = "bus:/Music";
+        mBusPaths[AudioCategory::Music] = "bus:/BGM";
         mBusPaths[AudioCategory::SFX] = "bus:/SFX";
         mBusPaths[AudioCategory::UI] = "bus:/UI";
         mBusPaths[AudioCategory::Ambience] = "bus:/Ambience";

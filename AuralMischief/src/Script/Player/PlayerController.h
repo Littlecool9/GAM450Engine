@@ -70,6 +70,7 @@ class PlayerController : public mts::ScriptBase
     void Heal(int hp);
     void OnEnemyHit(float damage, glm::vec3 pos);
     int GetMaxHP() const { return mMaxHP; }
+    void ToggleGodMode() { godModeOn = !godModeOn; };
 
     SCRIPT_CLASS(PlayerController)
 
@@ -162,6 +163,8 @@ class PlayerController : public mts::ScriptBase
     float enemyKnockback = 0.7f;
     float timeSinceLastBeat = 0.0f;
     Direction facingDir = RIGHT;
+    PlayerParticleController::ParticleTiming wasOnBeat = PlayerParticleController::EARLY;
+    bool godModeOn = false;
 
     PlayerAudioController* mPlayerAudio = nullptr;
 

@@ -4742,13 +4742,13 @@
       "UUID": "cf4822df-17b8-439a-b4c6-ce1cf1e9e326",
       "Name": "FlyingEnemy",
       "Layer": 0,
-      "Tags": ["Enemy"],
+      "Tags": [ "Enemy" ],
       "Components": [
         {
           "Type": "Transform",
           "Data": {
-            "Position": [124.5, 10.899999618530273, 0.0],
-            "Scale": [2.0, 2.0, 1.0],
+            "Position": [ 124.5, 10.899999618530273, 0.0 ],
+            "Scale": [ 2.0, 2.0, 1.0 ],
             "Rotation": 0.0
           }
         },
@@ -4757,7 +4757,7 @@
           "Data": {
             "Width": 0.3799999952316284,
             "Height": 0.30000001192092896,
-            "Offset": [0.0, -0.05000000074505806],
+            "Offset": [ 0.0, -0.05000000074505806 ],
             "IsTrigger": 0
           }
         },
@@ -4766,7 +4766,7 @@
           "Data": {
             "Mass": 1.0,
             "Inertia": 0.0,
-            "LinearVelocity": [0.0, 0.0],
+            "LinearVelocity": [ 0.0, 0.0 ],
             "AngularVelocity": 0.0,
             "LinearDamping": 0.0,
             "AngularDamping": 0.0,
@@ -4777,7 +4777,7 @@
         {
           "Type": "SpriteRenderer",
           "Data": {
-            "TintColor": [1.0, 1.0, 1.0],
+            "TintColor": [ 1.0, 1.0, 1.0 ],
             "Alpha": 1.0,
             "FrameIndex": 1,
             "ParallaxFactorX": 1.0,
@@ -4876,6 +4876,30 @@
         },
         {
           "Type": "ActionList"
+        }
+      ]
+    },
+    {
+      "UUID": "e0bf1ec9-a910-4960-a770-ae7b342164d5",
+      "Name": "LevelEndTeleport",
+      "Layer": 0,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [
+              67.4000015258789,
+              33.95000076293945,
+              0.0
+            ],
+            "Scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         }
       ]
     }

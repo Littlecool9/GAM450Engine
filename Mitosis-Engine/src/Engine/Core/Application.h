@@ -61,7 +61,7 @@ namespace mts
         EditorContext mCtx;
 
         bool mIsRunning = false;
-        bool mInDebugView = true;
+        bool mInDebugView = false;
     };
 
     Application* CreateApplication();

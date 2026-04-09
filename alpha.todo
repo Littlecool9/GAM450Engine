@@ -6,8 +6,8 @@ Rahul
 	[x] SFX
 	[x] Spritesheet
 	
-[-] Drone Enemy
-	[-] SFX
+[x] Drone Enemy
+	[x] SFX
 	[x] Spritesheet
 
 [x] Sentry Enemy
@@ -15,8 +15,8 @@ Rahul
 	[x] Spritesheet
 	[x] Missile
 	
-[-] Boss Enemy (lower priority)
-	[-] SFX
+[x] Boss Enemy (lower priority)
+	[x] SFX
 	[x] Spritesheet
 
 [x] Hero Character (higher priority)
@@ -30,7 +30,7 @@ Rahul
 
 [x] On-beat and Off-beat attack overlays
 
-[-] Tileset arrangement
+[x] Tileset arrangement
 
 Sumin
 -----
@@ -54,10 +54,10 @@ Josh
 Jackey
 ------
 [x] Level design polish
-[-] Camera movement polish
+[x] Camera movement polish
 [x] Camera post processing (adding shaders to the camera)
-[-] UI system
-	[-] Main menu, In-game pause
+[x] UI system
+	[x] Main menu, In-game pause
 
 Dong
 ----
@@ -65,16 +65,16 @@ Dong
 	[x] Patrol mode
 	[x] Alerted mode (whince on seeing hero)
 	[x] Attack mode
-[-] Drone behavior polish
-	[-] Patrol mode
-	[-] Alerted mode (whince on seeing hero)
-	[-] Attack mode
+[x] Drone behavior polish
+	[x] Patrol mode
+	[x] Alerted mode (whince on seeing hero)
+	[x] Attack mode
 [x] Sentry behavior
 	[x] Patrol mode
 	[x] Alerted mode (whince on seeing hero)
 	[x] Attack mode
-[-] Boss behavior
-	[-] TBD
+[x] Boss behavior
+	[x] TBD
 
 Notes:
 ------

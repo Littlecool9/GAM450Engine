@@ -1,10 +1,22 @@
 {
     "splashScreens": [
         {
-            "texturePath": "Data/Resources/SplashLogo.tex",
-            "fadeInDuration": 0.5,
-            "holdDuration": 1.5,
-            "fadeOutDuration": 0.5
+            "texturePath": "Data/Resources/KeyArt01.tex",
+            "fadeInDuration": 1.0,
+            "holdDuration": 2.0,
+            "fadeOutDuration": 1.0
+        },
+        {
+            "texturePath": "Data/Resources/KeyArt02.tex",
+            "fadeInDuration": 1.0,
+            "holdDuration": 2.0,
+            "fadeOutDuration": 1.0
+        },
+        {
+            "texturePath": "Data/Resources/KeyArt03.tex",
+            "fadeInDuration": 1.0,
+            "holdDuration": 2.0,
+            "fadeOutDuration": 1.0
         }
     ]
 }

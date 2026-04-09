@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "SplashScreen.h"
 
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
 #include "Engine/Renderer.h"
 #include "Engine/Resource/ResourceManager.h"
@@ -36,6 +37,15 @@ namespace mts
             return;
         }
 
+        // Start splashscreen music for the entire sequence
+        AudioHandle musicHandle{};
+        AudioManager& audio = AudioManager::Get();
+        if (audio.isInitialized())
+        {
+            audio.SetCategoryVolume(AudioCategory::UI, 1.0f);
+            musicHandle = audio.Play("event:/splashscreen");
+        }
+
         for (const auto& config : configs)
         {
             if (!isRunning)
@@ -58,7 +68,8 @@ namespace mts
             {
                 // --- Timing ---
                 Time::BeginFrame();
-                elapsed += static_cast<float>(Time::FrameDt());
+                const float dt = static_cast<float>(Time::FrameDt());
+                elapsed += dt;
 
                 if (elapsed >= totalTime)
                     done = true;
@@ -105,6 +116,9 @@ namespace mts
                 cmd.isUI      = true;
                 cmd.sortKey   = 0.0f;
 
+                if (audio.isInitialized())
+                    audio.Update(dt);
+
                 window.ClearScreen();
                 Renderer::BeginFrame();
                 Renderer::Submit(cmd);
@@ -113,6 +127,13 @@ namespace mts
                 window.SwapBuffer();
                 Time::EndFrame();
             }
+        }
+
+        // Stop splashscreen music when sequence ends
+        if (musicHandle)
+        {
+            audio.Stop(musicHandle, StopMode::AllowFadeOut);
+            audio.Release(musicHandle);
         }
     }
 

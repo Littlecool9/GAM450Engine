@@ -38,7 +38,6 @@ namespace mts
         bool mHitboxSpawned = false;
         bool mHasPlunged = false;
         bool mHitbox2Spawned = false;
-        uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 
 }  // namespace mts

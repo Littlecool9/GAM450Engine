@@ -64,14 +64,27 @@ namespace mts
             b->GetScript<BulletBehavior>()->SetDirection(glm::vec2(0.0f, -1.0f));
             b->GetScript<BulletBehavior>()->SetHoming(false);
         }
-        ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t subId = ctrl->GetConductorSubId("FlyAttack");
+        if (subId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(subId);
+            ctrl->ClearConductorSubId("FlyAttack");
+        }
     }
 
     void FlyingEnemyAttackAction::OnBeginning(EnemyAgent& agent)
     {
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        // Clean up any leftover subscription from a previous attack
+        uint32_t oldId = ctrl->GetConductorSubId("FlyAttack");
+        if (oldId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(oldId);
+            ctrl->ClearConductorSubId("FlyAttack");
+        }
         agent.GetState().SetInAction(true);
-
-        LOG_INFO("EnemyAttackAction: Attacking player!", );
+        LOG_INFO("EnemyAttackAction: Attacking player!");
     }
 
     bool FlyingEnemyAttackAction::IsAvailable(const EnemyState& state,
@@ -93,15 +106,13 @@ namespace mts
     EnemyActionResult FlyingEnemyAttackAction::Update(EnemyAgent* agent, float dt, float totalTime)
     {
         if (!agent)
-        {
             return Invalid;
-        }
+
         agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
 
         auto* playerGO = agent->GetPlayerReference();
         if (playerGO)
         {
-
             const float attackRange =
                 agent->GetGameObject()->GetScript<EnemyController>()->GetAttackRange();
             if (abs(agent->GetState().GetVectorToPlayer().x) > attackRange)
@@ -112,13 +123,23 @@ namespace mts
             }
         }
 
-        ConductorSystem& cs = ConductorSystem::Get();
-        mConductorSubId = cs.onBeat.Subscribe(
-            [this, agent](mts::BeatInfo info)
-            {
-                if (info.isHalfBeat)
-                    FireBullet(*agent);
-            });
+        auto* ctrl = agent->GetGameObject()->GetScript<EnemyController>();
+
+        // Subscribe once per attack
+        if (ctrl->GetConductorSubId("FlyAttack") == 0)
+        {
+            ConductorSystem& cs = ConductorSystem::Get();
+            uint32_t subId = cs.onBeat.Subscribe(
+                [this, agent](mts::BeatInfo info)
+                {
+                    if (info.isHalfBeat)
+                        FireBullet(*agent);
+                });
+            ctrl->SetConductorSubId("FlyAttack", subId);
+            return OnGoing;  // wait for beat to fire the bullet
+        }
+
+        // If FireBullet already cleared the sub ID, the bullet was fired — finish up
         // cooldown after attack
         agent->GetState()
             .params.at(HashAction("AttackCooldown"))
@@ -135,10 +156,15 @@ namespace mts
     {
         if (result == Failed)
         {
-            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
-            agent.GetState().SetInAction(false);
-            LOG_INFO("Attack Failed, unsubscribing from beat");
+            auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+            uint32_t subId = ctrl->GetConductorSubId("FlyAttack");
+            if (subId != 0)
+            {
+                ConductorSystem::Get().onBeat.Unsubscribe(subId);
+                ctrl->ClearConductorSubId("FlyAttack");
+            }
         }
+        agent.GetState().SetInAction(false);
     }
 
     std::unordered_map<EnemyGoal, float> FlyingEnemyAttackAction::InternalHeuristic(

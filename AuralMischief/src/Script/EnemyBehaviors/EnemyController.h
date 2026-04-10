@@ -65,6 +65,23 @@ namespace mts
         GameObject* GetAtk3HitboxFront2() const { return mAtk3HitboxFront2; }
         void SetAtk3HitboxBehind(GameObject* hb) { mAtk3HitboxBehind = hb; }
         GameObject* GetAtk3HitboxBehind() const { return mAtk3HitboxBehind; }
+
+        // Per-enemy conductor subscription IDs for each attack action
+        void SetConductorSubId(const std::string& actionName, uint32_t id)
+        {
+            mConductorSubIds[actionName] = id;
+        }
+        uint32_t GetConductorSubId(const std::string& actionName) const
+        {
+            auto it = mConductorSubIds.find(actionName);
+            return (it != mConductorSubIds.end()) ? it->second : 0;
+        }
+        void ClearConductorSubId(const std::string& actionName)
+        {
+            mConductorSubIds.erase(actionName);
+        }
+
+
         SCRIPT_CLASS(EnemyController)
 
        private:
@@ -100,6 +117,7 @@ namespace mts
         GameObject* mAtk3Hitbox = nullptr;
         GameObject* mAtk3HitboxFront2 = nullptr;
         GameObject* mAtk3HitboxBehind = nullptr;
+        std::unordered_map<std::string, uint32_t> mConductorSubIds;
     };
 
 }  // namespace mts

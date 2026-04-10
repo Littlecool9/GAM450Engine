@@ -31,11 +31,9 @@ namespace mts
         void FireBullet(EnemyAgent& agent);
 
        private:
-        std::unordered_map<EnemyGoal, float> InternalHeuristic(const EnemyState& state,
+        std::unordered_map<EnemyGoal, float> InternalHeuristic(
+            const EnemyState& state,
             const EnemyPreference& preference) override;
-
-
-        uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 
 }  // namespace mts

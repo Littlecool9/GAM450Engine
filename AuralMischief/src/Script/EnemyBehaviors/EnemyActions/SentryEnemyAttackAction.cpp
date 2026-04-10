@@ -11,12 +11,15 @@
 #include "SentryEnemyAttackAction.h"
 
 #include "../BulletBehavior.h"
+#include "../EnemyParameters/AttackCountdownParam.h"
+#include "../EnemyController.h"
 #include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
-#include "../EnemyParameters/AttackCountdownParam.h"
 #include "Engine/EntitySystem/Component/Animation.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Rigidbody2D.h"
-
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
+#include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/Conductor/ConductorSystem.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 namespace mts
 {
@@ -47,7 +50,8 @@ namespace mts
         GameObject* b = GameObjectFactory::CreateFromArchetype("Data/Bullet.prefab");
         if (b)
         {
-            float mul = agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1 : 1;
+            float mul =
+                agent.GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX() ? -1.0f : 1.0f;
             b->GetComponent<Transform>()->SetPosition(
                 agent.GetGameObject()->GetComponent<Transform>()->GetPosition() +
                 glm::vec3{0.3f * mul, 0.3f, 0});
@@ -57,12 +61,27 @@ namespace mts
             b->GetScript<BulletBehavior>()->SetDirection(glm::normalize(glm::vec2(mul, 1.0f)));
             b->GetScript<BulletBehavior>()->SetHoming(true);
         }
-        ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t subId = ctrl->GetConductorSubId("SentryAttack");
+        if (subId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(subId);
+            ctrl->ClearConductorSubId("SentryAttack");
+        }
     }
 
     void SentryEnemyAttackAction::OnBeginning(EnemyAgent& agent)
     {
         agent.GetState().SetInAction(true);
+
+        // Clean up any leftover subscription
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t oldId = ctrl->GetConductorSubId("SentryAttack");
+        if (oldId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(oldId);
+            ctrl->ClearConductorSubId("SentryAttack");
+        }
 
         if (agent.GetGameObject()->GetComponent<AnimationSystem>()->GetCurrentState() ==
             AnimationSystem::States::Attack1)
@@ -106,13 +125,23 @@ namespace mts
             return Success;
         }
 
-        ConductorSystem& cs = ConductorSystem::Get();
-        mConductorSubId = cs.onBeat.Subscribe(
-            [this, agent](mts::BeatInfo info)
-            {
-                if (info.isHalfBeat)
-                    FireBullet(*agent);
-            });
+        auto* ctrl = agent->GetGameObject()->GetScript<EnemyController>();
+
+        // Subscribe once per attack
+        if (ctrl->GetConductorSubId("SentryAttack") == 0)
+        {
+            ConductorSystem& cs = ConductorSystem::Get();
+            uint32_t subId = cs.onBeat.Subscribe(
+                [this, agent](mts::BeatInfo info)
+                {
+                    if (info.isHalfBeat)
+                        FireBullet(*agent);
+                });
+            ctrl->SetConductorSubId("SentryAttack", subId);
+            return OnGoing;  // wait for beat to fire the bullet
+        }
+
+        // If FireBullet already cleared the sub ID, the bullet was fired — finish up
         // cooldown after attack
         agent->GetState()
             .params.at(HashAction("AttackCooldown"))
@@ -129,10 +158,15 @@ namespace mts
     {
         if (result == Failed)
         {
-            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
-            agent.GetState().SetInAction(false);
-            LOG_INFO("Attack Failed, unsubscribing from beat");
+            auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+            uint32_t subId = ctrl->GetConductorSubId("SentryAttack");
+            if (subId != 0)
+            {
+                ConductorSystem::Get().onBeat.Unsubscribe(subId);
+                ctrl->ClearConductorSubId("SentryAttack");
+            }
         }
+        agent.GetState().SetInAction(false);
     }
 
     std::unordered_map<EnemyGoal, float> SentryEnemyAttackAction::InternalHeuristic(

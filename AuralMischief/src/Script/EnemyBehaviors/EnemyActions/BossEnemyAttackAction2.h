@@ -36,7 +36,6 @@ namespace mts
             const EnemyPreference& preference) override;
         bool mHasLunged = false;
         bool mHitboxSpawned = false;
-        uint32_t mConductorSubId = 0;  // for unsubscribing from conductor when action ends
     };
 
 }  // namespace mts

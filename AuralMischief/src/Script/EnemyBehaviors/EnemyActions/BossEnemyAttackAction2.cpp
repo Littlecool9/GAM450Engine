@@ -48,7 +48,13 @@ namespace mts
     {
         agent.GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
             AnimationSystem::States::Attack2);
-        ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t subId = ctrl->GetConductorSubId("BossAttack2");
+        if (subId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(subId);
+            ctrl->ClearConductorSubId("BossAttack2");
+        }
     }
 
     void BossEnemyAttackAction2::OnBeginning(EnemyAgent& agent)
@@ -57,13 +63,22 @@ namespace mts
         mHasLunged = false;
         mHitboxSpawned = false;
 
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t oldId = ctrl->GetConductorSubId("BossAttack2");
+        if (oldId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(oldId);
+            ctrl->ClearConductorSubId("BossAttack2");
+        }
+
         ConductorSystem& cs = ConductorSystem::Get();
-        mConductorSubId = cs.onBeat.Subscribe(
+        uint32_t subId = cs.onBeat.Subscribe(
             [this, &agent](mts::BeatInfo info)
             {
                 if (info.isHalfBeat)
                     FireBullet(agent);
             });
+        ctrl->SetConductorSubId("BossAttack2", subId);
     }
 
     bool BossEnemyAttackAction2::IsAvailable(const EnemyState& state,
@@ -180,11 +195,16 @@ namespace mts
 
     void BossEnemyAttackAction2::OnEnd(EnemyAgent& agent, EnemyActionResult result)
     {
+        auto* ctrl = agent.GetGameObject()->GetScript<EnemyController>();
+        uint32_t subId = ctrl->GetConductorSubId("BossAttack2");
+        if (subId != 0)
+        {
+            ConductorSystem::Get().onBeat.Unsubscribe(subId);
+            ctrl->ClearConductorSubId("BossAttack2");
+        }
         if (result == Failed)
         {
             agent.GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
-            ConductorSystem::Get().onBeat.Unsubscribe(mConductorSubId);
-            // agent.GetState().SetInAction(false);
             agent.GetState().SetInAction(false);
             LOG_INFO("Attack Failed, unsubscribing from beat");
         }

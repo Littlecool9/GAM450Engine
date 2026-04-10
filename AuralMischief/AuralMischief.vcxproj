@@ -205,6 +205,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.h" />
     <ClInclude Include="src\Script\FadeInScript.h" />
+    <ClInclude Include="src\Script\ReturnButton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="src\Script\UIPanels.h" />
     <ClInclude Include="src\Script\MainMenuButton.h" />
     <ClInclude Include="src\Script\Player\PlayerAudioController.h" />
     <ClInclude Include="src\Script\Player\PlayerParticleController.h" />
@@ -250,6 +255,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\MovablePlatform.h" />
     <ClInclude Include="src\Script\PlatformPuzzleScript.h" />
     <ClInclude Include="src\Script\Player\PlayerController.h" />
+    <ClInclude Include="src\Script\QuitButton.h" />
     <ClInclude Include="src\Script\RhythmSystem.h" />
     <ClInclude Include="src\Script\RhythmSystemScript.h" />
     <ClInclude Include="src\Script\SceneSwitcherScript.h" />
@@ -277,6 +283,11 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyDodgeAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.cpp" />
+    <ClCompile Include="src\Script\ReturnButton.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="src\Script\UIPanels.cpp" />
     <ClCompile Include="src\Script\Player\PlayerAudioController.cpp" />
     <ClCompile Include="src\Script\FadeInScript.cpp" />
     <ClCompile Include="src\Script\MainMenuButton.cpp" />
@@ -325,6 +336,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\MovablePlatform.cpp" />
     <ClCompile Include="src\Script\PlatformPuzzleScript.cpp" />
     <ClCompile Include="src\Script\Player\PlayerController.cpp" />
+    <ClCompile Include="src\Script\QuitButton.cpp" />
     <ClCompile Include="src\Script\RhythmSystem.cpp" />
     <ClCompile Include="src\Script\RhythmSystemScript.cpp" />
     <ClCompile Include="src\Script\SceneSwitcherScript.cpp" />

@@ -29,6 +29,8 @@
 #include "Script/VolumeStepButton.h"
 #include "Script/ResumeButton.h"
 #include "Script/ReturnToMainMenuButton.h"
+#include "Script/UIPanels.h"
+#include "Script/ReturnButton.h"
 
 #include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Audio/AudioManager.h"
@@ -37,6 +39,7 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Script/QuitButton.h"
 
 mts::Application* mts::CreateApplication()
 {
@@ -104,6 +107,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new SceneSwitcherScript(); });
     mts::ScriptFactory::RegisterScript(PlayerAudioController::StaticClassName(),
                                        []() { return new PlayerAudioController(); });
+    mts::ScriptFactory::RegisterScript(QuitButton::StaticClassName(),
+                                       []() { return new QuitButton(); });
     mts::ScriptFactory::RegisterScript(MainMenuButton::StaticClassName(),
                                        []() { return new MainMenuButton(); });
     mts::ScriptFactory::RegisterScript(FadeInScript::StaticClassName(),
@@ -124,6 +129,10 @@ void AuralMischief::RegisterScripts()
                                        []() { return new ReturnToMainMenuButton(); });
     mts::ScriptFactory::RegisterScript(PauseMenuNavigator::StaticClassName(),
                                        []() { return new PauseMenuNavigator(); });
+    mts::ScriptFactory::RegisterScript(UIPanels::StaticClassName(),
+                                       []() { return new UIPanels(); });
+    mts::ScriptFactory::RegisterScript(ReturnButton::StaticClassName(),
+                                       []() { return new ReturnButton(); });
 }
 
 void AuralMischief::OnUpdate(float dt)

@@ -69,8 +69,201 @@
             ]
         },
         {
-            "UUID": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-            "Name": "StartButton",
+            "UUID": "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b",
+            "Name": "QuitButton",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.7799999713897705,
+                            0.0
+                        ],
+                        "Scale": [
+                            6.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.9349857568740845,
+                            0.9446018934249878,
+                            1.0
+                        ],
+                        "Alpha": 0.8479999899864197,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/MainMenuButton.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "QuitButton"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "8ef8ded7-9681-4679-b642-2fae287d248e",
+            "Name": "QuitButtonText",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.46000000834465027,
+                            0.7799999713897705,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.6000000238418579,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 99,
+                        "TextureResource": "Data/Resources/BlackFontText.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Quit"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
+            "Name": "HowToButton",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5799999833106995,
+                            0.0
+                        ],
+                        "Scale": [
+                            6.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.9349857568740845,
+                            0.9446018934249878,
+                            1.0
+                        ],
+                        "Alpha": 0.8479999899864197,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/MainMenuButton.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "UIPanels",
+                        "Fields": {
+                            "UIObjects": [
+                                "d18a8dcd-d1a6-42bc-b9cf-ce9cf81a13b5",
+                                "33c0e76d-5ff0-4a29-8caf-f6ce0e1d5550",
+                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f6e3939a-0e2d-4165-95eb-4a33c7c5722f",
+            "Name": "HowToButtonText",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.4350000023841858,
+                            0.5799999833106995,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.30000001192092896,
+                            0.30000001192092896,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 99,
+                        "TextureResource": "Data/Resources/BlackFontText.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "How To Play"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
+            "Name": "OptionsButton",
             "Layer": 2,
             "Tags": [],
             "Components": [
@@ -83,7 +276,109 @@
                             0.0
                         ],
                         "Scale": [
-                            4.0,
+                            6.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.9349857568740845,
+                            0.9446018934249878,
+                            1.0
+                        ],
+                        "Alpha": 0.8479999899864197,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/MainMenuButton.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "UIPanels",
+                        "Fields": {
+                            "UIObjects": [
+                                "33c0e76d-5ff0-4a29-8caf-f6ce0e1d5550",
+                                "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
+                                "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
+                                "f4593465-8d2c-499d-8d37-1ffb7ddb9c68",
+                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "634af2d5-9d01-4be1-b6e0-3d648b48607e",
+            "Name": "OptionsButtonText",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.45500001311302185,
+                            0.6800000071525574,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.3499999940395355,
+                            0.4000000059604645,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 99,
+                        "TextureResource": "Data/Resources/BlackFontText.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Options"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "4551ac39-a40b-4526-912b-2d5ce454748d",
+            "Name": "StartButton",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.47999998927116394,
+                            0.0
+                        ],
+                        "Scale": [
+                            6.0,
                             1.0,
                             1.0
                         ],
@@ -115,6 +410,48 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "MainMenuButton"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "b0517a60-cf41-4ced-a1ad-2f69a0df3167",
+            "Name": "StartButtonText",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.4449999928474426,
+                            0.48500001430511475,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.6000000238418579,
+                            0.6000000238418579,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 99,
+                        "TextureResource": "Data/Resources/BlackFontText.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Start"
                     }
                 }
             ]
@@ -199,6 +536,296 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "FadeInScript"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "d18a8dcd-d1a6-42bc-b9cf-ce9cf81a13b5",
+            "Name": "Instruction",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5099999904632568,
+                            0.0
+                        ],
+                        "Scale": [
+                            10.0,
+                            6.130000114440918,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 101,
+                        "TextureResource": "Data/Resources/Instructions.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "33c0e76d-5ff0-4a29-8caf-f6ce0e1d5550",
+            "Name": "Instruction_Background",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            100.0,
+                            100.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Alpha": 0.699999988079071,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Data/Resources/TransparentMask.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f0bdfbc7-6716-4628-bec4-e7119cf42c9a",
+            "Name": "ReturnButton",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.9100000262260437,
+                            0.949999988079071,
+                            0.0
+                        ],
+                        "Scale": [
+                            3.549999952316284,
+                            1.25,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 101,
+                        "TextureResource": "Data/Resources/ReturnButton.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "ReturnButton",
+                        "Fields": {
+                            "MainMenuButtons": [
+                                "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
+                                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b",
+                                "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
+                                "4551ac39-a40b-4526-912b-2d5ce454748d"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
+            "Name": "PauseMenu_VolumeMinus",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.6150000095367432,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": -0.1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
+            "Name": "PauseMenu_VolumePlus",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.6949999928474426,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": 0.1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "f4593465-8d2c-499d-8d37-1ffb7ddb9c68",
+            "Name": "PauseMenu_Volumn_Icon",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.3199999928474426,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            2.0,
+                            2.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/Speaker_icon.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

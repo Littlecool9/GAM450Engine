@@ -1,0 +1,50 @@
+{
+    "UUID": "33dd0705-3a24-43fb-b052-fe53dc592783",
+    "Name": "Credits",
+    "Layer": 0,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    0.0,
+                    -4.949999809265137,
+                    0.0
+                ],
+                "Scale": [
+                    4.0,
+                    12.260000228881836,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/CreditsScreen.tex",
+                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "CreditsScrollScript"
+            }
+        },
+        {
+            "Type": "ActionList"
+        }
+    ]
+}

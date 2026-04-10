@@ -79,7 +79,7 @@
                     "Data": {
                         "Position": [
                             0.5,
-                            0.78,
+                            0.8799999952316284,
                             0.0
                         ],
                         "Scale": [
@@ -129,13 +129,13 @@
                     "Type": "UITransform",
                     "Data": {
                         "Position": [
-                            0.4706,
-                            0.78,
+                            0.4706000089645386,
+                            0.8899999856948853,
                             0.0
                         ],
                         "Scale": [
-                            0.4,
-                            0.4,
+                            0.4000000059604645,
+                            0.4000000059604645,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -172,7 +172,7 @@
                     "Data": {
                         "Position": [
                             0.5,
-                            0.58,
+                            0.5799999833106995,
                             0.0
                         ],
                         "Scale": [
@@ -229,13 +229,13 @@
                     "Type": "UITransform",
                     "Data": {
                         "Position": [
-                            0.4193,
-                            0.58,
+                            0.41929998993873596,
+                            0.5799999833106995,
                             0.0
                         ],
                         "Scale": [
-                            0.4,
-                            0.4,
+                            0.4000000059604645,
+                            0.4000000059604645,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -272,7 +272,7 @@
                     "Data": {
                         "Position": [
                             0.5,
-                            0.68,
+                            0.6800000071525574,
                             0.0
                         ],
                         "Scale": [
@@ -331,13 +331,13 @@
                     "Type": "UITransform",
                     "Data": {
                         "Position": [
-                            0.4486,
-                            0.68,
+                            0.44859999418258667,
+                            0.6800000071525574,
                             0.0
                         ],
                         "Scale": [
-                            0.4,
-                            0.4,
+                            0.4000000059604645,
+                            0.4000000059604645,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -374,7 +374,7 @@
                     "Data": {
                         "Position": [
                             0.5,
-                            0.48,
+                            0.47999998927116394,
                             0.0
                         ],
                         "Scale": [
@@ -424,13 +424,13 @@
                     "Type": "UITransform",
                     "Data": {
                         "Position": [
-                            0.4633,
-                            0.48,
+                            0.4632999897003174,
+                            0.47999998927116394,
                             0.0
                         ],
                         "Scale": [
-                            0.4,
-                            0.4,
+                            0.4000000059604645,
+                            0.4000000059604645,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -826,6 +826,99 @@
                         "TextureResource": "Data/Resources/Speaker_icon.tex",
                         "MeshResource": "Data/Resources/1x1MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "a1c26fba-4d64-4867-b815-a4e65a2fa9ee",
+            "Name": "CreditsButton",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.7799999713897705,
+                            0.0
+                        ],
+                        "Scale": [
+                            6.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.9349857568740845,
+                            0.9446018934249878,
+                            1.0
+                        ],
+                        "Alpha": 0.8479999899864197,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/MainMenuButton.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CreditsButton"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c1cdc8c6-4d29-4371-b001-f71a6893b342",
+            "Name": "CreditsButtonText",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.4632999897003174,
+                            0.7799999713897705,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.4000000059604645,
+                            0.4000000059604645,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 99,
+                        "TextureResource": "Data/Resources/BlackFontText.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Credits"
                     }
                 }
             ]

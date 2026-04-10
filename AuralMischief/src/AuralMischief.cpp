@@ -29,6 +29,7 @@
 #include "Script/VolumeStepButton.h"
 #include "Script/ResumeButton.h"
 #include "Script/ReturnToMainMenuButton.h"
+#include "Script/CreditsScrollScript.h"
 #include "Script/UIPanels.h"
 #include "Script/ReturnButton.h"
 
@@ -39,7 +40,9 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Script/CreditsButton.h"
 #include "Script/QuitButton.h"
+
 
 mts::Application* mts::CreateApplication()
 {
@@ -112,6 +115,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new QuitButton(); });
     mts::ScriptFactory::RegisterScript(MainMenuButton::StaticClassName(),
                                        []() { return new MainMenuButton(); });
+    mts::ScriptFactory::RegisterScript(CreditsButton::StaticClassName(),
+                                       []() { return new CreditsButton(); });
     mts::ScriptFactory::RegisterScript(FadeInScript::StaticClassName(),
                                        []() { return new FadeInScript(); });
     mts::ScriptFactory::RegisterScript(EndPointScript::StaticClassName(),
@@ -130,6 +135,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new ReturnToMainMenuButton(); });
     mts::ScriptFactory::RegisterScript(PauseMenuNavigator::StaticClassName(),
                                        []() { return new PauseMenuNavigator(); });
+    mts::ScriptFactory::RegisterScript(CreditsScrollScript::StaticClassName(),
+                                       []() { return new CreditsScrollScript(); });
     mts::ScriptFactory::RegisterScript(UIPanels::StaticClassName(),
                                        []() { return new UIPanels(); });
     mts::ScriptFactory::RegisterScript(ReturnButton::StaticClassName(),
@@ -190,7 +197,7 @@ void AuralMischief::OnUpdate(float dt)
         {
             // Go to credits
             // TODO add correct scene index
-            mts::SceneSystem::SwitchScene(0);
+            mts::SceneSystem::SwitchScene(5);
         }
         if (mts::Input::IsKeyPressed(mts::Key::F5))
         {

@@ -197,6 +197,8 @@ xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets\"</Command>
     <ClInclude Include="src\Actions\ColliderScaleAction.h" />
     <ClInclude Include="src\Script\BeatBarController.h" />
     <ClInclude Include="src\Script\BeatPulseScript.h" />
+    <ClInclude Include="src\Script\CreditsButton.h" />
+    <ClInclude Include="src\Script\CreditsScrollScript.h" />
     <ClInclude Include="src\Script\EndPointScript.h">
       <SubType>
       </SubType>
@@ -276,6 +278,8 @@ xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets\"</Command>
     <ClCompile Include="src\Actions\ColliderScaleAction.cpp" />
     <ClCompile Include="src\Script\BeatBarController.cpp" />
     <ClCompile Include="src\Script\BeatPulseScript.cpp" />
+    <ClCompile Include="src\Script\CreditsButton.cpp" />
+    <ClCompile Include="src\Script\CreditsScrollScript.cpp" />
     <ClCompile Include="src\Script\EndPointScript.cpp">
       <SubType>
       </SubType>

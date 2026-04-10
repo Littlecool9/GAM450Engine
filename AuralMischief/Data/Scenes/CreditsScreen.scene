@@ -1,0 +1,135 @@
+{
+    "GameObjects": [
+        {
+            "UUID": "33dd0705-3a24-43fb-b052-fe53dc592783",
+            "Name": "Credits",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            -9.899999618530273,
+                            0.0
+                        ],
+                        "Scale": [
+                            8.0,
+                            24.520000457763672,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/CreditsScreen.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CreditsScrollScript"
+                    }
+                },
+                {
+                    "Type": "ActionList"
+                }
+            ]
+        },
+        {
+            "UUID": "c0f57b85-aadd-4362-8e1a-5e8b19f2cca4",
+            "Name": "Camera",
+            "Layer": 0,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Camera",
+                    "Data": {
+                        "IsActive": 1,
+                        "NearPlane": -1.0,
+                        "FarPlane": 1.0,
+                        "OrthoSize": 3.0,
+                        "PostProcessing": []
+                    }
+                },
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e6cbbd71-614e-4238-acf3-ffd6d136495c",
+            "Name": "FadeOverlay",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            100.0,
+                            100.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Alpha": 0.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Engine/Resources/DefaultTextureResource.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "FadeInScript"
+                    }
+                }
+            ]
+        }
+    ]
+}

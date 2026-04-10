@@ -12,6 +12,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stb_image.h>
 
 #include "GLFWInputMapper.h"
 #include "Engine/Events/InputEvent.h"
@@ -48,6 +49,22 @@ namespace mts
                                   nullptr);
 
         MTS_ASSERT(window);
+
+        if (!props.IconPath.empty())
+        {
+            int w, h, channels;
+            unsigned char* pixels = stbi_load(props.IconPath.c_str(), &w, &h, &channels, 4);
+            if (pixels)
+            {
+                GLFWimage img{w, h, pixels};
+                glfwSetWindowIcon(window, 1, &img);
+                stbi_image_free(pixels);
+            }
+            else
+            {
+                LOG_WARN("Window icon not loaded: {0}", props.IconPath);
+            }
+        }
 
         glfwMakeContextCurrent(window);
         glfwSetWindowUserPointer(window, &windowData);

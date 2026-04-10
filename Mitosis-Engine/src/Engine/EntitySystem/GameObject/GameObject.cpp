@@ -47,18 +47,6 @@ namespace mts
 
     GameObject::~GameObject()
     {
-        // on destroy called first in case scripts have to do something with components
-        for (auto* nsc : m_scripts)
-        {
-            nsc->OnDestroy();
-        }
-        if (isActive)  // disable before destruction to trigger OnDisable events
-        {
-            for (auto* c : components)
-                if (c->IsEnabled())
-                    c->OnDisable();
-        }
-
         for (auto c : components)
             delete c;
     }
@@ -294,6 +282,16 @@ namespace mts
     void GameObject::Destroy()
     {
         isDead = true;
+
+        // on destroy called first in case scripts have to do something with components
+        for (auto* nsc : m_scripts)
+        {
+            nsc->OnDestroy();
+        }
+
+        for (auto* c : components)
+            if (c->IsEnabled())
+                c->OnDisable();
     }
 
     void GameObject::OnCollisionEnter2D(const Collision2D& collision)

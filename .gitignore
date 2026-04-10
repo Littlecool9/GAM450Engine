@@ -8,6 +8,14 @@
 *.log
 
 # ===============================
+# Installer
+# ===============================
+# build InstallScript.iss
+tools/Installation/INSTALLER/
+# copy from bin\Release-windows-x86_64\AuralMischief
+tools/Installation/GAMEDIRECTORY/
+
+# ===============================
 # Third-Party Generated Files
 # ===============================
 # CMake build trees

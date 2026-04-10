@@ -135,13 +135,17 @@ namespace mts
         {
             g->Init();
             g->Awake();
-            if (g->IsActive()) g->OnEnable();
-            if (g->IsActive()) g->Start();
+            if (g->IsActive())
+                g->OnEnable();
+            if (g->IsActive())
+                g->Start();
         }
     }
 
     void Scene::ClearGameObjects()
     {
+        for (auto* go : mGameObjects)
+            go->Destroy();
         for (auto* go : mGameObjects)
             delete go;
         mGameObjects.clear();

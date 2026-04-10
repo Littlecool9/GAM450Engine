@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugOpt|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
@@ -101,7 +101,7 @@
       <Command>IF NOT EXIST "..\bin\Debug-windows-x86_64\AuralMischief" (mkdir "..\bin\Debug-windows-x86_64\AuralMischief")
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll" "..\bin\Debug-windows-x86_64\AuralMischief\fmodL.dll"
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\Debug-windows-x86_64\AuralMischief\fmodstudioL.dll"
-xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)Shaders\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
 IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
@@ -131,7 +131,8 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -139,14 +140,13 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <AdditionalLibraryDirectories>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF NOT EXIST "..\bin\Release-windows-x86_64\AuralMischief" (mkdir "..\bin\Release-windows-x86_64\AuralMischief")
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmod.dll" "..\bin\Release-windows-x86_64\AuralMischief\fmod.dll"
+      <Command>copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmod.dll" "..\bin\Release-windows-x86_64\AuralMischief\fmod.dll"
 copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "..\bin\Release-windows-x86_64\AuralMischief\fmodstudio.dll"
-xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)Shaders\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
-IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
-IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
+xcopy /E /I /Y "$(ProjectDir)Data" "$(OutDir)Data\"
+xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <!-- ════════════════════════════════════
@@ -157,37 +157,38 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MTS_PLATFORM_WINDOWS;MTS_DEBUG;MTS_AUDIO_FMOD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MTS_PLATFORM_WINDOWS;MTS_AUDIO_FMOD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Mitosis-Engine\src;..\Mitosis-Launcher\src;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>MaxSpeed</Optimization>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <EnableMultiProcessorCompilation>true</EnableMultiProcessorCompilation>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /Zc:preprocessor /fp:fast %(AdditionalOptions)</AdditionalOptions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:preprocessor /fp:fast /GS- %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;user32.lib;gdi32.lib;shell32.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalDependencies>opengl32.lib;user32.lib;gdi32.lib;shell32.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF NOT EXIST "..\bin\DebugOpt-windows-x86_64\AuralMischief" (mkdir "..\bin\DebugOpt-windows-x86_64\AuralMischief")
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll" "..\bin\DebugOpt-windows-x86_64\AuralMischief\fmodL.dll"
-copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudioL.dll" "..\bin\DebugOpt-windows-x86_64\AuralMischief\fmodstudioL.dll"
-xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)..\Mitosis-Engine\src\Shaders\"
+      <Command>copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64\fmod.dll" "$(OutDir)fmod.dll"
+copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64\fmodstudio.dll" "$(OutDir)fmodstudio.dll"
+xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)Shaders\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
-IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
-IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
+IF EXIST "$(OutDir)Data" (rd "$(OutDir)Data" 2&gt;nul)
+xcopy /E /I /Y "$(ProjectDir)Data" "$(OutDir)Data\"
+IF EXIST "$(OutDir)Assets" (rd "$(OutDir)Assets" 2&gt;nul)
+xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -349,6 +350,12 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
       <SubType>
       </SubType>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AuralMischief.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Launcher\Mitosis-Launcher.vcxproj">

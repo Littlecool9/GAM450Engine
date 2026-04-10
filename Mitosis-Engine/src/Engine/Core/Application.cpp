@@ -35,7 +35,7 @@ namespace mts
 {
     void Application::Init()
     {
-        mWindow = Window::Create();
+        mWindow = Window::Create(GetWindowProps());
         mWindow->SetEventCallback([this](Event& e) { OnEvent(e); });
 
         Time::Init();
@@ -53,6 +53,10 @@ namespace mts
 
         RegisterScripts();
 
+#ifdef MTS_RELEASE
+        AppSystem::Get().ToggleFullscreen();
+#endif
+
         // push in order of calling
         mLayerStack.PushLayer(std::make_unique<MemoryManageLayer>());
         mLayerStack.PushLayer(std::make_unique<InputLayer>());
@@ -62,9 +66,11 @@ namespace mts
         mLayerStack.PushLayer(
             std::make_unique<SceneLayer>(GetInitialScene(), GetSceneRegistry(), mCtx));
         mLayerStack.PushLayer(std::make_unique<PhysicsLayer>(mCtx));
+#ifndef MTS_RELEASE
         mLayerStack.PushLayer(std::make_unique<DebugRenderLayer>());
         mLayerStack.PushOverlay(std::make_unique<ImGuiLayer>(mWindow.get()));
         mLayerStack.PushOverlay(std::make_unique<EditorLayer>(mCtx));
+#endif
     }
 
     void Application::Run()
@@ -75,10 +81,11 @@ namespace mts
             mCtx.requestPlay = true;
         }
 
+#ifndef MTS_RELEASE
         FPSCounter fps;
         ImGuiLayer* imgui = static_cast<ImGuiLayer*>(mLayerStack.FindLayerByName("ImGuiLayer"));
-
         MTS_ASSERT(imgui);
+#endif
 
         while (mIsRunning)
         {
@@ -102,15 +109,16 @@ namespace mts
                     layer->OnUpdate(dt);
             }
 
+#ifndef MTS_RELEASE
             if (Input::IsKeyPressed(Key::Grave))
             {
                 mInDebugView = !mInDebugView;
                 if (!mInDebugView)
                     Renderer::ClearGameViewport();
             }
+#endif
             if (Input::IsKeyPressed(Key::F11))
                 AppSystem::Get().ToggleFullscreen();
-
             this->OnUpdate(dt);
 
             for (auto& layer : mLayerStack)
@@ -153,6 +161,7 @@ namespace mts
             Renderer::FlushUI();         // UI on top, always to default FB
             Renderer::EndFrame();
 
+#ifndef MTS_RELEASE
             if (mInDebugView)
             {
                 fps.Update(dt);
@@ -165,6 +174,7 @@ namespace mts
 
                 imgui->End();
             }
+#endif
 
             mWindow->SwapBuffer();
 
@@ -251,6 +261,7 @@ namespace mts
 
     void Application::EnterPlayMode()
     {
+        mCtx.playState = PlayState::Play;
         for (auto& layer : mLayerStack)
         {
             if (layer->IsEnabled())
@@ -260,6 +271,7 @@ namespace mts
 
     void Application::StopPlayMode()
     {
+        mCtx.playState = PlayState::Edit;
         for (auto& layer : mLayerStack)
         {
             if (layer->IsEnabled())

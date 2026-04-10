@@ -11,6 +11,11 @@
 #include "Engine/Helpers/Format.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#ifdef MTS_RELEASE
+    #include <spdlog/sinks/basic_file_sink.h>
+    #include <shlobj.h>
+    #include <filesystem>
+#endif
 #include <array>
 
 constexpr auto LOG_PATTERN = "%^[%H:%M:%S] [%n] [%l] %v%$";
@@ -47,10 +52,18 @@ namespace mts
 
     void Log::Init()
     {
-        auto console = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        console->set_pattern(LOG_PATTERN);
-
-        std::vector<spdlog::sink_ptr> sinks{console};
+#ifdef MTS_RELEASE
+        // Write to %APPDATA%\AuralMischief\error.log — always writable, even in Program Files installs
+        char appDataPath[MAX_PATH];
+        SHGetFolderPathA(nullptr, CSIDL_APPDATA, nullptr, 0, appDataPath);
+        std::string logPath = std::string(appDataPath) + "\\AuralMischief\\error.log";
+        std::filesystem::create_directories(std::string(appDataPath) + "\\AuralMischief");
+        auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logPath, true);
+#else
+        auto sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        sink->set_pattern(LOG_PATTERN);
+#endif
+        std::vector<spdlog::sink_ptr> sinks{sink};
 
         loggers[static_cast<size_t>(LoggerId::Engine)] =
             std::make_shared<spdlog::logger>("ENGINE", sinks.begin(), sinks.end());
@@ -74,7 +87,9 @@ namespace mts
         auto fileName = string_format::ShortFile(where.file_name());
         // auto functionName = string_format::ShortFunc(where.function_name());
         std::string entryText = std::format("[{}: line {}] {}", fileName, where.line(), message);
+#ifndef MTS_RELEASE
         s_logEntries.push_back({ level, entryText });
+#endif
         targetLogger->log(ToSpdLvl(level), "{}", entryText);
     }
 

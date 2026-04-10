@@ -48,6 +48,7 @@ mts::Application* mts::CreateApplication()
 
 AuralMischief::AuralMischief()
 {
+    mWindowProps = {.Title = "Aural Mischief", .Width = 1600, .Height = 900, .VSync = false};
 }
 
 AuralMischief::~AuralMischief()

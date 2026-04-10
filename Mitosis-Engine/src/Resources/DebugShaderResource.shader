@@ -1,5 +1,5 @@
 {
   "Name": "DebugShaderResource",
-  "VertexShader": "../Mitosis-Engine/src/Shaders/debug.vert",
-  "FragmentShader": "../Mitosis-Engine/src/Shaders/debug.frag"
+  "VertexShader": "Shaders/debug.vert",
+  "FragmentShader": "Shaders/debug.frag"
 }

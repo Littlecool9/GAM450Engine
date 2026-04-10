@@ -1,5 +1,5 @@
 {
   "Name": "DefaultShaderResource",
-  "VertexShader": "../Mitosis-Engine/src/Shaders/standard.vert",
-  "FragmentShader": "../Mitosis-Engine/src/Shaders/standard.frag"
+  "VertexShader": "Shaders/standard.vert",
+  "FragmentShader": "Shaders/standard.frag"
 }

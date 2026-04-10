@@ -20,6 +20,7 @@ namespace mts
         uint32_t Width = 1600;
         uint32_t Height = 900;
         bool VSync = false;
+        std::string IconPath = "";
     };
 
     class Window

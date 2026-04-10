@@ -44,6 +44,7 @@ namespace mts
        protected:
         virtual std::string& GetInitialScene() = 0;
         virtual std::string& GetSceneRegistry() = 0;
+        virtual WindowProps& GetWindowProps() = 0;
         virtual void RegisterScripts() {};
         virtual std::vector<SplashScreenConfig> GetSplashScreens() { return {}; }
         virtual void OnUpdate(float dt) {};
@@ -61,7 +62,11 @@ namespace mts
         EditorContext mCtx;
 
         bool mIsRunning = false;
+#ifdef MTS_RELEASE
         bool mInDebugView = false;
+#else
+        bool mInDebugView = true;
+#endif
     };
 
     Application* CreateApplication();

@@ -1,5 +1,5 @@
 {
   "Name": "DefaultShaderResource",
-  "VertexShader": "../../src/Shaders/standardTile.vert",
-  "FragmentShader": "../../src/Shaders/standardTile.frag"
+  "VertexShader": "Shaders/standardTile.vert",
+  "FragmentShader": "Shaders/standardTile.frag"
 }

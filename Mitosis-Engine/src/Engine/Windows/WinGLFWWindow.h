@@ -33,10 +33,8 @@ namespace mts
 
         virtual void SwapBuffer() override;
 
-        void SetEventCallback(const EventCallbackFn& callback) override
-        {
-            windowData.EventCallback = callback;
-        }
+        void SetEventCallback(const EventCallbackFn& callback) override;
+
 
         void* NativeWindow() const override { return window; }
 

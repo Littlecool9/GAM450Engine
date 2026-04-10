@@ -59,6 +59,11 @@ namespace mts
         std::memcpy(s.prevKeys, s.keys, sizeof(s.keys));
         std::memcpy(s.prevMouse, s.mouse, sizeof(s.mouse));
         s.scrollDeltaY = 0.0f;
+
+        for (int i = 0; i < MaxGamepads; ++i)
+            std::memcpy(s.gamepads[i].prevButtons,
+                        s.gamepads[i].buttons,
+                        sizeof(s.gamepads[i].buttons));
     }
 
     // -------- Queries --------
@@ -166,6 +171,117 @@ namespace mts
         std::memset(s.mouse, 0, sizeof(s.mouse));
         std::memset(s.prevMouse, 0, sizeof(s.prevMouse));
         s.scrollDeltaY = 0.0f;
+
+        for (int i = 0; i < MaxGamepads; ++i)
+        {
+            // Leave connected flag unchanged — the pad is still physically connected.
+            std::memset(s.gamepads[i].buttons, 0, sizeof(s.gamepads[i].buttons));
+            std::memset(s.gamepads[i].prevButtons, 0, sizeof(s.gamepads[i].prevButtons));
+            std::memset(s.gamepads[i].axes, 0, sizeof(s.gamepads[i].axes));
+        }
+    }
+
+    // -------- Gamepad queries --------
+
+    bool Input::IsGamepadConnected(int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return false;
+        return GetState().gamepads[padId].connected;
+    }
+
+    static int GamepadButtonIndex(GamepadButton button)
+    {
+        int v = static_cast<int>(button);
+        if (v < 0 || v >= static_cast<int>(GamepadButton::Count))
+            return -1;
+        return v;
+    }
+
+    static int GamepadAxisIndex(GamepadAxis axis)
+    {
+        int v = static_cast<int>(axis);
+        if (v < 0 || v >= static_cast<int>(GamepadAxis::Count))
+            return -1;
+        return v;
+    }
+
+    bool Input::IsGamepadButtonDown(GamepadButton button, int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return false;
+        int i = GamepadButtonIndex(button);
+        return i >= 0 && GetState().gamepads[padId].buttons[i];
+    }
+
+    bool Input::IsGamepadButtonPressed(GamepadButton button, int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return false;
+        int i = GamepadButtonIndex(button);
+        if (i < 0)
+            return false;
+        const auto& pad = GetState().gamepads[padId];
+        return pad.buttons[i] && !pad.prevButtons[i];
+    }
+
+    bool Input::IsGamepadButtonReleased(GamepadButton button, int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return false;
+        int i = GamepadButtonIndex(button);
+        if (i < 0)
+            return false;
+        const auto& pad = GetState().gamepads[padId];
+        return !pad.buttons[i] && pad.prevButtons[i];
+    }
+
+    float Input::GetGamepadAxis(GamepadAxis axis, int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return 0.0f;
+        int i = GamepadAxisIndex(axis);
+        return i >= 0 ? GetState().gamepads[padId].axes[i] : 0.0f;
+    }
+
+    // -------- Gamepad sinks (called by platform) --------
+
+    void Input::OnGamepadConnected(int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return;
+        auto& pad = GetState().gamepads[padId];
+        pad.connected = true;
+        std::memset(pad.buttons, 0, sizeof(pad.buttons));
+        std::memset(pad.prevButtons, 0, sizeof(pad.prevButtons));
+        std::memset(pad.axes, 0, sizeof(pad.axes));
+    }
+
+    void Input::OnGamepadDisconnected(int padId)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return;
+        auto& pad = GetState().gamepads[padId];
+        pad.connected = false;
+        std::memset(pad.buttons, 0, sizeof(pad.buttons));
+        std::memset(pad.prevButtons, 0, sizeof(pad.prevButtons));
+        std::memset(pad.axes, 0, sizeof(pad.axes));
+    }
+
+    void Input::OnGamepadPoll(int padId, const bool* buttons, int buttonCount,
+                              const float* axes, int axisCount)
+    {
+        if (padId < 0 || padId >= MaxGamepads)
+            return;
+        auto& pad = GetState().gamepads[padId];
+
+        int bc = std::min(buttonCount, static_cast<int>(GamepadButton::Count));
+        for (int i = 0; i < bc; ++i)
+            pad.buttons[i] = buttons[i];
+
+        int ac = std::min(axisCount, static_cast<int>(GamepadAxis::Count));
+        for (int i = 0; i < ac; ++i)
+            pad.axes[i] = axes[i];
     }
 
     void Input::OnEvent(Event& e)
@@ -221,6 +337,20 @@ namespace mts
             [](WindowLostFocusEvent&)
             {
                 ClearAll();
+                return false;
+            });
+
+        d.Dispatch<GamepadConnectedEvent>(
+            [](GamepadConnectedEvent& ev)
+            {
+                OnGamepadConnected(ev.GetPadId());
+                return false;
+            });
+
+        d.Dispatch<GamepadDisconnectedEvent>(
+            [](GamepadDisconnectedEvent& ev)
+            {
+                OnGamepadDisconnected(ev.GetPadId());
                 return false;
             });
     }

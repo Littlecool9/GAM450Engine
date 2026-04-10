@@ -53,7 +53,8 @@ void PauseButton::OnUpdate(float dt)
 {
     (void)dt;
 
-    if (mts::Input::IsKeyPressed(mts::Key::Escape))
+    if (mts::Input::IsKeyPressed(mts::Key::Escape) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Start))
         TogglePause();
 }
 

@@ -33,6 +33,10 @@ namespace mts
         MouseScrolled,
         UIButtonClicked,
 
+        // Gamepad
+        GamepadConnected,
+        GamepadDisconnected,
+
         // App
         AppQuitRequest,
         AppToggleFullscreenRequest
@@ -47,7 +51,8 @@ namespace mts
         EventCategoryMouse = 1 << 3,
         EventCategoryMouseButton = 1 << 4,
         EventCategoryWindow = 1 << 5,
-        EventCategoryUI = 1 << 6
+        EventCategoryUI = 1 << 6,
+        EventCategoryGamepad = 1 << 7
     };
 
 #define MTS_EVENT_CLASS_TYPE(type)                  \

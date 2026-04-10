@@ -111,37 +111,43 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
 
     using mts::Input;
     using mts::Key;
+    using mts::GamepadButton;
 
     if (mActiveGroup == Group::Main)
     {
-        if (Input::IsKeyPressed(Key::Up))
+        if (Input::IsKeyPressed(Key::Up) ||
+            Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
             SetMainCursor(mMainCursor - 1);
-        else if (Input::IsKeyPressed(Key::Down))
+        else if (Input::IsKeyPressed(Key::Down) ||
+                 Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
             SetMainCursor(mMainCursor + 1);
 
         if (mMainCursor == kMainVolume)
         {
             // Volume slot — Left/Right step master volume directly via the
             // existing button click handlers.
-            if (Input::IsKeyPressed(Key::Left) &&
+            if ((Input::IsKeyPressed(Key::Left) ||
+                 Input::IsGamepadButtonPressed(GamepadButton::DPadLeft)) &&
                 mMainItems[kMainVolume].buttons.size() > 0 &&
                 mMainItems[kMainVolume].buttons[0])
             {
                 mMainItems[kMainVolume].buttons[0]->mOnClick.Invoke();
             }
-            else if (Input::IsKeyPressed(Key::Right) &&
+            else if ((Input::IsKeyPressed(Key::Right) ||
+                      Input::IsGamepadButtonPressed(GamepadButton::DPadRight)) &&
                      mMainItems[kMainVolume].buttons.size() > 1 &&
                      mMainItems[kMainVolume].buttons[1])
             {
                 mMainItems[kMainVolume].buttons[1]->mOnClick.Invoke();
             }
-            // Space/Enter intentionally do nothing here — there is no single
+            // Space/Enter/A intentionally do nothing here — there is no single
             // "activate" action for a stepper.
         }
         else
         {
             if (Input::IsKeyPressed(Key::Space) ||
-                Input::IsKeyPressed(Key::Enter))
+                Input::IsKeyPressed(Key::Enter) ||
+                Input::IsGamepadButtonPressed(GamepadButton::A))
             {
                 ActivateFocused();
             }
@@ -149,16 +155,23 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
     }
     else  // Group::Confirm
     {
-        if (Input::IsKeyPressed(Key::Left))
+        if (Input::IsKeyPressed(Key::Left) ||
+            Input::IsGamepadButtonPressed(GamepadButton::DPadLeft))
             SetConfirmCursor(kConfirmYes);
-        else if (Input::IsKeyPressed(Key::Right))
+        else if (Input::IsKeyPressed(Key::Right) ||
+                 Input::IsGamepadButtonPressed(GamepadButton::DPadRight))
             SetConfirmCursor(kConfirmNo);
 
         if (Input::IsKeyPressed(Key::Space) ||
-            Input::IsKeyPressed(Key::Enter))
+            Input::IsKeyPressed(Key::Enter) ||
+            Input::IsGamepadButtonPressed(GamepadButton::A))
         {
             ActivateFocused();
         }
+
+        // B button / Escape cancel the confirm dialog and return to main menu items
+        if (Input::IsGamepadButtonPressed(GamepadButton::B))
+            HideReturnConfirm();
     }
 }
 

@@ -17,9 +17,14 @@
 #include "GLFWInputMapper.h"
 #include "Engine/Events/InputEvent.h"
 #include "Engine/Events/WindowEvent.h"
+#include "Engine/Input/Input.h"
 
 namespace mts
 {
+    // GLFW joystick callback has no user-data pointer; store the app callback statically.
+    // Safe because only one GLFWwindow exists per process.
+    static EventCallbackFn s_JoystickEventCallback;
+
     WinGLFWwindow::WinGLFWwindow(const WindowProps& props)
     {
         Init(props);
@@ -202,6 +207,27 @@ namespace mts
                                       data.EventCallback(e);
                               });
 
+        // ----- Gamepad connect / disconnect -----
+
+        glfwSetJoystickCallback([](int jid, int event)
+        {
+            if (jid >= Input::MaxGamepads || !s_JoystickEventCallback)
+                return;
+
+            if (event == GLFW_CONNECTED && glfwJoystickIsGamepad(jid))
+            {
+                Input::OnGamepadConnected(jid);
+                GamepadConnectedEvent e(jid);
+                s_JoystickEventCallback(e);
+            }
+            else if (event == GLFW_DISCONNECTED)
+            {
+                Input::OnGamepadDisconnected(jid);
+                GamepadDisconnectedEvent e(jid);
+                s_JoystickEventCallback(e);
+            }
+        });
+
         SetVsync(windowData.VSync);
     }
 
@@ -240,6 +266,12 @@ namespace mts
         mIsFullscreen = fullscreen;
     }
 
+    void WinGLFWwindow::SetEventCallback(const EventCallbackFn& callback)
+    {
+        windowData.EventCallback = callback;
+        s_JoystickEventCallback  = callback;
+    }
+
     void WinGLFWwindow::SetVsync(bool enable)
     {
         if (enable)
@@ -258,6 +290,33 @@ namespace mts
     void WinGLFWwindow::PollEvents()
     {
         glfwPollEvents();
+
+        // Poll gamepad state for all connected pads. This runs after Input::BeginFrame()
+        // has already saved prev state, so Pressed/Released detection works correctly.
+        // Using glfwJoystickIsGamepad as the source of truth lets us detect pads that
+        // were already connected when the app started (the joystick callback only fires
+        // for hotplug events, not for pads present at launch).
+        for (int jid = 0; jid < Input::MaxGamepads; ++jid)
+        {
+            if (!glfwJoystickIsGamepad(jid))
+                continue;
+
+            if (!Input::IsGamepadConnected(jid))
+                Input::OnGamepadConnected(jid);
+
+            GLFWgamepadstate state;
+            if (!glfwGetGamepadState(jid, &state))
+                continue;
+
+            constexpr int buttonCount = GLFW_GAMEPAD_BUTTON_LAST + 1;
+            constexpr int axisCount   = GLFW_GAMEPAD_AXIS_LAST + 1;
+
+            bool buttons[buttonCount];
+            for (int i = 0; i < buttonCount; ++i)
+                buttons[i] = (state.buttons[i] == GLFW_PRESS);
+
+            Input::OnGamepadPoll(jid, buttons, buttonCount, state.axes, axisCount);
+        }
     }
 
     void WinGLFWwindow::SwapBuffer()
@@ -267,6 +326,8 @@ namespace mts
 
     void WinGLFWwindow::Shutdown()
     {
+        glfwSetJoystickCallback(nullptr);
+        s_JoystickEventCallback = nullptr;
         glfwDestroyWindow(window);
         window = nullptr;
         glfwTerminate();

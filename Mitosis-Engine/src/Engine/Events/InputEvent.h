@@ -135,4 +135,46 @@ namespace mts
         MTS_EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 
+    class GamepadConnectedEvent : public Event
+    {
+       public:
+        explicit GamepadConnectedEvent(int padId) : m_PadId(padId) {}
+
+        int GetPadId() const { return m_PadId; }
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "GamepadConnectedEvent: pad " << m_PadId;
+            return ss.str();
+        }
+
+        MTS_EVENT_CLASS_TYPE(GamepadConnected)
+        MTS_EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryGamepad)
+
+       private:
+        int m_PadId;
+    };
+
+    class GamepadDisconnectedEvent : public Event
+    {
+       public:
+        explicit GamepadDisconnectedEvent(int padId) : m_PadId(padId) {}
+
+        int GetPadId() const { return m_PadId; }
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "GamepadDisconnectedEvent: pad " << m_PadId;
+            return ss.str();
+        }
+
+        MTS_EVENT_CLASS_TYPE(GamepadDisconnected)
+        MTS_EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryGamepad)
+
+       private:
+        int m_PadId;
+    };
+
 }  // namespace mts

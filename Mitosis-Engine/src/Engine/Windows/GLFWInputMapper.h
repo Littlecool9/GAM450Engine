@@ -91,5 +91,46 @@ namespace mts
                     return MouseButton::Unknown;
             }
         }
+
+        // GamepadButton values are defined to match GLFW_GAMEPAD_BUTTON_* — cast directly.
+        static GamepadButton ToGamepadButton(int glfwButton)
+        {
+            if (glfwButton >= 0 && glfwButton <= GLFW_GAMEPAD_BUTTON_LAST)
+                return static_cast<GamepadButton>(glfwButton);
+            return GamepadButton::Unknown;
+        }
+
+        // GamepadAxis values are defined to match GLFW_GAMEPAD_AXIS_* — cast directly.
+        static GamepadAxis ToGamepadAxis(int glfwAxis)
+        {
+            if (glfwAxis >= 0 && glfwAxis <= GLFW_GAMEPAD_AXIS_LAST)
+                return static_cast<GamepadAxis>(glfwAxis);
+            return GamepadAxis::Unknown;
+        }
     };
+
+    // Compile-time verification that our enums stay in sync with GLFW constants.
+    static_assert(static_cast<int>(GamepadButton::A)            == GLFW_GAMEPAD_BUTTON_A);
+    static_assert(static_cast<int>(GamepadButton::B)            == GLFW_GAMEPAD_BUTTON_B);
+    static_assert(static_cast<int>(GamepadButton::X)            == GLFW_GAMEPAD_BUTTON_X);
+    static_assert(static_cast<int>(GamepadButton::Y)            == GLFW_GAMEPAD_BUTTON_Y);
+    static_assert(static_cast<int>(GamepadButton::LeftBumper)   == GLFW_GAMEPAD_BUTTON_LEFT_BUMPER);
+    static_assert(static_cast<int>(GamepadButton::RightBumper)  == GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER);
+    static_assert(static_cast<int>(GamepadButton::Back)         == GLFW_GAMEPAD_BUTTON_BACK);
+    static_assert(static_cast<int>(GamepadButton::Start)        == GLFW_GAMEPAD_BUTTON_START);
+    static_assert(static_cast<int>(GamepadButton::Guide)        == GLFW_GAMEPAD_BUTTON_GUIDE);
+    static_assert(static_cast<int>(GamepadButton::LeftThumb)    == GLFW_GAMEPAD_BUTTON_LEFT_THUMB);
+    static_assert(static_cast<int>(GamepadButton::RightThumb)   == GLFW_GAMEPAD_BUTTON_RIGHT_THUMB);
+    static_assert(static_cast<int>(GamepadButton::DPadUp)       == GLFW_GAMEPAD_BUTTON_DPAD_UP);
+    static_assert(static_cast<int>(GamepadButton::DPadRight)    == GLFW_GAMEPAD_BUTTON_DPAD_RIGHT);
+    static_assert(static_cast<int>(GamepadButton::DPadDown)     == GLFW_GAMEPAD_BUTTON_DPAD_DOWN);
+    static_assert(static_cast<int>(GamepadButton::DPadLeft)     == GLFW_GAMEPAD_BUTTON_DPAD_LEFT);
+
+    static_assert(static_cast<int>(GamepadAxis::LeftX)          == GLFW_GAMEPAD_AXIS_LEFT_X);
+    static_assert(static_cast<int>(GamepadAxis::LeftY)          == GLFW_GAMEPAD_AXIS_LEFT_Y);
+    static_assert(static_cast<int>(GamepadAxis::RightX)         == GLFW_GAMEPAD_AXIS_RIGHT_X);
+    static_assert(static_cast<int>(GamepadAxis::RightY)         == GLFW_GAMEPAD_AXIS_RIGHT_Y);
+    static_assert(static_cast<int>(GamepadAxis::LeftTrigger)    == GLFW_GAMEPAD_AXIS_LEFT_TRIGGER);
+    static_assert(static_cast<int>(GamepadAxis::RightTrigger)   == GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER);
+
 }  // namespace mts

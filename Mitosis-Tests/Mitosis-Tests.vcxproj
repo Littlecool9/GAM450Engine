@@ -164,6 +164,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Tests\ConductorSystem\ConductorSystemTests.cpp" />
     <ClCompile Include="src\Tests\BeatBarController\BeatBarControllerTests.cpp" />
+    <ClCompile Include="src\Tests\Input\GamepadInputTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mitosis-Engine\Mitosis-Engine.vcxproj">

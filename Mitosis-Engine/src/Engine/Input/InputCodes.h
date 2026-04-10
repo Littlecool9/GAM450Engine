@@ -104,4 +104,47 @@ namespace mts
         Unknown = 255
     };
 
+    // Values match GLFW_GAMEPAD_BUTTON_* constants — verified by static_assert in
+    // GLFWInputMapper.h.
+    enum class GamepadButton : uint8_t
+    {
+        A = 0,  // Cross on PlayStation
+        B,      // Circle
+        X,      // Square
+        Y,      // Triangle
+
+        LeftBumper,
+        RightBumper,
+
+        Back,
+        Start,
+        Guide,
+
+        LeftThumb,
+        RightThumb,
+
+        DPadUp,
+        DPadRight,
+        DPadDown,
+        DPadLeft,
+
+        Count,
+        Unknown = 255
+    };
+
+    // Values match GLFW_GAMEPAD_AXIS_* constants — verified by static_assert in
+    // GLFWInputMapper.h.
+    enum class GamepadAxis : uint8_t
+    {
+        LeftX = 0,
+        LeftY,
+        RightX,
+        RightY,
+        LeftTrigger,   // -1.0 (released) → 1.0 (fully pressed)
+        RightTrigger,
+
+        Count,
+        Unknown = 255
+    };
+
 }  // namespace mts

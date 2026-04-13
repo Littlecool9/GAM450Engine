@@ -187,10 +187,8 @@ copy /B /Y "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Shaders" "$(OutDir)Shaders\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Resources" "$(OutDir)Engine\Resources\"
 xcopy /E /I /Y "$(SolutionDir)Mitosis-Engine\src\Assets" "$(OutDir)Engine\Assets\"
-IF EXIST "$(OutDir)Data" (rd "$(OutDir)Data" 2&gt;nul)
-xcopy /E /I /Y "$(ProjectDir)Data" "$(OutDir)Data\"
-IF EXIST "$(OutDir)Assets" (rd "$(OutDir)Assets" 2&gt;nul)
-xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets\"</Command>
+IF NOT EXIST "$(OutDir)Data" (mklink /J "$(OutDir)Data" "$(ProjectDir)Data")
+IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

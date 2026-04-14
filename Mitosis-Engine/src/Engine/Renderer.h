@@ -103,6 +103,11 @@ namespace mts
         static int  GetWindowWidth()  { return s_windowW; }
         static int  GetWindowHeight() { return s_windowH; }
 
+        // UI reference resolution. Call SetUIReferenceSize once at app init.
+        // GetUIScaleFactor returns (vpW_units / refW_units, vpH_units / refH_units).
+        static void      SetUIReferenceSize(int w, int h);
+        static glm::vec2 GetUIScaleFactor();
+
         // Provide the available screen region; Renderer applies aspect constraint and stores
         // result.
         static void SetAvailableViewport(int x, int y, int w, int h);
@@ -145,6 +150,8 @@ namespace mts
         static AspectMode s_aspectMode;
         static float s_customX;
         static float s_customY;
+        static int s_uiRefW;
+        static int s_uiRefH;
 
         // Render Command queue
         static std::vector<RenderCommand> OpaqueCommands;

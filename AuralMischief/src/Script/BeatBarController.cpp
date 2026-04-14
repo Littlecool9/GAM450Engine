@@ -53,9 +53,10 @@ void BeatBarController::OnUpdate(float /*dt*/)
         float offsetNorm = 0.5f * (1.0f - barPhase);
         float alpha      = std::min(barPhase / fadeRampEnd, 1.0f);
 
-        // vec2 overload preserves z set in BeatMarker.prefab
-        mLeftMarkerTransforms[i] ->SetPosition(glm::vec2(0.5f - offsetNorm, kBeatCircleNormY));
-        mRightMarkerTransforms[i]->SetPosition(glm::vec2(0.5f + offsetNorm, kBeatCircleNormY));
+        // offsetNorm 0..0.5 (half-screen) → ref-px 0..800 from BottomCenter anchor
+        float offsetPx = offsetNorm * 1600.0f;
+        mLeftMarkerTransforms[i] ->SetOffset({-offsetPx, kBeatCircleOffsetY});
+        mRightMarkerTransforms[i]->SetOffset({ offsetPx, kBeatCircleOffsetY});
         mLeftMarkerRenderers[i]  ->SetAlpha(alpha);
         mRightMarkerRenderers[i] ->SetAlpha(alpha);
     }

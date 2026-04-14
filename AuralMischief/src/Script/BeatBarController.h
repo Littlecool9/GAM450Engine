@@ -30,9 +30,9 @@ class BeatBarController : public mts::ScriptBase
     void GetInspectorFields(std::vector<mts::ScriptField>& fields) override;
 
    private:
-    // Y position of the beat circle in normalized [0,1] screen coords (Y-down).
-    // Circle sits 130px above the bottom of a 900px viewport: (900-130)/900.
-    static constexpr float kBeatCircleNormY = 770.0f / 900.0f;
+    // Y offset of beat circle from BottomCenter anchor, in reference pixels (Y-down).
+    // Circle sits 130px above the bottom of a 900px viewport: negative = up from bottom.
+    static constexpr float kBeatCircleOffsetY = -130.0f;
 
     // Number of marker pairs. Each bar takes mBarCount beats to travel edge→center,
     // with one bar arriving at center every beat. Higher = more bars, slower motion.

@@ -14,6 +14,8 @@ namespace mts
 {
     int Renderer::s_windowW = 0;
     int Renderer::s_windowH = 0;
+    int Renderer::s_uiRefW  = 1600;
+    int Renderer::s_uiRefH  = 900;
     RenderCamera Renderer::ActiveCamera{};
     PostProcessStack* Renderer::s_postProcessStack = nullptr;
     Viewport Renderer::targetViewport{};
@@ -111,6 +113,24 @@ namespace mts
     {
         s_windowW = w;
         s_windowH = h;
+    }
+
+    void Renderer::SetUIReferenceSize(int w, int h)
+    {
+        s_uiRefW = (w > 0) ? w : 1;
+        s_uiRefH = (h > 0) ? h : 1;
+    }
+
+    glm::vec2 Renderer::GetUIScaleFactor()
+    {
+        Viewport gv = GetGameViewport();
+        float vpW = (gv.valid ? static_cast<float>(gv.w)
+                               : static_cast<float>(s_windowW)) / PixelsPerUnit;
+        float vpH = (gv.valid ? static_cast<float>(gv.h)
+                               : static_cast<float>(s_windowH)) / PixelsPerUnit;
+        float refW = static_cast<float>(s_uiRefW) / PixelsPerUnit;
+        float refH = static_cast<float>(s_uiRefH) / PixelsPerUnit;
+        return { vpW / refW, vpH / refH };
     }
 
     void Renderer::SetAspectMode(AspectMode mode, float x, float y)

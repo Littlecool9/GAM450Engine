@@ -101,9 +101,9 @@ void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    float upStrength    = mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
-    float downStrength  = mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
-    float leftStrength  = mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
+    float upStrength = mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
+    float downStrength = mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
+    float leftStrength = mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
     float rightStrength = mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
 
     // Gamepad: left stick (with deadzone) and D-Pad augment keyboard strengths
@@ -111,25 +111,33 @@ void PlayerController::OnUpdate(float dt)
     {
         const float stickX = mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX);
         const float stickY = mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftY);
-        if (stickX < -kGamepadDeadzone) leftStrength  = 1.0f;
-        if (stickX >  kGamepadDeadzone) rightStrength = 1.0f;
-        if (stickY < -kGamepadDeadzone) upStrength    = 1.0f;  // stick up   → game up
-        if (stickY >  kGamepadDeadzone) downStrength  = 1.0f;  // stick down → game down
-        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadLeft))  leftStrength  = 1.0f;
-        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadRight)) rightStrength = 1.0f;
-        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadUp))    upStrength    = 1.0f;
-        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadDown))  downStrength  = 1.0f;
+        if (stickX < -kGamepadDeadzone)
+            leftStrength = 1.0f;
+        if (stickX > kGamepadDeadzone)
+            rightStrength = 1.0f;
+        if (stickY < -kGamepadDeadzone)
+            upStrength = 1.0f;  // stick up   → game up
+        if (stickY > kGamepadDeadzone)
+            downStrength = 1.0f;  // stick down → game down
+        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadLeft))
+            leftStrength = 1.0f;
+        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadRight))
+            rightStrength = 1.0f;
+        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadUp))
+            upStrength = 1.0f;
+        if (mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadDown))
+            downStrength = 1.0f;
     }
 
-    glm::vec2 inputDir  = {rightStrength - leftStrength, upStrength - downStrength};
-    bool jumpPressed    = mts::Input::IsKeyPressed(mts::Key::Space)
-                       || mts::Input::IsGamepadButtonPressed(mts::GamepadButton::A);
-    bool dashPressed    = mts::Input::IsKeyPressed(mts::Key::K)
-                       || mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B);
-    bool attackPressed  = mts::Input::IsKeyPressed(mts::Key::J)
-                       || mts::Input::IsGamepadButtonPressed(mts::GamepadButton::X);
-    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::J)
-                       || mts::Input::IsGamepadButtonReleased(mts::GamepadButton::X);
+    glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
+    bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space) ||
+                       mts::Input::IsGamepadButtonPressed(mts::GamepadButton::A);
+    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::K) ||
+                       mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B);
+    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::J) ||
+                         mts::Input::IsGamepadButtonPressed(mts::GamepadButton::X);
+    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::J) ||
+                          mts::Input::IsGamepadButtonReleased(mts::GamepadButton::X);
 
     // Get current audio state for beat check
     mts::AudioManager& audio = mts::AudioManager::Get();
@@ -213,7 +221,6 @@ void PlayerController::OnUpdate(float dt)
             wasOnBeat = PlayerParticleController::LATE;
         else
             wasOnBeat = PlayerParticleController::EARLY;
-
     }
     else if (attackReleased)
     {
@@ -354,14 +361,14 @@ void PlayerController::OnFixedUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    bool leftHeld  = mts::Input::IsKeyDown(mts::Key::A)
-                  || mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadLeft)
-                  || (mts::Input::IsGamepadConnected()
-                      && mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) < -kGamepadDeadzone);
-    bool rightHeld = mts::Input::IsKeyDown(mts::Key::D)
-                  || mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadRight)
-                  || (mts::Input::IsGamepadConnected()
-                      && mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) > kGamepadDeadzone);
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::A) ||
+                    mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadLeft) ||
+                    (mts::Input::IsGamepadConnected() &&
+                     mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) < -kGamepadDeadzone);
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::D) ||
+                     mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadRight) ||
+                     (mts::Input::IsGamepadConnected() &&
+                      mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) > kGamepadDeadzone);
 
     // Get facing direction
     float moveDir = 0.0f;
@@ -675,7 +682,9 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
         }
     }
     auto a = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
-    if ((collision.other->GetGameObject()->HasTag("Enemy") || (a && a->GetTeam() == AttackHitboxScript::Team::Enemy)) && iFramesTimer < 0.0f)
+    if ((collision.other->GetGameObject()->HasTag("Enemy") ||
+         (a && a->GetTeam() == AttackHitboxScript::Team::Enemy)) &&
+        iFramesTimer < 0.0f)
     {
         auto o = collision.other->GetGameObject();
         if (o->GetScript<mts::BulletBehavior>())
@@ -687,7 +696,8 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
         }
         if (o->GetScript<mts::EnemyController>())
         {
-            if (o->GetScript<mts::EnemyController>()->IsDying() && o->GetScript<mts::EnemyController>()->GetEnemyType() != mts::EnemyType::CrawlEnemy)
+            if (o->GetScript<mts::EnemyController>()->IsDying() &&
+                o->GetScript<mts::EnemyController>()->GetEnemyType() != mts::EnemyType::CrawlEnemy)
             {
                 LOG_INFO("Collided with dead enemy that isng slug");
                 return;
@@ -784,7 +794,8 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
                 SpawnAttackHitbox(mOnBeatHeavyDamage,
                                   3.0f,
                                   2.5f,
-                                  PlayerParticleController::ON_BEAT_HEAVY, timing);
+                                  PlayerParticleController::ON_BEAT_HEAVY,
+                                  timing);
             };
             LOG_INFO("Heavy attacked on beat, held for {} beats, dealt {} damage",
                      numBeatsCharged,
@@ -801,7 +812,8 @@ void PlayerController::Attack(bool inWindow, bool isChargeAttack)
                 SpawnAttackHitbox(mOffBeatHeavyDamage,
                                   3.0f,
                                   2.5f,
-                                  PlayerParticleController::OFF_BEAT_HEAVY, timing);
+                                  PlayerParticleController::OFF_BEAT_HEAVY,
+                                  timing);
             };
             LOG_INFO("Heavy attacked {} beat, held for {} beats, dealt {} damage",
                      inWindow ? "on" : "off",
@@ -900,7 +912,7 @@ void PlayerController::SpawnAttackHitbox(float damage,
     attackHitboxTransform->SetScale(glm::vec3(scaleX, scaleY, 0.0f));
     // Set damage of hitbox
     if (godModeOn)
-        attackHitboxScript->SetDamage(damage*10);
+        attackHitboxScript->SetDamage(damage * 10);
     else
         attackHitboxScript->SetDamage(damage);
 
@@ -1063,7 +1075,10 @@ void PlayerController::InitHP()
     {
         mHearts[i]->SetActive(true);
         if (auto* uiTr = mHearts[i]->GetComponent<mts::UITransform>())
-            uiTr->SetPosition(glm::vec3(mHPStartX + i * mHPSpacing, mHPStartY, 0.0f));
+        {
+            uiTr->SetAnchor(mts::UIAnchor::TopLeft);
+            uiTr->SetOffset({(mHPStartX + i * mHPSpacing) * 1600.0f, mHPStartY * 900.0f});
+        }
         if (auto* sr = mHearts[i]->GetComponent<mts::SpriteRenderer>())
             sr->SetFrame(mFullHeartFrame);
     }

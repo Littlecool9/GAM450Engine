@@ -33,6 +33,7 @@
 #include "Script/UIPanels.h"
 #include "Script/ReturnButton.h"
 
+#include "Engine/Renderer.h"
 #include "Engine/Scripting/ScriptFactory.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Input/Input.h"
@@ -52,6 +53,7 @@ mts::Application* mts::CreateApplication()
 AuralMischief::AuralMischief()
 {
     mWindowProps = {.Title = "Aural Mischief", .Width = 1600, .Height = 900, .VSync = false};
+    mts::Renderer::SetUIReferenceSize(1600, 900);
 }
 
 AuralMischief::~AuralMischief()

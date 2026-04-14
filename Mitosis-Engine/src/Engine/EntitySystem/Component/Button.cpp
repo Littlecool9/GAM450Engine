@@ -29,22 +29,22 @@ namespace mts
         if (!uit)
             return;
 
-        glm::vec3 pos   = uit->GetPosition();
-        glm::vec3 scale = uit->GetScale();
-        glm::vec2 mouse = Renderer::MouseToUISpace();
+        glm::vec2 center   = uit->GetNormalizedCenter();
+        glm::vec3 effScale = uit->GetEffectiveScale();
+        glm::vec2 mouse    = Renderer::MouseToUISpace();
 
-        // Convert scale from UI units to normalized viewport fraction
+        // Convert effective scale from UI units to normalized viewport fraction
         Viewport gv = Renderer::GetGameViewport();
         float vpW = (gv.valid ? static_cast<float>(gv.w)
                                : static_cast<float>(Renderer::GetWindowWidth())) / PixelsPerUnit;
         float vpH = (gv.valid ? static_cast<float>(gv.h)
                                : static_cast<float>(Renderer::GetWindowHeight())) / PixelsPerUnit;
 
-        float halfW = (scale.x / vpW) * 0.5f;
-        float halfH = (scale.y / vpH) * 0.5f;
+        float halfW = (effScale.x / vpW) * 0.5f;
+        float halfH = (effScale.y / vpH) * 0.5f;
 
-        bool inside = mouse.x >= pos.x - halfW && mouse.x <= pos.x + halfW
-                   && mouse.y >= pos.y - halfH && mouse.y <= pos.y + halfH;
+        bool inside = mouse.x >= center.x - halfW && mouse.x <= center.x + halfW
+                   && mouse.y >= center.y - halfH && mouse.y <= center.y + halfH;
 
         State prev = mState;
 

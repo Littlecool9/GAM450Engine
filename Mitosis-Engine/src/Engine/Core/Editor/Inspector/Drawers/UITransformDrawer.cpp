@@ -35,11 +35,47 @@ namespace mts
         }
         if (open && !removed)
         {
-            ImGui::TextDisabled("(screen-space, normalized 0-1)");
+            UIAnchor cur = tr->GetAnchor();
 
-            glm::vec3 pos = tr->GetPosition();
-            if (ImGui::DragFloat3("Position", &pos.x, 0.01f))
-                tr->SetPosition(pos);
+            const char* labels[9] = {"TL", "TC", "TR", "ML", "CC", "MR", "BL", "BC", "BR"};
+            UIAnchor values[9] = {
+                UIAnchor::TopLeft,
+                UIAnchor::TopCenter,
+                UIAnchor::TopRight,
+                UIAnchor::MiddleLeft,
+                UIAnchor::Center,
+                UIAnchor::MiddleRight,
+                UIAnchor::BottomLeft,
+                UIAnchor::BottomCenter,
+                UIAnchor::BottomRight,
+            };
+
+            ImGui::Text("Anchor");
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    int idx = row * 3 + col;
+                    bool selected = (cur == values[idx]);
+                    if (selected)
+                        ImGui::PushStyleColor(ImGuiCol_Button,
+                                              ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+                    if (ImGui::Button(labels[idx], ImVec2(28, 22)))
+                        tr->SetAnchor(values[idx]);
+                    if (selected)
+                        ImGui::PopStyleColor();
+                    if (col < 2)
+                        ImGui::SameLine();
+                }
+            }
+
+            glm::vec2 off = tr->GetOffset();
+            if (ImGui::DragFloat2("Offset (px)", &off.x, 1.0f))
+                tr->SetOffset(off);
+
+            float depth = tr->GetDepth();
+            if (ImGui::DragFloat("Depth", &depth, 0.01f))
+                tr->SetDepth(depth);
 
             glm::vec3 scale = tr->GetScale();
             if (ImGui::DragFloat3("Scale", &scale.x, 0.05f))

@@ -119,6 +119,25 @@ namespace mts
             bool hasAlpha = sr->HasTextureAlpha();
             if (ImGui::Checkbox("Texture Has Alpha", &hasAlpha))
                 sr->SetHasTextureAlpha(hasAlpha);
+
+            // Render layer
+            int renderLayer = sr->GetRenderLayer();
+            if (ImGui::DragInt("Render Layer", &renderLayer, 1.0f, -100, 100))
+                sr->SetRenderLayer(renderLayer);
+
+
+            {
+                char buf[256];
+                const std::string& text = sr->GetText();
+                snprintf(buf, sizeof(buf), "%s", text.c_str());
+                if (ImGui::InputText("Text", buf, sizeof(buf)))
+                {
+                    if (strlen(buf) > 0)
+                        sr->SetText(buf);
+                    else
+                        sr->ClearText();
+                }
+            }
         }
 
         ImGui::PopID();

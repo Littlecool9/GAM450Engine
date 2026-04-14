@@ -22,6 +22,11 @@
 
 void PauseButton::Awake()
 {
+    if (auto* scene = mts::SceneSystem::GetCurrentScene())
+    {
+        if (auto* panelGO = scene->FindGameObjectByName("PauseMenuPanel"))
+            mMenuPanel = panelGO->GetScript<PauseMenuPanel>();
+    }
     if (!mMenuPanel)
     {
         LOG_WARN(
@@ -39,11 +44,6 @@ void PauseButton::Awake()
     if (!mAudio->isInitialized())
     {
         LOG_WARN("PauseButton: AudioManager not initialized");
-    }
-    if (auto* scene = mts::SceneSystem::GetCurrentScene())
-    {
-        if (auto* panelGO = scene->FindGameObjectByName("PauseMenuPanel"))
-            mMenuPanel = panelGO->GetScript<PauseMenuPanel>();
     }
     if (mButton)
         mClickId = mButton->mOnClick.Subscribe([this]() { TogglePause(); });

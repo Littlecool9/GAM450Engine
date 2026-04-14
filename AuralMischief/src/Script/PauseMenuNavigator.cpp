@@ -29,15 +29,89 @@ namespace
 
     // Slot indices into mMainItems for clarity.
     constexpr int kMainVolume = 0;
-    constexpr int kMainResume = 1;
-    constexpr int kMainReturn = 2;
+    constexpr int kMainSFX    = 1;
+    constexpr int kMainResume = 2;
+    constexpr int kMainReturn = 3;
 
     constexpr int kConfirmYes = 0;
     constexpr int kConfirmNo = 1;
+
+    // Human-readable names for each binding slot (inspector + log messages).
+    constexpr const char* kSlotNames[] = {
+        "Volume Minus",
+        "Volume Plus",
+        "SFX Minus",
+        "SFX Plus",
+        "Resume",
+        "Return",
+        "Confirm Background",
+        "Confirm Prompt",
+        "Confirm Yes",
+        "Confirm No",
+    };
 }  // namespace
+
+// ---------------------------------------------------------------------------
+// Serialization
+// ---------------------------------------------------------------------------
+
+void PauseMenuNavigator::DeserializeFields(mts::JsonValue const& fields)
+{
+    if (fields.Has("bindings"))
+    {
+        mts::JsonValue arr = fields["bindings"];
+        if (arr.IsArray())
+        {
+            const size_t count = std::min(arr.Size(),
+                                          static_cast<size_t>(SlotCount));
+            for (size_t i = 0; i < count; ++i)
+                mBindingUUIDs[i] = mts::UUID::FromString(arr[i].GetString());
+        }
+    }
+}
+
+void PauseMenuNavigator::SerializeFields(mts::JsonDocument& out) const
+{
+    out.BeginArray("bindings");
+    for (int i = 0; i < SlotCount; ++i)
+        out.WriteString(mBindingUUIDs[i].ToString().c_str());
+    out.EndArray();
+}
+
+void PauseMenuNavigator::GetInspectorFields(
+    std::vector<mts::ScriptField>& fields)
+{
+    for (int i = 0; i < SlotCount; ++i)
+    {
+        fields.push_back({.name = kSlotNames[i],
+                          .type = mts::ScriptField::Type::GameObject,
+                          .ptr = {.go = &mBindingGOs[i]},
+                          .uuid = &mBindingUUIDs[i]});
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Lifecycle
+// ---------------------------------------------------------------------------
 
 void PauseMenuNavigator::Awake()
 {
+    // Resolve all UUID bindings to GO pointers.
+    auto* scene = mts::SceneSystem::GetCurrentScene();
+    if (scene)
+    {
+        for (int i = 0; i < SlotCount; ++i)
+        {
+            if (mBindingUUIDs[i].IsValid())
+            {
+                mBindingGOs[i] = scene->FindGameObjectByUUID(mBindingUUIDs[i]);
+                if (!mBindingGOs[i])
+                    LOG_WARN("PauseMenuNavigator: binding '{}' UUID not found",
+                             kSlotNames[i]);
+            }
+        }
+    }
+
     BuildItems();
 
     // Hide the confirm dialog at startup so it only appears when the player
@@ -122,23 +196,22 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
                  Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
             SetMainCursor(mMainCursor + 1);
 
-        if (mMainCursor == kMainVolume)
+        if (mMainCursor == kMainVolume || mMainCursor == kMainSFX)
         {
-            // Volume slot — Left/Right step master volume directly via the
+            // Volume/SFX slot — Left/Right step volume directly via the
             // existing button click handlers.
+            auto& slot = mMainItems[mMainCursor];
             if ((Input::IsKeyPressed(Key::Left) ||
                  Input::IsGamepadButtonPressed(GamepadButton::DPadLeft)) &&
-                mMainItems[kMainVolume].buttons.size() > 0 &&
-                mMainItems[kMainVolume].buttons[0])
+                slot.buttons.size() > 0 && slot.buttons[0])
             {
-                mMainItems[kMainVolume].buttons[0]->mOnClick.Invoke();
+                slot.buttons[0]->mOnClick.Invoke();
             }
             else if ((Input::IsKeyPressed(Key::Right) ||
                       Input::IsGamepadButtonPressed(GamepadButton::DPadRight)) &&
-                     mMainItems[kMainVolume].buttons.size() > 1 &&
-                     mMainItems[kMainVolume].buttons[1])
+                     slot.buttons.size() > 1 && slot.buttons[1])
             {
-                mMainItems[kMainVolume].buttons[1]->mOnClick.Invoke();
+                slot.buttons[1]->mOnClick.Invoke();
             }
             // Space/Enter/A intentionally do nothing here — there is no single
             // "activate" action for a stepper.
@@ -175,6 +248,10 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
     }
 }
 
+// ---------------------------------------------------------------------------
+// Panel show / hide
+// ---------------------------------------------------------------------------
+
 void PauseMenuNavigator::OnPanelShown()
 {
     mPanelVisible = true;
@@ -190,6 +267,10 @@ void PauseMenuNavigator::OnPanelHidden()
     ClearHighlight();
     mPanelVisible = false;
 }
+
+// ---------------------------------------------------------------------------
+// Confirm dialog
+// ---------------------------------------------------------------------------
 
 void PauseMenuNavigator::ShowReturnConfirm()
 {
@@ -219,61 +300,46 @@ void PauseMenuNavigator::HideReturnConfirm()
     ApplyHighlight();
 }
 
+// ---------------------------------------------------------------------------
+// Item building (uses resolved mBindingGOs)
+// ---------------------------------------------------------------------------
+
 void PauseMenuNavigator::BuildItems()
 {
     mMainItems.clear();
     mConfirmItems.clear();
     mConfirmMembers.clear();
 
-    auto* scene = mts::SceneSystem::GetCurrentScene();
-    if (!scene)
+    // Main menu focus items
+    mMainItems.push_back(
+        MakeVolumeItem(mBindingGOs[SFXMinus], mBindingGOs[SFXPlus]));
+    mMainItems.push_back(
+        MakeVolumeItem(mBindingGOs[VolumeMinus], mBindingGOs[VolumePlus]));
+    mMainItems.push_back(MakeItem(mBindingGOs[Resume]));
+    mMainItems.push_back(MakeItem(mBindingGOs[Return]));
+
+    // Confirm dialog focus items
+    mConfirmItems.push_back(MakeItem(mBindingGOs[ConfirmYes]));
+    mConfirmItems.push_back(MakeItem(mBindingGOs[ConfirmNo]));
+
+    // Confirm dialog members (toggled via SetActive for visibility)
+    const Slot confirmSlots[] = {ConfirmBg, ConfirmPrompt, ConfirmYes, ConfirmNo};
+    for (Slot s : confirmSlots)
     {
-        LOG_WARN("PauseMenuNavigator: no current scene during Awake");
-        return;
-    }
-
-    mMainItems.push_back(MakeVolumeItem());
-    mMainItems.push_back(MakeItem("PauseMenu_Resume"));
-    mMainItems.push_back(MakeItem("PauseMenu_ReturnToMenu"));
-
-    mConfirmItems.push_back(MakeItem("PauseMenu_Confirm_Yes"));
-    mConfirmItems.push_back(MakeItem("PauseMenu_Confirm_No"));
-
-    static constexpr const char* kConfirmGoNames[] = {
-        "PauseMenu_Confirm_Background",
-        "PauseMenu_Confirm_Prompt",
-        "PauseMenu_Confirm_Yes",
-        "PauseMenu_Confirm_No",
-    };
-    for (const char* name : kConfirmGoNames)
-    {
-        auto* go = scene->FindGameObjectByName(name);
-        if (go)
-            mConfirmMembers.push_back(go);
-        else
-            LOG_WARN("PauseMenuNavigator: confirm member '{}' not found", name);
+        if (mBindingGOs[s])
+            mConfirmMembers.push_back(mBindingGOs[s]);
     }
 }
 
-PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeItem(const char* name)
+PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeItem(mts::GameObject* go)
 {
     FocusItem item;
-    auto* scene = mts::SceneSystem::GetCurrentScene();
-    if (!scene)
-        return item;
-
-    auto* go = scene->FindGameObjectByName(name);
     if (!go)
-    {
-        LOG_WARN("PauseMenuNavigator: focus item GO '{}' not found", name);
         return item;
-    }
 
-    auto* btn = go->GetComponent<mts::Button>();
-    auto* sprite = go->GetComponent<mts::SpriteRenderer>();
-    if (btn)
+    if (auto* btn = go->GetComponent<mts::Button>())
         item.buttons.push_back(btn);
-    if (sprite)
+    if (auto* sprite = go->GetComponent<mts::SpriteRenderer>())
     {
         item.sprites.push_back(sprite);
         item.originalTints.push_back(sprite->GetTintColor());
@@ -281,25 +347,15 @@ PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeItem(const char* name)
     return item;
 }
 
-PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem()
+PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem(
+    mts::GameObject* minusGo, mts::GameObject* plusGo)
 {
     FocusItem item;
-    auto* scene = mts::SceneSystem::GetCurrentScene();
-    if (!scene)
-        return item;
-
-    static constexpr const char* kVolumeNames[] = {
-        "PauseMenu_VolumeMinus",
-        "PauseMenu_VolumePlus",
-    };
-    for (const char* name : kVolumeNames)
+    mts::GameObject* gos[] = {minusGo, plusGo};
+    for (auto* go : gos)
     {
-        auto* go = scene->FindGameObjectByName(name);
         if (!go)
-        {
-            LOG_WARN("PauseMenuNavigator: volume member '{}' not found", name);
             continue;
-        }
         if (auto* btn = go->GetComponent<mts::Button>())
             item.buttons.push_back(btn);
         if (auto* sprite = go->GetComponent<mts::SpriteRenderer>())
@@ -310,6 +366,10 @@ PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem()
     }
     return item;
 }
+
+// ---------------------------------------------------------------------------
+// Hover / highlight / cursor
+// ---------------------------------------------------------------------------
 
 void PauseMenuNavigator::SubscribeHover(FocusItem const& item, Group group,
                                        int index)

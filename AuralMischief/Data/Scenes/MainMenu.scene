@@ -314,7 +314,12 @@
                                 "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
                                 "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
                                 "f4593465-8d2c-499d-8d37-1ffb7ddb9c68",
-                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a",
+                                "febcaa48-0751-434a-bc05-6716aa6dc14c",
+                                "c7a38c22-f390-43fc-b84f-e61f9055de4b",
+                                "b9f1af92-d2e2-4513-89f5-776e169d3fc4",
+                                "b9f1af92-d2e2-4513-89f5-444444444444",
+                                "ff05dab8-3295-4898-ba7c-c15b2011bfaa"
                             ]
                         }
                     }
@@ -729,7 +734,9 @@
                     "Data": {
                         "Class": "VolumeStepButton",
                         "Fields": {
-                            "Delta": -0.1
+                            "Delta": -0.10000000149011612,
+                            "Category": 0,
+                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
                         }
                     }
                 }
@@ -783,7 +790,9 @@
                     "Data": {
                         "Class": "VolumeStepButton",
                         "Fields": {
-                            "Delta": 0.1
+                            "Delta": 0.10000000149011612,
+                            "Category": 0,
+                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
                         }
                     }
                 }
@@ -920,6 +929,416 @@
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
                         "Text": "Credits"
                     }
+                }
+            ]
+        },
+        {
+            "UUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4",
+            "Name": "PauseMenu_SFX_Volume",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.7799999713897705,
+                            0.5600000023841858,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.44999998807907104,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 105,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Volume"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "b9f1af92-d2e2-4513-89f5-444444444444",
+            "Name": "PauseMenu_Master_Volume",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.7799999713897705,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.44999998807907104,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 105,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "Volume"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
+            "Name": "PauseMenu_SFX_VolumeUp",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.6949999928474426,
+                            0.5600000023841858,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": 0.10000000149011612,
+                            "Category": 2,
+                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
+            "Name": "PauseMenu_SFX_VolumeDown",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.6150000095367432,
+                            0.5600000023841858,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": -0.10000000149011612,
+                            "Category": 2,
+                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "ff05dab8-3295-4898-ba7c-c15b2011bfaa",
+            "Name": "PauseMenu_SFX_Prompt",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.3100000023841858,
+                            0.5600000023841858,
+                            0.0
+                        ],
+                        "Scale": [
+                            0.6000000238418579,
+                            0.6499999761581421,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "SFX"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c0ffee01-1111-4abc-9def-111111111111",
+            "Name": "MainMenu_Confirm_Background",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            100.0,
+                            100.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Alpha": 0.8500000238418579,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 200,
+                        "TextureResource": "Data/Resources/TransparentMask.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c0ffee02-2222-4abc-9def-222222222222",
+            "Name": "MainMenu_Confirm_Prompt",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.5,
+                            0.4000000059604645,
+                            0.0
+                        ],
+                        "Scale": [
+                            14.25,
+                            3.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 201,
+                        "TextureResource": "Data/Resources/Confirm_return_to_menu.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c0ffee03-3333-4abc-9def-333333333333",
+            "Name": "MainMenu_Confirm_Yes",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.4000000059604645,
+                            0.6000000238418579,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.7999999523162842,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 202,
+                        "TextureResource": "Data/Resources/YESTextureResource.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                }
+            ]
+        },
+        {
+            "UUID": "c0ffee04-4444-4abc-9def-444444444444",
+            "Name": "MainMenu_Confirm_No",
+            "Layer": 2,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Position": [
+                            0.6100000143051147,
+                            0.6000000238418579,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.649999976158142,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 202,
+                        "TextureResource": "Data/Resources/NOTextureResource.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
                 }
             ]
         }

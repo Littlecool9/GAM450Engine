@@ -1,0 +1,42 @@
+{
+    "UUID": "c61c079f-8f6d-4686-af74-0388842114f0",
+    "Name": "PauseMenu_SFX_Prompt",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Position": [
+                    0.6499999761581421,
+                    0.28999999165534973,
+                    0.0
+                ],
+                "Scale": [
+                    0.44999998807907104,
+                    0.5,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    0.5977244973182678,
+                    0.9906827211380005,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 100,
+                "TextureResource": "Data/Resources/WhiteFont.tex",
+                "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                "Text": "SFX"
+            }
+        }
+    ]
+}

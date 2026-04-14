@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "AudioController.h"
 #include "Engine/Audio/AudioManager.h"
+#include "Engine/Serialization/JsonAbstraction.h"
 
 void AudioController::Init()
 {

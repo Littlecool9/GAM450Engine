@@ -49,6 +49,7 @@ namespace mts
 
         bool GetFlipX() const { return mFlipX; }
         bool GetFlipY() const { return mFlipY; }
+        int GetRenderLayer() const { return mRenderLayer; }
 
         void SetMesh(Mesh* newMesh) { mMesh = newMesh; }
         void SetShader(Shader* newShader) { mShader = newShader; }
@@ -61,6 +62,7 @@ namespace mts
         void SetTintColor(glm::vec3 tintColor) { mTintColor = tintColor; }
         void SetRows(int r);
         void SetCols(int c);
+        void SetRenderLayer(int layer) { mRenderLayer = layer; }
         glm::vec3 GetTintColor() const { return mTintColor; }
 
         void SetText(const std::string& text)

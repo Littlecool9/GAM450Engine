@@ -7,9 +7,9 @@
 [-] Tileset fix (Rahul)
 [-] Player hit needs to be updated (Josh)
 [-] Gamepad controls needs to be shown (Rahul)
-[-] Responsive control for music (Jackey)
-[-] SFX and Music control separation (Jackey)
-[-] Main menu should add confirmation on exit (Jackey)
+[x] Responsive control for music (Jackey)
+[x] SFX and Music control separation (Jackey)
+[x] Main menu should add confirmation on exit (Jackey)
 [-] Controls remapping (Josh)
 	[-] Movement - Arrows
 	[-] Dash - Shift

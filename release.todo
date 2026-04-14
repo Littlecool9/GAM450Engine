@@ -1,21 +1,22 @@
-[-] Main menu fix (Jackey)
+[x] Main menu fix (Jackey)
 	[x] UI alignment fix (Sumin)
-[-] Boss fix (Dong)
+[-] Boss fix (Dong) [revisit second half 04/14]
 	[-] SFX connection (Dong)
 [x] Checkpoint sprite (Josh)
 	[x] Send reference files to Josh (Rahul)
-[-] Tileset fix (Rahul)
+[x] Tileset fix (Rahul)
+	[-] Remapping tilesets (Jackey)
 [x] Player hit needs to be updated (Josh)
-[-] Gamepad controls needs to be shown (Rahul)
+[x] Gamepad controls needs to be shown (Rahul)
 [x] Responsive control for music (Jackey)
 [x] SFX and Music control separation (Jackey)
 [x] Main menu should add confirmation on exit (Jackey)
 [x] Controls remapping (Josh)
-	[x] Movement - Arrows
-	[x] Dash - Shift
-	[x] Jump - Space
-	[x] Attack - X
-	[x] Heavy attack - hold X
+	[x] Movement - Arrows / Right joystick
+	[x] Dash - Shift / B
+	[x] Jump - Space / A
+	[x] Attack - X / X
+	[x] Heavy attack - hold X / hold X
 [-] In-game control sprites update (Rahul)
 
 -------------------------

@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * @file EnemyAttackAction.cpp
  * @author Dong Ta
  * @brief // TODO: Add a brief description of this class
@@ -93,7 +93,10 @@ namespace mts
         auto rangeIt = state.params.find(HashAction("AttackRange"));
         auto cdIt = state.params.find(HashAction("AttackCooldown"));
         if (rangeIt == state.params.end() || cdIt == state.params.end())
+        {
+            LOG_INFO("fly attack params not found");
             return false;
+        }
         float dis = std::get<float>(rangeIt->second->GetValue());
         float cd = std::get<float>(cdIt->second->GetValue());
         if (state.GetInAction() || cd > 0 || abs(state.GetVectorToPlayer().x) > dis)
@@ -139,7 +142,7 @@ namespace mts
             return OnGoing;  // wait for beat to fire the bullet
         }
 
-        // If FireBullet already cleared the sub ID, the bullet was fired — finish up
+        // If FireBullet already cleared the sub ID, the bullet was fired finish up
         // cooldown after attack
         agent->GetState()
             .params.at(HashAction("AttackCooldown"))

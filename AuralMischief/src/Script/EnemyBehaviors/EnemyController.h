@@ -49,6 +49,11 @@ namespace mts
         void Explode();
         float GetAggroRange() { return mAggroRange; }
         float GetAttackRange() { return mAttackRange; }
+        float GetAggroYRange() { return mAggroYRange; }
+        bool IsPlayerInYRange(const glm::vec2& enemyPos, const glm::vec2& playerPos) const
+        {
+            return std::abs(playerPos.y - enemyPos.y) <= mAggroYRange;
+        }
         void SetDesiredVelocity(glm::vec2 vel) { mDesiredVelocity = vel; }
 
         // Attack hitbox management — per-attack storage
@@ -81,6 +86,7 @@ namespace mts
             mConductorSubIds.erase(actionName);
         }
 
+        void PlayBossMoanSFX();
 
         SCRIPT_CLASS(EnemyController)
 
@@ -94,8 +100,9 @@ namespace mts
         bool mAttack2Done = false;
         float mMoveSpeed = 1.5f;
         float mPatrolRadius = 2.f;
-        float mAggroRange = 5.f;
+        float mAggroRange = 4.f;
         float mAttackRange = 1.f;
+        float mAggroYRange = 8.5f;
         float mAttackCooldown = 5.f;
         float mAttack2Cooldown = 5.f;
         float mAttack3Cooldown = 5.f;

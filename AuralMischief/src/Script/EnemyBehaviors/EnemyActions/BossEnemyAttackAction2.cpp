@@ -86,7 +86,8 @@ namespace mts
     {
         if (state.GetInAction() ||
             std::get<float>(state.params.at(HashAction("Attack2Cooldown"))->GetValue()) > 0 ||
-            abs(state.GetVectorToPlayer().x) > 7)
+            abs(state.GetVectorToPlayer().x) > 4 ||
+            abs(state.GetVectorToPlayer().y) > 1.5f)
         {
             return false;
         }
@@ -104,12 +105,13 @@ namespace mts
         auto* anim = agent->GetGameObject()->GetComponent<Animation>();
         if (!mHasLunged && totalTime >= anim->GetFrameDuration() * 4.f)
         {
+            agent->GetGameObject()->GetScript<EnemyController>()->PlayBossMoanSFX();
             mHasLunged = true;
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(
                 glm::vec2(0));
             bool flipX = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX();
             float dir = flipX ? -1.0f : 1.0f;
-            float lungeDist = 3.0f;
+            float lungeDist = 2.0f;
             float frameDur = anim->GetFrameDuration();
             float lungeSpeed = lungeDist / (frameDur * 3.0f);
             agent->GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(

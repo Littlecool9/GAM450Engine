@@ -212,12 +212,12 @@
                 "Fields": {
                     "MoveSpeed": 1.5,
                     "PatrolRadius": 2.0,
-                    "AggroRange": 8.0,
+                    "AggroRange": 6.6,
                     "AttackCooldown": 3.5,
                     "Attack2Cooldown": 4.6,
                     "Attack3Cooldown": 6.0,
                     "DodgeCooldown": 6.0,
-                    "AttackRange": 4.0,
+                    "AttackRange": 2.0,
                     "HealthPoints": 30,
                     "EnemyType": "BossEnemy"
                 }

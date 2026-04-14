@@ -34,7 +34,8 @@ namespace mts
         {
             auto* p = it->second;
 
-            if (state.GetDistanceToPlayer() <= std::get<float>(p->GetValue()))
+            if (abs(state.GetVectorToPlayer().x) <= std::get<float>(p->GetValue())
+                && abs(state.GetVectorToPlayer().y) <= std::get<float>(p->GetValue()))
             {
                 return false;
             }
@@ -96,7 +97,8 @@ namespace mts
         if (it != s.params.end() && it->second != nullptr)
         {
             const float aggroRange = std::get<float>(it->second->GetValue());
-            if (s.GetDistanceToPlayer() <= aggroRange)
+            if (abs(s.GetVectorToPlayer().x) <= aggroRange
+                && abs(s.GetVectorToPlayer().y) <= controller->GetAggroYRange())
             {
                 controller->SetDesiredVelocity(glm::vec2(0.0f));
                 rb->SetVelocity({0.0f, rb->GetVelocity().y});

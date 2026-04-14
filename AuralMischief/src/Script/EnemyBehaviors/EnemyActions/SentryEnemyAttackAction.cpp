@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * @file SentryEnemyAttackAction.cpp
  * @author Dong Ta
  * @brief // TODO: Add a brief description of this class
@@ -141,7 +141,7 @@ namespace mts
             return OnGoing;  // wait for beat to fire the bullet
         }
 
-        // If FireBullet already cleared the sub ID, the bullet was fired — finish up
+        // If FireBullet already cleared the sub ID, the bullet was fired finish up
         // cooldown after attack
         agent->GetState()
             .params.at(HashAction("AttackCooldown"))

@@ -206,6 +206,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction3.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\EnemyDodgeAction.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.h" />
+    <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AggroYRangeParam.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.h" />
     <ClInclude Include="src\Script\FadeInScript.h" />
     <ClInclude Include="src\Script\ReturnButton.h">
@@ -287,6 +288,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\BossEnemyAttackAction3.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\EnemyDodgeAction.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyActions\SlugEnemyAttackAction.cpp" />
+    <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AggroYRangeParam.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\EnemyParameters\AttackRangeParam.cpp" />
     <ClCompile Include="src\Script\ReturnButton.cpp">
       <SubType>

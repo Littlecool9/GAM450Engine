@@ -21,6 +21,7 @@
 #include "EnemyActions/SentryEnemyAttackAction.h"
 #include "EnemyActions/SlugEnemyAttackAction.h"
 #include "EnemyParameters/AggroRangeParam.h"
+#include "EnemyParameters/AggroYRangeParam.h"
 #include "EnemyParameters/AttackCountdownParam.h"
 #include "EnemyParameters/PlayerHealthRatioParam.h"
 #include "Engine/EntitySystem/Component/ActionList.h"
@@ -39,6 +40,7 @@
 #include "EnemyParameters/AttackRangeParam.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Engine/Helpers/Random.h"
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/SceneSystem/Scene.h"
@@ -289,7 +291,13 @@ namespace mts
         }
 
         auto a = GetGameObject()->GetComponent<EnemyAgent>();
-        if (a->GetState().GetDistanceToPlayer() <= mAggroRange)
+        const glm::vec2 enemyPos = GetGameObject()->GetComponent<Transform>()->GetPosition();
+        auto* playerRef = a->GetPlayerReference();
+        const glm::vec2 playerPos = playerRef ? glm::vec2(playerRef->GetComponent<Transform>()->GetPosition()) : enemyPos;
+        const float xDist = std::abs(playerPos.x - enemyPos.x);
+        const float yDist = std::abs(playerPos.y - enemyPos.y);
+
+        if (xDist <= mAggroRange && yDist <= mAggroYRange)
         {
             if (!alerted)
             {
@@ -299,14 +307,9 @@ namespace mts
                     mAudioController->PlayAlertSound(enemyType);
                 GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                     AnimationSystem::States::Alerted);
-                const glm::vec2 enemyPos =
-                    GetGameObject()->GetComponent<Transform>()->GetPosition();
-                auto p = GetGameObject()->GetComponent<EnemyAgent>()->GetPlayerReference();
-                const glm::vec2 playerPos = p->GetComponent<Transform>()->GetPosition();
 
                 const glm::vec2 toPlayer = playerPos - enemyPos;
-                const float dist =
-                    GetGameObject()->GetComponent<EnemyAgent>()->GetState().GetDistanceToPlayer();
+                const float dist = glm::length(toPlayer);
                 glm::vec2 dir = (dist > 0.0001f) ? (toPlayer / dist) : glm::vec2{0.0f, 0.0f};
                 if (dir.x < 0)
                 {
@@ -342,6 +345,11 @@ namespace mts
         {
             GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
         }
+    }
+
+    void EnemyController::PlayBossMoanSFX()
+    {
+        mAudioController->PlayBossMoan();
     }
 
     void EnemyController::SetEnemyPlans(std::string name)
@@ -394,12 +402,19 @@ namespace mts
             p.emplace(mts::HashAction("AggroRange"), new mts::AggroRangeParam());
             p.at(HashAction("AggroRange"))->SetValue(mAggroRange);
         }
+
         if (fields.Has("AttackRange"))
         {
             mAttackRange = fields["AttackRange"].GetFloat();
             p.emplace(mts::HashAction("AttackRange"), new AttackRangeParam());
             p.at(HashAction("AttackRange"))->SetValue(mAttackRange);
         }
+        if (fields.Has("AggroYRange"))
+        {
+            mAggroYRange = fields["AggroYRange"].GetFloat();
+        }
+        p.emplace(mts::HashAction("AggroYRange"), new mts::AggroYRangeParam());
+        p.at(HashAction("AggroYRange"))->SetValue(mAggroYRange);
         if (fields.Has("AttackCooldown"))
         {
             mAttackCooldown = fields["AttackCooldown"].GetFloat();
@@ -452,7 +467,13 @@ namespace mts
         out.WriteFloat("MoveSpeed", mMoveSpeed);
         out.WriteFloat("PatrolRadius", mPatrolRadius);
         out.WriteFloat("AggroRange", mAggroRange);
+        out.WriteFloat("AggroYRange", mAggroYRange);
         out.WriteFloat("AttackCooldown", mAttackCooldown);
+        out.WriteFloat("Attack2Cooldown", mAttack2Cooldown);
+        out.WriteFloat("Attack3Cooldown", mAttack3Cooldown);
+        out.WriteFloat("AttackRange", mAttackRange);
+        out.WriteInt("HealthPoints", maxhp);
+        out.WriteFloat("DodgeCooldown", mDodgeCooldown);
         out.WriteBool("IsInvincible", mIsInvincible);
         out.WriteFloat("Explosion Radius", mExplosionRadiusMultiplier);
         out.WriteFloat("Explosion Timer", mTimeTillExplode);
@@ -471,6 +492,14 @@ namespace mts
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAggroRange},
                           .step = 0.1f});
+        fields.push_back({.name = "AggroYRange",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mAggroYRange},
+                          .step = 0.1f});
+        fields.push_back({.name = "AttackRange",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mAttackRange},
+                          .step = 0.1f});
         fields.push_back({.name = "AttackCooldown",
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAttackCooldown},
@@ -483,6 +512,11 @@ namespace mts
                           .type = mts::ScriptField::Type::Float,
                           .ptr = {.f = &mAttack3Cooldown},
                           .step = 0.1f});
+        fields.push_back({.name = "DodgeCooldown",
+                          .type = mts::ScriptField::Type::Float,
+                          .ptr = {.f = &mDodgeCooldown},
+                          .step = 0.1f});
+
         fields.push_back(
             {.name = "HealthPoints", .type = mts::ScriptField::Type::Int, .ptr = {.i = &maxhp}});
 
@@ -510,8 +544,12 @@ namespace mts
                 TakeDamage(damage);
             /*LOG_INFO("cur hp {}, is invin: {}", curhp, mIsInvincible);*/
 
-            if (mAudioController)
+            if (mAudioController && enemyType != EnemyType::BossEnemy)
                 mAudioController->PlayHitSound(enemyType);
+            else
+            {
+                PlayBossMoanSFX();
+            }
 
             if (mPlayerController)
             {

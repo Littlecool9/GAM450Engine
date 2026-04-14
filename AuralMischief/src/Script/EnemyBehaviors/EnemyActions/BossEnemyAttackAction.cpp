@@ -88,7 +88,8 @@ namespace mts
     {
         if (state.GetInAction() ||
             std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue()) > 0 ||
-            (state.GetVectorToPlayer().x) > 5.2f)
+            (state.GetVectorToPlayer().x) > 3.2f ||
+            abs(state.GetVectorToPlayer().y) > 1.5f)
         {
             return false;
         }
@@ -106,6 +107,7 @@ namespace mts
         auto* anim = agent->GetGameObject()->GetComponent<Animation>();
         if (!mHasLunged && totalTime >= anim->GetFrameDuration() * 6.f)
         {
+            agent->GetGameObject()->GetScript<EnemyController>()->PlayBossMoanSFX();
             mHasLunged = true;
             bool flipX = agent->GetGameObject()->GetComponent<SpriteRenderer>()->GetFlipX();
             float dir = flipX ? -1.0f : 1.0f;

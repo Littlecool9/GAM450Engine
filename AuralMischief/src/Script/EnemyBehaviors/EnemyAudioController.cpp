@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "EnemyAudioController.h"
 #include "Engine/Audio/AudioManager.h"
+#include "Engine/Helpers/Random.h"
 
 void EnemyAudioController::Init()
 {
@@ -53,6 +54,23 @@ void EnemyAudioController::PlaySlugExplode(mts::AudioHandle fuseHandle)
 void EnemyAudioController::PlayFlyExplode()
 {
     mts::AudioManager::Get().Play("event:/explosion");
+}
+
+void EnemyAudioController::PlayBossMoan()
+{
+    int randomIndex = mts::Random::Range(1, 3);
+    switch (randomIndex)
+    {
+        case 1:
+            mts::AudioManager::Get().Play("event:/boss_moan_01");
+        case 2:
+            mts::AudioManager::Get().Play("event:/boss_moan_02");
+        case 3:
+            mts::AudioManager::Get().Play("event:/boss_moan_03");
+        default:
+            mts::AudioManager::Get().Play("event:/boss_moan_01");
+            break;
+    }
 }
 
 void EnemyAudioController::PlayAlertSound(mts::EnemyType type)

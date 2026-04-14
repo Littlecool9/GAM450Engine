@@ -25,7 +25,7 @@ public:
     mts::AudioHandle PlaySlugBeep();
     void PlaySlugExplode(mts::AudioHandle fuseHandle);
     void PlayFlyExplode();
-
+    void PlayBossMoan();
     SCRIPT_CLASS(EnemyAudioController)
 
 private:

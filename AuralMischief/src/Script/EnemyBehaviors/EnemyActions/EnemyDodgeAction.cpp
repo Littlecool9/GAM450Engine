@@ -21,7 +21,8 @@ namespace mts
                                        const EnemyPreference& /*preferences*/) const
     {
         if (std::get<float>(state.params.at(HashAction("DodgeCooldown"))->GetValue()) > 0 ||
-            state.GetDistanceToPlayer() > 6 ||
+            abs(state.GetVectorToPlayer().x) > 6 ||
+            abs(state.GetVectorToPlayer().y) > 6 ||
             (state.GetCurrentPlayerState() != AnimationSystem::States::Attack1 && state.GetCurrentPlayerState() != AnimationSystem::States::Attack2))
         {
             return false;
@@ -107,7 +108,7 @@ namespace mts
          std::unordered_map<EnemyGoal, float> heuristic;
          // Heuristic: if player is close, dodging is more favorable for self-preservation
          heuristic[EnemyGoal::SelfPreservation] =
-             state.GetDistanceToPlayer() < 4.0f
+             abs(state.GetVectorToPlayer().x) < 4.0f
                  ? 1.0f
                  : 0.5f;
          heuristic[EnemyGoal::PlayerElimination] = 0.2f;  // dodging doesn't directly contribute to offense

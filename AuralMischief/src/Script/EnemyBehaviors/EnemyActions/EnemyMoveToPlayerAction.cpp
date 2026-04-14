@@ -23,12 +23,21 @@ namespace mts
                                               const EnemyPreference& /*preferences*/) const
     {
         auto it = state.params.find(HashAction("AttackRange"));
-        if (it == state.params.end())
+        auto it2 = state.params.find(HashAction("AggroYRange"));
+        if (it == state.params.end() || it2 == state.params.end())
+        {
+            LOG_INFO("Params arent found");
             return false;
-        float dis = std::get<float>(it->second->GetValue());
+        }
 
-        if (state.GetInAction() || abs(state.GetVectorToPlayer().x) <= dis)
+        float dis = std::get<float>(it->second->GetValue());
+        float yDis = std::get<float>(it2->second->GetValue());
+
+        if (state.GetInAction() || abs(state.GetVectorToPlayer().x) <= dis || abs(state.GetVectorToPlayer().y) > yDis)
+        {
+            LOG_INFO("EnemyMoveToPlayerAction not available: InAction={}, xDist={}, yDist={}", state.GetInAction(), abs(state.GetVectorToPlayer().x), abs(state.GetVectorToPlayer().y));
             return false;
+        }
 
         return true;
     }

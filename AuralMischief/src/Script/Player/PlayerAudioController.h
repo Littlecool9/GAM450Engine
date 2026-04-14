@@ -31,7 +31,8 @@ class PlayerAudioController : public mts::ScriptBase
            CHARGE_LOOP,
            LAND_HARD,
            LAND_SOFT,
-           JUMP
+           JUMP,
+           DAMAGE
        };
 
     void Init() override;

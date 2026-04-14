@@ -65,6 +65,10 @@ namespace mts
         {
             SetLayer(static_cast<LayerMasks>(jsonObj["Layer"].GetInt()));
         }
+        if (jsonObj.Has("IsActive"))
+        {
+            SetActive(jsonObj["IsActive"].GetBool(true));
+        }
 
         if (jsonObj.Has("Tags"))
         {
@@ -126,6 +130,7 @@ namespace mts
         json.WriteString("UUID", _id.ToString().c_str());
         json.WriteString("Name", name.c_str());
         json.WriteInt("Layer", static_cast<int>(objectLayer));
+        json.WriteBool("IsActive", isActive);
 
         json.BeginArray("Tags");
         for (const Tag& t : tags)

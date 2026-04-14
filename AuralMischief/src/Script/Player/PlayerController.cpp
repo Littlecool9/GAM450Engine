@@ -101,10 +101,10 @@ void PlayerController::OnUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    float upStrength = mts::Input::IsKeyDown(mts::Key::W) ? 1.0f : 0.0f;
-    float downStrength = mts::Input::IsKeyDown(mts::Key::S) ? 1.0f : 0.0f;
-    float leftStrength = mts::Input::IsKeyDown(mts::Key::A) ? 1.0f : 0.0f;
-    float rightStrength = mts::Input::IsKeyDown(mts::Key::D) ? 1.0f : 0.0f;
+    float upStrength = mts::Input::IsKeyDown(mts::Key::Up) ? 1.0f : 0.0f;
+    float downStrength = mts::Input::IsKeyDown(mts::Key::Down) ? 1.0f : 0.0f;
+    float leftStrength = mts::Input::IsKeyDown(mts::Key::Left) ? 1.0f : 0.0f;
+    float rightStrength = mts::Input::IsKeyDown(mts::Key::Right) ? 1.0f : 0.0f;
 
     // Gamepad: left stick (with deadzone) and D-Pad augment keyboard strengths
     if (mts::Input::IsGamepadConnected())
@@ -132,11 +132,11 @@ void PlayerController::OnUpdate(float dt)
     glm::vec2 inputDir = {rightStrength - leftStrength, upStrength - downStrength};
     bool jumpPressed = mts::Input::IsKeyPressed(mts::Key::Space) ||
                        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::A);
-    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::K) ||
+    bool dashPressed = mts::Input::IsKeyPressed(mts::Key::LeftShift) ||
                        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B);
-    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::J) ||
+    bool attackPressed = mts::Input::IsKeyPressed(mts::Key::X) ||
                          mts::Input::IsGamepadButtonPressed(mts::GamepadButton::X);
-    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::J) ||
+    bool attackReleased = mts::Input::IsKeyReleased(mts::Key::X) ||
                           mts::Input::IsGamepadButtonReleased(mts::GamepadButton::X);
 
     // Get current audio state for beat check
@@ -328,6 +328,20 @@ void PlayerController::OnUpdate(float dt)
         chargeFlashTimer = -1.0f;
     }
 
+    damageFlashTimer -= dt;
+    if (damageFlashTimer > 0.0f)
+    {
+        if (static_cast<int>(damageFlashTimer * 10) % 2 == 0)
+            sprite->SetTintColor(glm::vec3(1.0f, 0.2f, 0.2f));
+        else
+            sprite->SetTintColor(glm::vec3(1.0f));
+    }
+    else
+    {
+        sprite->SetTintColor(glm::vec3(1.0f));
+        damageFlashTimer = -1.0f;
+    }
+
     if (isCharging)
     {
         particleController.UpdateParticlePositions(transform->GetPosition());
@@ -361,11 +375,11 @@ void PlayerController::OnFixedUpdate(float dt)
 {
     // Check all important held keys at start of loop
     // This cleans up the code and reduces function calls
-    bool leftHeld = mts::Input::IsKeyDown(mts::Key::A) ||
+    bool leftHeld = mts::Input::IsKeyDown(mts::Key::Left) ||
                     mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadLeft) ||
                     (mts::Input::IsGamepadConnected() &&
                      mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) < -kGamepadDeadzone);
-    bool rightHeld = mts::Input::IsKeyDown(mts::Key::D) ||
+    bool rightHeld = mts::Input::IsKeyDown(mts::Key::Right) ||
                      mts::Input::IsGamepadButtonDown(mts::GamepadButton::DPadRight) ||
                      (mts::Input::IsGamepadConnected() &&
                       mts::Input::GetGamepadAxis(mts::GamepadAxis::LeftX) > kGamepadDeadzone);
@@ -706,6 +720,11 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
         LOG_INFO("hit by enemy with normal {}, {}", collision.normal.x, collision.normal.y);
         iFramesTimer = iFrames;
         glm::vec2 hitDir = a ? a->GetDirection() : -collision.normal;
+        hitDir.y *= 1.5f;  // accounts for division in dash function
+        // make sure player is pushed horizontally so they don't get stuck on enemy
+        if (hitDir.x < 0.1 && hitDir.x > -0.1)
+            hitDir.x = 2.0f;
+        hitDir = glm::normalize(hitDir);
         queuedDash = [this, hitDir]() { Dash(hitDir, true, enemyKnockback); };
         if (a)
         {
@@ -1020,6 +1039,10 @@ void PlayerController::TakeDamage(int damage)
 
     LOG_INFO("[PlayerController] TakeDamage: {} damage, HP now {}/{}", damage, mCurrentHP, mMaxHP);
     RefreshHeartVisuals();
+    if (mPlayerAudio)
+        mPlayerAudio->PlayOneShotSound(PlayerAudioController::DAMAGE);
+
+    damageFlashTimer = damageFlashLength;
 
     if (mCurrentHP <= 0)
     {

@@ -4,6 +4,7 @@
             "UUID": "ff31b8cf-c199-4245-84da-a61d4de90225",
             "Name": "TilemapObject",
             "Layer": 1,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9332,6 +9333,7 @@
             "UUID": "e945a8c5-ddae-4975-9b32-d43cfd458a43",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9390,6 +9392,7 @@
             "UUID": "1adce601-a0e0-463e-814b-c3509d4fa812",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9448,6 +9451,7 @@
             "UUID": "22f8a3b6-058d-42f3-a9d6-d87f01ff1033",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9506,6 +9510,7 @@
             "UUID": "d7bf0133-6485-41ae-93f0-e3f8259b36f2",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9564,6 +9569,7 @@
             "UUID": "6f43dedb-7e03-47de-8194-0919552936eb",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9622,6 +9628,7 @@
             "UUID": "1428702e-47cb-4b5d-bd8b-6a91ea2a6699",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9708,6 +9715,7 @@
             "UUID": "0ee5ce7a-1632-4094-892c-b061a96f3e74",
             "Name": "CameraObject",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9767,6 +9775,7 @@
             "UUID": "34808668-6058-4fb0-b4b1-456a2fd19eee",
             "Name": "Background",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -9808,16 +9817,18 @@
             "UUID": "1e2dca6c-6854-46fc-84aa-8dbe67d035c3",
             "Name": "ESC",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.019999999552965164,
-                            0.029999999329447746,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            32.0,
+                            27.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             0.800000011920929,
                             0.800000011920929,
@@ -9859,16 +9870,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-111111111111",
             "Name": "PauseMenuPanel",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.5,
-                            0.5,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            800.0,
+                            450.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.0,
                             1.0,
@@ -9909,16 +9922,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-222222222222",
             "Name": "PauseMenu_Background",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.5,
-                            0.5,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            800.0,
+                            450.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             100.0,
                             100.0,
@@ -9950,16 +9965,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-333333333333",
             "Name": "PauseMenu_Instructions",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.2800000011920929,
-                            0.49000000953674316,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            448.0,
+                            441.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             10.0,
                             6.0,
@@ -9991,16 +10008,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
             "Name": "PauseMenu_VolumeMinus",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.7549999952316284,
-                            0.4000000059604645,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1208.0,
+                            360.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.0,
                             1.0,
@@ -10047,16 +10066,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
             "Name": "PauseMenu_VolumePlus",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.824999988079071,
-                            0.4000000059604645,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1320.0,
+                            360.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.0,
                             1.0,
@@ -10103,16 +10124,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-666666666666",
             "Name": "PauseMenu_Resume",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.75,
-                            0.5799999833106995,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1200.0,
+                            522.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             3.0,
                             1.0,
@@ -10154,16 +10177,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-777777777777",
             "Name": "PauseMenu_ReturnToMenu",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.75,
-                            0.699999988079071,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1200.0,
+                            630.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             6.900000095367432,
                             1.0,
@@ -10205,16 +10230,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-888888888888",
             "Name": "PauseMenu_Confirm_Background",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.5,
-                            0.5,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            800.0,
+                            450.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             100.0,
                             100.0,
@@ -10246,16 +10273,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-999999999999",
             "Name": "PauseMenu_Confirm_Prompt",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.5,
-                            0.4000000059604645,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            800.0,
+                            360.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             14.25,
                             3.0,
@@ -10287,16 +10316,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-aaaaaaaaaaaa",
             "Name": "PauseMenu_Confirm_Yes",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.4000000059604645,
-                            0.6000000238418579,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            640.0,
+                            540.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.7999999523162842,
                             1.0,
@@ -10332,16 +10363,18 @@
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-bbbbbbbbbbbb",
             "Name": "PauseMenu_Confirm_No",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.6100000143051147,
-                            0.6000000238418579,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            976.0,
+                            540.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.649999976158142,
                             1.0,
@@ -10377,16 +10410,18 @@
             "UUID": "f4593465-8d2c-499d-8d37-1ffb7ddb9c68",
             "Name": "PauseMenu_Volumn_Icon",
             "Layer": 0,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.6600000262260437,
-                            0.4000000059604645,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1056.0,
+                            360.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.0,
                             2.0,
@@ -10418,6 +10453,7 @@
             "UUID": "bcfea507-5e81-458a-a8c0-6bcbf64eabc1",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10459,6 +10495,7 @@
             "UUID": "1a3cb8b7-5397-447f-907a-11f1bef425ff",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10500,6 +10537,7 @@
             "UUID": "94d2aebe-af23-4002-ac77-e3e8d610b22c",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10541,6 +10579,7 @@
             "UUID": "9fa5e12f-b269-469f-9882-545da5a1926f",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10582,6 +10621,7 @@
             "UUID": "2dd22b12-52b2-4490-a750-34d9afc844e0",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10623,6 +10663,7 @@
             "UUID": "6b48c42c-91cc-47b6-a470-4d858aef0064",
             "Name": "Hazard",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10681,6 +10722,7 @@
             "UUID": "2497eeae-98e3-4fb7-93f2-107f96362e4a",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10767,6 +10809,7 @@
             "UUID": "f1014891-ab33-4b17-a214-514860595fe1",
             "Name": "RhythmSystem",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -10781,6 +10824,7 @@
             "UUID": "4354c1a4-c52e-4eb1-9eed-797fc52121be",
             "Name": "Player",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Player"
             ],
@@ -10997,6 +11041,7 @@
             "UUID": "6913f7c5-a872-4afb-b004-06e8ed949844",
             "Name": "AudioController",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11022,6 +11067,7 @@
             "UUID": "07f46d52-cf94-4fb5-a7e2-40017820d31b",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11063,6 +11109,7 @@
             "UUID": "d6cec691-57a6-4739-960c-00dd81cf81a8",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11104,6 +11151,7 @@
             "UUID": "1c845eb7-7e6d-460e-a246-5e4b650f9c1e",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11145,6 +11193,7 @@
             "UUID": "69949e01-bc16-4f63-a4d7-2e6e83cf7281",
             "Name": "EndPoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11234,6 +11283,7 @@
             "UUID": "af8d18e4-1ef6-4416-b984-b0eae752d54f",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11275,6 +11325,7 @@
             "UUID": "be89b430-74c6-444e-9a24-2f569684fab7",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11316,6 +11367,7 @@
             "UUID": "d9f5788d-c7bf-4f13-ab9b-a0088c515249",
             "Name": "InputGuidance",
             "Layer": 2,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -11357,6 +11409,7 @@
             "UUID": "1fa6444f-06d8-4bb3-adc3-bb43452d67c8",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -11541,6 +11594,7 @@
             "UUID": "6fbe3bb4-5a56-479c-9015-b8884cf59da1",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -11725,6 +11779,7 @@
             "UUID": "6e28f334-bcc3-4083-9e60-5cf0ca07ba99",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -11909,6 +11964,7 @@
             "UUID": "200660f6-ebc9-4365-8cb4-afcb6809bb55",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12093,6 +12149,7 @@
             "UUID": "6c3fb803-e823-4ec1-ac23-b7c5876e6285",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12254,6 +12311,7 @@
             "UUID": "f4addc8a-34dc-422c-b4b8-ce91ce6568dd",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12427,6 +12485,7 @@
             "UUID": "8278a142-75c8-4508-b8c9-0cd3aa464c77",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12600,6 +12659,7 @@
             "UUID": "a9cd5064-a30d-4a46-bf53-8523cc61bb6e",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12761,6 +12821,7 @@
             "UUID": "e12e7963-85cb-44c0-86af-a1b6b74ffeab",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -12922,6 +12983,7 @@
             "UUID": "2047a91b-b94d-4f7b-ae7c-ed22d4bbabed",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -13106,6 +13168,7 @@
             "UUID": "bfc4db16-a3c7-4ce2-9066-a9a746421b66",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -13279,6 +13342,7 @@
             "UUID": "a9f59fbc-60fc-4f29-b516-4fcad18be0f6",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -13452,6 +13516,7 @@
             "UUID": "d2fe41a6-e9ad-4a15-a59d-f0bfb56ad42c",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -13636,6 +13701,7 @@
             "UUID": "1e42e723-eaf4-4a13-a4b3-dad487600f56",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -13722,6 +13788,7 @@
             "UUID": "758469a3-d746-4895-bc58-61ac42f617a6",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -13808,6 +13875,7 @@
             "UUID": "833f74e5-b1e7-490e-8b73-335e35953fc4",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -13894,6 +13962,7 @@
             "UUID": "339e61ed-84f4-4fb0-915b-58552bc9d2d1",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -13980,6 +14049,7 @@
             "UUID": "62de5b8c-7f31-4fc9-94ec-99276edb5987",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -14066,6 +14136,7 @@
             "UUID": "60878325-60af-4f23-934c-ec3514fa3532",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -14152,6 +14223,7 @@
             "UUID": "fb65c35c-31e8-4520-8338-e620518d5231",
             "Name": "Checkpoint",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -14238,16 +14310,18 @@
             "UUID": "769980de-5827-45ea-a9cc-430a13bbbfb3",
             "Name": "HP",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.10000000149011612,
-                            0.12999999523162842,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            160.0,
+                            116.99999237060547
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.5,
                             2.5,
@@ -14285,16 +14359,18 @@
             "UUID": "7ad6e4ba-e1d8-4547-844c-4b7b4e2bd808",
             "Name": "HP",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.15000000596046448,
-                            0.12999999523162842,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            240.00001525878906,
+                            116.99999237060547
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.5,
                             2.5,
@@ -14332,16 +14408,18 @@
             "UUID": "5aad7d26-1647-4b96-b802-c652ea26549f",
             "Name": "HP",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.20000000298023224,
-                            0.12999999523162842,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            320.0,
+                            116.99999237060547
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.5,
                             2.5,
@@ -14379,16 +14457,18 @@
             "UUID": "07172845-232a-4044-a3a8-6dfd78764671",
             "Name": "HP",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.25,
-                            0.12999999523162842,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            400.0,
+                            116.99999237060547
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.5,
                             2.5,
@@ -14426,16 +14506,18 @@
             "UUID": "7405140b-642d-4a50-bf1d-90fd0bd1c7ad",
             "Name": "HP",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.30000001192092896,
-                            0.12999999523162842,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            480.0000305175781,
+                            116.99999237060547
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             2.5,
                             2.5,
@@ -14473,6 +14555,7 @@
             "UUID": "997e02a4-483a-409e-b2b7-1dee40987775",
             "Name": "EnemyAudioController",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -14504,16 +14587,18 @@
             "UUID": "98615498-80c6-4755-8685-04ed7a8956e9",
             "Name": "Beatline",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.5,
-                            0.5,
-                            0.10000000149011612
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            800.0,
+                            450.0
                         ],
+                        "Depth": 0.10000000149011612,
                         "Scale": [
                             20.0,
                             11.25,
@@ -14538,6 +14623,7 @@
             "UUID": "4a8d8c35-2fc3-47f8-b288-2f393c6443ec",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -14711,6 +14797,7 @@
             "UUID": "f2520777-b867-4c18-84b8-3a2808865fc1",
             "Name": "SentryEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -14884,6 +14971,7 @@
             "UUID": "f70edae9-1ee8-412e-a3ed-ba2e1acfe741",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -15045,6 +15133,7 @@
             "UUID": "474c10cb-6f6b-47d6-bffe-275168fa3c31",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -15229,6 +15318,7 @@
             "UUID": "e1f030b8-56ac-452c-b491-793e6e6eb99e",
             "Name": "SlugEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -15413,6 +15503,7 @@
             "UUID": "1e0f6f27-f858-4520-a328-9f1557ff6e33",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -15574,6 +15665,7 @@
             "UUID": "cf4822df-17b8-439a-b4c6-ce1cf1e9e326",
             "Name": "FlyingEnemy",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [
                 "Enemy"
             ],
@@ -15735,6 +15827,7 @@
             "UUID": "e0bf1ec9-a910-4960-a770-ae7b342164d5",
             "Name": "LevelEndTeleport",
             "Layer": 0,
+            "IsActive": true,
             "Tags": [],
             "Components": [
                 {
@@ -15759,16 +15852,18 @@
             "UUID": "c61c079f-8f6d-4686-af74-0388842114f0",
             "Name": "PauseMenu_SFX_Prompt",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.6499999761581421,
-                            0.28999999165534973,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1040.0,
+                            261.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             0.44999998807907104,
                             0.5,
@@ -15801,16 +15896,18 @@
             "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
             "Name": "PauseMenu_SFX_VolumeUp",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.824999988079071,
-                            0.2800000011920929,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1320.0,
+                            252.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.0,
                             1.0,
@@ -15857,16 +15954,18 @@
             "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
             "Name": "PauseMenu_SFX_VolumeDown",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.7549999952316284,
-                            0.2800000011920929,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1208.0,
+                            252.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             1.0,
                             1.0,
@@ -15913,16 +16012,18 @@
             "UUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b",
             "Name": "PauseMenu_SFX_Volume",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.8799999952316284,
-                            0.28999999165534973,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1408.0,
+                            261.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             0.44999998807907104,
                             0.5,
@@ -15955,16 +16056,18 @@
             "UUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91",
             "Name": "PauseMenu_Master_Volume",
             "Layer": 2,
+            "IsActive": false,
             "Tags": [],
             "Components": [
                 {
                     "Type": "UITransform",
                     "Data": {
-                        "Position": [
-                            0.8799999952316284,
-                            0.4000000059604645,
-                            0.0
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1408.0,
+                            360.0
                         ],
+                        "Depth": 0.0,
                         "Scale": [
                             0.44999998807907104,
                             0.5,

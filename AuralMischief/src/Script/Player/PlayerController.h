@@ -158,9 +158,11 @@ class PlayerController : public mts::ScriptBase
     bool chargeComplete = false;
     bool attackAnimType = true;  // keeps track of if previous attack animation was 1st or 2nd (used
                                  // to alternate animations)
-    float iFrames = 0.8f;
+    float iFrames = 1.0f;
     float iFramesTimer = -1.0f;
-    float enemyKnockback = 0.7f;
+    float enemyKnockback = 0.8f;
+    float damageFlashTimer = -1.0f;
+    float damageFlashLength = 1.0f;
     float timeSinceLastBeat = 0.0f;
     Direction facingDir = RIGHT;
     PlayerParticleController::ParticleTiming wasOnBeat = PlayerParticleController::EARLY;

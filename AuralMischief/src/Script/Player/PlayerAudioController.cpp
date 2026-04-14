@@ -30,6 +30,7 @@ void PlayerAudioController::Init()
     soundMap.insert(std::pair(LAND_HARD, "event:/hero_land_hard"));
     soundMap.insert(std::pair(LAND_SOFT, "event:/hero_land_soft"));
     soundMap.insert(std::pair(JUMP, "event:/hero_wall_jump"));
+    soundMap.insert(std::pair(DAMAGE, "event:/player_damaged"));
 }
 
 void PlayerAudioController::Awake()

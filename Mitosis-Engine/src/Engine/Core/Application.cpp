@@ -30,6 +30,7 @@
 #include "Layer/SceneLayer.h"
 #include "Engine/AppSystem/AppSystem.h"
 #include "Engine/Events/AppEvent.h"
+#include "Engine/Audio/AudioManager.h"
 
 namespace mts
 {
@@ -91,6 +92,13 @@ namespace mts
         {
             HandlePlayStateTransitions();
 
+            if (!mHasFocus)
+            {
+                mWindow->PollEvents();
+                std::this_thread::sleep_for(std::chrono::milliseconds(16));
+                continue;
+            }
+
             Time::BeginFrame();
 
             // MUST happen BEFORE PollEvents (so callbacks set pressed/released for this frame)
@@ -119,6 +127,7 @@ namespace mts
 #endif
             if (Input::IsKeyPressed(Key::F11))
                 AppSystem::Get().ToggleFullscreen();
+
             this->OnUpdate(dt);
 
             for (auto& layer : mLayerStack)
@@ -203,6 +212,7 @@ namespace mts
         mWindow.reset();
     }
 
+    // todo: move the events to be handled by designated layers
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
@@ -226,6 +236,22 @@ namespace mts
             {
                 mWindow->SetFullscreen(!mWindow->IsFullscreen());
                 return true;
+            });
+
+        dispatcher.Dispatch<WindowLostFocusEvent>(
+            [this](WindowLostFocusEvent&)
+            {
+                mHasFocus = false;
+                AudioManager::Get().PauseAll();
+                return false;
+            });
+
+        dispatcher.Dispatch<WindowFocusEvent>(
+            [this](WindowFocusEvent&)
+            {
+                mHasFocus = true;
+                AudioManager::Get().ResumeAll();
+                return false;
             });
 
         // Dispatch to layers in reverse order (overlays first)

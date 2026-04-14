@@ -62,6 +62,7 @@ namespace mts
         EditorContext mCtx;
 
         bool mIsRunning = false;
+        bool mHasFocus = true;
 #ifdef MTS_RELEASE
         bool mInDebugView = false;
 #else

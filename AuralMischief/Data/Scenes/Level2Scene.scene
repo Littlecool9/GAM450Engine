@@ -9010,675 +9010,774 @@
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            105.5,
-                            23.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  105.5,
+                  23.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "fb10b9af-68ab-4ec1-b12f-8ad9be29684c",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            113.5,
-                            9.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  113.5,
+                  9.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "eb6ab7ae-7eb5-4cc1-9089-592d60b522a9",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            136.0,
-                            22.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  136.0,
+                  22.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "582a8399-322c-4ea2-ab46-1676e1959a35",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            84.94999694824219,
-                            11.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            2.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  84.94999694824219,
+                  11.0,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  2.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_2tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "1c875ce3-fc73-43df-a8cc-cb7dacce3116",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            44.5,
-                            16.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            4.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  44.5,
+                  16.0,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  4.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "ed133ee8-92bd-44d5-8615-76a25da9573b",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            12.579999923706055,
-                            32.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  12.579999923706055,
+                  32.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "deb05383-128a-42ee-a2c2-45977881ffc8",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            40.5,
-                            33.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            2.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  40.5,
+                  33.0,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  2.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_2tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "0650dae8-166e-4b19-8c6a-9d781624184e",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            75.5,
-                            28.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  75.5,
+                  28.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "532ee8a3-b656-48ff-863e-c4421e82915a",
             "Name": "Checkpoint",
             "Layer": 0,
             "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            131.5,
-                            36.5,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            3.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "BoxCollider2D",
-                    "Data": {
-                        "Width": 1.0,
-                        "Height": 1.0,
-                        "Offset": [
-                            0.0,
-                            0.0
-                        ],
-                        "IsTrigger": 1
-                    }
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "CheckPoint"
-                    }
-                },
-                {
-                    "Type": "RigidBody2D",
-                    "Data": {
-                        "Mass": 1.0,
-                        "Inertia": 1.0,
-                        "LinearVelocity": [
-                            0.0,
-                            0.0
-                        ],
-                        "AngularVelocity": 0.0,
-                        "LinearDamping": 0.0,
-                        "AngularDamping": 0.0,
-                        "GravityScale": 0.0,
-                        "BodyType": 0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.19138562679290771,
-                            0.2912713885307312,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 47,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/OtherSprite.tex",
-                        "MeshResource": "Data/Resources/14x7MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
+          "Components": [
+            {
+              "Type": "Transform",
+              "Data": {
+                "Position": [
+                  131.5,
+                  36.5,
+                  0.0
+                ],
+                "Scale": [
+                  1.0,
+                  3.0,
+                  1.0
+                ],
+                "Rotation": 0.0
+              }
+            },
+            {
+              "Type": "BoxCollider2D",
+              "Data": {
+                "Width": 1.0,
+                "Height": 1.0,
+                "Offset": [
+                  0.0,
+                  0.0
+                ],
+                "IsTrigger": 1
+              }
+            },
+            {
+              "Type": "NativeScript",
+              "Data": {
+                "Class": "CheckPoint"
+              }
+            },
+            {
+              "Type": "RigidBody2D",
+              "Data": {
+                "Mass": 1.0,
+                "Inertia": 1.0,
+                "LinearVelocity": [
+                  0.0,
+                  0.0
+                ],
+                "AngularVelocity": 0.0,
+                "LinearDamping": 0.0,
+                "AngularDamping": 0.0,
+                "GravityScale": 0.0,
+                "BodyType": 0
+              }
+            },
+            {
+              "Type": "SpriteRenderer",
+              "Data": {
+                "TintColor": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+              }
+            },
+            {
+              "Type": "Animation",
+              "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
+              }
+            }
+          ]
         },
         {
             "UUID": "34808668-6058-4fb0-b4b1-456a2fd19eee",

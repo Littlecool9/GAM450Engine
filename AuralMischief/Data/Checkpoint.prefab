@@ -58,17 +58,28 @@
             "Type": "SpriteRenderer",
             "Data": {
                 "TintColor": [
-                    0.19138562679290771,
-                    0.2912713885307312,
+                    1.0,
+                    1.0,
                     1.0
                 ],
                 "Alpha": 1.0,
-                "FrameIndex": 47,
+                "FrameIndex": 0,
                 "ParallaxFactorX": 1.0,
                 "RenderLayer": 0,
-                "TextureResource": "Data/Resources/OtherSprite.tex",
-                "MeshResource": "Data/Resources/14x7MeshResource.mesh",
+                "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                "MeshResource": "Data/Resources/1x12MeshResource.mesh",
                 "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        },
+        {
+            "Type": "Animation",
+            "Data": {
+                "FrameIndex": 0,
+                "FrameCount": 12,
+                "FrameDelay": 0.10000000149011612,
+                "FrameDuration": 0.10000000149011612,
+                "IsRunning": 1,
+                "IsLooping": 1
             }
         }
     ]

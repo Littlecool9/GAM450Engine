@@ -32,6 +32,7 @@
 #include "Script/CreditsScrollScript.h"
 #include "Script/UIPanels.h"
 #include "Script/ReturnButton.h"
+#include "Script/InputGuidanceScript.h"
 
 #include "Engine/Renderer.h"
 #include "Engine/Scripting/ScriptFactory.h"
@@ -143,6 +144,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new UIPanels(); });
     mts::ScriptFactory::RegisterScript(ReturnButton::StaticClassName(),
                                        []() { return new ReturnButton(); });
+    mts::ScriptFactory::RegisterScript(InputGuidanceScript::StaticClassName(),
+                                       []() { return new InputGuidanceScript(); });
 }
 
 void AuralMischief::OnUpdate(float dt)

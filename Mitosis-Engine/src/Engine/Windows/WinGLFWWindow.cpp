@@ -18,12 +18,29 @@
 #include "Engine/Events/InputEvent.h"
 #include "Engine/Events/WindowEvent.h"
 #include "Engine/Input/Input.h"
+#include <Xinput.h>
+
+// XInput: tracks previous connected state per slot for edge detection.
+static bool s_PadWasConnected[XUSER_MAX_COUNT] = {};
+
+namespace
+{
+    // Normalise XInput SHORT stick value (-32768..32767) to float -1..1.
+    float NormalizeStick(SHORT v)
+    {
+        return v >= 0 ? v / 32767.0f : v / 32768.0f;
+    }
+
+    // Normalise XInput BYTE trigger (0..255) to float -1..1.
+    // Matches GLFW convention: -1 = released, 1 = fully pressed.
+    float NormalizeTrigger(BYTE v)
+    {
+        return (v / 127.5f) - 1.0f;
+    }
+}  // namespace
 
 namespace mts
 {
-    // GLFW joystick callback has no user-data pointer; store the app callback statically.
-    // Safe because only one GLFWwindow exists per process.
-    static EventCallbackFn s_JoystickEventCallback;
 
     WinGLFWwindow::WinGLFWwindow(const WindowProps& props)
     {
@@ -207,27 +224,6 @@ namespace mts
                                       data.EventCallback(e);
                               });
 
-        // ----- Gamepad connect / disconnect -----
-
-        glfwSetJoystickCallback([](int jid, int event)
-        {
-            if (jid >= Input::MaxGamepads || !s_JoystickEventCallback)
-                return;
-
-            if (event == GLFW_CONNECTED && glfwJoystickIsGamepad(jid))
-            {
-                Input::OnGamepadConnected(jid);
-                GamepadConnectedEvent e(jid);
-                s_JoystickEventCallback(e);
-            }
-            else if (event == GLFW_DISCONNECTED)
-            {
-                Input::OnGamepadDisconnected(jid);
-                GamepadDisconnectedEvent e(jid);
-                s_JoystickEventCallback(e);
-            }
-        });
-
         SetVsync(windowData.VSync);
     }
 
@@ -269,7 +265,6 @@ namespace mts
     void WinGLFWwindow::SetEventCallback(const EventCallbackFn& callback)
     {
         windowData.EventCallback = callback;
-        s_JoystickEventCallback  = callback;
     }
 
     void WinGLFWwindow::SetVsync(bool enable)
@@ -291,31 +286,68 @@ namespace mts
     {
         glfwPollEvents();
 
-        // Poll gamepad state for all connected pads. This runs after Input::BeginFrame()
-        // has already saved prev state, so Pressed/Released detection works correctly.
-        // Using glfwJoystickIsGamepad as the source of truth lets us detect pads that
-        // were already connected when the app started (the joystick callback only fires
-        // for hotplug events, not for pads present at launch).
-        for (int jid = 0; jid < Input::MaxGamepads; ++jid)
+        // XInput polling — avoids WM_DEVICECHANGE HID enumeration stall.
+        // Note: on Windows 7 and earlier, XInputGetState on a disconnected slot
+        // incurs ~7ms overhead per call. Windows 10+ is not affected.
+        // Scan disconnected slots only every 30 frames to reduce idle overhead.
+        static int s_ScanCooldown = 0;
+        const bool doFullScan     = (s_ScanCooldown == 0);
+        if (doFullScan)
+            s_ScanCooldown = 30;
+        else
+            --s_ScanCooldown;
+
+        for (DWORD i = 0; i < XUSER_MAX_COUNT; ++i)
         {
-            if (!glfwJoystickIsGamepad(jid))
+            if (!s_PadWasConnected[i] && !doFullScan)
                 continue;
 
-            if (!Input::IsGamepadConnected(jid))
-                Input::OnGamepadConnected(jid);
+            XINPUT_STATE xstate{};
+            const bool connected = (XInputGetState(i, &xstate) == ERROR_SUCCESS);
 
-            GLFWgamepadstate state;
-            if (!glfwGetGamepadState(jid, &state))
+            if (connected && !s_PadWasConnected[i])
+                Input::OnGamepadConnected(static_cast<int>(i));
+            else if (!connected && s_PadWasConnected[i])
+                Input::OnGamepadDisconnected(static_cast<int>(i));
+
+            s_PadWasConnected[i] = connected;
+
+            if (!connected)
                 continue;
 
-            constexpr int buttonCount = GLFW_GAMEPAD_BUTTON_LAST + 1;
-            constexpr int axisCount   = GLFW_GAMEPAD_AXIS_LAST + 1;
+            // --- Buttons ---
+            const WORD xb = xstate.Gamepad.wButtons;
+            constexpr int kButtonCount = static_cast<int>(GamepadButton::Count);
+            bool buttons[kButtonCount] = {};
+            buttons[static_cast<int>(GamepadButton::A)]           = (xb & XINPUT_GAMEPAD_A)              != 0;
+            buttons[static_cast<int>(GamepadButton::B)]           = (xb & XINPUT_GAMEPAD_B)              != 0;
+            buttons[static_cast<int>(GamepadButton::X)]           = (xb & XINPUT_GAMEPAD_X)              != 0;
+            buttons[static_cast<int>(GamepadButton::Y)]           = (xb & XINPUT_GAMEPAD_Y)              != 0;
+            buttons[static_cast<int>(GamepadButton::LeftBumper)]  = (xb & XINPUT_GAMEPAD_LEFT_SHOULDER)  != 0;
+            buttons[static_cast<int>(GamepadButton::RightBumper)] = (xb & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0;
+            buttons[static_cast<int>(GamepadButton::Back)]        = (xb & XINPUT_GAMEPAD_BACK)           != 0;
+            buttons[static_cast<int>(GamepadButton::Start)]       = (xb & XINPUT_GAMEPAD_START)          != 0;
+            // Guide button (index 8) not available in XInput — left false
+            buttons[static_cast<int>(GamepadButton::LeftThumb)]   = (xb & XINPUT_GAMEPAD_LEFT_THUMB)     != 0;
+            buttons[static_cast<int>(GamepadButton::RightThumb)]  = (xb & XINPUT_GAMEPAD_RIGHT_THUMB)    != 0;
+            buttons[static_cast<int>(GamepadButton::DPadUp)]      = (xb & XINPUT_GAMEPAD_DPAD_UP)        != 0;
+            buttons[static_cast<int>(GamepadButton::DPadRight)]   = (xb & XINPUT_GAMEPAD_DPAD_RIGHT)     != 0;
+            buttons[static_cast<int>(GamepadButton::DPadDown)]    = (xb & XINPUT_GAMEPAD_DPAD_DOWN)      != 0;
+            buttons[static_cast<int>(GamepadButton::DPadLeft)]    = (xb & XINPUT_GAMEPAD_DPAD_LEFT)      != 0;
 
-            bool buttons[buttonCount];
-            for (int i = 0; i < buttonCount; ++i)
-                buttons[i] = (state.buttons[i] == GLFW_PRESS);
+            // --- Axes ---
+            // Y axes are negated: XInput positive-Y = stick up, engine negative-Y = stick up
+            // (matches GLFW convention used throughout PlayerController).
+            constexpr int kAxisCount = static_cast<int>(GamepadAxis::Count);
+            float axes[kAxisCount] = {};
+            axes[static_cast<int>(GamepadAxis::LeftX)]        =  NormalizeStick(xstate.Gamepad.sThumbLX);
+            axes[static_cast<int>(GamepadAxis::LeftY)]        = -NormalizeStick(xstate.Gamepad.sThumbLY);
+            axes[static_cast<int>(GamepadAxis::RightX)]       =  NormalizeStick(xstate.Gamepad.sThumbRX);
+            axes[static_cast<int>(GamepadAxis::RightY)]       = -NormalizeStick(xstate.Gamepad.sThumbRY);
+            axes[static_cast<int>(GamepadAxis::LeftTrigger)]  =  NormalizeTrigger(xstate.Gamepad.bLeftTrigger);
+            axes[static_cast<int>(GamepadAxis::RightTrigger)] =  NormalizeTrigger(xstate.Gamepad.bRightTrigger);
 
-            Input::OnGamepadPoll(jid, buttons, buttonCount, state.axes, axisCount);
+            Input::OnGamepadPoll(static_cast<int>(i), buttons, kButtonCount, axes, kAxisCount);
         }
     }
 
@@ -326,8 +358,6 @@ namespace mts
 
     void WinGLFWwindow::Shutdown()
     {
-        glfwSetJoystickCallback(nullptr);
-        s_JoystickEventCallback = nullptr;
         glfwDestroyWindow(window);
         window = nullptr;
         glfwTerminate();

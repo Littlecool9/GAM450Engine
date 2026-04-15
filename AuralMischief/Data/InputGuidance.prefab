@@ -21,6 +21,12 @@
             }
         },
         {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "InputGuidanceScript"
+            }
+        },
+        {
             "Type": "SpriteRenderer",
             "Data": {
                 "TintColor": [

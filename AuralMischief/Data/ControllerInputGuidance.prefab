@@ -1,0 +1,50 @@
+{
+    "UUID": "b3e8d2a1-1f4c-4b7e-9d2a-c8f01234abcd",
+    "Name": "ControllerInputGuidance",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "Transform",
+            "Data": {
+                "Position": [
+                    7.0,
+                    8.649999618530273,
+                    0.0
+                ],
+                "Scale": [
+                    0.800000011920929,
+                    0.800000011920929,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "InputGuidanceScript",
+                "Fields": {
+                    "ForController": true
+                }
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 0.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 0,
+                "TextureResource": "Data/Resources/XboxUITexture.tex",
+                "MeshResource": "Data/Resources/10x10MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

@@ -17,6 +17,12 @@
             "fadeInDuration": 1.0,
             "holdDuration": 2.0,
             "fadeOutDuration": 1.0
+        },
+                {
+            "texturePath": "Data/Resources/KeyArt04.tex",
+            "fadeInDuration": 1.0,
+            "holdDuration": 2.0,
+            "fadeOutDuration": 1.0
         }
     ]
 }

@@ -22,7 +22,7 @@
 [-] Menus update (incl. win and lose) (Jackey)
 	[x] Sprites for buttons (Rahul)
 	[-] Add hold text on heavy attack in-game sprite
-	[-] Add recommended with controller screen after the splash screen
+	[x] Add recommended with controller screen after the splash screen
 [-] Boss movement fix (Dong)
 	[-] Sprite movement needs to be faster (Dong)
 

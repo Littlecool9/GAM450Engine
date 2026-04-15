@@ -12170,6 +12170,12 @@
                     }
                 },
                 {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "InputGuidanceScript"
+                    }
+                },
+                {
                     "Type": "SpriteRenderer",
                     "Data": {
                         "TintColor": [
@@ -12188,6 +12194,59 @@
                 }
             ]
         },
+        {
+            "UUID": "a2b3c4d5-e6f7-4089-9876-fedcba987654",
+            "Name": "PauseMenu_Instructions_Controller",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            448.0,
+                            441.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            10.0,
+                            6.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "InputGuidanceScript",
+                        "Fields": {
+                            "ForController": true
+                        }
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 0.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 101,
+                        "TextureResource": "Data/Resources/InstructionsXbox.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                }
+            ]
+        },
+
         {
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
             "Name": "PauseMenu_VolumeMinus",

@@ -12,12 +12,12 @@
 [x] SFX and Music control separation (Jackey)
 [x] Main menu should add confirmation on exit (Jackey)
 [x] Controls remapping (Josh)
-	[x] Movement - Arrows / Right joystick
+	[x] Movement - Arrows / Left joystick
 	[x] Dash - Shift / B
 	[x] Jump - Space / A
 	[x] Attack - X / X
 	[x] Heavy attack - hold X / hold X
-[-] In-game control sprites update (Rahul)
+[x] In-game control sprites update (Rahul)
 
 -------------------------
 

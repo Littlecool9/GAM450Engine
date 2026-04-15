@@ -22,6 +22,7 @@ namespace
     constexpr const char* kMemberNames[] = {
         "PauseMenu_Background",
         "PauseMenu_Instructions",
+        "PauseMenu_Instructions_Controller",
         "PauseMenu_VolumeMinus",
         "PauseMenu_VolumePlus",
         "PauseMenu_Master_Volume",

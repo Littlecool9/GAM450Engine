@@ -1,0 +1,51 @@
+{
+    "UUID": "c7d4e2f1-3a8b-4c9d-b5e6-f0a1b2c3d4e5",
+    "Name": "PauseMenu_Instructions_Controller",
+    "Layer": 2,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Anchor": "TopLeft",
+                "Offset": [
+                    448.0,
+                    441.0
+                ],
+                "Depth": 0.0,
+                "Scale": [
+                    8.0,
+                    8.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "NativeScript",
+            "Data": {
+                "Class": "InputGuidanceScript",
+                "Fields": {
+                    "ForController": true
+                }
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 0.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 0.0,
+                "RenderLayer": 101,
+                "TextureResource": "Data/Resources/InstructionsXbox.tex",
+                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

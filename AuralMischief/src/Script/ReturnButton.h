@@ -23,7 +23,6 @@ class ReturnButton : public mts::ScriptBase
 {
     public:
     SCRIPT_CLASS(ReturnButton)
-    void Awake() override;
     void OnEnable() override;
     void OnDisable() override;
     void DeserializeFields(mts::JsonValue const& fields) override;

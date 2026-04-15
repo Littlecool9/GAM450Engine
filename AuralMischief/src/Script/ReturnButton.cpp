@@ -16,36 +16,38 @@
 
 #include "UIPanels.h"
 
-void ReturnButton::Awake()
-{
-	mButton = GetGameObject()->GetComponent<mts::Button>();
-	if (!mButton)
-	{
-		LOG_WARN("ReturnButton: no Button component found on '{}'",
-				 GetGameObject()->GetName().c_str());
-	}
-	for (const auto& uuid : kMainMenuButtonUUIDs)
-	{
-		auto* scene = mts::SceneSystem::GetCurrentScene();
-		if (!scene)
-			return;
-		auto* go = scene->FindGameObjectByUUID(uuid);
-		if (go)
-		{
-			auto* btn = go->GetComponent<mts::Button>();
-			if (btn)
-				mMainMenuButtons.push_back(btn);
-			else
-				LOG_WARN("ReturnButton: main menu button '{}' does not have a Button component",
-						 go->GetName().c_str());
-		}
-		else
-            LOG_WARN("ReturnButton: main menu button '{}' not found in scene", uuid.ToString());
-	}
-}
-
 void ReturnButton::OnEnable()
 {
+    LOG_INFO("ReturnButton Awake: looking for Button component on '{}'",
+             GetGameObject()->GetName().c_str());
+    if (!mButton)
+    {
+        mButton = GetGameObject()->GetComponent<mts::Button>();
+        if (!mButton)
+            LOG_WARN("ReturnButton: no Button component found on '{}'",
+                 GetGameObject()->GetName().c_str());
+    }
+    if (kMainMenuButtonUUIDs.size() != mMainMenuButtons.size())
+    {
+        for (const auto& uuid : kMainMenuButtonUUIDs)
+        {
+            auto* scene = mts::SceneSystem::GetCurrentScene();
+            if (!scene)
+                return;
+            auto* go = scene->FindGameObjectByUUID(uuid);
+            if (go)
+            {
+                auto* btn = go->GetComponent<mts::Button>();
+                if (btn)
+                    mMainMenuButtons.push_back(btn);
+                else
+                    LOG_WARN("ReturnButton: main menu button '{}' does not have a Button component",
+                             go->GetName().c_str());
+            }
+            else
+                LOG_WARN("ReturnButton: main menu button '{}' not found in scene", uuid.ToString());
+        }
+    }
 	if (mButton)
 		mClickId = mButton->mOnClick.Subscribe(
 			[this]()

@@ -7,6 +7,7 @@
  */
 
 #pragma once
+#include <vector>
 #include "Engine/Scripting/ScriptBase.h"
 #include "Engine/Delegate/Delegate.h"
 
@@ -40,4 +41,10 @@ class QuitButton : public mts::ScriptBase
     mts::Button* mNoButton{nullptr};
     mts::Delegate<>::Id mYesClickId{0};
     mts::Delegate<>::Id mNoClickId{0};
+
+    // Sibling main-menu buttons that must be suppressed while the confirm
+    // dialog is open. Their hit areas overlap the Yes/No buttons, so leaving
+    // them enabled causes the underlying button to also fire on the same
+    // mouse release (e.g. "No" click triggering HowToButton).
+    std::vector<mts::Button*> mSiblingButtons;
 };

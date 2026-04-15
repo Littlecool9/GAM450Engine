@@ -21,6 +21,8 @@
 namespace mts
 {
     class GameObject;
+    class SpriteRenderer;
+    class Texture;
 }
 
 class PauseMenuNavigator;
@@ -32,11 +34,28 @@ class PauseMenuPanel : public mts::ScriptBase
 
     void Awake() override;
     void Start() override;
+    void OnUpdate(float dt) override;
 
     // Show or hide every resolved menu member GameObject.
     void SetVisible(bool visible);
 
    private:
+    enum class InputDevice
+    {
+        Keyboard,
+        Controller,
+    };
+
     std::vector<mts::GameObject*> mMembers;
     PauseMenuNavigator* mNavigator{nullptr};
+
+    // Cached sprite + textures for the keyboard/controller instruction swap.
+    mts::SpriteRenderer* mInstructionsSprite{nullptr};
+    mts::Texture* mKeyboardTex{nullptr};
+    mts::Texture* mControllerTex{nullptr};
+
+    InputDevice mActiveDevice{InputDevice::Keyboard};
+    float mLastMouseX{0.0f};
+    float mLastMouseY{0.0f};
+    bool mMouseInitialized{false};
 };

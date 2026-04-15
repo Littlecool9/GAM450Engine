@@ -30,6 +30,21 @@ void QuitButton::Init()
         mConfirmPrompt = scene->FindGameObjectByName("MainMenu_Confirm_Prompt");
         mConfirmYes    = scene->FindGameObjectByName("MainMenu_Confirm_Yes");
         mConfirmNo     = scene->FindGameObjectByName("MainMenu_Confirm_No");
+
+        // The Yes/No buttons sit on top of the main-menu buttons — their hit
+        // areas overlap. Cache the siblings so we can disable them while the
+        // dialog is open and restore them when the player clicks "No".
+        const char* kSiblingNames[] = {
+            "StartButton", "HowToButton", "OptionsButton", "CreditsButton",
+        };
+        for (const char* name : kSiblingNames)
+        {
+            if (auto* go = scene->FindGameObjectByName(name))
+            {
+                if (auto* btn = go->GetComponent<mts::Button>())
+                    mSiblingButtons.push_back(btn);
+            }
+        }
     }
 
     if (mConfirmYes)
@@ -91,6 +106,12 @@ void QuitButton::ShowConfirm()
     if (mConfirmPrompt) mConfirmPrompt->SetActive(true);
     if (mConfirmYes) mConfirmYes->SetActive(true);
     if (mConfirmNo) mConfirmNo->SetActive(true);
+
+    // Suppress underlying main-menu buttons so clicks on Yes/No don't also
+    // trigger the overlapping button beneath them.
+    if (mButton) mButton->SetEnabled(false);
+    for (auto* btn : mSiblingButtons)
+        if (btn) btn->SetEnabled(false);
 }
 
 void QuitButton::HideConfirm()
@@ -99,4 +120,8 @@ void QuitButton::HideConfirm()
     if (mConfirmPrompt) mConfirmPrompt->SetActive(false);
     if (mConfirmYes) mConfirmYes->SetActive(false);
     if (mConfirmNo) mConfirmNo->SetActive(false);
+
+    if (mButton) mButton->SetEnabled(true);
+    for (auto* btn : mSiblingButtons)
+        if (btn) btn->SetEnabled(true);
 }

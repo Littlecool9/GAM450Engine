@@ -577,13 +577,13 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            800.0,
-                            459.0
+                            460.0,
+                            450.0
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            10.0,
-                            6.130000114440918,
+                            8.0,
+                            8.0,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -1394,6 +1394,49 @@
                 {
                     "Type": "Button",
                     "Data": {}
+                }
+            ]
+        },
+        {
+            "UUID": "a985ca0b-aae0-4992-9372-eaac0cd6bd51",
+            "Name": "Instruction",
+            "Layer": 0,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1140.0,
+                            450.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            8.0,
+                            8.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 101,
+                        "TextureResource": "Data/Resources/InstructionsXbox.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
                 }
             ]
         }

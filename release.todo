@@ -5,7 +5,7 @@
 [x] Checkpoint sprite (Josh)
 	[x] Send reference files to Josh (Rahul)
 [x] Tileset fix (Rahul)
-	[-] Remapping tilesets (Jackey)
+	[x] Remapping tilesets (Jackey)
 [x] Player hit needs to be updated (Josh)
 [x] Gamepad controls needs to be shown (Rahul)
 [x] Responsive control for music (Jackey)
@@ -18,6 +18,13 @@
 	[x] Attack - X / X
 	[x] Heavy attack - hold X / hold X
 [x] In-game control sprites update (Rahul)
+[-] SFX and Master name change (Josh)
+[-] Menus update (incl. win and lose) (Jackey)
+	[x] Sprites for buttons (Rahul)
+	[-] Add hold text on heavy attack in-game sprite
+	[-] Add recommended with controller screen after the splash screen
+[-] Boss movement fix (Dong)
+	[-] Sprite movement needs to be faster (Dong)
 
 -------------------------
 

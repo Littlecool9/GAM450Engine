@@ -1,0 +1,43 @@
+{
+    "UUID": "d18a8dcd-d1a6-42bc-b9cf-ce9cf81a13b5",
+    "Name": "Instruction",
+    "Layer": 0,
+    "IsActive": true,
+    "Tags": [],
+    "Components": [
+        {
+            "Type": "UITransform",
+            "Data": {
+                "Anchor": "TopLeft",
+                "Offset": [
+                    460.0,
+                    450.0
+                ],
+                "Depth": 0.0,
+                "Scale": [
+                    8.0,
+                    8.0,
+                    1.0
+                ],
+                "Rotation": 0.0
+            }
+        },
+        {
+            "Type": "SpriteRenderer",
+            "Data": {
+                "TintColor": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Alpha": 1.0,
+                "FrameIndex": 0,
+                "ParallaxFactorX": 1.0,
+                "RenderLayer": 101,
+                "TextureResource": "Data/Resources/Instructions.tex",
+                "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+            }
+        }
+    ]
+}

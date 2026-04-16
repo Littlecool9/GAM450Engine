@@ -83,9 +83,16 @@ namespace mts
                 Input::BeginFrame();
                 window.PollEvents();
 
-                if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Escape) ||
-                    Input::IsKeyPressed(Key::Enter) || Input::IsMousePressed(MouseButton::Left) ||
-                    Input::IsMousePressed(MouseButton::Right))
+                if (mts::Input::IsKeyPressed(mts::Key::Space) ||
+                    mts::Input::IsKeyPressed(mts::Key::Escape) ||
+                    mts::Input::IsKeyPressed(mts::Key::Enter) ||
+                    mts::Input::IsMousePressed(mts::MouseButton::Left) ||
+                    mts::Input::IsMousePressed(mts::MouseButton::Right) ||
+                    mts::Input::IsGamepadButtonPressed(mts::GamepadButton::A) ||
+                    mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Start) ||
+                    mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B) ||
+                    mts::Input::IsGamepadButtonPressed(mts::GamepadButton::X) ||
+                    mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Y))
                 {
                     skipFlag = true;
                 }

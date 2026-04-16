@@ -79,6 +79,8 @@ class MenuNavigator : public mts::ScriptBase
     // activated us (e.g., the Enter press on a parent menu's button) does not
     // immediately fire on this navigator's focused entry.
     bool mSkipNextUpdate{false};
+    bool mGamePadLeftNeutral{true};
+    bool mGamePadRightNeutral{true};
 
     glm::vec3 mHighlightTint{1.4f, 1.4f, 0.6f};
 };

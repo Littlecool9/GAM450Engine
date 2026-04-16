@@ -15,6 +15,7 @@
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Button.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Input/Input.h"
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/Time/Time.h"
@@ -64,6 +65,15 @@ void ResumeButton::OnEnable()
             mts::Time::SetTimeScale(1.0f);
             mts::AudioManager::Get().ResumeAll();
         });
+}
+
+void ResumeButton::OnUpdate(float dt)
+{
+    if (mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B))
+    {
+        if (mButton)
+            mButton->mOnClick.Invoke();
+    }
 }
 
 void ResumeButton::OnDisable()

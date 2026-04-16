@@ -30,9 +30,11 @@ void CreditsScrollScript::Awake()
 
 void CreditsScrollScript::OnUpdate(float dt)
 {
-    if (mActionList->IsEmpty() || mts::Input::IsKeyPressed(mts::Key::Escape))
+    if (mActionList->IsEmpty() || mts::Input::IsKeyPressed(mts::Key::Escape) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Start) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B))
         mts::SceneSystem::SwitchScene(1);
-    if (mts::Input::IsKeyDown(mts::Key::Enter) || mts::Input::IsKeyDown(mts::Key::Space))
+    if (mts::Input::IsKeyDown(mts::Key::Enter) || mts::Input::IsKeyDown(mts::Key::Space) || mts::Input::IsGamepadButtonDown(mts::GamepadButton::A))
     {
         mActionList->FastForward();
     }

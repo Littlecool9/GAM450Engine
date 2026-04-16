@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "MenuNavigator.h"
 
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Button.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
@@ -142,11 +143,72 @@ void MenuNavigator::OnUpdate(float /*dt*/)
     using mts::Input;
     using mts::Key;
 
-    if (Input::IsKeyPressed(Key::Up) || Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
+        if (Input::IsGamepadConnected())
+    {
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftY)) < 0.2f) &&
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftX)) < 0.2f))
+        {
+            mGamePadLeftNeutral = true;
+        }
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::RightY)) < 0.2f) &&
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::RightX)) < 0.2f))
+        {
+            mGamePadRightNeutral = true;
+        }
+    }
+
+    bool upPressed = Input::IsKeyPressed(Key::Up) ||
+                     Input::IsGamepadButtonPressed(GamepadButton::DPadUp) ||
+                     (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                      Input::GetGamepadAxis(mts::GamepadAxis::LeftY) < -0.2f) ||
+                     (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                      Input::GetGamepadAxis(mts::GamepadAxis::RightY) < -0.2f);
+
+    bool downPressed = Input::IsKeyPressed(Key::Down) ||
+                       Input::IsGamepadButtonPressed(GamepadButton::DPadDown) ||
+                       (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::LeftY) > 0.2f) ||
+                       (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::RightY) > 0.2f);
+
+    bool rightPressed = Input::IsKeyPressed(Key::Right) ||
+                        Input::IsGamepadButtonPressed(GamepadButton::DPadRight) ||
+                        (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                         Input::GetGamepadAxis(mts::GamepadAxis::LeftX) > 0.2f) ||
+                        (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                         Input::GetGamepadAxis(mts::GamepadAxis::RightX) > 0.2f);
+
+    bool leftPressed = Input::IsKeyPressed(Key::Left) ||
+                       Input::IsGamepadButtonPressed(GamepadButton::DPadLeft) ||
+                       (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::LeftX) < -0.2f) ||
+                       (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::RightX) < -0.2f);
+
+    if (Input::IsGamepadConnected())
+    {
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftY)) > 0.2f) ||
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftX)) > 0.2f))
+        {
+            mGamePadLeftNeutral = false;
+        }
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::RightY)) > 0.2f) ||
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::RightX)) > 0.2f))
+        {
+            mGamePadRightNeutral = false;
+        }
+    }
+
+    if (upPressed || leftPressed)
+    {
         StepCursor(-1);
-    else if (Input::IsKeyPressed(Key::Down) ||
-             Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
+        mts::AudioManager::Get().Play("event:/hero_evade");
+    }
+    else if (downPressed || rightPressed)
+    {
         StepCursor(+1);
+        mts::AudioManager::Get().Play("event:/hero_evade");
+    }
 
     if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
         Input::IsGamepadButtonPressed(GamepadButton::A))

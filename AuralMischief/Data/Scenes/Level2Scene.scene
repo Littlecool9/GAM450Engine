@@ -12196,7 +12196,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -12248,7 +12248,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,

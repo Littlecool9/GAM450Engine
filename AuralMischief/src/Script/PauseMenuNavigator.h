@@ -116,6 +116,8 @@ class PauseMenuNavigator : public mts::ScriptBase
     int mConfirmCursor{1};  // default to "No" — the safe choice
     bool mPanelVisible{false};
     bool mHighlightApplied{false};
+    bool mGamePadLeftNeutral{true};
+    bool mGamePadRightNeutral{true};
 
     // Highlight tint multiplier applied to the focused slot's sprites.
     glm::vec3 mHighlightTint{1.4f, 1.4f, 0.6f};

@@ -182,27 +182,86 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
     using mts::Input;
     using mts::Key;
 
+    if (Input::IsGamepadConnected())
+    {
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftY)) < 0.2f) &&
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftX)) < 0.2f))
+        {
+            mGamePadLeftNeutral = true;
+        }
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::RightY)) < 0.2f) &&
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::RightX)) < 0.2f))
+        {
+            mGamePadRightNeutral = true;
+        }
+    }
+
+    bool upPressed = Input::IsKeyPressed(Key::Up) ||
+                     Input::IsGamepadButtonPressed(GamepadButton::DPadUp) ||
+                     (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                      Input::GetGamepadAxis(mts::GamepadAxis::LeftY) < -0.2f) ||
+                     (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                      Input::GetGamepadAxis(mts::GamepadAxis::RightY) < -0.2f);
+
+    bool downPressed = Input::IsKeyPressed(Key::Down) ||
+                       Input::IsGamepadButtonPressed(GamepadButton::DPadDown) ||
+                       (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::LeftY) > 0.2f) ||
+                       (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::RightY) > 0.2f);
+
+    bool rightPressed = Input::IsKeyPressed(Key::Right) ||
+                        Input::IsGamepadButtonPressed(GamepadButton::DPadRight) ||
+                        (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                         Input::GetGamepadAxis(mts::GamepadAxis::LeftX) > 0.2f) ||
+                        (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                         Input::GetGamepadAxis(mts::GamepadAxis::RightX) > 0.2f);
+
+    bool leftPressed = Input::IsKeyPressed(Key::Left) ||
+                       Input::IsGamepadButtonPressed(GamepadButton::DPadLeft) ||
+                       (Input::IsGamepadConnected() && mGamePadLeftNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::LeftX) < -0.2f) ||
+                       (Input::IsGamepadConnected() && mGamePadRightNeutral &&
+                        Input::GetGamepadAxis(mts::GamepadAxis::RightX) < -0.2f);
+
+    if (Input::IsGamepadConnected())
+    {
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftY)) > 0.2f) ||
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::LeftX)) > 0.2f))
+        {
+            mGamePadLeftNeutral = false;
+        }
+        if ((abs(Input::GetGamepadAxis(mts::GamepadAxis::RightY)) > 0.2f) ||
+            (abs(Input::GetGamepadAxis(mts::GamepadAxis::RightX)) > 0.2f))
+        {
+            mGamePadRightNeutral = false;
+        }
+    }
+
     if (mActiveGroup == Group::Main)
     {
-        if (Input::IsKeyPressed(Key::Up) || Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
+        if (upPressed)
+        {
             SetMainCursor(mMainCursor - 1);
-        else if (Input::IsKeyPressed(Key::Down) ||
-                 Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
+            mts::AudioManager::Get().Play("event:/hero_evade");
+        }
+        else if (downPressed)
+        {
             SetMainCursor(mMainCursor + 1);
+            mts::AudioManager::Get().Play("event:/hero_evade");
+        }
 
         if (mMainCursor == kMainVolume || mMainCursor == kMainSFX)
         {
             // Volume/SFX slot — Left/Right step volume directly via the
             // existing button click handlers.
             auto& slot = mMainItems[mMainCursor];
-            if ((Input::IsKeyPressed(Key::Left) ||
-                 Input::IsGamepadButtonPressed(GamepadButton::DPadLeft)) &&
+            if (leftPressed &&
                 slot.buttons.size() > 0 && slot.buttons[0])
             {
                 slot.buttons[0]->mOnClick.Invoke();
             }
-            else if ((Input::IsKeyPressed(Key::Right) ||
-                      Input::IsGamepadButtonPressed(GamepadButton::DPadRight)) &&
+            else if (rightPressed &&
                      slot.buttons.size() > 1 && slot.buttons[1])
             {
                 slot.buttons[1]->mOnClick.Invoke();
@@ -221,11 +280,9 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
     }
     else  // Group::Confirm
     {
-        if (Input::IsKeyPressed(Key::Left) ||
-            Input::IsGamepadButtonPressed(GamepadButton::DPadLeft))
+        if (leftPressed)
             SetConfirmCursor(kConfirmYes);
-        else if (Input::IsKeyPressed(Key::Right) ||
-                 Input::IsGamepadButtonPressed(GamepadButton::DPadRight))
+        else if (rightPressed)
             SetConfirmCursor(kConfirmNo);
 
         if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||

@@ -88,8 +88,8 @@ void PauseButton::TogglePause()
         mts::Time::SetTimeScale(0.0f);
         mPausedByThis = true;
         LOG_INFO("PauseButton: game paused");
-        if (mAudio)
-            mAudio->PauseAll();
+        //if (mAudio)
+          //  mAudio->PauseAll();
         if (mMenuPanel)
             mMenuPanel->SetVisible(true);
         return;

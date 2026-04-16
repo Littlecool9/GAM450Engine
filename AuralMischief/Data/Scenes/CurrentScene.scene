@@ -10003,7 +10003,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -10055,7 +10055,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -10549,7 +10549,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 210,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10600,7 +10600,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 14,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10656,7 +10656,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 208,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10707,7 +10707,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 12,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10761,7 +10761,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 55,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10812,7 +10812,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 95,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10868,7 +10868,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 48,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10919,7 +10919,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 97,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11377,7 +11377,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 212,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11428,7 +11428,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 15,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11482,7 +11482,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 210,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11533,7 +11533,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 14,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11677,7 +11677,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 44,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11728,7 +11728,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 61,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11784,7 +11784,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 44,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11835,7 +11835,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 61,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16580,7 +16580,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 48,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16631,7 +16631,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 95,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16685,7 +16685,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16736,7 +16736,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 97,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16778,7 +16778,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16829,7 +16829,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16880,7 +16880,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16928,7 +16928,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,

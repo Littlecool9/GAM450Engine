@@ -29,6 +29,7 @@ class ResumeButton : public mts::ScriptBase
     void Init() override;
     void OnEnable() override;
     void OnDisable() override;
+    void OnUpdate(float) override;
 
    private:
     mts::Button* mButton{nullptr};

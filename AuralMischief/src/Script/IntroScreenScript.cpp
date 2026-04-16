@@ -60,7 +60,12 @@ void IntroScreenScript::OnUpdate(float dt)
     if (mts::Input::IsKeyPressed(mts::Key::Space) || mts::Input::IsKeyPressed(mts::Key::Escape) ||
         mts::Input::IsKeyPressed(mts::Key::Enter) ||
         mts::Input::IsMousePressed(mts::MouseButton::Left) ||
-        mts::Input::IsMousePressed(mts::MouseButton::Right))
+        mts::Input::IsMousePressed(mts::MouseButton::Right) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::A) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Start) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::X) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::Y))
     {
         mElapsed = 0.0f;
         ++mCurrentIndex;

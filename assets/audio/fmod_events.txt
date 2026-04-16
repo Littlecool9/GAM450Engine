@@ -51,6 +51,7 @@ BGM:
 ----
 
 event:/lvl1_bgm
+event:/lvl2_bgm
 event:/main_menu
 
 ---

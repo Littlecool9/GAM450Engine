@@ -8472,7 +8472,7 @@
                             "SFXVolume": 1,
                             "UIVolume": 1,
                             "AmbienceVolume": 1,
-                            "MusicEventPath": "event:/lvl1_bgm",
+                            "MusicEventPath": "event:/lvl2_bgm",
                             "Bpm": 120,
                             "BeatsPerBar": 4,
                             "OffsetSec": 0

@@ -1,5 +1,6 @@
 /**
  * @file PostProcessStack.cpp
+ * @author Jackey Cen
  * @brief Post-processing pipeline execution with ping-pong FBOs
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -124,11 +125,15 @@ namespace mts
 
         // position: location 0
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);
         // uv: location 1
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
-                              (void*)(2 * sizeof(float)));
+        glVertexAttribPointer(1,
+                              2,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              4 * sizeof(float),
+                              (void*) (2 * sizeof(float)));
 
         glBindVertexArray(0);
     }
@@ -192,7 +197,9 @@ namespace mts
                 glClear(GL_COLOR_BUFFER_BIT);
 
                 shader->UseProgram();
-                effect->SetUniforms(shader, pass, mFBO[currentRead].GetWidth(),
+                effect->SetUniforms(shader,
+                                    pass,
+                                    mFBO[currentRead].GetWidth(),
                                     mFBO[currentRead].GetHeight());
 
                 // Bind source texture
@@ -228,9 +235,9 @@ namespace mts
         if (needsPrevFrame && mPrevFrameFBO.IsValid())
         {
             // Copy current result to previous frame FBO via blit
-            glBindFramebuffer(GL_READ_FRAMEBUFFER, mFBO[currentRead].IsValid()
-                                                       ? mFBO[currentRead].GetColorTexture()
-                                                       : 0);
+            glBindFramebuffer(
+                GL_READ_FRAMEBUFFER,
+                mFBO[currentRead].IsValid() ? mFBO[currentRead].GetColorTexture() : 0);
             // Use glBlitFramebuffer for the copy
             GLuint srcFBO = 0;
             // We need the actual FBO handle. Since Framebuffer only exposes Bind(),
@@ -253,7 +260,10 @@ namespace mts
         }
 
         // Blit final result to default framebuffer
-        BlitToScreen(mFBO[currentRead].GetColorTexture(), viewportX, viewportY, viewportW,
+        BlitToScreen(mFBO[currentRead].GetColorTexture(),
+                     viewportX,
+                     viewportY,
+                     viewportW,
                      viewportH);
     }
 

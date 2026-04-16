@@ -1,5 +1,6 @@
 /**
  * @file InputGuidanceScript.cpp
+ * @author rahul
  * @brief  Shows or hides the SpriteRenderer based on whether a gamepad is connected.
  *         Keyboard guidance objects have ForController = false (visible when no pad).
  *         Controller guidance objects have ForController = true (visible when pad connected).
@@ -65,5 +66,5 @@ void InputGuidanceScript::GetInspectorFields(std::vector<mts::ScriptField>& fiel
 {
     fields.push_back({.name = "For Controller",
                       .type = mts::ScriptField::Type::Bool,
-                      .ptr  = {.b = &mForController}});
+                      .ptr = {.b = &mForController}});
 }

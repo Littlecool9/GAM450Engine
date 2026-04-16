@@ -1,7 +1,7 @@
 /**
  * @file CreditsScrollScript.h
  * @author josh.siegel
- * @brief
+ * @brief  credits scroll script
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -10,7 +10,6 @@
 #pragma once
 #include "Engine/EntitySystem/Component/ActionList.h"
 #include "Engine/Scripting/ScriptBase.h"
-
 
 class CreditsScrollScript : public mts::ScriptBase
 {

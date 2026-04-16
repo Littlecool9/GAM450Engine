@@ -1,4 +1,12 @@
-
+/**
+ * @file UIPanels.h
+ * @author Jackey Cen
+ * @brief  Script that shows/hides a group of UI panel GameObjects; shared pause/unpause path for
+ * ESC key and pause-icon button.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
 
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"
@@ -28,8 +36,7 @@ class UIPanels : public mts::ScriptBase
     // header pause icon.
     void SetPanelActive(bool active);
 
-
-    private:
+   private:
     mts::Button* mButton{nullptr};
     mts::Delegate<>::Id mClickId{0};
     std::vector<mts::UUID> kMemberUUIDs;

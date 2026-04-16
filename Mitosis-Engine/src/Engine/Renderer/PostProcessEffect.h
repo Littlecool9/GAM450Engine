@@ -1,5 +1,6 @@
 /**
  * @file PostProcessEffect.h
+ * @author Jackey Cen
  * @brief Base class for post-processing effects and built-in effect types
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

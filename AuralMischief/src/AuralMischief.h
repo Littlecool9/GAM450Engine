@@ -1,3 +1,13 @@
+/**
+ * @file AuralMischief.h
+ * @author sumin.park
+ * @brief  Application subclass for AuralMischief; registers all scripts, configures window props,
+ * initial scene, scene registry, and splash screens.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
+
 #pragma once
 #include "pch.h"
 

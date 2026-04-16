@@ -1,6 +1,6 @@
 /**
  * @file HazardCollider.h
- * @author 11210
+ * @author Jackey Cen
  * @brief // TODO: Add a brief description of this header
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

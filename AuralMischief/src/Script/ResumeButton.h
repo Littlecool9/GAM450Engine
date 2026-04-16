@@ -1,5 +1,6 @@
 /**
  * @file ResumeButton.h
+ * @author Jackey Cen
  * @brief Button script on the pause menu's "Resume" entry. Forwards the click
  *        to the scene's PauseButton::TogglePause() so pause/unpause and
  *        menu visibility stay in sync with the ESC shortcut and the header

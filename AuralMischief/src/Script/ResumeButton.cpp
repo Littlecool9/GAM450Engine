@@ -1,5 +1,6 @@
 /**
  * @file ResumeButton.cpp
+ * @author Jackey Cen
  * @brief Resume button on the pause menu.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -39,8 +40,9 @@ void ResumeButton::Init()
 
     if (!mPauseButton)
     {
-        LOG_WARN("ResumeButton: could not locate PauseButton script in scene — "
-                 "falling back to direct time/audio restore");
+        LOG_WARN(
+            "ResumeButton: could not locate PauseButton script in scene — "
+            "falling back to direct time/audio restore");
     }
 }
 

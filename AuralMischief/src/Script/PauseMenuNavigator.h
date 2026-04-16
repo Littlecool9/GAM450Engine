@@ -1,5 +1,6 @@
 /**
  * @file PauseMenuNavigator.h
+ * @author Jackey Cen
  * @brief Keyboard navigation, focus signifier, and return-to-main-menu
  *        confirmation dialog for the pause menu. Lives as a sibling script on
  *        the PauseMenuPanel GameObject and drives all focus state for the
@@ -122,9 +123,15 @@ class PauseMenuNavigator : public mts::ScriptBase
     // UUID-based GO bindings configured in the scene JSON "bindings" array.
     // Index order defined by the Slot enum above.
     mts::UUID mBindingUUIDs[SlotCount] = {
-        mts::UUID::InvalidID, mts::UUID::InvalidID, mts::UUID::InvalidID,
-        mts::UUID::InvalidID, mts::UUID::InvalidID, mts::UUID::InvalidID,
-        mts::UUID::InvalidID, mts::UUID::InvalidID, mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
+        mts::UUID::InvalidID,
         mts::UUID::InvalidID,
     };
     mts::GameObject* mBindingGOs[SlotCount]{};

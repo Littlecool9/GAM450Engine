@@ -1,5 +1,6 @@
 /**
  * @file Framebuffer.h
+ * @author Jackey Cen
  * @brief OpenGL framebuffer object wrapper for off-screen rendering
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

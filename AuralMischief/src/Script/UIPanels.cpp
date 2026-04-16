@@ -1,3 +1,12 @@
+/**
+ * @file UIPanels.h
+ * @author Jackey Cen
+ * @brief  Script that shows/hides a group of UI panel GameObjects; shared pause/unpause path for
+ * ESC key and pause-icon button.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
 #include "pch.h"
 #include "UIPanels.h"
 
@@ -47,8 +56,7 @@ void UIPanels::DeserializeFields(mts::JsonValue const& fields)
         for (size_t i = 0; i < uiObjectCount; ++i)
         {
             const auto& uiObjectJson = uiObjectsArray[i];
-            kMemberUUIDs.emplace_back(
-                mts::UUID::FromString(uiObjectJson.GetString()));
+            kMemberUUIDs.emplace_back(mts::UUID::FromString(uiObjectJson.GetString()));
         }
     }
 }

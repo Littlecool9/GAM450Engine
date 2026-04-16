@@ -15,7 +15,7 @@
 #include "Engine/EntitySystem/Component/EnemyBehavior/EnemyAgent.h"
 #include <Engine/EntitySystem/Component/Transform.h>
 #include <Engine/EntitySystem/GameObject/GameObject.h>
-#include <Engine/EntitySystem/\Component/SpriteRenderer.h>
+#include <Engine/EntitySystem/Component/SpriteRenderer.h>
 #include <fmt/base.h>
 
 #include "../EnemyController.h"
@@ -34,8 +34,8 @@ namespace mts
         {
             auto* p = it->second;
 
-            if (abs(state.GetVectorToPlayer().x) <= std::get<float>(p->GetValue())
-                && abs(state.GetVectorToPlayer().y) <= std::get<float>(p->GetValue()))
+            if (abs(state.GetVectorToPlayer().x) <= std::get<float>(p->GetValue()) &&
+                abs(state.GetVectorToPlayer().y) <= std::get<float>(p->GetValue()))
             {
                 return false;
             }
@@ -97,8 +97,8 @@ namespace mts
         if (it != s.params.end() && it->second != nullptr)
         {
             const float aggroRange = std::get<float>(it->second->GetValue());
-            if (abs(s.GetVectorToPlayer().x) <= aggroRange
-                && abs(s.GetVectorToPlayer().y) <= controller->GetAggroYRange())
+            if (abs(s.GetVectorToPlayer().x) <= aggroRange &&
+                abs(s.GetVectorToPlayer().y) <= controller->GetAggroYRange())
             {
                 controller->SetDesiredVelocity(glm::vec2(0.0f));
                 rb->SetVelocity({0.0f, rb->GetVelocity().y});

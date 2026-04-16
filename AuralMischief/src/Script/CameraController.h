@@ -1,8 +1,8 @@
 /**
  * @file CameraController.h
  * @author Jackey Cen
- * @brief: Camera control script for handling camera behavior such as zooming and shaking and
- * behavior in the scene.
+ * @brief  script for camera behavior control, including zoom and shake effects, as well as optional
+ * target following.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -37,8 +37,6 @@ class CameraController : public mts::ScriptBase
     SCRIPT_CLASS(CameraController);
     bool GetAndInitCamera(mts::ConductorSystem&);
 
-    
-
    private:
     // Define Zoom Process: When the zoom is triggered, we set a target zoom level and a zoom
     // speed. Each frame, we smoothly interpolate the current zoom level towards the target zoom
@@ -60,11 +58,11 @@ class CameraController : public mts::ScriptBase
     float currentHeight = 0.0f;   // Current height of the camera's view (for zooming)
 
     // Zoom parameters
-    float zoomSpeed = 1.0f;           // Speed of zooming
-    float targetZoom = 1.0f;          // Desired zoom level
-    float currentZoom = 1.0f;         // Current zoom level
-    const float originalZoom = 1.0f;  // Original zoom level (for anchoring)
-    bool isZooming = false;           // Flag to indicate if zooming is in progress
+    float zoomSpeed = 1.0f;                         // Speed of zooming
+    float targetZoom = 1.0f;                        // Desired zoom level
+    float currentZoom = 1.0f;                       // Current zoom level
+    const float originalZoom = 1.0f;                // Original zoom level (for anchoring)
+    bool isZooming = false;                         // Flag to indicate if zooming is in progress
     std::queue<std::pair<float, float>> zoomQueue;  // Queue to handle multiple zoom requests
 
     // Shake parameters

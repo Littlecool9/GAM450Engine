@@ -1,5 +1,6 @@
 /**
  * @file IntroScreenScript.cpp
+ * @author rahul
  * @brief Plays a fullscreen image sequence (fade-in / hold / fade-out) at scene start,
  *        mirroring the SplashScreen behaviour but driven from within a scene.
  *
@@ -25,7 +26,7 @@ static const char* kTexPaths[] = {
 
 void IntroScreenScript::Start()
 {
-    mMesh   = mts::ResourceManager::GetMesh("Engine/Resources/DefaultMeshResource.mesh");
+    mMesh = mts::ResourceManager::GetMesh("Engine/Resources/DefaultMeshResource.mesh");
     mShader = mts::ResourceManager::GetShader("Engine/Resources/DefaultShaderResource.shader");
 
     if (!mMesh || !mShader)
@@ -45,9 +46,9 @@ void IntroScreenScript::Start()
     }
 
     mCurrentIndex = 0;
-    mElapsed      = 0.0f;
+    mElapsed = 0.0f;
     mCurrentAlpha = 0.0f;
-    mDone         = mEntries.empty();
+    mDone = mEntries.empty();
 }
 
 void IntroScreenScript::OnUpdate(float dt)
@@ -56,10 +57,9 @@ void IntroScreenScript::OnUpdate(float dt)
         return;
 
     // Advance to next image on any key/mouse press
-    if (mts::Input::IsKeyPressed(mts::Key::Space)           ||
-        mts::Input::IsKeyPressed(mts::Key::Escape)          ||
-        mts::Input::IsKeyPressed(mts::Key::Enter)           ||
-        mts::Input::IsMousePressed(mts::MouseButton::Left)  ||
+    if (mts::Input::IsKeyPressed(mts::Key::Space) || mts::Input::IsKeyPressed(mts::Key::Escape) ||
+        mts::Input::IsKeyPressed(mts::Key::Enter) ||
+        mts::Input::IsMousePressed(mts::MouseButton::Left) ||
         mts::Input::IsMousePressed(mts::MouseButton::Right))
     {
         mElapsed = 0.0f;
@@ -74,8 +74,8 @@ void IntroScreenScript::OnUpdate(float dt)
 
     mElapsed += dt;
 
-    const IntroEntry& entry     = mEntries[mCurrentIndex];
-    const float       totalTime = entry.fadeInDuration + entry.holdDuration + entry.fadeOutDuration;
+    const IntroEntry& entry = mEntries[mCurrentIndex];
+    const float totalTime = entry.fadeInDuration + entry.holdDuration + entry.fadeOutDuration;
 
     if (mElapsed >= totalTime)
     {
@@ -106,22 +106,22 @@ void IntroScreenScript::OnRender()
 
     // Full-screen model matrix (screen-space units, matching SplashScreen)
     glm::vec4 vp = mts::Renderer::GetViewportInfo();
-    float     w  = vp.z / mts::PixelsPerUnit;
-    float     h  = vp.w / mts::PixelsPerUnit;
+    float w = vp.z / mts::PixelsPerUnit;
+    float h = vp.w / mts::PixelsPerUnit;
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(w * 0.5f, h * 0.5f, 0.0f));
-    model           = glm::scale(model, glm::vec3(w, h, 1.0f));
+    model = glm::scale(model, glm::vec3(w, h, 1.0f));
 
     mts::RenderCommand cmd;
-    cmd.shader    = mShader;
-    cmd.texture   = mEntries[mCurrentIndex].texture;
-    cmd.mesh      = mMesh;
-    cmd.model     = model;
+    cmd.shader = mShader;
+    cmd.texture = mEntries[mCurrentIndex].texture;
+    cmd.mesh = mMesh;
+    cmd.model = model;
     cmd.tintColor = {1.0f, 1.0f, 1.0f};
-    cmd.alpha     = mCurrentAlpha;
-    cmd.hasAlpha  = true;
-    cmd.isUI      = true;
-    cmd.sortKey   = 9999.0f;
+    cmd.alpha = mCurrentAlpha;
+    cmd.hasAlpha = true;
+    cmd.isUI = true;
+    cmd.sortKey = 9999.0f;
 
     mts::Renderer::Submit(cmd);
 }

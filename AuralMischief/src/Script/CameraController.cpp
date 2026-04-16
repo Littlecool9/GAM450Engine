@@ -1,7 +1,8 @@
 /**
  * @file CameraController.cpp
  * @author Jackey Cen
- * @brief // TODO: Add a brief description of this class
+ * @brief: Camera control script for handling camera behavior such as zooming and shaking and
+ * behavior in the scene.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -92,7 +93,6 @@ void CameraController::OnLateUpdate(float dt)
         zoomSpeed = nextZoom.second;
     }
 
-
     // Modify mainCamera's parameters
     HandleZoom(dt);   // Update mainCamera with new zoom level if needed
     HandleShake(dt);  // Update mainCamera position with shake offset if shaking
@@ -100,11 +100,10 @@ void CameraController::OnLateUpdate(float dt)
     mts::Renderer::SetActiveCamera(*mainCamera);
 }
 
-
 void CameraController::TriggerZoom(float zoomLevel, float speed)
 {
-    //targetZoom = zoomLevel;
-    //zoomSpeed = speed;
+    // targetZoom = zoomLevel;
+    // zoomSpeed = speed;
     zoomQueue.push(std::make_pair(zoomLevel, speed));
 }
 
@@ -166,13 +165,12 @@ void CameraController::HandleZoom(float dt)
     // Update the camera's projection matrix
     if (cachedCameraComponent)
     {
-
         mainCamera->proj = glm::ortho(-currentWidth / 2.0f,
-                                        currentWidth / 2.0f,
-                                        -currentHeight / 2.0f,
-                                        currentHeight / 2.0f,
-                                        cachedCameraComponent->nearPlane,
-                                        cachedCameraComponent->farPlane);
+                                      currentWidth / 2.0f,
+                                      -currentHeight / 2.0f,
+                                      currentHeight / 2.0f,
+                                      cachedCameraComponent->nearPlane,
+                                      cachedCameraComponent->farPlane);
         mainCamera->viewProj =
             mainCamera->proj * mainCamera->view;  // Update view-projection matrix
     }
@@ -185,29 +183,29 @@ void CameraController::HandleShake(float dt)
         shakeDuration -= dt;
         float offsetX = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 2.0f * shakeIntensity;
         float offsetY = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 2.0f * shakeIntensity;
-        
+
         // Apply shake offset to position
         mainCamera->position += glm::vec3(offsetX, offsetY, 0.0f);
         shakeOffset += glm::vec3(offsetX, offsetY, 0.0f);  // Track total offset
-        
+
         // CRITICAL: Update view matrix after position change
         glm::mat4 V(1.0f);
         V = glm::translate(V, -mainCamera->position);  // Simple 2D view: inverse of position
         mainCamera->view = V;
-        
+
         // CRITICAL: Recalculate viewProj
         mainCamera->viewProj = mainCamera->proj * mainCamera->view;
     }
     else if (shakeOffset != glm::vec3(0.0f))  // Only reset ONCE when shake ends
     {
         mainCamera->position -= shakeOffset;  // Remove accumulated shake offset
-        
+
         // Update view matrix for reset position
         glm::mat4 V(1.0f);
         V = glm::translate(V, -mainCamera->position);
         mainCamera->view = V;
         mainCamera->viewProj = mainCamera->proj * mainCamera->view;
-        
+
         shakeOffset = glm::vec3(0.0f);  // Clear offset so this doesn't run again
     }
 }
@@ -230,5 +228,5 @@ bool CameraController::GetAndInitCamera(mts::ConductorSystem& conductor)
     originalWidth = currentWidth = w / mts::PixelsPerUnit;
     originalHeight = currentHeight = h / mts::PixelsPerUnit;
 
-    return true;  
+    return true;
 }

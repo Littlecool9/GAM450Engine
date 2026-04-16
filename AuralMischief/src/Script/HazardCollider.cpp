@@ -1,6 +1,6 @@
 /**
  * @file HazardCollider.cpp
- * @author 11210
+ * @author Jackey Cen
  * @brief // TODO: Add a brief description of this class
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -19,15 +19,15 @@
 void HazardCollider::OnCollisionEnter2D(const mts::Collision2D& collision)
 {
     LOG_INFO("HazardCollider collided with {}", collision.other->GetGameObject()->GetName());
-	if (collision.other->GetGameObject()->GetName() == "Player")
-	{
-		PlayerController* playerScript =
+    if (collision.other->GetGameObject()->GetName() == "Player")
+    {
+        PlayerController* playerScript =
             collision.other->GetGameObject()->GetScript<PlayerController>();
-		if (playerScript)
-		{
+        if (playerScript)
+        {
             LOG_INFO("Player hit hazard, returning to checkpoint");
             playerScript->ReturnToCheckPoint();
             playerScript->TakeDamage(1);
-		}
-	}
+        }
+    }
 }

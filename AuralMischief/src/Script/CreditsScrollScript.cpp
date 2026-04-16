@@ -1,7 +1,7 @@
 /**
  * @file CreditsScrollScript.cpp
  * @author josh.siegel
- * @brief  
+ * @brief  credits scroll script
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *

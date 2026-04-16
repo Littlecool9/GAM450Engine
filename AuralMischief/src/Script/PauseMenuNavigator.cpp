@@ -1,5 +1,6 @@
 /**
  * @file PauseMenuNavigator.cpp
+ * @author Jackey Cen
  * @brief Keyboard navigation, focus signifier, and confirm dialog logic for
  *        the pause menu.
  *
@@ -29,7 +30,7 @@ namespace
 
     // Slot indices into mMainItems for clarity.
     constexpr int kMainVolume = 0;
-    constexpr int kMainSFX    = 1;
+    constexpr int kMainSFX = 1;
     constexpr int kMainResume = 2;
     constexpr int kMainReturn = 3;
 
@@ -62,8 +63,7 @@ void PauseMenuNavigator::DeserializeFields(mts::JsonValue const& fields)
         mts::JsonValue arr = fields["bindings"];
         if (arr.IsArray())
         {
-            const size_t count = std::min(arr.Size(),
-                                          static_cast<size_t>(SlotCount));
+            const size_t count = std::min(arr.Size(), static_cast<size_t>(SlotCount));
             for (size_t i = 0; i < count; ++i)
                 mBindingUUIDs[i] = mts::UUID::FromString(arr[i].GetString());
         }
@@ -78,8 +78,7 @@ void PauseMenuNavigator::SerializeFields(mts::JsonDocument& out) const
     out.EndArray();
 }
 
-void PauseMenuNavigator::GetInspectorFields(
-    std::vector<mts::ScriptField>& fields)
+void PauseMenuNavigator::GetInspectorFields(std::vector<mts::ScriptField>& fields)
 {
     for (int i = 0; i < SlotCount; ++i)
     {
@@ -106,8 +105,7 @@ void PauseMenuNavigator::Awake()
             {
                 mBindingGOs[i] = scene->FindGameObjectByUUID(mBindingUUIDs[i]);
                 if (!mBindingGOs[i])
-                    LOG_WARN("PauseMenuNavigator: binding '{}' UUID not found",
-                             kSlotNames[i]);
+                    LOG_WARN("PauseMenuNavigator: binding '{}' UUID not found", kSlotNames[i]);
             }
         }
     }
@@ -131,8 +129,7 @@ void PauseMenuNavigator::Awake()
 
     // The Yes/No buttons have no dedicated script — the navigator owns their
     // click handlers so all confirm-related logic stays in one place.
-    if (mConfirmItems.size() > kConfirmYes &&
-        !mConfirmItems[kConfirmYes].buttons.empty() &&
+    if (mConfirmItems.size() > kConfirmYes && !mConfirmItems[kConfirmYes].buttons.empty() &&
         mConfirmItems[kConfirmYes].buttons[0])
     {
         auto* yesBtn = mConfirmItems[kConfirmYes].buttons[0];
@@ -148,13 +145,11 @@ void PauseMenuNavigator::Awake()
         mClickSubs.push_back({yesBtn, id});
     }
 
-    if (mConfirmItems.size() > kConfirmNo &&
-        !mConfirmItems[kConfirmNo].buttons.empty() &&
+    if (mConfirmItems.size() > kConfirmNo && !mConfirmItems[kConfirmNo].buttons.empty() &&
         mConfirmItems[kConfirmNo].buttons[0])
     {
         auto* noBtn = mConfirmItems[kConfirmNo].buttons[0];
-        const auto id = noBtn->mOnClick.Subscribe(
-            [this]() { HideReturnConfirm(); });
+        const auto id = noBtn->mOnClick.Subscribe([this]() { HideReturnConfirm(); });
         mClickSubs.push_back({noBtn, id});
     }
 }
@@ -183,14 +178,13 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
     if (!mPanelVisible)
         return;
 
+    using mts::GamepadButton;
     using mts::Input;
     using mts::Key;
-    using mts::GamepadButton;
 
     if (mActiveGroup == Group::Main)
     {
-        if (Input::IsKeyPressed(Key::Up) ||
-            Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
+        if (Input::IsKeyPressed(Key::Up) || Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
             SetMainCursor(mMainCursor - 1);
         else if (Input::IsKeyPressed(Key::Down) ||
                  Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
@@ -218,8 +212,7 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
         }
         else
         {
-            if (Input::IsKeyPressed(Key::Space) ||
-                Input::IsKeyPressed(Key::Enter) ||
+            if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
                 Input::IsGamepadButtonPressed(GamepadButton::A))
             {
                 ActivateFocused();
@@ -235,8 +228,7 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
                  Input::IsGamepadButtonPressed(GamepadButton::DPadRight))
             SetConfirmCursor(kConfirmNo);
 
-        if (Input::IsKeyPressed(Key::Space) ||
-            Input::IsKeyPressed(Key::Enter) ||
+        if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
             Input::IsGamepadButtonPressed(GamepadButton::A))
         {
             ActivateFocused();
@@ -311,10 +303,8 @@ void PauseMenuNavigator::BuildItems()
     mConfirmMembers.clear();
 
     // Main menu focus items
-    mMainItems.push_back(
-        MakeVolumeItem(mBindingGOs[SFXMinus], mBindingGOs[SFXPlus]));
-    mMainItems.push_back(
-        MakeVolumeItem(mBindingGOs[VolumeMinus], mBindingGOs[VolumePlus]));
+    mMainItems.push_back(MakeVolumeItem(mBindingGOs[SFXMinus], mBindingGOs[SFXPlus]));
+    mMainItems.push_back(MakeVolumeItem(mBindingGOs[VolumeMinus], mBindingGOs[VolumePlus]));
     mMainItems.push_back(MakeItem(mBindingGOs[Resume]));
     mMainItems.push_back(MakeItem(mBindingGOs[Return]));
 
@@ -347,8 +337,8 @@ PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeItem(mts::GameObject* go)
     return item;
 }
 
-PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem(
-    mts::GameObject* minusGo, mts::GameObject* plusGo)
+PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem(mts::GameObject* minusGo,
+                                                                 mts::GameObject* plusGo)
 {
     FocusItem item;
     mts::GameObject* gos[] = {minusGo, plusGo};
@@ -371,8 +361,7 @@ PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem(
 // Hover / highlight / cursor
 // ---------------------------------------------------------------------------
 
-void PauseMenuNavigator::SubscribeHover(FocusItem const& item, Group group,
-                                       int index)
+void PauseMenuNavigator::SubscribeHover(FocusItem const& item, Group group, int index)
 {
     for (auto* btn : item.buttons)
     {
@@ -397,8 +386,7 @@ void PauseMenuNavigator::SubscribeHover(FocusItem const& item, Group group,
 void PauseMenuNavigator::ApplyHighlight()
 {
     auto& items = (mActiveGroup == Group::Main) ? mMainItems : mConfirmItems;
-    const int cursor =
-        (mActiveGroup == Group::Main) ? mMainCursor : mConfirmCursor;
+    const int cursor = (mActiveGroup == Group::Main) ? mMainCursor : mConfirmCursor;
 
     if (cursor < 0 || cursor >= static_cast<int>(items.size()))
         return;
@@ -408,9 +396,8 @@ void PauseMenuNavigator::ApplyHighlight()
     {
         if (!item.sprites[i])
             continue;
-        const glm::vec3 base = (i < item.originalTints.size())
-                                   ? item.originalTints[i]
-                                   : glm::vec3(1.0f);
+        const glm::vec3 base =
+            (i < item.originalTints.size()) ? item.originalTints[i] : glm::vec3(1.0f);
         item.sprites[i]->SetTintColor(base * mHighlightTint);
     }
     mHighlightApplied = true;
@@ -427,9 +414,8 @@ void PauseMenuNavigator::ClearHighlight()
         {
             if (!item.sprites[i])
                 continue;
-            const glm::vec3 base = (i < item.originalTints.size())
-                                       ? item.originalTints[i]
-                                       : glm::vec3(1.0f);
+            const glm::vec3 base =
+                (i < item.originalTints.size()) ? item.originalTints[i] : glm::vec3(1.0f);
             item.sprites[i]->SetTintColor(base);
         }
     };
@@ -469,8 +455,7 @@ void PauseMenuNavigator::SetConfirmCursor(int index)
 void PauseMenuNavigator::ActivateFocused()
 {
     auto& items = (mActiveGroup == Group::Main) ? mMainItems : mConfirmItems;
-    const int cursor =
-        (mActiveGroup == Group::Main) ? mMainCursor : mConfirmCursor;
+    const int cursor = (mActiveGroup == Group::Main) ? mMainCursor : mConfirmCursor;
     if (cursor < 0 || cursor >= static_cast<int>(items.size()))
         return;
     auto& item = items[cursor];

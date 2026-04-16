@@ -1,5 +1,6 @@
 /**
  * @file ReturnToMainMenuButton.h
+ * @author Jackey Cen
  * @brief Button script for the pause menu's "Return to Main Menu" entry.
  *        Restores time scale and audio before switching scenes, so the main
  *        menu isn't loaded frozen when the player returns while paused.

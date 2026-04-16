@@ -1,5 +1,6 @@
 /**
  * @file QuitButton.h
+ * @author Jackey Cen
  * @brief  Main-menu Quit button. Shows a confirmation dialog before quitting.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -15,7 +16,7 @@ namespace mts
 {
     class Button;
     class GameObject;
-}
+}  // namespace mts
 
 class QuitButton : public mts::ScriptBase
 {

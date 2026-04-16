@@ -1,5 +1,6 @@
 /**
  * @file CreditsButton.cpp
+ * @author Jackey Cen
  * @brief  Script that switches to the gameplay scene when the main menu button is clicked.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -27,8 +28,7 @@ void CreditsButton::Awake()
 {
     if (mButton)
     {
-        mClickId = mButton->mOnClick.Subscribe(
-            [this]() { mts::SceneSystem::SwitchScene(5); });
+        mClickId = mButton->mOnClick.Subscribe([this]() { mts::SceneSystem::SwitchScene(5); });
     }
 }
 

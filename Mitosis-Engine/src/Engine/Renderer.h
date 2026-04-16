@@ -1,4 +1,13 @@
-﻿#pragma once
+﻿/**
+ * @file Renderer.h
+ * @author josh.siegel
+ * @brief  Core renderer implementation: command queue execution, coordinate conversion, and
+ * viewport management.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
+#pragma once
 #include "SceneSystem/Scene.h"
 #include <glad/glad.h>
 #include <glm/mat4x4.hpp>
@@ -100,12 +109,12 @@ namespace mts
         // MouseToWorld / MouseToUISpace can bridge GLFW-top-relative mouse coords
         // to the OpenGL-bottom-relative game viewport stored in targetViewport.
         static void SetWindowSize(int w, int h);
-        static int  GetWindowWidth()  { return s_windowW; }
-        static int  GetWindowHeight() { return s_windowH; }
+        static int GetWindowWidth() { return s_windowW; }
+        static int GetWindowHeight() { return s_windowH; }
 
         // UI reference resolution. Call SetUIReferenceSize once at app init.
         // GetUIScaleFactor returns (vpW_units / refW_units, vpH_units / refH_units).
-        static void      SetUIReferenceSize(int w, int h);
+        static void SetUIReferenceSize(int w, int h);
         static glm::vec2 GetUIScaleFactor();
 
         // Provide the available screen region; Renderer applies aspect constraint and stores

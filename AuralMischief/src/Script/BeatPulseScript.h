@@ -1,7 +1,7 @@
 /**
  * @file BeatPulseScript.h
- * @brief Scales a sprite with exponential decay on every beat:
- *        s(t) = 1 + A * exp(-k * t), applied uniformly on X and Y.
+ * @author sumin.park
+ * @brief  Scales a sprite with exponential decay on every beat.
  */
 #pragma once
 

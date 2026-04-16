@@ -9775,7 +9775,16 @@
                 {
                     "Type": "NativeScript",
                     "Data": {
-                        "Class": "CheckPoint"
+                        "Class": "CheckPoint",
+                        "Fields": {
+                            "IsBossLocked": true,
+                            "BossUUID": "75a77f30-27e9-439f-a2f7-24d61741ee8f",
+                            "LockedTint": [
+                                1.0,
+                                0.30000001192092896,
+                                0.30000001192092896
+                            ]
+                        }
                     }
                 },
                 {
@@ -13007,6 +13016,102 @@
                         "MeshResource": "Data/Resources/16x8MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
                         "Text": "Volume"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "476abb59-afa4-4106-95bc-2afb5bbd0cb4",
+            "Name": "Checkpoint",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            107.05000305175781,
+                            36.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            3.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "CheckPoint",
+                        "Fields": {
+                            "IsBossLocked": true,
+                            "BossUUID": "75a77f30-27e9-439f-a2f7-24d61741ee8f",
+                            "LockedTint": [
+                                1.0,
+                                0.30000001192092896,
+                                0.30000001192092896
+                            ]
+                        }
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/Checkpoint_3tiles.tex",
+                        "MeshResource": "Data/Resources/1x12MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Animation",
+                    "Data": {
+                        "FrameIndex": 0,
+                        "FrameCount": 12,
+                        "FrameDelay": 0.10000000149011612,
+                        "FrameDuration": 0.10000000149011612,
+                        "IsRunning": 1,
+                        "IsLooping": 1
                     }
                 }
             ]

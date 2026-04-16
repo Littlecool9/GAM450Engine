@@ -1,7 +1,8 @@
 /**
  * @file CheckPoint.cpp
- * @author 11210
- * @brief // TODO: Add a brief description of this class
+ * @author Jackey Cen
+ * @brief: CheckPoint script for player respawn logic. When the player collides with this
+ * checkpoint
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
  *
@@ -14,11 +15,68 @@
 #include "Engine/Physics2D/Collision2D.h"
 #include "Engine/EntitySystem/Component/PhysicsComponents/Collider2D.h"
 #include "Engine/EntitySystem/Component/Transform.h"
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
+#include "Engine/SceneSystem/SceneSystem.h"
+#include "Engine/SceneSystem/Scene.h"
 
 #include "Player/PlayerController.h"
+#include "EnemyBehaviors/EnemyController.h"
+
+void CheckPoint::Init()
+{
+    mBossGO = nullptr;
+    mBossEC = nullptr;
+    mSr = nullptr;
+}
+
+void CheckPoint::Start()
+{
+    mSr = GetGameObject()->GetComponent<mts::SpriteRenderer>();
+    mCollider = GetGameObject()->GetComponent<mts::Collider2D>();
+
+    if (mIsBossLocked && mBossUUID.IsValid())
+    {
+        auto* scene = mts::SceneSystem::GetCurrentScene();
+        if (scene)
+        {
+            mBossGO = scene->FindGameObjectByUUID(mBossUUID);
+            if (mBossGO)
+                mBossEC = mBossGO->GetScript<mts::EnemyController>();
+        }
+    }
+}
+
+void CheckPoint::OnUpdate(float dt)
+{
+    if (!mIsBossLocked || !mSr)
+        return;
+
+    // Validate cached boss GO still in scene — clears cache when boss is destroyed
+    if (mBossEC)
+    {
+        auto* scene = mts::SceneSystem::GetCurrentScene();
+        if (!scene || !scene->FindGameObjectByUUID(mBossUUID))
+        {
+            mBossEC = nullptr;
+            mBossGO = nullptr;
+        }
+    }
+
+    mSr->SetTintColor(IsBossLocking() ? mLockedTint : glm::vec3(1.0f, 1.0f, 1.0f));
+    mCollider->SetIsTrigger(!IsBossLocking());
+}
+
+void CheckPoint::OnDisable()
+{
+    if (mSr)
+        mSr->SetTintColor({1.0f, 1.0f, 1.0f});
+}
 
 void CheckPoint::OnCollisionEnter2D(mts::Collision2D const& collision)
 {
+    if (mIsBossLocked && IsBossLocking())
+        return;
+
     if (collision.other->GetGameObject()->GetName() == "Player")
     {
         PlayerController* playerScript =
@@ -32,6 +90,48 @@ void CheckPoint::OnCollisionEnter2D(mts::Collision2D const& collision)
         playerScript->Heal(
             playerScript->GetMaxHP());  // Heal player to full on checkpoint activation
     }
+}
+
+void CheckPoint::DeserializeFields(mts::JsonValue const& fields)
+{
+    if (fields.Has("IsBossLocked"))
+        mIsBossLocked = fields["IsBossLocked"].GetBool(mIsBossLocked);
+    if (fields.Has("BossUUID"))
+        mBossUUID = mts::UUID::FromString(fields["BossUUID"].GetString());
+    if (fields.Has("LockedTint"))
+        mLockedTint = fields["LockedTint"].GetVec3(mLockedTint);
+}
+
+void CheckPoint::SerializeFields(mts::JsonDocument& out) const
+{
+    out.WriteBool("IsBossLocked", mIsBossLocked);
+    if (mBossUUID.IsValid())
+        out.WriteString("BossUUID", mBossUUID.ToString().c_str());
+    out.WriteVec3("LockedTint", mLockedTint);
+}
+
+void CheckPoint::GetInspectorFields(std::vector<mts::ScriptField>& fields)
+{
+    fields.push_back({.name = "Is Boss Locked",
+                      .type = mts::ScriptField::Type::Bool,
+                      .ptr = {.b = &mIsBossLocked}});
+    fields.push_back({.name = "Boss GO",
+                      .type = mts::ScriptField::Type::GameObject,
+                      .ptr = {.go = &mBossGO},
+                      .uuid = &mBossUUID});
+    fields.push_back({.name = "Locked Tint",
+                      .type = mts::ScriptField::Type::Color,
+                      .ptr = {.v3 = &mLockedTint}});
+}
+
+bool CheckPoint::IsBossLocking()
+{
+    if (!mBossEC)
+        return false;
+    if (!mIsWasLocked && mBossEC->GetIsAgrroed())
+        mIsWasLocked = true;
+
+    return mIsWasLocked && mBossEC->GetCurHP() > 0;
 }
 
 glm::vec3 CheckPoint::GetCheckPointPosition() const

@@ -1,5 +1,6 @@
 /**
  * @file InputGuidanceScript.h
+ * @author rahul
  * @brief  Shows or hides the SpriteRenderer based on whether a gamepad is connected.
  *         Keyboard guidance objects have ForController = false (visible when no pad).
  *         Controller guidance objects have ForController = true (visible when pad connected).

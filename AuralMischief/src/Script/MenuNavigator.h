@@ -1,5 +1,6 @@
 /**
  * @file MenuNavigator.h
+ * @author Jackey Cen
  * @brief Reusable keyboard/gamepad/mouse focus + tint highlight script for any
  *        menu scene (main menu, win screen, lose screen, etc.). The focusable
  *        button list and highlight tint are configured entirely from JSON;

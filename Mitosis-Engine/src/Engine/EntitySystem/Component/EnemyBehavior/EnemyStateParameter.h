@@ -1,6 +1,6 @@
 /**
  * @file EnemyStateParameter.h
- * @author cyclo
+ * @author Dong Ta
  * @brief // TODO: Add a brief description of this header
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

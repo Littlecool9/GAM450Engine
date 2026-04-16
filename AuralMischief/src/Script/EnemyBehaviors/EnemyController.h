@@ -47,6 +47,7 @@ namespace mts
         bool IsDying() const { return mDying; }
         bool IsExploding() const { return mShouldExplode; }
         void Explode();
+        bool GetIsAgrroed() const { return alerted; }
         float GetAggroRange() { return mAggroRange; }
         float GetAttackRange() { return mAttackRange; }
         float GetAggroYRange() { return mAggroYRange; }

@@ -1,5 +1,10 @@
 /**
  * @file BeatPulseScript.cpp
+ * @author sumin.park
+ * @brief  Scales a sprite with exponential decay on every beat.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
  */
 #include "pch.h"
 #include "BeatPulseScript.h"

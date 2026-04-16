@@ -1,5 +1,6 @@
 /**
  * @file MenuNavigator.cpp
+ * @author Jackey Cen
  * @brief Implementation of the reusable menu focus / highlight script.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -30,8 +31,7 @@ void MenuNavigator::DeserializeFields(mts::JsonValue const& fields)
             mButtonUUIDs.clear();
             mButtonUUIDs.reserve(arr.Size());
             for (size_t i = 0; i < arr.Size(); ++i)
-                mButtonUUIDs.emplace_back(
-                    mts::UUID::FromString(arr[i].GetString()));
+                mButtonUUIDs.emplace_back(mts::UUID::FromString(arr[i].GetString()));
         }
     }
 
@@ -142,15 +142,13 @@ void MenuNavigator::OnUpdate(float /*dt*/)
     using mts::Input;
     using mts::Key;
 
-    if (Input::IsKeyPressed(Key::Up) ||
-        Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
+    if (Input::IsKeyPressed(Key::Up) || Input::IsGamepadButtonPressed(GamepadButton::DPadUp))
         StepCursor(-1);
     else if (Input::IsKeyPressed(Key::Down) ||
              Input::IsGamepadButtonPressed(GamepadButton::DPadDown))
         StepCursor(+1);
 
-    if (Input::IsKeyPressed(Key::Space) ||
-        Input::IsKeyPressed(Key::Enter) ||
+    if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
         Input::IsGamepadButtonPressed(GamepadButton::A))
         ActivateFocused();
 }
@@ -176,16 +174,14 @@ void MenuNavigator::EnsureResolved()
         auto* go = scene->FindGameObjectByUUID(uuid);
         if (!go)
         {
-            LOG_WARN("MenuNavigator: button UUID '{}' not found in scene",
-                     uuid.ToString());
+            LOG_WARN("MenuNavigator: button UUID '{}' not found in scene", uuid.ToString());
             continue;
         }
 
         auto* btn = go->GetComponent<mts::Button>();
         if (!btn)
         {
-            LOG_WARN("MenuNavigator: GO '{}' has no Button, skipping",
-                     go->GetName().c_str());
+            LOG_WARN("MenuNavigator: GO '{}' has no Button, skipping", go->GetName().c_str());
             continue;
         }
 
@@ -195,9 +191,10 @@ void MenuNavigator::EnsureResolved()
         if (item.sprite)
             item.originalTint = item.sprite->GetTintColor();
         else
-            LOG_WARN("MenuNavigator: GO '{}' has Button but no SpriteRenderer; "
-                     "highlight will have no visual effect",
-                     go->GetName().c_str());
+            LOG_WARN(
+                "MenuNavigator: GO '{}' has Button but no SpriteRenderer; "
+                "highlight will have no visual effect",
+                go->GetName().c_str());
 
         mItems.push_back(item);
     }
@@ -231,8 +228,7 @@ void MenuNavigator::SubscribeAll()
         if (!btn)
             continue;
         const int index = static_cast<int>(i);
-        const auto id = btn->mOnHoverEnter.Subscribe(
-            [this, index]() { SetCursor(index); });
+        const auto id = btn->mOnHoverEnter.Subscribe([this, index]() { SetCursor(index); });
         mHoverSubs.push_back({btn, id});
     }
 }

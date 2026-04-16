@@ -1,5 +1,6 @@
 /**
  * @file Framebuffer.cpp
+ * @author Jackey Cen
  * @brief OpenGL framebuffer object wrapper for off-screen rendering
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -68,7 +69,14 @@ namespace mts
         // Create color attachment texture
         glGenTextures(1, &mColorTexture);
         glBindTexture(GL_TEXTURE_2D, mColorTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     GL_RGBA8,
+                     width,
+                     height,
+                     0,
+                     GL_RGBA,
+                     GL_UNSIGNED_BYTE,
                      nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -76,7 +84,10 @@ namespace mts
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
         // Attach color to FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mColorTexture,
+        glFramebufferTexture2D(GL_FRAMEBUFFER,
+                               GL_COLOR_ATTACHMENT0,
+                               GL_TEXTURE_2D,
+                               mColorTexture,
                                0);
 
         // Optional depth renderbuffer (needed for scene rendering with depth test)
@@ -85,8 +96,10 @@ namespace mts
             glGenRenderbuffers(1, &mDepthRBO);
             glBindRenderbuffer(GL_RENDERBUFFER, mDepthRBO);
             glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
-                                     mDepthRBO);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER,
+                                      GL_DEPTH_ATTACHMENT,
+                                      GL_RENDERBUFFER,
+                                      mDepthRBO);
             glBindRenderbuffer(GL_RENDERBUFFER, 0);
         }
 

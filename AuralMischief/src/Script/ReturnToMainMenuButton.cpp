@@ -1,5 +1,6 @@
 /**
  * @file ReturnToMainMenuButton.cpp
+ * @author Jackey Cen
  * @brief Return-to-main-menu button on the pause menu.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -42,8 +43,9 @@ void ReturnToMainMenuButton::Init()
     }
     if (!mNavigator)
     {
-        LOG_WARN("ReturnToMainMenuButton: no PauseMenuNavigator found — "
-                 "click will fall back to immediate scene switch");
+        LOG_WARN(
+            "ReturnToMainMenuButton: no PauseMenuNavigator found — "
+            "click will fall back to immediate scene switch");
     }
 }
 

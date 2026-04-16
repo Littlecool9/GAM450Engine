@@ -1,6 +1,6 @@
 /**
  * @file EnemyAttackAction.cpp
- * @author cyclo
+ * @author Dong Ta
  * @brief // TODO: Add a brief description of this class
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -88,8 +88,7 @@ namespace mts
     {
         if (state.GetInAction() ||
             std::get<float>(state.params.at(HashAction("AttackCooldown"))->GetValue()) > 0 ||
-            (state.GetVectorToPlayer().x) > 3.2f ||
-            abs(state.GetVectorToPlayer().y) > 1.5f)
+            (state.GetVectorToPlayer().x) > 3.2f || abs(state.GetVectorToPlayer().y) > 1.5f)
         {
             return false;
         }
@@ -159,8 +158,7 @@ namespace mts
         }
 
         // Keep the hitbox following the boss during lunge
-        auto* mAttackHitbox =
-            agent->GetGameObject()->GetScript<EnemyController>()->GetAtk1Hitbox();
+        auto* mAttackHitbox = agent->GetGameObject()->GetScript<EnemyController>()->GetAtk1Hitbox();
         if (mAttackHitbox && !mAttackHitbox->IsDead() && mAttackHitbox->IsActive())
         {
             auto* bossTr = agent->GetGameObject()->GetComponent<Transform>();

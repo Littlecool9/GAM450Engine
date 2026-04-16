@@ -1,5 +1,6 @@
 /**
  * @file PauseMenuPanel.h
+ * @author Jackey Cen
  * @brief Visibility controller for the pause menu. Resolves the menu's member
  *        GameObjects (background, instructions, volume buttons, resume,
  *        return-to-main-menu) by name at scene load and toggles their active
@@ -23,7 +24,7 @@ namespace mts
     class GameObject;
     class SpriteRenderer;
     class Texture;
-}
+}  // namespace mts
 
 class PauseMenuNavigator;
 

@@ -22,14 +22,15 @@
 namespace mts
 {
     void SplashScreen::Run(const std::vector<SplashScreenConfig>& configs,
-                           Window&                                window,
-                           bool&                                  isRunning)
+                           Window& window,
+                           bool& isRunning)
     {
         if (configs.empty())
             return;
 
-        Mesh*   mesh   = ResourceManager::GetMesh("Engine/Resources/DefaultMeshResource.mesh");
-        Shader* shader = ResourceManager::GetShader("Engine/Resources/DefaultShaderResource.shader");
+        Mesh* mesh = ResourceManager::GetMesh("Engine/Resources/DefaultMeshResource.mesh");
+        Shader* shader =
+            ResourceManager::GetShader("Engine/Resources/DefaultShaderResource.shader");
 
         if (!mesh || !shader)
         {
@@ -46,9 +47,13 @@ namespace mts
             musicHandle = audio.Play("event:/splashscreen");
         }
 
+        bool skipFlag = false;
+
         for (const auto& config : configs)
         {
             if (!isRunning)
+                break;
+            if (skipFlag)
                 break;
 
             Texture* texture = ResourceManager::GetTexture(config.texturePath);
@@ -59,12 +64,12 @@ namespace mts
                 continue;
             }
 
-            const float totalTime = config.fadeInDuration + config.holdDuration +
-                                    config.fadeOutDuration;
+            const float totalTime =
+                config.fadeInDuration + config.holdDuration + config.fadeOutDuration;
             float elapsed = 0.0f;
-            bool  done    = false;
+            bool done = false;
 
-            while (isRunning && !done)
+            while (isRunning && !done && !skipFlag)
             {
                 // --- Timing ---
                 Time::BeginFrame();
@@ -78,13 +83,11 @@ namespace mts
                 Input::BeginFrame();
                 window.PollEvents();
 
-                if (Input::IsKeyPressed(Key::Space)          ||
-                    Input::IsKeyPressed(Key::Escape)         ||
-                    Input::IsKeyPressed(Key::Enter)          ||
-                    Input::IsMousePressed(MouseButton::Left) ||
+                if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Escape) ||
+                    Input::IsKeyPressed(Key::Enter) || Input::IsMousePressed(MouseButton::Left) ||
                     Input::IsMousePressed(MouseButton::Right))
                 {
-                    done = true;
+                    skipFlag = true;
                 }
 
                 // --- Compute alpha ---
@@ -93,28 +96,29 @@ namespace mts
                     alpha = elapsed / config.fadeInDuration;
                 else if (elapsed >= config.fadeInDuration + config.holdDuration)
                     alpha = 1.0f - (elapsed - config.fadeInDuration - config.holdDuration) /
-                                   config.fadeOutDuration;
+                                       config.fadeOutDuration;
                 alpha = std::clamp(alpha, 0.0f, 1.0f);
 
                 // --- Full-screen model matrix (screen-space units) ---
                 glm::vec4 vp = Renderer::GetViewportInfo();
-                float     w  = vp.z / PixelsPerUnit;
-                float     h  = vp.w / PixelsPerUnit;
+                float w = vp.z / PixelsPerUnit;
+                float h = vp.w / PixelsPerUnit;
 
-                glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(w * 0.5f, h * 0.5f, 0.0f));
-                model           = glm::scale(model, glm::vec3(w, h, 1.0f));
+                glm::mat4 model =
+                    glm::translate(glm::mat4(1.0f), glm::vec3(w * 0.5f, h * 0.5f, 0.0f));
+                model = glm::scale(model, glm::vec3(w, h, 1.0f));
 
                 // --- Render ---
                 RenderCommand cmd;
-                cmd.shader    = shader;
-                cmd.texture   = texture;
-                cmd.mesh      = mesh;
-                cmd.model     = model;
+                cmd.shader = shader;
+                cmd.texture = texture;
+                cmd.mesh = mesh;
+                cmd.model = model;
                 cmd.tintColor = {1.0f, 1.0f, 1.0f};
-                cmd.alpha     = alpha;
-                cmd.hasAlpha  = true;
-                cmd.isUI      = true;
-                cmd.sortKey   = 0.0f;
+                cmd.alpha = alpha;
+                cmd.hasAlpha = true;
+                cmd.isUI = true;
+                cmd.sortKey = 0.0f;
 
                 if (audio.isInitialized())
                     audio.Update(dt);
@@ -158,11 +162,11 @@ namespace mts
         JsonValue arr = root["splashScreens"];
         for (size_t i = 0; i < arr.Size(); ++i)
         {
-            JsonValue          entry = arr[i];
+            JsonValue entry = arr[i];
             SplashScreenConfig cfg;
-            cfg.texturePath     = entry["texturePath"].GetString();
-            cfg.fadeInDuration  = entry["fadeInDuration"].GetFloat(0.5f);
-            cfg.holdDuration    = entry["holdDuration"].GetFloat(1.5f);
+            cfg.texturePath = entry["texturePath"].GetString();
+            cfg.fadeInDuration = entry["fadeInDuration"].GetFloat(0.5f);
+            cfg.holdDuration = entry["holdDuration"].GetFloat(1.5f);
             cfg.fadeOutDuration = entry["fadeOutDuration"].GetFloat(0.5f);
             configs.push_back(cfg);
         }

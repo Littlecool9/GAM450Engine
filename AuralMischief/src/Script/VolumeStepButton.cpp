@@ -1,5 +1,6 @@
 /**
  * @file VolumeStepButton.cpp
+ * @author Jackey Cen
  * @brief Button script that steps master volume by a serialized Delta on click.
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine
@@ -39,9 +40,8 @@ void VolumeStepButton::Awake()
             mBindingGO = scene->FindGameObjectByUUID(mBindingUUID);
             if (!mBindingGO)
             {
-                LOG_WARN(
-                    "VolumeStepButton: binding GO with UUID {} not found in scene",
-                    mBindingUUID.ToString().c_str());
+                LOG_WARN("VolumeStepButton: binding GO with UUID {} not found in scene",
+                         mBindingUUID.ToString().c_str());
             }
         }
     }
@@ -83,8 +83,8 @@ void VolumeStepButton::DeserializeFields(mts::JsonValue const& fields)
         mDelta = fields["Delta"].GetFloat(mDelta);
     if (fields.Has("Category"))
         mCategory = fields["Category"].GetInt(mCategory);
-    //if (fields.Has("TextGoName"))
-    //    mTextGoName = fields["TextGoName"].GetString("");
+    // if (fields.Has("TextGoName"))
+    //     mTextGoName = fields["TextGoName"].GetString("");
     if (fields.Has("TextGoUUID"))
         mBindingUUID = mts::UUID::FromString(fields["TextGoUUID"].GetString());
 }
@@ -93,7 +93,7 @@ void VolumeStepButton::SerializeFields(mts::JsonDocument& out) const
 {
     out.WriteFloat("Delta", mDelta);
     out.WriteInt("Category", mCategory);
-    //out.WriteString("TextGoName", mTextGoName.c_str());
+    // out.WriteString("TextGoName", mTextGoName.c_str());
     out.WriteString("TextGoUUID", mBindingUUID.ToString().c_str());
 }
 
@@ -107,9 +107,9 @@ void VolumeStepButton::GetInspectorFields(std::vector<mts::ScriptField>& fields)
                       .type = mts::ScriptField::Type::Int,
                       .ptr = {.i = &mCategory},
                       .step = 1.0f});
-    //fields.push_back({.name = "Text GO Name",
-    //                  .type = mts::ScriptField::Type::String,
-    //                  .ptr = {.s = &mTextGoName}});
+    // fields.push_back({.name = "Text GO Name",
+    //                   .type = mts::ScriptField::Type::String,
+    //                   .ptr = {.s = &mTextGoName}});
     fields.push_back({.name = "Text GO UUID",
                       .type = mts::ScriptField::Type::GameObject,
                       .ptr = {.go = &mBindingGO},
@@ -118,8 +118,8 @@ void VolumeStepButton::GetInspectorFields(std::vector<mts::ScriptField>& fields)
 
 void VolumeStepButton::UpdateTextDisplay(float volume)
 {
-    //if (mTextGoName.empty())
-    //    return;
+    // if (mTextGoName.empty())
+    //     return;
     if (!mBindingGO)
     {
         if (mBindingUUID == mts::UUID::InvalidID)

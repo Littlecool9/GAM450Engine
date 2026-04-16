@@ -1,4 +1,12 @@
-﻿#include "pch.h"
+﻿/**
+ * @file Renderer.cpp
+ * @author josh.siegel
+ * @brief  Core renderer implementation: command queue execution, coordinate conversion, and viewport management.
+ *
+ * @copyright Copyright (c) 2026 - Mitosis Engine
+ *
+ */
+#include "pch.h"
 #include "Renderer.h"
 #include "EntitySystem/GameObject/GameObject.h"
 #include "EntitySystem/Component/Transform.h"

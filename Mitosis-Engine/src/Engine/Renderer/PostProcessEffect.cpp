@@ -1,5 +1,6 @@
 /**
  * @file PostProcessEffect.cpp
+ * @author Jackey Cen
  * @brief Post-processing effect implementations
  *
  * @copyright Copyright (c) 2026 - Mitosis Engine

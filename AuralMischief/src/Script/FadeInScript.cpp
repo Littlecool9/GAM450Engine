@@ -1,5 +1,6 @@
 /**
  * @file FadeInScript.cpp
+ * @author Jackey Cen
  * @brief  Fades out the SpriteRenderer alpha from 1 to 0 over a configurable duration,
  *         creating a fade-in effect for the scene underneath.
  *

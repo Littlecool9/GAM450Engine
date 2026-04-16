@@ -27,9 +27,9 @@
                     "Type": "SpriteRenderer",
                     "Data": {
                         "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
+                            0.3648119270801544,
+                            0.4718392491340637,
+                            0.8008939623832703
                         ],
                         "Alpha": 1.0,
                         "FrameIndex": 0,
@@ -118,6 +118,49 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "QuitButton"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "b04ebf70-8cda-4f8b-82ca-fa8948a12fdc",
+            "Name": "Title",
+            "Layer": 2,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            605.0,
+                            468.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            15.0,
+                            11.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/Title.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

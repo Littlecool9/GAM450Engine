@@ -28,7 +28,7 @@ void MainMenuButton::Awake()
     if (mButton)
     {
         mClickId = mButton->mOnClick.Subscribe(
-            [this]() { mts::SceneSystem::SwitchScene(0); });
+            [this]() { mts::SceneSystem::SwitchScene(6); });
     }
 }
 

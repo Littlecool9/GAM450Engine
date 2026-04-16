@@ -174,6 +174,15 @@ namespace mts
             m_script->OnFixedUpdate(dt);
     }
 
+    void NativeScriptComponent::Render()
+    {
+        if (!IsEnabled())
+            return;
+
+        if (m_script)
+            m_script->OnRender();
+    }
+
     void NativeScriptComponent::DebugRender()
     {
         // no-op

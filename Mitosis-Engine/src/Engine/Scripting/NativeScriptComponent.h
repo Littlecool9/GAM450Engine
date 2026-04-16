@@ -28,6 +28,7 @@ namespace mts
         void Update(float dt) override;
         void LateUpdate(float dt) override;
         void FixedUpdate(float dt) override;
+        void Render() override;
         void DebugRender() override;
         void OnDestroy();  // only called inside play mode
 

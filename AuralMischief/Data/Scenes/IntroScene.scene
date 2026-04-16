@@ -1,0 +1,19 @@
+{
+    "GameObjects": [
+        {
+            "UUID": "b7e94c12-3af0-4d81-a65e-8c2f1d9e07b3",
+            "Name": "IntroScreen",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "IntroScreenScript"
+                    }
+                }
+            ]
+        }
+    ]
+}

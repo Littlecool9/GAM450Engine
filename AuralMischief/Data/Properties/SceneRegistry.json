@@ -5,6 +5,7 @@
         "Data/Scenes/WinScreen.scene",
         "Data/Scenes/LoseScreen.scene",
       "Data/Scenes/Level2Scene.scene",
-      "Data/Scenes/CreditsScreen.scene"
+      "Data/Scenes/CreditsScreen.scene",
+      "Data/Scenes/IntroScene.scene"
     ]
 }

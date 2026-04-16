@@ -72,6 +72,7 @@ namespace mts
         virtual void OnUpdate(float /*dt*/) {}
         virtual void OnLateUpdate(float /*dt*/) {}
         virtual void OnFixedUpdate(float /*dt*/) {}
+        virtual void OnRender() {}
         virtual void OnEnable() {}
         virtual void OnDisable() {}
         virtual void OnDestroy() {}  // play mode only — on destruction while in play.

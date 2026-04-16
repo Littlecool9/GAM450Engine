@@ -64,6 +64,13 @@ class MenuNavigator : public mts::ScriptBase
     std::vector<FocusItem> mItems;
     std::vector<Sub> mHoverSubs;
 
+    // GameObjects whose active state suppresses this navigator. While ANY of
+    // these GOs is currently active, OnUpdate early-outs and ClearHighlight is
+    // applied so two navigators in the same scene (e.g., main menu + an opened
+    // sub-panel navigator) don't both consume Up/Down/Enter.
+    std::vector<mts::UUID> mSuppressorUUIDs;
+    std::vector<mts::GameObject*> mSuppressors;
+
     int mCursor{0};
     bool mResolved{false};
     bool mHighlightApplied{false};

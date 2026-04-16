@@ -325,6 +325,42 @@
       "IsCollidable": true
     },
     {
+      "TileID": 36,
+      "Name": "Semi_Inner_Bottom_Right_Corner",
+      "IndexX": 8,
+      "IndexY": 0,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 37,
+      "Name": "Semi_Inner_Bottom_Left_Corner",
+      "IndexX": 9,
+      "IndexY": 0,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 38,
+      "Name": "Semi_Inner_Top_Right_Corner",
+      "IndexX": 8,
+      "IndexY": 1,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
+      "TileID": 39,
+      "Name": "Semi_Inner_Top_Left_Corner",
+      "IndexX": 9, 
+      "IndexY": 1,
+
+      "Tag": "Tile",
+      "IsCollidable": true
+    },
+    {
       "TileID": 28,
       "Name": "Random_Decoration_1",
       "IndexX": 2,
@@ -346,7 +382,7 @@
       "TileID": 30,
       "Name": "special_tile",
       "IndexX": 4,
-      "IndexY": 3,
+      "IndexY": 2,
 
       "Tag": "Decoration",
       "IsCollidable": true

@@ -93,7 +93,8 @@ void ReturnButton::OnEnable()
 
 void ReturnButton::OnUpdate(float dt)
 {
-    if (mts::Input::IsKeyPressed(mts::Key::Escape))
+    if (mts::Input::IsKeyPressed(mts::Key::Escape) ||
+        mts::Input::IsGamepadButtonPressed(mts::GamepadButton::B))
     {
         if (mButton)
             mButton->mOnClick.Invoke();

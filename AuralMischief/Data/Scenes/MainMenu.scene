@@ -1200,12 +1200,17 @@
                                 "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
                                 "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
                                 "a1c26fba-4d64-4867-b815-a4e65a2fa9ee",
-                                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b"
+                                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b",
+                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
                             ],
                             "highlightTint": [
                                 1.4,
                                 1.4,
                                 0.6
+                            ],
+                            "suppressors": [
+                                "44aa44aa-4444-4aaa-9aaa-444444444444",
+                                "55aa55aa-5555-4aaa-9aaa-555555555555"
                             ]
                         }
                     }
@@ -1228,7 +1233,34 @@
                                 "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
                                 "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
                                 "c7a38c22-f390-43fc-b84f-e61f9055de4b",
-                                "febcaa48-0751-434a-bc05-6716aa6dc14c"
+                                "febcaa48-0751-434a-bc05-6716aa6dc14c",
+                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+                            ],
+                            "highlightTint": [
+                                1.4,
+                                1.4,
+                                0.6
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "55aa55aa-5555-4aaa-9aaa-555555555555",
+            "Name": "MainMenu_Confirm_Navigator",
+            "Layer": 0,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "MenuNavigator",
+                        "Fields": {
+                            "buttons": [
+                                "c0ffee04-4444-4abc-9def-444444444444",
+                                "c0ffee03-3333-4abc-9def-333333333333"
                             ],
                             "highlightTint": [
                                 1.4,

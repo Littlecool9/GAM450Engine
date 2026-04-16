@@ -40,6 +40,19 @@ void MenuNavigator::DeserializeFields(mts::JsonValue const& fields)
         mts::JsonValue tint = fields["highlightTint"];
         mHighlightTint = tint.GetVec3(mHighlightTint);
     }
+
+    if (fields.Has("suppressors"))
+    {
+        mts::JsonValue arr = fields["suppressors"];
+        if (arr.IsArray())
+        {
+            mSuppressorUUIDs.clear();
+            mSuppressorUUIDs.reserve(arr.Size());
+            for (size_t i = 0; i < arr.Size(); ++i)
+                mSuppressorUUIDs.emplace_back(
+                    mts::UUID::FromString(arr[i].GetString()));
+        }
+    }
 }
 
 void MenuNavigator::SerializeFields(mts::JsonDocument& out) const
@@ -50,6 +63,11 @@ void MenuNavigator::SerializeFields(mts::JsonDocument& out) const
     out.EndArray();
 
     out.WriteVec3("highlightTint", mHighlightTint);
+
+    out.BeginArray("suppressors");
+    for (auto const& uuid : mSuppressorUUIDs)
+        out.WriteString(uuid.ToString().c_str());
+    out.EndArray();
 }
 
 // ---------------------------------------------------------------------------
@@ -84,9 +102,19 @@ void MenuNavigator::OnUpdate(float /*dt*/)
     if (mItems.empty())
         return;
 
-    // If every target button has been disabled (e.g., a sub-panel is covering
-    // this menu and called SetEnabled(false) on our buttons), stay dormant so
-    // we don't fight another MenuNavigator for the same Up/Down/Enter keys.
+    // Stay dormant if any explicit suppressor GO is currently active (e.g., a
+    // sub-panel navigator opened on top of us), or if every target button has
+    // been disabled. Either signal alone is enough to mean "another navigator
+    // owns the input this frame."
+    for (auto* suppressor : mSuppressors)
+    {
+        if (suppressor && suppressor->IsActive())
+        {
+            ClearHighlight();
+            return;
+        }
+    }
+
     bool anyEnabled = false;
     for (auto const& item : mItems)
     {
@@ -98,6 +126,11 @@ void MenuNavigator::OnUpdate(float /*dt*/)
     }
     if (!anyEnabled)
         return;
+
+    // Re-apply highlight in case a suppressor was just deactivated and
+    // ClearHighlight ran on a previous frame.
+    if (!mHighlightApplied)
+        ApplyHighlight();
 
     if (mSkipNextUpdate)
     {
@@ -167,6 +200,20 @@ void MenuNavigator::EnsureResolved()
                      go->GetName().c_str());
 
         mItems.push_back(item);
+    }
+
+    mSuppressors.clear();
+    mSuppressors.reserve(mSuppressorUUIDs.size());
+    for (auto const& uuid : mSuppressorUUIDs)
+    {
+        auto* go = scene->FindGameObjectByUUID(uuid);
+        if (!go)
+        {
+            LOG_WARN("MenuNavigator: suppressor UUID '{}' not found in scene",
+                     uuid.ToString());
+            continue;
+        }
+        mSuppressors.push_back(go);
     }
 
     mResolved = true;

@@ -21,10 +21,10 @@
 [-] SFX and Master name change (Josh)
 [-] Menus update (incl. win and lose) (Jackey)
 	[x] Sprites for buttons (Rahul)
-	[-] Add hold text on heavy attack in-game sprite
+	[x] Add hold text on heavy attack in-game sprite
 	[x] Add recommended with controller screen after the splash screen
-[-] Boss movement fix (Dong)
-	[-] Sprite movement needs to be faster (Dong)
+[x] Boss movement fix (Dong)
+	[x] Sprite movement needs to be faster (Dong)
 
 -------------------------
 

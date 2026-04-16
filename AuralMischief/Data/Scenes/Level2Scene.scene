@@ -9998,7 +9998,7 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            124.8499984741211,
+                            128.10000610351563,
                             37.25,
                             0.0
                         ],
@@ -10078,7 +10078,7 @@
                                 "FrameIndex": 0,
                                 "FrameCount": 12,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 0
                             },
@@ -10090,7 +10090,7 @@
                                 "FrameIndex": 4,
                                 "FrameCount": 6,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 1
                             },
@@ -10102,7 +10102,7 @@
                                 "FrameIndex": 13,
                                 "FrameCount": 3,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 0
                             },
@@ -10114,7 +10114,7 @@
                                 "FrameIndex": 16,
                                 "FrameCount": 3,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 0
                             },
@@ -10126,7 +10126,7 @@
                                 "FrameIndex": 19,
                                 "FrameCount": 10,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 0
                             },
@@ -10138,7 +10138,7 @@
                                 "FrameIndex": 29,
                                 "FrameCount": 8,
                                 "FrameDelay": 0.0,
-                                "FrameDuration": 0.2142857164144516,
+                                "FrameDuration": 0.14714285731315613,
                                 "IsRunning": 0,
                                 "IsLooping": 0
                             },
@@ -10201,7 +10201,7 @@
                             "EnemyType": "BossEnemy",
                             "MoveSpeed": 1.5,
                             "PatrolRadius": 2.0,
-                            "AggroRange": 8.0,
+                            "AggroRange": 7.5,
                             "AggroYRange": 1.5,
                             "AttackCooldown": 3.5,
                             "Attack2Cooldown": 4.599999904632568,
@@ -12246,7 +12246,6 @@
                 }
             ]
         },
-
         {
             "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
             "Name": "PauseMenu_VolumeMinus",
@@ -12301,6 +12300,49 @@
                             "Category": 0,
                             "TextGoUUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91"
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "784719a0-c244-42e3-9d98-6f739e64505f",
+            "Name": "CheatsText",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1536.0,
+                            855.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            1.0,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/CheatsText.tex",
+                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
@@ -12687,49 +12729,6 @@
                         "RenderLayer": 102,
                         "TextureResource": "Data/Resources/Speaker_icon.tex",
                         "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "784719a0-c244-42e3-9d98-6f739e64505f",
-            "Name": "CheatsText",
-            "Layer": 0,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1536.0,
-                            855.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            1.0,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/CheatsText.tex",
-                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }

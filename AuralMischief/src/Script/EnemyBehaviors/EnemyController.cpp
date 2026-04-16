@@ -349,7 +349,7 @@ namespace mts
 
     void EnemyController::PlayBossMoanSFX()
     {
-        mAudioController->PlayBossMoan();
+        mBossSFX = mAudioController->PlayBossMoan(mBossSFX);
     }
 
     void EnemyController::SetEnemyPlans(std::string name)

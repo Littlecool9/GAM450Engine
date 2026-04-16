@@ -114,6 +114,7 @@ namespace mts
         bool deathAnimFirstTime = true;
         bool mDeathBeepPlayed = false;
         mts::AudioHandle mFuseHandle{};
+        mts::AudioHandle mBossSFX{};
         float mExplosionRadiusMultiplier = 5;
         float mTimeTillExplode = 1;
         PlayerController* mPlayerController = nullptr;

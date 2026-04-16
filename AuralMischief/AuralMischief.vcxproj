@@ -266,6 +266,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\SceneSwitcherScript.h" />
     <ClInclude Include="src\Script\PauseMenuPanel.h" />
     <ClInclude Include="src\Script\PauseMenuNavigator.h" />
+    <ClInclude Include="src\Script\MenuNavigator.h" />
     <ClInclude Include="src\Script\VolumeStepButton.h" />
     <ClInclude Include="src\Script\ResumeButton.h" />
     <ClInclude Include="src\Script\ReturnToMainMenuButton.h" />
@@ -351,6 +352,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\SceneSwitcherScript.cpp" />
     <ClCompile Include="src\Script\PauseMenuPanel.cpp" />
     <ClCompile Include="src\Script\PauseMenuNavigator.cpp" />
+    <ClCompile Include="src\Script\MenuNavigator.cpp" />
     <ClCompile Include="src\Script\VolumeStepButton.cpp" />
     <ClCompile Include="src\Script\ResumeButton.cpp" />
     <ClCompile Include="src\Script\ReturnToMainMenuButton.cpp" />

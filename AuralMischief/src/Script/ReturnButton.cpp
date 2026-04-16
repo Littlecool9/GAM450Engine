@@ -12,7 +12,9 @@
 #include "Engine/SceneSystem/Scene.h"
 #include "Engine/SceneSystem/SceneSystem.h"
 #include "Engine/EntitySystem/Component/Button.h"
+#include "Engine/EntitySystem/Component/SpriteRenderer.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
+#include "Engine/Input/Input.h"
 
 #include "UIPanels.h"
 
@@ -60,12 +62,57 @@ void ReturnButton::OnEnable()
 						btn->SetEnabled(true);
 				}
 			});
+
+    // Hover highlight — cache the sprite's current tint as the baseline so we
+    // can restore it on hover-exit without relying on the sprite being untouched.
+    if (!mSprite)
+        mSprite = GetGameObject()->GetComponent<mts::SpriteRenderer>();
+    if (mSprite && !mHoverApplied)
+        mOriginalTint = mSprite->GetTintColor();
+
+    if (mButton)
+    {
+        mHoverEnterId = mButton->mOnHoverEnter.Subscribe(
+            [this]()
+            {
+                if (!mSprite || mHoverApplied)
+                    return;
+                mSprite->SetTintColor(mOriginalTint * mHoverTint);
+                mHoverApplied = true;
+            });
+        mHoverExitId = mButton->mOnHoverExit.Subscribe(
+            [this]()
+            {
+                if (!mSprite || !mHoverApplied)
+                    return;
+                mSprite->SetTintColor(mOriginalTint);
+                mHoverApplied = false;
+            });
+    }
+}
+
+void ReturnButton::OnUpdate(float dt)
+{
+    if (mts::Input::IsKeyPressed(mts::Key::Escape))
+    {
+        if (mButton)
+            mButton->mOnClick.Invoke();
+    }
 }
 
 void ReturnButton::OnDisable()
 {
 	if (mButton)
+	{
 		mButton->mOnClick.Unsubscribe(mClickId);
+		mButton->mOnHoverEnter.Unsubscribe(mHoverEnterId);
+		mButton->mOnHoverExit.Unsubscribe(mHoverExitId);
+	}
+	if (mSprite && mHoverApplied)
+	{
+		mSprite->SetTintColor(mOriginalTint);
+		mHoverApplied = false;
+	}
 }
 
 void ReturnButton::DeserializeFields(mts::JsonValue const& fields)
@@ -84,5 +131,11 @@ void ReturnButton::DeserializeFields(mts::JsonValue const& fields)
 			const auto& buttonJson = buttonsArray[i];
             kMainMenuButtonUUIDs.emplace_back(mts::UUID::FromString(buttonJson.GetString()));
 		}
+	}
+
+	if (fields.Has("HoverTint"))
+	{
+		mts::JsonValue tint = fields["HoverTint"];
+		mHoverTint = tint.GetVec3(mHoverTint);
 	}
 }

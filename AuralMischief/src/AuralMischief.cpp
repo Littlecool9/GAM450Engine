@@ -44,6 +44,7 @@
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
 #include "Script/CreditsButton.h"
 #include "Script/QuitButton.h"
+#include "Script/MenuNavigator.h"
 
 
 mts::Application* mts::CreateApplication()
@@ -146,6 +147,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new ReturnButton(); });
     mts::ScriptFactory::RegisterScript(InputGuidanceScript::StaticClassName(),
                                        []() { return new InputGuidanceScript(); });
+    mts::ScriptFactory::RegisterScript(MenuNavigator::StaticClassName(),
+                                       []() { return new MenuNavigator(); });
 }
 
 void AuralMischief::OnUpdate(float dt)

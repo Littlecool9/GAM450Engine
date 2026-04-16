@@ -17,8 +17,8 @@
                         ],
                         "Depth": -0.1599999964237213,
                         "Scale": [
-                            35.0,
-                            20.0,
+                            20.200000762939453,
+                            12.449999809265137,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -243,6 +243,32 @@
                     "Type": "NativeScript",
                     "Data": {
                         "Class": "FadeInScript"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "22aa22aa-2222-4aaa-9aaa-222222222222",
+            "Name": "MenuNavigator",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "MenuNavigator",
+                        "Fields": {
+                            "buttons": [
+                                "6b93e255-952e-43fa-ad6d-57459d8f72ac",
+                                "e918e715-e993-467c-b528-69332b535dd8"
+                            ],
+                            "highlightTint": [
+                                1.4,
+                                1.4,
+                                0.6
+                            ]
+                        }
                     }
                 }
             ]

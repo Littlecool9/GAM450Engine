@@ -37,6 +37,7 @@ class QuitButton : public mts::ScriptBase
     mts::GameObject* mConfirmPrompt{nullptr};
     mts::GameObject* mConfirmYes{nullptr};
     mts::GameObject* mConfirmNo{nullptr};
+    mts::GameObject* mConfirmNavigator{nullptr};
     mts::Button* mYesButton{nullptr};
     mts::Button* mNoButton{nullptr};
     mts::Delegate<>::Id mYesClickId{0};

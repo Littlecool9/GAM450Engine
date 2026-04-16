@@ -69,6 +69,8 @@ void MenuNavigator::OnEnable()
 
     SubscribeAll();
     ApplyHighlight();
+
+    mSkipNextUpdate = true;
 }
 
 void MenuNavigator::OnDisable()
@@ -96,6 +98,12 @@ void MenuNavigator::OnUpdate(float /*dt*/)
     }
     if (!anyEnabled)
         return;
+
+    if (mSkipNextUpdate)
+    {
+        mSkipNextUpdate = false;
+        return;
+    }
 
     using mts::GamepadButton;
     using mts::Input;

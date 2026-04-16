@@ -67,6 +67,10 @@ class MenuNavigator : public mts::ScriptBase
     int mCursor{0};
     bool mResolved{false};
     bool mHighlightApplied{false};
+    // Skip the first OnUpdate after each enable so the same input frame that
+    // activated us (e.g., the Enter press on a parent menu's button) does not
+    // immediately fire on this navigator's focused entry.
+    bool mSkipNextUpdate{false};
 
     glm::vec3 mHighlightTint{1.4f, 1.4f, 0.6f};
 };

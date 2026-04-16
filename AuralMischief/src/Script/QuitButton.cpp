@@ -26,10 +26,11 @@ void QuitButton::Init()
 
     if (auto* scene = mts::SceneSystem::GetCurrentScene())
     {
-        mConfirmBg     = scene->FindGameObjectByName("MainMenu_Confirm_Background");
-        mConfirmPrompt = scene->FindGameObjectByName("MainMenu_Confirm_Prompt");
-        mConfirmYes    = scene->FindGameObjectByName("MainMenu_Confirm_Yes");
-        mConfirmNo     = scene->FindGameObjectByName("MainMenu_Confirm_No");
+        mConfirmBg        = scene->FindGameObjectByName("MainMenu_Confirm_Background");
+        mConfirmPrompt    = scene->FindGameObjectByName("MainMenu_Confirm_Prompt");
+        mConfirmYes       = scene->FindGameObjectByName("MainMenu_Confirm_Yes");
+        mConfirmNo        = scene->FindGameObjectByName("MainMenu_Confirm_No");
+        mConfirmNavigator = scene->FindGameObjectByName("MainMenu_Confirm_Navigator");
 
         // The Yes/No buttons sit on top of the main-menu buttons — their hit
         // areas overlap. Cache the siblings so we can disable them while the
@@ -106,6 +107,7 @@ void QuitButton::ShowConfirm()
     if (mConfirmPrompt) mConfirmPrompt->SetActive(true);
     if (mConfirmYes) mConfirmYes->SetActive(true);
     if (mConfirmNo) mConfirmNo->SetActive(true);
+    if (mConfirmNavigator) mConfirmNavigator->SetActive(true);
 
     // Suppress underlying main-menu buttons so clicks on Yes/No don't also
     // trigger the overlapping button beneath them.
@@ -120,6 +122,7 @@ void QuitButton::HideConfirm()
     if (mConfirmPrompt) mConfirmPrompt->SetActive(false);
     if (mConfirmYes) mConfirmYes->SetActive(false);
     if (mConfirmNo) mConfirmNo->SetActive(false);
+    if (mConfirmNavigator) mConfirmNavigator->SetActive(false);
 
     if (mButton) mButton->SetEnabled(true);
     for (auto* btn : mSiblingButtons)

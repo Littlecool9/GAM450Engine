@@ -697,8 +697,7 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
     }
     auto a = collision.other->GetGameObject()->GetScript<AttackHitboxScript>();
     if ((collision.other->GetGameObject()->HasTag("Enemy") ||
-         (a && a->GetTeam() == AttackHitboxScript::Team::Enemy)) &&
-        iFramesTimer < 0.0f)
+         (a && a->GetTeam() == AttackHitboxScript::Team::Enemy)))
     {
         auto o = collision.other->GetGameObject();
         if (o->GetScript<mts::BulletBehavior>())
@@ -718,7 +717,6 @@ void PlayerController::OnCollisionStay2D(const mts::Collision2D& collision)
             }
         }
         LOG_INFO("hit by enemy with normal {}, {}", collision.normal.x, collision.normal.y);
-        iFramesTimer = iFrames;
         glm::vec2 hitDir = a ? a->GetDirection() : -collision.normal;
         hitDir.y *= 1.5f;  // accounts for division in dash function
         // make sure player is pushed horizontally so they don't get stuck on enemy
@@ -1030,8 +1028,10 @@ void PlayerController::RefreshHeartVisuals()
 
 void PlayerController::TakeDamage(int damage)
 {
-    if (mCurrentHP <= 0 || (godModeOn && damage < 100))
+    if (mCurrentHP <= 0 || (godModeOn && damage < 100) || iFramesTimer > 0.0f)
         return;
+
+    iFramesTimer = iFrames;
 
     mCurrentHP -= damage;
     if (mCurrentHP < 0)

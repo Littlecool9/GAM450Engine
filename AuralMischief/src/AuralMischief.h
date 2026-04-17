@@ -17,6 +17,11 @@ class AuralMischief : public mts::Application
     AuralMischief();
     ~AuralMischief();
 
+    static AuralMischief* Get() { return sInstance; }
+
+    bool HasAppliedInitialVolumes() const { return mInitialVolumesApplied; }
+    void MarkInitialVolumesApplied() { mInitialVolumesApplied = true; }
+
    private:
     std::string& GetInitialScene() override;
     std::string& GetSceneRegistry() override;
@@ -26,10 +31,17 @@ class AuralMischief : public mts::Application
     void OnUpdate(float dt) override;
 
    private:
+    static AuralMischief* sInstance;
+
     std::string mInitialScene = "Data/Scenes/MainMenu.scene";
     std::string mSceneRegistry = "Data/Properties/SceneRegistry.json";
     std::string mSplashScreenConfigPath = "Data/Splashscreen.json";
     mts::WindowProps mWindowProps{.IconPath = "icon.png"};
+
+    // One-shot seed for AudioManager category volumes — AudioController::Init()
+    // applies scene-authored volumes only on the first scene of the session; later
+    // scene switches inherit whatever the player has adjusted at runtime.
+    bool mInitialVolumesApplied = false;
 
     // Cheat Code System state variables
     bool mCheatsEnabled = false;

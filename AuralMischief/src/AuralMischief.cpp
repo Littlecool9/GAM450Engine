@@ -62,14 +62,19 @@ mts::Application* mts::CreateApplication()
     return new AuralMischief();
 }
 
+AuralMischief* AuralMischief::sInstance = nullptr;
+
 AuralMischief::AuralMischief()
 {
+    sInstance = this;
     mWindowProps = {.Title = "Aural Mischief", .Width = 1600, .Height = 900, .VSync = false};
     mts::Renderer::SetUIReferenceSize(1600, 900);
 }
 
 AuralMischief::~AuralMischief()
 {
+    if (sInstance == this)
+        sInstance = nullptr;
 }
 
 std::string& AuralMischief::GetInitialScene()

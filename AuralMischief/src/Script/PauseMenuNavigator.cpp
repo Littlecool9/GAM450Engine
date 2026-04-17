@@ -28,12 +28,6 @@ namespace
     // ReturnToMainMenuButton.cpp.
     constexpr int kMainMenuSceneIndex = 1;
 
-    // Slot indices into mMainItems for clarity.
-    constexpr int kMainVolume = 0;
-    constexpr int kMainSFX = 1;
-    constexpr int kMainResume = 2;
-    constexpr int kMainReturn = 3;
-
     constexpr int kConfirmYes = 0;
     constexpr int kConfirmNo = 1;
 
@@ -251,31 +245,10 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
             mts::AudioManager::Get().Play("event:/hero_evade");
         }
 
-        if (mMainCursor == kMainVolume || mMainCursor == kMainSFX)
+        if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
+            Input::IsGamepadButtonPressed(GamepadButton::A))
         {
-            // Volume/SFX slot — Left/Right step volume directly via the
-            // existing button click handlers.
-            auto& slot = mMainItems[mMainCursor];
-            if (leftPressed &&
-                slot.buttons.size() > 0 && slot.buttons[0])
-            {
-                slot.buttons[0]->mOnClick.Invoke();
-            }
-            else if (rightPressed &&
-                     slot.buttons.size() > 1 && slot.buttons[1])
-            {
-                slot.buttons[1]->mOnClick.Invoke();
-            }
-            // Space/Enter/A intentionally do nothing here — there is no single
-            // "activate" action for a stepper.
-        }
-        else
-        {
-            if (Input::IsKeyPressed(Key::Space) || Input::IsKeyPressed(Key::Enter) ||
-                Input::IsGamepadButtonPressed(GamepadButton::A))
-            {
-                ActivateFocused();
-            }
+            ActivateFocused();
         }
     }
     else  // Group::Confirm
@@ -359,9 +332,13 @@ void PauseMenuNavigator::BuildItems()
     mConfirmItems.clear();
     mConfirmMembers.clear();
 
-    // Main menu focus items
-    mMainItems.push_back(MakeVolumeItem(mBindingGOs[SFXMinus], mBindingGOs[SFXPlus]));
-    mMainItems.push_back(MakeVolumeItem(mBindingGOs[VolumeMinus], mBindingGOs[VolumePlus]));
+    // Main menu focus items — each volume/SFX button is its own slot so the
+    // pause menu behaves like the main-menu options sub-menu: Up/Down walks
+    // through every actionable button, Enter activates the focused one.
+    mMainItems.push_back(MakeItem(mBindingGOs[SFXMinus]));
+    mMainItems.push_back(MakeItem(mBindingGOs[SFXPlus]));
+    mMainItems.push_back(MakeItem(mBindingGOs[VolumeMinus]));
+    mMainItems.push_back(MakeItem(mBindingGOs[VolumePlus]));
     mMainItems.push_back(MakeItem(mBindingGOs[Resume]));
     mMainItems.push_back(MakeItem(mBindingGOs[Return]));
 
@@ -390,26 +367,6 @@ PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeItem(mts::GameObject* go)
     {
         item.sprites.push_back(sprite);
         item.originalTints.push_back(sprite->GetTintColor());
-    }
-    return item;
-}
-
-PauseMenuNavigator::FocusItem PauseMenuNavigator::MakeVolumeItem(mts::GameObject* minusGo,
-                                                                 mts::GameObject* plusGo)
-{
-    FocusItem item;
-    mts::GameObject* gos[] = {minusGo, plusGo};
-    for (auto* go : gos)
-    {
-        if (!go)
-            continue;
-        if (auto* btn = go->GetComponent<mts::Button>())
-            item.buttons.push_back(btn);
-        if (auto* sprite = go->GetComponent<mts::SpriteRenderer>())
-        {
-            item.sprites.push_back(sprite);
-            item.originalTints.push_back(sprite->GetTintColor());
-        }
     }
     return item;
 }

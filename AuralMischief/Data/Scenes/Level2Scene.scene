@@ -8418,36 +8418,36 @@
                     "Data": {
                         "Class": "PlayerController",
                         "Fields": {
-                            "moveSpeed": 5,
-                            "jumpSpeed": 17,
-                            "dashSpeed": 23,
-                            "friction": 80,
-                            "acceleration": 40,
-                            "deceleration": 15,
-                            "turnSpeed": 100,
-                            "dashDeceleration": 100,
+                            "moveSpeed": 5.0,
+                            "jumpSpeed": 17.0,
+                            "dashSpeed": 23.0,
+                            "friction": 80.0,
+                            "acceleration": 40.0,
+                            "deceleration": 15.0,
+                            "turnSpeed": 100.0,
+                            "dashDeceleration": 100.0,
                             "dashCooldown": 0.25,
                             "dashMax": 1,
                             "attackCooldown": 0.5,
-                            "attackDelay": 0,
-                            "offBeatLightDamage": 1,
-                            "onBeatLightDamage": 3,
-                            "offBeatHeavyDamage": 2,
-                            "onBeatHeavyDamage": 8,
+                            "attackDelay": 0.0,
+                            "offBeatLightDamage": 1.0,
+                            "onBeatLightDamage": 3.0,
+                            "offBeatHeavyDamage": 2.0,
+                            "onBeatHeavyDamage": 8.0,
                             "attackHitboxOffsetX": 0.5,
-                            "dashBeatBoost": 1,
-                            "jumpBeatBoost": 1,
+                            "dashBeatBoost": 1.0,
+                            "jumpBeatBoost": 1.0,
                             "dashRhythmLock": false,
                             "jumpRhythmLock": false,
+                            "camZoomSpeed": 0.5,
                             "defaultTextureResource": "Data/Resources/PlayerTexture.tex",
                             "altTextureResource": "Data/Resources/PlayerTextureAlt.tex",
-                            "camZoomSpeed": 0.5,
                             "maxHP": 5,
                             "fullHeartFrame": 67,
                             "emptyHeartFrame": 39,
-                            "hpStartX": 0.1,
-                            "hpStartY": 0.13,
-                            "hpSpacing": 0.05
+                            "hpStartX": 0.10000000149011612,
+                            "hpStartY": 0.12999999523162842,
+                            "hpSpacing": 0.07000000029802322
                         }
                     }
                 },
@@ -8471,7 +8471,7 @@
                     "Data": {
                         "Class": "AudioController",
                         "Fields": {
-                            "MasterVolume": 0.10000000149011612,
+                            "MasterVolume": 1,
                             "MusicVolume": 1,
                             "SFXVolume": 1,
                             "UIVolume": 1,
@@ -8606,7 +8606,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            240.00001525878906,
+                            272.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -8655,7 +8655,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            320.0,
+                            384.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -8704,7 +8704,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            400.0,
+                            496.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -8753,7 +8753,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            480.0000305175781,
+                            608.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -12176,8 +12176,8 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            10.0,
-                            6.0,
+                            8.0,
+                            8.0,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -12209,7 +12209,7 @@
             ]
         },
         {
-            "UUID": "a2b3c4d5-e6f7-4089-9876-fedcba987654",
+            "UUID": "f1e2d3c4-b5a6-4978-8765-abcdef012345",
             "Name": "PauseMenu_Instructions_Controller",
             "Layer": 2,
             "IsActive": false,
@@ -12225,8 +12225,8 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            10.0,
-                            6.0,
+                            8.0,
+                            8.0,
                             1.0
                         ],
                         "Rotation": 0.0
@@ -12272,12 +12272,12 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1208.0,
+                            1113.0,
                             360.0
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.0,
+                            2.25,
                             1.0,
                             1.0
                         ],
@@ -12378,7 +12378,7 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.0,
+                            2.25,
                             1.0,
                             1.0
                         ],
@@ -12432,7 +12432,7 @@
                         "Anchor": "TopLeft",
                         "Offset": [
                             1200.0,
-                            522.0
+                            492.0
                         ],
                         "Depth": 0.0,
                         "Scale": [
@@ -12485,11 +12485,11 @@
                         "Anchor": "TopLeft",
                         "Offset": [
                             1200.0,
-                            630.0
+                            600.0
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            5.0,
+                            3.0,
                             1.0,
                             1.0
                         ],
@@ -12628,7 +12628,7 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.7999999523162842,
+                            2.5,
                             1.0,
                             1.0
                         ],
@@ -12675,7 +12675,7 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.649999976158142,
+                            2.5,
                             1.0,
                             1.0
                         ],
@@ -12717,7 +12717,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1056.0,
+                            914.0,
                             360.0
                         ],
                         "Depth": 0.0,
@@ -12749,31 +12749,6 @@
             ]
         },
         {
-            "UUID": "c9724b16-6687-4ba5-924b-bb4334ba094b",
-            "Name": "LevelEndTeleport",
-            "Layer": 0,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            131.5500030517578,
-                            36.349998474121094,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                }
-            ]
-        },
-        {
             "UUID": "c61c079f-8f6d-4686-af74-0388842114f0",
             "Name": "PauseMenu_SFX_Prompt",
             "Layer": 2,
@@ -12785,7 +12760,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1040.0,
+                            894.0,
                             261.0
                         ],
                         "Depth": 0.0,
@@ -12834,7 +12809,7 @@
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.0,
+                            2.25,
                             1.0,
                             1.0
                         ],
@@ -12887,12 +12862,12 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1208.0,
+                            1113.0,
                             252.0
                         ],
                         "Depth": 0.0,
                         "Scale": [
-                            1.0,
+                            2.25,
                             1.0,
                             1.0
                         ],
@@ -12945,7 +12920,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1408.0,
+                            1445.0,
                             261.0
                         ],
                         "Depth": 0.0,
@@ -12968,11 +12943,11 @@
                         "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 1.0,
-                        "RenderLayer": 105,
+                        "RenderLayer": 100,
                         "TextureResource": "Data/Resources/WhiteFont.tex",
                         "MeshResource": "Data/Resources/16x8MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "Volume"
+                        "Text": "100%"
                     }
                 }
             ]
@@ -12989,7 +12964,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            1408.0,
+                            1445.0,
                             360.0
                         ],
                         "Depth": 0.0,
@@ -13012,11 +12987,36 @@
                         "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 1.0,
-                        "RenderLayer": 105,
+                        "RenderLayer": 100,
                         "TextureResource": "Data/Resources/WhiteFont.tex",
                         "MeshResource": "Data/Resources/16x8MeshResource.mesh",
                         "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "Volume"
+                        "Text": "10%"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c9724b16-6687-4ba5-924b-bb4334ba094b",
+            "Name": "LevelEndTeleport",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            131.5500030517578,
+                            36.349998474121094,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
                     }
                 }
             ]
@@ -13173,49 +13173,6 @@
                         "AngularDamping": 0.0,
                         "GravityScale": 0.0,
                         "BodyType": 0
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "e27c4fb8-d5ba-452c-84d6-1f35d918973a",
-            "Name": "CheatsText",
-            "Layer": 0,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1536.0,
-                            855.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            1.0,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/CheatsText.tex",
-                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

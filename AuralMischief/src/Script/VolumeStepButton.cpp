@@ -12,6 +12,7 @@
 
 #include <algorithm>
 
+#include "../AuralMischief.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/EntitySystem/Component/Button.h"
 #include "Engine/EntitySystem/Component/SpriteRenderer.h"
@@ -62,6 +63,10 @@ void VolumeStepButton::OnEnable()
             const float current = audio.GetCategoryVolume(cat);
             const float next = std::clamp(current + mDelta, 0.0f, 1.0f);
             audio.SetCategoryVolume(cat, next);
+            // Claim the session: prevent any later scene's AudioController::Init from
+            // overwriting this user-chosen value (e.g. when the first AudioController-bearing
+            // scene is entered after the player adjusts volumes from MainMenu).
+            AuralMischief::Get()->MarkInitialVolumesApplied();
             UpdateTextDisplay(next);
         });
 

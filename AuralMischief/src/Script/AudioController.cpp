@@ -9,17 +9,22 @@
 
 #include "pch.h"
 #include "AudioController.h"
+#include "../AuralMischief.h"
 #include "Engine/Audio/AudioManager.h"
 #include "Engine/Serialization/JsonAbstraction.h"
 
 void AudioController::Init()
 {
+    if (AuralMischief::Get()->HasAppliedInitialVolumes())
+        return;
+
     auto& audio = mts::AudioManager::Get();
     audio.SetCategoryVolume(mts::AudioCategory::Master, mMasterVolume);
     audio.SetCategoryVolume(mts::AudioCategory::Music, mMusicVolume);
     audio.SetCategoryVolume(mts::AudioCategory::SFX, mSFXVolume);
     audio.SetCategoryVolume(mts::AudioCategory::UI, mUIVolume);
     audio.SetCategoryVolume(mts::AudioCategory::Ambience, mAmbienceVolume);
+    AuralMischief::Get()->MarkInitialVolumesApplied();
 }
 
 void AudioController::Awake()

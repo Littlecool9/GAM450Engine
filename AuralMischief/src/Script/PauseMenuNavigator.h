@@ -86,7 +86,6 @@ class PauseMenuNavigator : public mts::ScriptBase
 
     void BuildItems();
     FocusItem MakeItem(mts::GameObject* go);
-    FocusItem MakeVolumeItem(mts::GameObject* minusGo, mts::GameObject* plusGo);
 
     void SubscribeHover(FocusItem const& item, Group group, int index);
     void ApplyHighlight();
@@ -96,7 +95,7 @@ class PauseMenuNavigator : public mts::ScriptBase
     void ActivateFocused();
 
     // Resolved focus slots.
-    std::vector<FocusItem> mMainItems;     // [Volume, SFX, Resume, Return]
+    std::vector<FocusItem> mMainItems;     // [SFX-, SFX+, Vol-, Vol+, Resume, Return]
     std::vector<FocusItem> mConfirmItems;  // [Yes, No]
 
     // GameObjects that make up the confirmation dialog (toggled via SetActive).

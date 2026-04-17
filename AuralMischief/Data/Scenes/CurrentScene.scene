@@ -10003,7 +10003,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -10055,7 +10055,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -10512,6 +10512,254 @@
             ]
         },
         {
+            "UUID": "c61c079f-8f6d-4686-af74-0388842114f0",
+            "Name": "PauseMenu_SFX_Prompt",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            894.0,
+                            261.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            0.44999998807907104,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "SFX"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
+            "Name": "PauseMenu_SFX_VolumeUp",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1320.0,
+                            252.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            2.25,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": 0.10000000149011612,
+                            "Category": 2,
+                            "TextGoUUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
+            "Name": "PauseMenu_SFX_VolumeDown",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1113.0,
+                            252.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            2.25,
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 0.0,
+                        "RenderLayer": 102,
+                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
+                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+                    }
+                },
+                {
+                    "Type": "Button",
+                    "Data": {}
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "VolumeStepButton",
+                        "Fields": {
+                            "Delta": -0.10000000149011612,
+                            "Category": 2,
+                            "TextGoUUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b",
+            "Name": "PauseMenu_SFX_Volume",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1445.0,
+                            261.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            0.44999998807907104,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "100%"
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91",
+            "Name": "PauseMenu_Master_Volume",
+            "Layer": 2,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1445.0,
+                            360.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            0.44999998807907104,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            0.5977244973182678,
+                            0.9906827211380005,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 100,
+                        "TextureResource": "Data/Resources/WhiteFont.tex",
+                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+                        "Text": "10%"
+                    }
+                }
+            ]
+        },
+        {
             "UUID": "bcfea507-5e81-458a-a8c0-6bcbf64eabc1",
             "Name": "InputGuidance",
             "Layer": 2,
@@ -10549,7 +10797,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 210,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10600,7 +10848,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 14,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10656,7 +10904,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 208,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10707,7 +10955,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 12,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10761,7 +11009,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 55,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10812,7 +11060,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 95,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10868,7 +11116,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 48,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -10919,7 +11167,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 97,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11296,7 +11544,7 @@
                             "emptyHeartFrame": 39,
                             "hpStartX": 0.10000000149011612,
                             "hpStartY": 0.12999999523162842,
-                            "hpSpacing": 0.05000000074505806
+                            "hpSpacing": 0.07000000029802322
                         }
                     }
                 },
@@ -11320,7 +11568,7 @@
                     "Data": {
                         "Class": "AudioController",
                         "Fields": {
-                            "MasterVolume": 0.10000000149011612,
+                            "MasterVolume": 1,
                             "MusicVolume": 1,
                             "SFXVolume": 1,
                             "UIVolume": 1,
@@ -11377,7 +11625,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 212,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11428,7 +11676,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 15,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11482,7 +11730,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 210,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11533,7 +11781,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 14,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11677,7 +11925,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 44,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11728,7 +11976,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 61,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11784,7 +12032,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 44,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -11835,7 +12083,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 61,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -14808,7 +15056,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            240.00001525878906,
+                            272.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -14857,7 +15105,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            320.0,
+                            384.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -14906,7 +15154,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            400.0,
+                            496.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -14955,7 +15203,7 @@
                     "Data": {
                         "Anchor": "TopLeft",
                         "Offset": [
-                            480.0000305175781,
+                            608.0,
                             116.99999237060547
                         ],
                         "Depth": 0.0,
@@ -16290,254 +16538,6 @@
             ]
         },
         {
-            "UUID": "c61c079f-8f6d-4686-af74-0388842114f0",
-            "Name": "PauseMenu_SFX_Prompt",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            894.0,
-                            261.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            0.44999998807907104,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.5977244973182678,
-                            0.9906827211380005,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 100,
-                        "TextureResource": "Data/Resources/WhiteFont.tex",
-                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "SFX"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
-            "Name": "PauseMenu_SFX_VolumeUp",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1320.0,
-                            252.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.25,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": 0.10000000149011612,
-                            "Category": 2,
-                            "TextGoUUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
-            "Name": "PauseMenu_SFX_VolumeDown",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1113.0,
-                            252.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.25,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": -0.10000000149011612,
-                            "Category": 2,
-                            "TextGoUUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "61ed78bf-001a-4fe4-bc62-d657d3d16e3b",
-            "Name": "PauseMenu_SFX_Volume",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1445.0,
-                            261.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            0.44999998807907104,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.5977244973182678,
-                            0.9906827211380005,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 100,
-                        "TextureResource": "Data/Resources/WhiteFont.tex",
-                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "100%"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91",
-            "Name": "PauseMenu_Master_Volume",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1445.0,
-                            360.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            0.44999998807907104,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.5977244973182678,
-                            0.9906827211380005,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 100,
-                        "TextureResource": "Data/Resources/WhiteFont.tex",
-                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "10%"
-                    }
-                }
-            ]
-        },
-        {
             "UUID": "4a38a1d1-3799-4cae-97a1-b96423d2e4fa",
             "Name": "InputGuidance",
             "Layer": 2,
@@ -16580,7 +16580,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 48,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16631,7 +16631,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 95,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16685,7 +16685,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 56,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16736,7 +16736,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 97,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16778,7 +16778,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16829,7 +16829,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16880,7 +16880,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,
@@ -16928,7 +16928,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 91,
                         "ParallaxFactorX": 1.0,
                         "RenderLayer": 0,

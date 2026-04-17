@@ -1,0 +1,12 @@
+================================================================================
+AURAL MISCHIEF CREDITS
+================================================================================
+
+--------------------------------------------------------------------------------
+SOFTWARE LIBRARIES
+--------------------------------------------------------------------------------
+
+FMOD Studio
+  Made with FMOD Studio by Firelight Technologies Pty Ltd.
+  Copyright (c) Firelight Technologies Pty Ltd. All rights reserved.
+  https://www.fmod.com/

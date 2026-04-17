@@ -1,0 +1,69 @@
+================================================================================
+AURAL MISCHIEF
+================================================================================
+--------------------------------------------------------------------------------
+AUDIO ASSETS
+--------------------------------------------------------------------------------
+
+MIDDLEWARE
+  FMOD Studio  (AuralMischief.fspro)
+
+BANKS (exported)
+  Master.bank
+  Master.strings.bank
+  BGM.bank
+  SFX.bank
+  UI.bank
+
+BGM
+  main_menu.wav         Main menu background music
+  lvl1_bgm.wav          Level 1 background music (24-bit 48kHz stereo WAV)
+  lvl2_bgm.wav          Level 2 background music
+  playable_bgm.mp3      Alternate playable BGM
+
+SFX — PLAYER
+  guitar_attack_01.mp3  Player attack swing 1
+  guitar_attack_02.mp3  Player attack swing 2
+  guitar_attack_03.mp3  Player attack swing 3
+  guitar_attack_04.mp3  Player attack swing 4
+  guitar_attack_05.mp3  Player attack swing 5
+  hero_dash.mp3         Player dash
+  hero_dash_vibration.mp3              Player dash controller vibration cue
+  hero_evade.mp3        Player evade
+  hero_falling.mp3      Player falling
+  hero_guitar_charge_complete.mp3      Guitar charge complete
+  hero_guitar_charge_complete_vibration.mp3   Guitar charge complete vibration cue
+  hero_guitar_charge_initiate.mp3      Guitar charge start
+  hero_guitar_charge_initiate_vibration.mp3   Guitar charge start vibration cue
+  hero_guitar_charge_loop.mp3          Guitar charge loop
+  hero_land_hard.mp3    Player hard landing
+  hero_land_soft.mp3    Player soft landing
+  hero_wall_jump.mp3    Player wall jump
+  hero_wall_slide.mp3   Player wall slide
+  player_damaged.wav    Player takes damage
+
+SFX — ENEMIES
+  boss_moan_01.wav      Boss vocal 1
+  boss_moan_02.wav      Boss vocal 2
+  boss_moan_03.wav      Boss vocal 3
+  drone_hit_1.wav       Drone hit 1
+  drone_hit_2.wav       Drone hit 2
+  drone_hit_3.wav       Drone hit 3
+  explosion.wav         Explosion
+  fuse.wav              Fuse/missile fuse
+  sentry_alert_1.wav    Sentry alert 1
+  sentry_alert_2.wav    Sentry alert 2
+  sentry_alert_3.wav    Sentry alert 3
+  sentry_hit_1.wav      Sentry hit 1
+  sentry_hit_2.wav      Sentry hit 2
+  sentry_hit_3.wav      Sentry hit 3
+  slug_alert_1.wav      Slug alert 1
+  slug_alert_2.wav      Slug alert 2
+  slug_alert_3.wav      Slug alert 3
+  slug_hit_1.wav        Slug hit 1
+  slug_hit_2.wav        Slug hit 2
+  slug_hit_3.wav        Slug hit 3
+
+SFX — UI
+  button_pressed.wav    UI button press
+  splashscreen.wav      Splash screen sting

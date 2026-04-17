@@ -1,0 +1,20 @@
+###############################################################################
+
+  Kenney Art Assets
+  By Kenney Vleugels (www.kenney.nl)
+
+  License (CC0 1.0 Universal)
+  http://creativecommons.org/publicdomain/zero/1.0/
+
+  You may use these assets in personal, educational and commercial projects.
+  Credit (Kenney or www.kenney.nl) would be nice but is not mandatory.
+
+  -------------------------------------------------------------------------
+
+  Platformer Pack: Extended Tiles
+  https://kenney.nl/assets/platformer-pack-redux
+
+  Input Prompts
+  https://kenney.nl/assets/input-prompts
+
+###############################################################################

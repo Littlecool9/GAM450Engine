@@ -1,0 +1,16 @@
+================================================================================
+AURAL MISCHIEF : Rhythm Action Platformer
+================================================================================
+
+Aural Mischief is a rhythm action platformer where your attacks and the world is powered by the beat. You play as a guitar-wielding hero navigating a hostile world of platforms and enemies, all synchronized to a pulsing soundtrack. Assimilate with the beat to deal more damage, and feel the flow of the music through traversing the world.
+
+Rahul Nair 	Producer   		rahul.nair@digipen.edu
+Sumin Park 	Technical Lead 		sumin.park@digipen.edu
+Josh Siegel 	Graphics Programmer	josh.siegel@digipen.edu
+Jackey Cen 	Game Designer		jackey.cen@digipen.edu
+Quy Dong Ta 	AI Behavior		d.ta@digipen.edu
+Griffin Hart	Composer		griffin.hart@digipen.edu
+
+Emergency Contact: Rahul Nair, rahul.nair@digipen.edu, 425-547-2348
+Technical Contact: Sumin Park, sumin.park@digipen.edu, 425-766-6830
+     

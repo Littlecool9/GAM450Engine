@@ -1,81 +1,35 @@
 {
-    "GameObjects": [
+  "GameObjects": [
+    {
+      "UUID": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "Name": "MainMenuBackground",
+      "Layer": 1,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
         {
-            "UUID": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-            "Name": "MainMenuBackground",
-            "Layer": 1,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "Transform",
-                    "Data": {
-                        "Position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            19.0,
-                            10.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.3648119270801544,
-                            0.4718392491340637,
-                            0.8008939623832703
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": -10,
-                        "TextureResource": "Data/Resources/MainMenuBackground.tex",
-                        "MeshResource": "Data/Resources/1x20MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Animation",
-                    "Data": {
-                        "FrameIndex": 0,
-                        "FrameCount": 20,
-                        "FrameDelay": 0.5,
-                        "FrameDuration": 0.05000000074505806,
-                        "IsRunning": 1,
-                        "IsLooping": 1
-                    }
-                },
-                {
-                    "Type": "AudioEmitter",
-                    "Data": {
-                        "EventId": "event:/main_menu",
-                        "PositionOffset": [
-                            0.0,
-                            0.0
-                        ],
-                        "MaxAudibleDistance": 900.0,
-                        "StartVolume": 1.0,
-                        "StartPitch": 1.0,
-                        "PlayOnStart": 0,
-                        "Spatialized2D": 1,
-                        "IsOneShot": 0
-                    }
-                }
-            ]
+          "Type": "Transform",
+          "Data": {
+            "Position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Scale": [
+              19.0,
+              10.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         },
         {
           "Type": "SpriteRenderer",
           "Data": {
             "TintColor": [
-              1.0,
-              1.0,
-              1.0
+              0.3648119270801544,
+              0.4718392491340637,
+              0.8008939623832703
             ],
             "Alpha": 1.0,
             "FrameIndex": 0,
@@ -87,107 +41,15 @@
           }
         },
         {
-            "UUID": "b04ebf70-8cda-4f8b-82ca-fa8948a12fdc",
-            "Name": "Title",
-            "Layer": 2,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            605.0,
-                            468.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            15.0,
-                            11.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/Title.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
-            "Name": "HowToButton",
-            "Layer": 2,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            800.0,
-                            522.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            4.199999809265137,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 0.8479999899864197,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/MainMenuControlButton.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "UIPanels",
-                        "Fields": {
-                            "UIObjects": [
-                                "d18a8dcd-d1a6-42bc-b9cf-ce9cf81a13b5",
-                                "33c0e76d-5ff0-4a29-8caf-f6ce0e1d5550",
-                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
-                            ]
-                        }
-                    }
-                }
-            ]
+          "Type": "Animation",
+          "Data": {
+            "FrameIndex": 0,
+            "FrameCount": 20,
+            "FrameDelay": 0.5,
+            "FrameDuration": 0.05000000074505806,
+            "IsRunning": 1,
+            "IsLooping": 1
+          }
         },
         {
           "Type": "AudioEmitter",
@@ -203,6 +65,49 @@
             "PlayOnStart": 0,
             "Spatialized2D": 1,
             "IsOneShot": 0
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b04ebf70-8cda-4f8b-82ca-fa8948a12fdc",
+      "Name": "Title",
+      "Layer": 2,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              605.0,
+              468.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              15.0,
+              11.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 0,
+            "TextureResource": "Data/Resources/Title.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
           }
         }
       ]
@@ -346,120 +251,25 @@
           }
         },
         {
-            "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
-            "Name": "PauseMenu_VolumeMinus",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            859.0,
-                            360.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": -0.10000000149011612,
-                            "Category": 0,
-                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
-                        }
-                    }
-                }
-            ]
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 0.8479999899864197,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 0,
+            "TextureResource": "Data/Resources/MainMenuOptionButton.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
         },
         {
-            "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
-            "Name": "PauseMenu_VolumePlus",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1058.0,
-                            359.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": 0.10000000149011612,
-                            "Category": 0,
-                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
-                        }
-                    }
-                }
-            ]
+          "Type": "Button",
+          "Data": {}
         },
         {
           "Type": "NativeScript",
@@ -526,208 +336,78 @@
           }
         },
         {
-            "UUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4",
-            "Name": "PauseMenu_SFX_Volume",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1248.0,
-                            504.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            0.44999998807907104,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.5977244973182678,
-                            0.9906827211380005,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 105,
-                        "TextureResource": "Data/Resources/WhiteFont.tex",
-                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "100%"
-                    }
-                }
-            ]
+          "Type": "Button",
+          "Data": {}
         },
         {
-            "UUID": "b9f1af92-d2e2-4513-89f5-444444444444",
-            "Name": "PauseMenu_Master_Volume",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1248.0,
-                            360.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            0.44999998807907104,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            0.5977244973182678,
-                            0.9906827211380005,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 105,
-                        "TextureResource": "Data/Resources/WhiteFont.tex",
-                        "MeshResource": "Data/Resources/16x8MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
-                        "Text": "100%"
-                    }
-                }
-            ]
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MainMenuButton"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "Name": "MainCamera",
+      "Layer": 1,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "Transform",
+          "Data": {
+            "Position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         },
         {
-            "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
-            "Name": "PauseMenu_SFX_VolumeUp",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1062.0,
-                            504.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumePlus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": 0.10000000149011612,
-                            "Category": 2,
-                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
-                        }
-                    }
-                }
-            ]
+          "Type": "Camera",
+          "Data": {
+            "IsActive": 1,
+            "NearPlane": -1.0,
+            "FarPlane": 1.0,
+            "OrthoSize": 5.0,
+            "PostProcessing": []
+          }
         },
         {
-            "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
-            "Name": "PauseMenu_SFX_VolumeDown",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            855.0,
-                            504.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 102,
-                        "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                },
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "VolumeStepButton",
-                        "Fields": {
-                            "Delta": -0.10000000149011612,
-                            "Category": 2,
-                            "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
-                        }
-                    }
-                }
-            ]
+          "Type": "AudioListener"
+        }
+      ]
+    },
+    {
+      "UUID": "d4e5f6a7-b8c9-0123-defa-234567890123",
+      "Name": "FadeOverlay",
+      "Layer": 2,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              0.0,
+              0.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              100.0,
+              100.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         },
         {
           "Type": "SpriteRenderer",
@@ -865,239 +545,826 @@
           }
         },
         {
-            "UUID": "c0ffee03-3333-4abc-9def-333333333333",
-            "Name": "MainMenu_Confirm_Yes",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            640.0,
-                            540.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.799999952316284,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 202,
-                        "TextureResource": "Data/Resources/YESTextureResource.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                }
-            ]
+          "Type": "Button",
+          "Data": {}
         },
         {
-            "UUID": "c0ffee04-4444-4abc-9def-444444444444",
-            "Name": "MainMenu_Confirm_No",
-            "Layer": 2,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            976.0,
-                            540.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            2.799999952316284,
-                            1.0,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 0.0,
-                        "RenderLayer": 202,
-                        "TextureResource": "Data/Resources/NOTextureResource.tex",
-                        "MeshResource": "Data/Resources/1x1MeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
-                    }
-                },
-                {
-                    "Type": "Button",
-                    "Data": {}
-                }
-            ]
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 101,
+            "TextureResource": "Data/Resources/ReturnButton.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
         },
         {
-            "UUID": "11aa11aa-1111-4aaa-9aaa-111111111111",
-            "Name": "MenuNavigator",
-            "Layer": 0,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "MenuNavigator",
-                        "Fields": {
-                            "buttons": [
-                                "4551ac39-a40b-4526-912b-2d5ce454748d",
-                                "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
-                                "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
-                                "a1c26fba-4d64-4867-b815-a4e65a2fa9ee",
-                                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b",
-                                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
-                            ],
-                            "highlightTint": [
-                                1.4,
-                                1.4,
-                                0.6
-                            ],
-                            "suppressors": [
-                                "44aa44aa-4444-4aaa-9aaa-444444444444",
-                                "55aa55aa-5555-4aaa-9aaa-555555555555",
-                                "99aa99aa-4444-4aaa-9aaa-999999999999"
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-         {
-          "UUID": "99aa99aa-4444-4aaa-9aaa-999999999999",
-          "Name": "InstructionsMenuNavigator",
-          "Layer": 0,
-          "IsActive": false,
-          "Tags": [],
-          "Components": [
-            {
-              "Type": "NativeScript",
-              "Data": {
-                "Class": "MenuNavigator",
-                "Fields": {
-                  "buttons": [
-                    "f0bdfbc7-6716-4628-bec4-e7119cf42c9a",
-                    "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
-                  ],
-                  "highlightTint": [
-                    1.4,
-                    1.4,
-                    0.6
-                  ]
-                }
-              }
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "ReturnButton",
+            "Fields": {
+              "MainMenuButtons": [
+                "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
+                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b",
+                "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
+                "4551ac39-a40b-4526-912b-2d5ce454748d",
+                "a1c26fba-4d64-4867-b815-a4e65a2fa9ee"
+              ],
+              "HoverTint": [
+                1.4,
+                1.4,
+                0.6
+              ]
             }
-          ]
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
+      "Name": "PauseMenu_VolumeMinus",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              859.0,
+              360.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         },
         {
-            "UUID": "44aa44aa-4444-4aaa-9aaa-444444444444",
-            "Name": "OptionsMenuNavigator",
-            "Layer": 0,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "MenuNavigator",
-                        "Fields": {
-                            "buttons": [
-                                "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
-                                "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
-                                "c7a38c22-f390-43fc-b84f-e61f9055de4b",
-                                "febcaa48-0751-434a-bc05-6716aa6dc14c"
-                            ],
-                            "highlightTint": [
-                                1.4,
-                                1.4,
-                                0.6
-                            ]
-                        }
-                    }
-                }
-            ]
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 102,
+            "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
         },
         {
-            "UUID": "55aa55aa-5555-4aaa-9aaa-555555555555",
-            "Name": "MainMenu_Confirm_Navigator",
-            "Layer": 0,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "MenuNavigator",
-                        "Fields": {
-                            "buttons": [
-                                "c0ffee04-4444-4abc-9def-444444444444",
-                                "c0ffee03-3333-4abc-9def-333333333333"
-                            ],
-                            "highlightTint": [
-                                1.4,
-                                1.4,
-                                0.6
-                            ]
-                        }
-                    }
-                }
-            ]
+          "Type": "Button",
+          "Data": {}
         },
         {
-            "UUID": "55aa55aa-5555-4aaa-9aaa-555555555555",
-            "Name": "MainMenu_Confirm_Navigator",
-            "Layer": 0,
-            "IsActive": false,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "NativeScript",
-                    "Data": {
-                        "Class": "MenuNavigator",
-                        "Fields": {
-                            "buttons": [
-                                "c0ffee04-4444-4abc-9def-444444444444",
-                                "c0ffee03-3333-4abc-9def-333333333333"
-                            ],
-                            "highlightTint": [
-                                1.4,
-                                1.4,
-                                0.6
-                            ]
-                        }
-                    }
-                }
-            ]
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "VolumeStepButton",
+            "Fields": {
+              "Delta": -0.10000000149011612,
+              "Category": 0,
+              "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
+      "Name": "PauseMenu_VolumePlus",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              1058.0,
+              359.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 102,
+            "TextureResource": "Data/Resources/BtnVolumePlus.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "VolumeStepButton",
+            "Fields": {
+              "Delta": 0.10000000149011612,
+              "Category": 0,
+              "TextGoUUID": "b9f1af92-d2e2-4513-89f5-444444444444"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "f4593465-8d2c-499d-8d37-1ffb7ddb9c68",
+      "Name": "PauseMenu_Volumn_Icon",
+      "Layer": 0,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              512.0,
+              360.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.0,
+              2.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 102,
+            "TextureResource": "Data/Resources/Speaker_icon.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a1c26fba-4d64-4867-b815-a4e65a2fa9ee",
+      "Name": "CreditsButton",
+      "Layer": 2,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              800.0,
+              702.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              4.199999809265137,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 0.8479999899864197,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 0,
+            "TextureResource": "Data/Resources/MainMenuCreditButton.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "CreditsButton"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4",
+      "Name": "PauseMenu_SFX_Volume",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              1248.0,
+              504.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              0.44999998807907104,
+              0.5,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              0.5977244973182678,
+              0.9906827211380005,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 105,
+            "TextureResource": "Data/Resources/WhiteFont.tex",
+            "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+            "Text": "100%"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "b9f1af92-d2e2-4513-89f5-444444444444",
+      "Name": "PauseMenu_Master_Volume",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              1248.0,
+              360.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              0.44999998807907104,
+              0.5,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              0.5977244973182678,
+              0.9906827211380005,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 105,
+            "TextureResource": "Data/Resources/WhiteFont.tex",
+            "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+            "Text": "100%"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "febcaa48-0751-434a-bc05-6716aa6dc14c",
+      "Name": "PauseMenu_SFX_VolumeUp",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              1062.0,
+              504.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 102,
+            "TextureResource": "Data/Resources/BtnVolumePlus.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "VolumeStepButton",
+            "Fields": {
+              "Delta": 0.10000000149011612,
+              "Category": 2,
+              "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c7a38c22-f390-43fc-b84f-e61f9055de4b",
+      "Name": "PauseMenu_SFX_VolumeDown",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              855.0,
+              504.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.0,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 102,
+            "TextureResource": "Data/Resources/BtnVolumeMinus.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        },
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "VolumeStepButton",
+            "Fields": {
+              "Delta": -0.10000000149011612,
+              "Category": 2,
+              "TextGoUUID": "b9f1af92-d2e2-4513-89f5-776e169d3fc4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "ff05dab8-3295-4898-ba7c-c15b2011bfaa",
+      "Name": "PauseMenu_SFX_Prompt",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              496.0,
+              504.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              0.6000000238418579,
+              0.6499999761581421,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              0.5977244973182678,
+              0.9906827211380005,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 1.0,
+            "RenderLayer": 100,
+            "TextureResource": "Data/Resources/WhiteFont.tex",
+            "MeshResource": "Data/Resources/16x8MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader",
+            "Text": "SFX"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c0ffee01-1111-4abc-9def-111111111111",
+      "Name": "MainMenu_Confirm_Background",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              800.0,
+              450.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              100.0,
+              100.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Alpha": 0.8500000238418579,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 200,
+            "TextureResource": "Data/Resources/TransparentMask.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c0ffee02-2222-4abc-9def-222222222222",
+      "Name": "MainMenu_Confirm_Prompt",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              800.0,
+              360.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              14.25,
+              3.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 201,
+            "TextureResource": "Data/Resources/Confirm_return_to_menu.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "c0ffee03-3333-4abc-9def-333333333333",
+      "Name": "MainMenu_Confirm_Yes",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              640.0,
+              540.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.799999952316284,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 202,
+            "TextureResource": "Data/Resources/YESTextureResource.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        }
+      ]
+    },
+    {
+      "UUID": "c0ffee04-4444-4abc-9def-444444444444",
+      "Name": "MainMenu_Confirm_No",
+      "Layer": 2,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              976.0,
+              540.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              2.799999952316284,
+              1.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "Data": {
+            "TintColor": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Alpha": 1.0,
+            "FrameIndex": 0,
+            "ParallaxFactorX": 0.0,
+            "RenderLayer": 202,
+            "TextureResource": "Data/Resources/NOTextureResource.tex",
+            "MeshResource": "Data/Resources/1x1MeshResource.mesh",
+            "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
+          }
+        },
+        {
+          "Type": "Button",
+          "Data": {}
+        }
+      ]
+    },
+    {
+      "UUID": "11aa11aa-1111-4aaa-9aaa-111111111111",
+      "Name": "MenuNavigator",
+      "Layer": 0,
+      "IsActive": true,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MenuNavigator",
+            "Fields": {
+              "buttons": [
+                "4551ac39-a40b-4526-912b-2d5ce454748d",
+                "1a9f3223-70cf-48f5-af8d-05bc79ebd3c1",
+                "259df1b7-802c-4b7d-b36e-c0ec974b8c28",
+                "a1c26fba-4d64-4867-b815-a4e65a2fa9ee",
+                "aa97ad9b-3b70-4045-81ba-7fc43b3a9a2b"
+              ],
+              "highlightTint": [
+                1.4,
+                1.4,
+                0.6
+              ],
+              "suppressors": [
+                "44aa44aa-4444-4aaa-9aaa-444444444444",
+                "55aa55aa-5555-4aaa-9aaa-555555555555",
+                "99aa99aa-4444-4aaa-9aaa-999999999999"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "99aa99aa-4444-4aaa-9aaa-999999999999",
+      "Name": "InstructionsMenuNavigator",
+      "Layer": 0,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MenuNavigator",
+            "Fields": {
+              "buttons": [
+                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a",
+                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+              ],
+              "highlightTint": [
+                1.4,
+                1.4,
+                0.6
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "44aa44aa-4444-4aaa-9aaa-444444444444",
+      "Name": "OptionsMenuNavigator",
+      "Layer": 0,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MenuNavigator",
+            "Fields": {
+              "buttons": [
+                "a1b2c3d4-e5f6-4a5b-9c8d-444444444444",
+                "a1b2c3d4-e5f6-4a5b-9c8d-555555555555",
+                "c7a38c22-f390-43fc-b84f-e61f9055de4b",
+                "febcaa48-0751-434a-bc05-6716aa6dc14c",
+                "f0bdfbc7-6716-4628-bec4-e7119cf42c9a"
+              ],
+              "highlightTint": [
+                1.4,
+                1.4,
+                0.6
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "55aa55aa-5555-4aaa-9aaa-555555555555",
+      "Name": "MainMenu_Confirm_Navigator",
+      "Layer": 0,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "NativeScript",
+          "Data": {
+            "Class": "MenuNavigator",
+            "Fields": {
+              "buttons": [
+                "c0ffee04-4444-4abc-9def-444444444444",
+                "c0ffee03-3333-4abc-9def-333333333333"
+              ],
+              "highlightTint": [
+                1.4,
+                1.4,
+                0.6
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "UUID": "a985ca0b-aae0-4992-9372-eaac0cd6bd51",
+      "Name": "Instruction",
+      "Layer": 0,
+      "IsActive": false,
+      "Tags": [],
+      "Components": [
+        {
+          "Type": "UITransform",
+          "Data": {
+            "Anchor": "TopLeft",
+            "Offset": [
+              1140.0,
+              450.0
+            ],
+            "Depth": 0.0,
+            "Scale": [
+              8.0,
+              8.0,
+              1.0
+            ],
+            "Rotation": 0.0
+          }
         },
         {
           "Type": "SpriteRenderer",

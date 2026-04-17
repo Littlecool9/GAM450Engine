@@ -63,6 +63,11 @@ namespace mts
 
         bool mIsRunning = false;
         bool mHasFocus = true;
+
+        float mLastMouseX = 0.f;
+        float mLastMouseY = 0.f;
+        float mMouseIdleTime = 0.f;
+        bool mCursorVisible = true;
 #ifdef MTS_RELEASE
         bool mInDebugView = false;
 #else

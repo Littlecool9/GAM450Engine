@@ -29,6 +29,7 @@ namespace mts
 
         ImGuiIO& io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
 
         GLFWwindow* glfwWindow = static_cast<GLFWwindow*>(mWindow->NativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);

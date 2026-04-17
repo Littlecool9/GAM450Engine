@@ -262,6 +262,12 @@ namespace mts
         mIsFullscreen = fullscreen;
     }
 
+    void WinGLFWwindow::SetCursorVisible(bool visible)
+    {
+        LOG_INFO("Cursor visibility set to {0}", visible);
+        glfwSetInputMode(window, GLFW_CURSOR, visible ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
+    }
+
     void WinGLFWwindow::SetEventCallback(const EventCallbackFn& callback)
     {
         windowData.EventCallback = callback;
@@ -291,7 +297,7 @@ namespace mts
         // incurs ~7ms overhead per call. Windows 10+ is not affected.
         // Scan disconnected slots only every 30 frames to reduce idle overhead.
         static int s_ScanCooldown = 0;
-        const bool doFullScan     = (s_ScanCooldown == 0);
+        const bool doFullScan = (s_ScanCooldown == 0);
         if (doFullScan)
             s_ScanCooldown = 30;
         else
@@ -319,33 +325,42 @@ namespace mts
             const WORD xb = xstate.Gamepad.wButtons;
             constexpr int kButtonCount = static_cast<int>(GamepadButton::Count);
             bool buttons[kButtonCount] = {};
-            buttons[static_cast<int>(GamepadButton::A)]           = (xb & XINPUT_GAMEPAD_A)              != 0;
-            buttons[static_cast<int>(GamepadButton::B)]           = (xb & XINPUT_GAMEPAD_B)              != 0;
-            buttons[static_cast<int>(GamepadButton::X)]           = (xb & XINPUT_GAMEPAD_X)              != 0;
-            buttons[static_cast<int>(GamepadButton::Y)]           = (xb & XINPUT_GAMEPAD_Y)              != 0;
-            buttons[static_cast<int>(GamepadButton::LeftBumper)]  = (xb & XINPUT_GAMEPAD_LEFT_SHOULDER)  != 0;
-            buttons[static_cast<int>(GamepadButton::RightBumper)] = (xb & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0;
-            buttons[static_cast<int>(GamepadButton::Back)]        = (xb & XINPUT_GAMEPAD_BACK)           != 0;
-            buttons[static_cast<int>(GamepadButton::Start)]       = (xb & XINPUT_GAMEPAD_START)          != 0;
+            buttons[static_cast<int>(GamepadButton::A)] = (xb & XINPUT_GAMEPAD_A) != 0;
+            buttons[static_cast<int>(GamepadButton::B)] = (xb & XINPUT_GAMEPAD_B) != 0;
+            buttons[static_cast<int>(GamepadButton::X)] = (xb & XINPUT_GAMEPAD_X) != 0;
+            buttons[static_cast<int>(GamepadButton::Y)] = (xb & XINPUT_GAMEPAD_Y) != 0;
+            buttons[static_cast<int>(GamepadButton::LeftBumper)] =
+                (xb & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0;
+            buttons[static_cast<int>(GamepadButton::RightBumper)] =
+                (xb & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0;
+            buttons[static_cast<int>(GamepadButton::Back)] = (xb & XINPUT_GAMEPAD_BACK) != 0;
+            buttons[static_cast<int>(GamepadButton::Start)] = (xb & XINPUT_GAMEPAD_START) != 0;
             // Guide button (index 8) not available in XInput — left false
-            buttons[static_cast<int>(GamepadButton::LeftThumb)]   = (xb & XINPUT_GAMEPAD_LEFT_THUMB)     != 0;
-            buttons[static_cast<int>(GamepadButton::RightThumb)]  = (xb & XINPUT_GAMEPAD_RIGHT_THUMB)    != 0;
-            buttons[static_cast<int>(GamepadButton::DPadUp)]      = (xb & XINPUT_GAMEPAD_DPAD_UP)        != 0;
-            buttons[static_cast<int>(GamepadButton::DPadRight)]   = (xb & XINPUT_GAMEPAD_DPAD_RIGHT)     != 0;
-            buttons[static_cast<int>(GamepadButton::DPadDown)]    = (xb & XINPUT_GAMEPAD_DPAD_DOWN)      != 0;
-            buttons[static_cast<int>(GamepadButton::DPadLeft)]    = (xb & XINPUT_GAMEPAD_DPAD_LEFT)      != 0;
+            buttons[static_cast<int>(GamepadButton::LeftThumb)] =
+                (xb & XINPUT_GAMEPAD_LEFT_THUMB) != 0;
+            buttons[static_cast<int>(GamepadButton::RightThumb)] =
+                (xb & XINPUT_GAMEPAD_RIGHT_THUMB) != 0;
+            buttons[static_cast<int>(GamepadButton::DPadUp)] = (xb & XINPUT_GAMEPAD_DPAD_UP) != 0;
+            buttons[static_cast<int>(GamepadButton::DPadRight)] =
+                (xb & XINPUT_GAMEPAD_DPAD_RIGHT) != 0;
+            buttons[static_cast<int>(GamepadButton::DPadDown)] =
+                (xb & XINPUT_GAMEPAD_DPAD_DOWN) != 0;
+            buttons[static_cast<int>(GamepadButton::DPadLeft)] =
+                (xb & XINPUT_GAMEPAD_DPAD_LEFT) != 0;
 
             // --- Axes ---
             // Y axes are negated: XInput positive-Y = stick up, engine negative-Y = stick up
             // (matches GLFW convention used throughout PlayerController).
             constexpr int kAxisCount = static_cast<int>(GamepadAxis::Count);
             float axes[kAxisCount] = {};
-            axes[static_cast<int>(GamepadAxis::LeftX)]        =  NormalizeStick(xstate.Gamepad.sThumbLX);
-            axes[static_cast<int>(GamepadAxis::LeftY)]        = -NormalizeStick(xstate.Gamepad.sThumbLY);
-            axes[static_cast<int>(GamepadAxis::RightX)]       =  NormalizeStick(xstate.Gamepad.sThumbRX);
-            axes[static_cast<int>(GamepadAxis::RightY)]       = -NormalizeStick(xstate.Gamepad.sThumbRY);
-            axes[static_cast<int>(GamepadAxis::LeftTrigger)]  =  NormalizeTrigger(xstate.Gamepad.bLeftTrigger);
-            axes[static_cast<int>(GamepadAxis::RightTrigger)] =  NormalizeTrigger(xstate.Gamepad.bRightTrigger);
+            axes[static_cast<int>(GamepadAxis::LeftX)] = NormalizeStick(xstate.Gamepad.sThumbLX);
+            axes[static_cast<int>(GamepadAxis::LeftY)] = -NormalizeStick(xstate.Gamepad.sThumbLY);
+            axes[static_cast<int>(GamepadAxis::RightX)] = NormalizeStick(xstate.Gamepad.sThumbRX);
+            axes[static_cast<int>(GamepadAxis::RightY)] = -NormalizeStick(xstate.Gamepad.sThumbRY);
+            axes[static_cast<int>(GamepadAxis::LeftTrigger)] =
+                NormalizeTrigger(xstate.Gamepad.bLeftTrigger);
+            axes[static_cast<int>(GamepadAxis::RightTrigger)] =
+                NormalizeTrigger(xstate.Gamepad.bRightTrigger);
 
             Input::OnGamepadPoll(static_cast<int>(i), buttons, kButtonCount, axes, kAxisCount);
         }

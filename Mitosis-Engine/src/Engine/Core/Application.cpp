@@ -34,6 +34,7 @@
 
 namespace mts
 {
+    constexpr float cursorHideDelay = 1.0f;
     void Application::Init()
     {
         mWindow = Window::Create(GetWindowProps());
@@ -129,6 +130,32 @@ namespace mts
                 AppSystem::Get().ToggleFullscreen();
 
             this->OnUpdate(dt);
+
+            if (mCtx.playState == PlayState::Play)
+            {
+                float x = Input::GetMouseX();
+                float y = Input::GetMouseY();
+                if (x != mLastMouseX || y != mLastMouseY)
+                {
+                    mLastMouseX = x;
+                    mLastMouseY = y;
+                    mMouseIdleTime = 0.f;
+                    if (!mCursorVisible)
+                    {
+                        mWindow->SetCursorVisible(true);
+                        mCursorVisible = true;
+                    }
+                }
+                else
+                {
+                    mMouseIdleTime += dt;
+                    if (mCursorVisible && mMouseIdleTime >= cursorHideDelay)
+                    {
+                        mWindow->SetCursorVisible(false);
+                        mCursorVisible = false;
+                    }
+                }
+            }
 
             for (auto& layer : mLayerStack)
             {
@@ -302,6 +329,13 @@ namespace mts
         {
             if (layer->IsEnabled())
                 layer->OnExitPlayMode();
+        }
+
+        mMouseIdleTime = 0.f;
+        if (!mCursorVisible)
+        {
+            mWindow->SetCursorVisible(true);
+            mCursorVisible = true;
         }
     }
 

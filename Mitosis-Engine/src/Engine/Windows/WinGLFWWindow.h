@@ -26,6 +26,7 @@ namespace mts
         void SetVsync(bool enable) override;
         void SetFullscreen(bool fullscreen) override;
         bool IsFullscreen() const override { return mIsFullscreen; }
+        void SetCursorVisible(bool visible) override;
 
         void ClearScreen() override;
 

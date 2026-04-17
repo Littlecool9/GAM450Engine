@@ -12311,7 +12311,7 @@
                         "Class": "VolumeStepButton",
                         "Fields": {
                             "Delta": -0.10000000149011612,
-                            "Category": 0,
+                            "Category": 1,
                             "TextGoUUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91"
                         }
                     }
@@ -12412,7 +12412,7 @@
                         "Class": "VolumeStepButton",
                         "Fields": {
                             "Delta": 0.10000000149011612,
-                            "Category": 0,
+                            "Category": 1,
                             "TextGoUUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91"
                         }
                     }

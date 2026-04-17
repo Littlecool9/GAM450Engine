@@ -98,12 +98,17 @@ namespace mts
         {
             lifetime = fields["Lifetime"].GetFloat();
         }
+        if (fields.Has("Damage"))
+        {
+            dmg = fields["Damage"].GetFloat(); 
+        }
     }
 
     void BulletBehavior::SerializeFields(JsonDocument& out) const
     {
         out.WriteFloat("BulletSpeed", mBulletSpeed);
         out.WriteFloat("Lifetime", lifetime);
+        out.WriteFloat("Damage", dmg);
     }
 
     void BulletBehavior::OnCollisionEnter2D(const Collision2D& collision)

@@ -12015,7 +12015,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -12200,7 +12200,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -12385,7 +12385,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -12570,7 +12570,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -12731,7 +12731,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -12906,7 +12906,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -13080,7 +13080,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -13241,7 +13241,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -13403,7 +13403,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -13589,7 +13589,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -13763,7 +13763,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -13937,7 +13937,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -13966,7 +13966,7 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            140.85000610351563,
+                            140.85000610351562,
                             37.25,
                             0.0
                         ],
@@ -14122,7 +14122,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -15218,7 +15218,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -15392,7 +15392,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -15553,7 +15553,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -15739,7 +15739,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -15924,7 +15924,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -16085,7 +16085,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -16247,7 +16247,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }

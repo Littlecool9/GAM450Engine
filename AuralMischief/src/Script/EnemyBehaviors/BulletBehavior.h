@@ -38,7 +38,7 @@ namespace mts
         void BeginDeath();
 
         float mBulletSpeed = 1.5f;
-        float dmg = 2;
+        float dmg = 1;
         float lifetime = 5.f;
         glm::vec2 mDirection{1.0f, 0.0f};
         Transform* playerTransform = nullptr;

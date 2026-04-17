@@ -115,6 +115,7 @@
                 "Fields": {
                     "BulletSpeed": 4,
                     "Lifetime": 7.0,
+                    "Damage": 1
                 }
             }
         }

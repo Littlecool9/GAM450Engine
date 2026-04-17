@@ -10012,7 +10012,7 @@
                     "Type": "Transform",
                     "Data": {
                         "Position": [
-                            128.10000610351563,
+                            128.10000610351562,
                             37.25,
                             0.0
                         ],
@@ -10409,7 +10409,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -10583,7 +10583,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -10768,7 +10768,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -10953,7 +10953,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -11114,7 +11114,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -11300,7 +11300,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -11474,7 +11474,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -11648,7 +11648,7 @@
                             "PatrolRadius": 5.0,
                             "AggroRange": 9.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 9,
+                            "HealthPoints": 8,
                             "IsInvincible": false
                         }
                     }
@@ -11833,7 +11833,7 @@
                             "PatrolRadius": 2.0,
                             "AggroRange": 5.0,
                             "AttackCooldown": 5.0,
-                            "HealthPoints": 7,
+                            "HealthPoints": 2,
                             "EnemyType": "SlugEnemy"
                         }
                     }
@@ -11994,7 +11994,7 @@
                             "PatrolRadius": 6.0,
                             "AggroRange": 6.0,
                             "AttackCooldown": 3.0,
-                            "HealthPoints": 6,
+                            "HealthPoints": 5,
                             "AttackRange": 0.5,
                             "EnemyType": "FlyEnemy"
                         }
@@ -12314,6 +12314,49 @@
                             "Category": 0,
                             "TextGoUUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91"
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "784719a0-c244-42e3-9d98-6f739e64505f",
+            "Name": "CheatsText",
+            "Layer": 0,
+            "IsActive": false,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1536.0,
+                            855.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            1.0,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/CheatsText.tex",
+                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

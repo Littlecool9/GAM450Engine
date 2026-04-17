@@ -307,7 +307,7 @@ namespace mts
                     mAudioController->PlayAlertSound(enemyType);
                 GetGameObject()->GetComponent<AnimationSystem>()->ChangeState(
                     AnimationSystem::States::Alerted);
-
+                GetGameObject()->GetComponent<RigidBody2D>()->SetVelocity(glm::vec2(0));
                 const glm::vec2 toPlayer = playerPos - enemyPos;
                 const float dist = glm::length(toPlayer);
                 glm::vec2 dir = (dist > 0.0001f) ? (toPlayer / dist) : glm::vec2{0.0f, 0.0f};
@@ -556,11 +556,6 @@ namespace mts
                 glm::vec3 pos = GetGameObject()->GetComponent<Transform>()->GetPosition();
                 mPlayerController->OnEnemyHit(damage, pos);
             }
-        }
-        if (collision.other->GetGameObject()->HasTag("Player") &&
-            enemyType == EnemyType::CrawlEnemy && (curhp <= 0 || !mDying))
-        {
-            collision.other->GetGameObject()->GetScript<PlayerController>()->TakeDamage(1);
         }
         if (collision.other->GetGameObject()->HasTag("TilemapCollider"))
         {

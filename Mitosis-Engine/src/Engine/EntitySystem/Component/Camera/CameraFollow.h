@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief Component to attach to camera in conjunction with camera component to allow
  *        the component to follow its designated target
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

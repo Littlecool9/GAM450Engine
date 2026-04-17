@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief: Component Factory Implementation
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

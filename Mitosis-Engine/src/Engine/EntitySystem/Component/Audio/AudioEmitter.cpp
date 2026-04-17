@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief Functionality for audio emitter
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 #include "pch.h"

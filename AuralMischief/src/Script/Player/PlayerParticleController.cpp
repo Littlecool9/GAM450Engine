@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // Handles spawning and moving particle objects for the player
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

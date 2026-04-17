@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // Texture object with OpenGL texture data and texture use functions
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

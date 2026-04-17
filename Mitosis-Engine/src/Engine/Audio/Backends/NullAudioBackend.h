@@ -3,7 +3,7 @@
  * @author rahul
  * @brief No-op audio backend used when nothing is available (CI / server builds)
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Helper for order-independent pairs of UUIDs
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

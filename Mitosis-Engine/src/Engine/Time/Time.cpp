@@ -4,7 +4,7 @@
  * @brief Engine timekeeping (frame delta + fixed timestep accumulator) with optional frame-rate
  * limiting
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

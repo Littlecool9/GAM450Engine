@@ -5,7 +5,7 @@
  * send to renderer
  * @brief This class is the middle layer to convey gameplay logic to rendering, modification logic
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

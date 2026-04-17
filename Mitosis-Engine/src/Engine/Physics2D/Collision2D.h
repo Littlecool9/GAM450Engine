@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  collision info struct passed onto collision callbacks
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

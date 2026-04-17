@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Engine window events such as resize and close notifications.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -4,7 +4,7 @@
  * @brief This is a renderer class for rendering tiles in tilemaps
  * @brief This class solve the problem of rendering irregular shape meshes of tilemap
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

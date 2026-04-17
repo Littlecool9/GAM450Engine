@@ -2,6 +2,9 @@
  * @file BeatPulseScript.h
  * @author sumin.park
  * @brief  Scales a sprite with exponential decay on every beat.
+ *
+ * @copyright (c) 2026 DigiPen (USA) Corporation
+ *
  */
 #pragma once
 

@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Component that stores physics information
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

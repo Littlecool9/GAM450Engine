@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // Loads all texture, shader, and mesh resources and handles giving them to game objects and freeing them at the end of the program
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

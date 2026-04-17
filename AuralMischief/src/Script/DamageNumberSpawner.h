@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Manages a pool of DamageNumber objects and spawns multi-digit damage numbers on hit
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -4,7 +4,7 @@
  * @brief Plays a fullscreen image sequence (fade-in / hold / fade-out) at scene start,
  *        mirroring the SplashScreen behaviour but driven from within a scene.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

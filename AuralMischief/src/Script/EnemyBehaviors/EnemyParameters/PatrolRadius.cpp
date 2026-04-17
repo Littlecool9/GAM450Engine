@@ -4,7 +4,7 @@
  * 
  * @brief // TODO: Add a brief description of this class
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

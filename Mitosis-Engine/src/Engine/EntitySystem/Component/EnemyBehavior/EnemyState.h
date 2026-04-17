@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief // Contain information on current enemy state
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

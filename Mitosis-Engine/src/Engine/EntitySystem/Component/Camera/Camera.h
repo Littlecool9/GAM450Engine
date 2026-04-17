@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief Component for camera functionality
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

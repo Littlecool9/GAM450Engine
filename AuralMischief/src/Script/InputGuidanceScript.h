@@ -5,7 +5,7 @@
  *         Keyboard guidance objects have ForController = false (visible when no pad).
  *         Controller guidance objects have ForController = true (visible when pad connected).
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

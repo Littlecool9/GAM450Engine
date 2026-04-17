@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Engine-defined input events for keyboard and mouse interactions.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

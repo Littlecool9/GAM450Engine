@@ -4,7 +4,7 @@
  * @brief Pure beat/bar arithmetic utilities with no engine dependencies.
  *        Used by ConductorSystem, BeatBarController, and unit tests.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  */
 #pragma once
 #include <cmath>

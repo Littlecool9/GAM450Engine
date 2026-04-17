@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief  script for player audio controller
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

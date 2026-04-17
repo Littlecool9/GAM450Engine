@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Return-to-main-menu button on the pause menu.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

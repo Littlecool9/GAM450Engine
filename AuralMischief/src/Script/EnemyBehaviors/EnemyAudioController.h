@@ -3,7 +3,7 @@
  * @author dream
  * @brief  Shared service script that plays type-appropriate SFX for all enemy types
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

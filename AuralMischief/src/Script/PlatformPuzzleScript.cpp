@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief See PlatformPuzzleScript.h
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  */
 #include "pch.h"
 #include "PlatformPuzzleScript.h"

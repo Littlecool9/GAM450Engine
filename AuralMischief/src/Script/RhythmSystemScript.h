@@ -3,7 +3,7 @@
  * @author dream
  * @brief  Script that owns the RhythmSystem lifecycle (Init on Awake, Shutdown on OnDisable).
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

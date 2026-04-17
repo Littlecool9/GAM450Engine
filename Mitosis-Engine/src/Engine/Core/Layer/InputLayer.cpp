@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  layer for input system
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

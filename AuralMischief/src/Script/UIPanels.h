@@ -4,7 +4,7 @@
  * @brief  Script that shows/hides a group of UI panel GameObjects; shared pause/unpause path for
  * ESC key and pause-icon button.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

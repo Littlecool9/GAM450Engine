@@ -4,7 +4,7 @@
  * @brief: Camera control script for handling camera behavior such as zooming and shaking and
  * behavior in the scene.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

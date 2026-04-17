@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief drawer for CameraComponent
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 
@@ -26,7 +26,8 @@ namespace mts
 
         const char* typeName = effect->GetTypeName();
         bool open =
-            ImGui::TreeNodeEx(typeName, ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowOverlap);
+            ImGui::TreeNodeEx(typeName,
+                              ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowOverlap);
 
         // Enable/disable + remove on the same line
         ImGui::SameLine(ImGui::GetContentRegionAvail().x - 60.0f);
@@ -39,7 +40,8 @@ namespace mts
             // Move up / move down
             if (index > 0 && ImGui::SmallButton("Up"))
                 stack.MoveEffect(index, index - 1);
-            if (index < static_cast<int>(stack.GetEffects().size()) - 1 && ImGui::SmallButton("Down"))
+            if (index < static_cast<int>(stack.GetEffects().size()) - 1 &&
+                ImGui::SmallButton("Down"))
                 stack.MoveEffect(index, index + 1);
 
             // Effect-specific parameters

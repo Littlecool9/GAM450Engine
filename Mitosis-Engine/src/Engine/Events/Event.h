@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Core event base types and dispatcher for engine-wide event handling.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief hierarchy ui
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

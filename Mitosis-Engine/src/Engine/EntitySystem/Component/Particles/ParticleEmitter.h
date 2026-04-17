@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // This component class is responsible for emitting particles.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

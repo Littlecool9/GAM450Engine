@@ -4,7 +4,7 @@
  * @brief   Script for a button that returns to a parent menu panel when clicked; also listens for
  * ESC key to trigger click. Used for the back button on the pause menu and the instruction screen.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

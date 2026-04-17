@@ -4,7 +4,7 @@
  * @brief Tile represents a tile definition shared by many cells. It is NOT a runtime tile instance.
  * @brief Currently only holds TileID, more properties like gameplay or lifecycle related logic can be added later
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

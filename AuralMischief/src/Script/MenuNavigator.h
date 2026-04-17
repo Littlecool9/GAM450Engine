@@ -6,7 +6,7 @@
  *        button list and highlight tint are configured entirely from JSON;
  *        navigation order matches the order of UUIDs in the "buttons" array.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author rahul
  * @brief FMOD-only implementation directly connecting with API
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -6,7 +6,7 @@
  *        the PauseMenuPanel GameObject and drives all focus state for the
  *        actionable items in the pause menu (volume stepper, resume, return).
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

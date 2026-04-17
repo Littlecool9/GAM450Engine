@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Window class for the Windows OS
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  switches scene on button click
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

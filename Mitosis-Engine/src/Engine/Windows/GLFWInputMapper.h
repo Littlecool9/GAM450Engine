@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Maps GLFW-specific input codes to engine-defined input codes.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

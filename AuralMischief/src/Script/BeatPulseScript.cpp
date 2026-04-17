@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Scales a sprite with exponential decay on every beat.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 #include "pch.h"

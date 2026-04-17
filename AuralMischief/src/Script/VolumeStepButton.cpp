@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Button script that steps master volume by a serialized Delta on click.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

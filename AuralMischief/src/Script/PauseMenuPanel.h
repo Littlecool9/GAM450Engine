@@ -10,7 +10,7 @@
  *        Sibling GameObjects are used rather than a parent/child hierarchy
  *        because Mitosis scene JSON stores GameObjects as a flat list.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

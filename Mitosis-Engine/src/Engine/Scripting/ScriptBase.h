@@ -3,7 +3,7 @@
  * @author rahul
  * @brief Base class for user-authored gameplay scripts with Unity-style lifecycle callbacks.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author dream
  * @brief  Positions a beatline overlay and animates multiple converging beat markers
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  basic string formats for the engine
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

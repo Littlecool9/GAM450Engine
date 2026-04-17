@@ -3,7 +3,7 @@
  * @author rahul
  * @brief Interface for generic backend connection to Audio library
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

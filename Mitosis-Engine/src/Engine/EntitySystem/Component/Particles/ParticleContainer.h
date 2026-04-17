@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // This class acts as a container to hold and manage particles.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

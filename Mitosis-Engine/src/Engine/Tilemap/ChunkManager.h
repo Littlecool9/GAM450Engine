@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief This class manages the loading and unloading of chunks in the tilemap
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

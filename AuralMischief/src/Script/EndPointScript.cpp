@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  trigger win
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

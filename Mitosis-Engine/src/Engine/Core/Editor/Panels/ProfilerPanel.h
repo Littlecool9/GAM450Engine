@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Editor panel for FPS and memory profiling
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

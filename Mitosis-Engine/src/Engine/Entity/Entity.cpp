@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief: Implementation file for Entity class
  *
- * @copyright Copyright (c) 2025 - MTS Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

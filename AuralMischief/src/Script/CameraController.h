@@ -4,7 +4,7 @@
  * @brief  script for camera behavior control, including zoom and shake effects, as well as optional
  * target following.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

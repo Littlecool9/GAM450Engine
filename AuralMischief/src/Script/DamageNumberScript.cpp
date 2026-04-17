@@ -4,7 +4,7 @@
  * @brief  Animates a single digit sprite in a configurable direction while fading out, then
  * disables itself
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

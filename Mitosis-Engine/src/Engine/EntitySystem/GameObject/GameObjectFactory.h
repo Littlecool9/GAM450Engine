@@ -4,7 +4,7 @@
  * @brief This header defines the GameObjectFactory class, which is responsible for creating
  * GameObjects.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

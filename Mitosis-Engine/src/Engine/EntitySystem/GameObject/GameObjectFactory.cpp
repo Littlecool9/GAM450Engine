@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief This is a Factory class to create GameObjects based on string or enum types.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

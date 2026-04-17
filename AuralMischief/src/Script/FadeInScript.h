@@ -4,7 +4,7 @@
  * @brief  Fades out the SpriteRenderer alpha from 1 to 0 over a configurable duration,
  *         creating a fade-in effect for the scene underneath.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief  Core renderer implementation: command queue execution, coordinate conversion, and viewport management.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 #include "pch.h"

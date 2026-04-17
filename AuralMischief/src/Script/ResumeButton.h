@@ -6,7 +6,7 @@
  *        menu visibility stay in sync with the ESC shortcut and the header
  *        pause icon.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

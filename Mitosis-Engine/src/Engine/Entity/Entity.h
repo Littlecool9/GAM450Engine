@@ -4,7 +4,7 @@
  * @brief: Header file for Entity class
  * @brief: This is a base class for all entities in the engine
  * @brief: This class holds the UUID property
- * @copyright Copyright (c) 2025 - MTS Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

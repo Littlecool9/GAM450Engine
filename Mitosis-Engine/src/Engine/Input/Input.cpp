@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Centralized, platform-independent input service providing frame-based input queries.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

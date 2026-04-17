@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 1/8/2026 6:55:28 AM
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

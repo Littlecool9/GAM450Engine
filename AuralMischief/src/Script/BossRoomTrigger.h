@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Tracks whether the player is currently inside the boss room trigger zone
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

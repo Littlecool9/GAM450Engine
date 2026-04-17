@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Physics commands for physics systems to queue
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

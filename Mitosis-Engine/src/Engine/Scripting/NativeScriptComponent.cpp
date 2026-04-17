@@ -3,7 +3,7 @@
  * @author rahul
  * @brief Component that hosts and drives a user-defined native C++ script attached to a GameObject.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

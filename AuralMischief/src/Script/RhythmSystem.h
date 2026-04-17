@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief: Connect ConductorySystem with gameplay logic.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  */
 
 #pragma once

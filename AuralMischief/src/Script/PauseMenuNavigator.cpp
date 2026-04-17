@@ -4,7 +4,7 @@
  * @brief Keyboard navigation, focus signifier, and confirm dialog logic for
  *        the pause menu.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

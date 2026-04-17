@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  The core physics system in 2D.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

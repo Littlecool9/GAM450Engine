@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Tests for MemoryManager
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

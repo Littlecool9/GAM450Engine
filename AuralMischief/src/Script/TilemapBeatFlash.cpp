@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  makes tilemap flash on given beat
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

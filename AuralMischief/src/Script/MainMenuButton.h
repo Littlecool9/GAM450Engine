@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief  Script that switches to the gameplay scene when the main menu button is clicked.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

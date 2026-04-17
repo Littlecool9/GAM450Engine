@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief An interface for components that can submit render commands to the Renderer.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -5,7 +5,7 @@
  *        The same class serves both the "−" and "+" buttons; each instance
  *        stores its own Delta (negative or positive) in the scene JSON.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

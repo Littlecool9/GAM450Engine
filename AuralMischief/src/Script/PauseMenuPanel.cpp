@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Visibility controller for the pause menu.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

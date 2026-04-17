@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief  Test script — logs to console when the Button on this GameObject is clicked.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

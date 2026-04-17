@@ -4,7 +4,7 @@
  * @brief: CheckPoint script for player respawn logic. When the player collides with this
  * checkpoint,
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

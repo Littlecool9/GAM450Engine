@@ -4,7 +4,7 @@
  * @brief: This is a script that attached to a platform and allows moving to the target position at
  * call
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

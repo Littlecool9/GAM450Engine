@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Implementation of the reusable menu focus / highlight script.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

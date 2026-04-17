@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief Component to allow gameobjects to detect/listen to audio
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

@@ -3,7 +3,7 @@
  * @author rahul
  * @brief Engine-facing audio service built on IAudioBackend
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

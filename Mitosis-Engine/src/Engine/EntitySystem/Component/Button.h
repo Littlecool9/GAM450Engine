@@ -5,7 +5,7 @@
  *         Hit area = UITransform scale half-extents.
  *         Subscribe to delegates at runtime; they are cleared on Clone().
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

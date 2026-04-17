@@ -4,7 +4,7 @@
  * @brief RhythmSystem Manages rhythm-based gameplay logic, connecting ConductorSystem beats to
  * platform puzzles and other mechanics.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  */
 
 #include "pch.h"

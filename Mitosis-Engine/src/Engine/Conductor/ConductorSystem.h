@@ -4,7 +4,7 @@
  * @brief Rhythm conductor: detects beat/half-beat/bar crossings from AudioManager
  *        and dispatches them to game-layer subscribers via Delegate<BeatInfo>.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

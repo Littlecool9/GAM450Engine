@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  transform component for screen space GameObjects
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

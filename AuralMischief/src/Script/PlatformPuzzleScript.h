@@ -5,7 +5,7 @@
  *        Each puzzle entity has this script attached to configure its platforms,
  *        movement sequences, and timing via UUID references.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  */
 #pragma once
 #include "Engine/Scripting/ScriptBase.h"

@@ -3,7 +3,7 @@
  * @author rahul
  * @brief Audio types and associated configurations
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

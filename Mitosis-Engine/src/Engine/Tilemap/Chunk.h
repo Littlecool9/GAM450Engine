@@ -4,7 +4,7 @@
  * @brief Chunk represents a section of the tilemap to optimize memory and performance
  * @brief A chunk is the basic unit for loading/unloading and updating the tilemap
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

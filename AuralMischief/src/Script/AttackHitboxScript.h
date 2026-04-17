@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief // Script to control attack hitboxes spawned by player
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

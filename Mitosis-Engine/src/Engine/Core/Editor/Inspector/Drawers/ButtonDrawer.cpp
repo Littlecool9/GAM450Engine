@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief  Inspector drawer for the Button component
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

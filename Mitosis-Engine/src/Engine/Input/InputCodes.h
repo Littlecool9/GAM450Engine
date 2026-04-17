@@ -3,7 +3,7 @@
  * @author rahul
  * @brief // Engine-defined, platform-agnostic key and mouse codes used by the input system.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

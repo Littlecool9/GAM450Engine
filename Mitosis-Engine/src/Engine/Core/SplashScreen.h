@@ -4,7 +4,7 @@
  * @brief  Splash screen configuration and runner.
  *         Game projects configure entries via GetSplashScreens() or LoadFromJson().
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

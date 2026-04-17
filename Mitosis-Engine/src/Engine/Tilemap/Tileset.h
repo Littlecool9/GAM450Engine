@@ -4,7 +4,7 @@
  * @brief This is a map between the definition of a tile and the ID that is used in tile map
  * @brief decoupling the tile data with the rendering and gameplay logical layer
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

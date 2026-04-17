@@ -3,7 +3,7 @@
  * @author rahul
  * @brief FPS Counter for the Engine
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

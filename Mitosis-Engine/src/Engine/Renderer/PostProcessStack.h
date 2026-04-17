@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Manages a chain of post-processing effects with ping-pong FBOs
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

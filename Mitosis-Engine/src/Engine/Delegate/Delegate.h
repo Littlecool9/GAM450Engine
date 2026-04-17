@@ -4,7 +4,7 @@
  * @brief: This is a tool class for C# style delegate implementation.
  * implementation.
  *
- * @copyright Copyright (c) 2025 - RM Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

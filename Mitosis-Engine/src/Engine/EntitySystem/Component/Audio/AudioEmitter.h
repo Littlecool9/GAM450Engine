@@ -3,7 +3,7 @@
  * @author Dong Ta
  * @brief Component to allow a gameobject to emit audio
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 #pragma once

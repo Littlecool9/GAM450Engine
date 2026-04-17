@@ -3,7 +3,7 @@
  * @author josh.siegel
  * @brief  credits scroll script
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

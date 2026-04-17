@@ -5,7 +5,7 @@
  *        Restores time scale and audio before switching scenes, so the main
  *        menu isn't loaded frozen when the player returns while paused.
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

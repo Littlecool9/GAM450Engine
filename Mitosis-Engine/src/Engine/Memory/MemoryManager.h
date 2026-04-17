@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Class that control of allocation and deallocation
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

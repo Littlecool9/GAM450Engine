@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief  Asset browser panel — lists files on disk and supports drag-drop onto Inspector fields
  *
- * @copyright Copyright (c) 2026 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

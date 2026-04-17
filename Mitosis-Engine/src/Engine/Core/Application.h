@@ -3,7 +3,7 @@
  * @author sumin.park
  * @brief The application class that the app will inherit.
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 #pragma once

@@ -3,7 +3,7 @@
  * @author Jackey Cen
  * @brief Implementation file for UUID class
  *
- * @copyright Copyright (c) 2025 - Mitosis Engine
+ * @copyright Copyright (c) 2026 DigiPen (USA) Corporation
  *
  */
 

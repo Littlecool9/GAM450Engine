@@ -21,11 +21,14 @@
 
 #include "Player/PlayerController.h"
 #include "EnemyBehaviors/EnemyController.h"
+#include "BossRoomTrigger.h"
 
 void CheckPoint::Init()
 {
     mBossGO = nullptr;
     mBossEC = nullptr;
+    mBossRoomTriggerGO = nullptr;
+    mBossRoomTrigger = nullptr;
     mSr = nullptr;
 }
 
@@ -42,6 +45,13 @@ void CheckPoint::Start()
             mBossGO = scene->FindGameObjectByUUID(mBossUUID);
             if (mBossGO)
                 mBossEC = mBossGO->GetScript<mts::EnemyController>();
+
+            if (mBossRoomTriggerUUID.IsValid())
+            {
+                mBossRoomTriggerGO = scene->FindGameObjectByUUID(mBossRoomTriggerUUID);
+                if (mBossRoomTriggerGO)
+                    mBossRoomTrigger = mBossRoomTriggerGO->GetScript<BossRoomTrigger>();
+            }
         }
     }
 }
@@ -51,14 +61,25 @@ void CheckPoint::OnUpdate(float dt)
     if (!mIsBossLocked || !mSr)
         return;
 
+    auto* scene = mts::SceneSystem::GetCurrentScene();
+
     // Validate cached boss GO still in scene — clears cache when boss is destroyed
     if (mBossEC)
     {
-        auto* scene = mts::SceneSystem::GetCurrentScene();
         if (!scene || !scene->FindGameObjectByUUID(mBossUUID))
         {
             mBossEC = nullptr;
             mBossGO = nullptr;
+        }
+    }
+
+    // Validate cached room trigger GO still in scene
+    if (mBossRoomTrigger)
+    {
+        if (!scene || !scene->FindGameObjectByUUID(mBossRoomTriggerUUID))
+        {
+            mBossRoomTrigger = nullptr;
+            mBossRoomTriggerGO = nullptr;
         }
     }
 
@@ -100,6 +121,8 @@ void CheckPoint::DeserializeFields(mts::JsonValue const& fields)
         mBossUUID = mts::UUID::FromString(fields["BossUUID"].GetString());
     if (fields.Has("LockedTint"))
         mLockedTint = fields["LockedTint"].GetVec3(mLockedTint);
+    if (fields.Has("BossRoomTriggerUUID"))
+        mBossRoomTriggerUUID = mts::UUID::FromString(fields["BossRoomTriggerUUID"].GetString());
 }
 
 void CheckPoint::SerializeFields(mts::JsonDocument& out) const
@@ -108,6 +131,8 @@ void CheckPoint::SerializeFields(mts::JsonDocument& out) const
     if (mBossUUID.IsValid())
         out.WriteString("BossUUID", mBossUUID.ToString().c_str());
     out.WriteVec3("LockedTint", mLockedTint);
+    if (mBossRoomTriggerUUID.IsValid())
+        out.WriteString("BossRoomTriggerUUID", mBossRoomTriggerUUID.ToString().c_str());
 }
 
 void CheckPoint::GetInspectorFields(std::vector<mts::ScriptField>& fields)
@@ -122,16 +147,24 @@ void CheckPoint::GetInspectorFields(std::vector<mts::ScriptField>& fields)
     fields.push_back({.name = "Locked Tint",
                       .type = mts::ScriptField::Type::Color,
                       .ptr = {.v3 = &mLockedTint}});
+    fields.push_back({.name = "Boss Room Trigger GO",
+                      .type = mts::ScriptField::Type::GameObject,
+                      .ptr = {.go = &mBossRoomTriggerGO},
+                      .uuid = &mBossRoomTriggerUUID});
 }
 
 bool CheckPoint::IsBossLocking()
 {
     if (!mBossEC)
         return false;
-    if (!mIsWasLocked && mBossEC->GetIsAgrroed())
-        mIsWasLocked = true;
 
-    return mIsWasLocked && mBossEC->GetCurHP() > 0;
+    bool isBossAlive = mBossEC->GetCurHP() > 0;
+    bool isPlayerInRoom = !mBossRoomTrigger || mBossRoomTrigger->IsPlayerInside();
+
+    if (!isPlayerInRoom)
+        return false;
+    else
+        return isBossAlive;
 }
 
 glm::vec3 CheckPoint::GetCheckPointPosition() const

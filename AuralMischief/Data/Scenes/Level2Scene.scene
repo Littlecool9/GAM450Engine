@@ -9783,7 +9783,8 @@
                                 1.0,
                                 0.30000001192092896,
                                 0.30000001192092896
-                            ]
+                            ],
+                            "BossRoomTriggerUUID": "52e186c4-47d2-4006-ac51-64e68a53245e"
                         }
                     }
                 },
@@ -12196,7 +12197,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 0.0,
+                        "Alpha": 1.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -12248,7 +12249,7 @@
                             1.0,
                             1.0
                         ],
-                        "Alpha": 1.0,
+                        "Alpha": 0.0,
                         "FrameIndex": 0,
                         "ParallaxFactorX": 0.0,
                         "RenderLayer": 101,
@@ -12313,49 +12314,6 @@
                             "Category": 0,
                             "TextGoUUID": "2721a243-8dad-4cc0-86ae-da704eeb6c91"
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "UUID": "784719a0-c244-42e3-9d98-6f739e64505f",
-            "Name": "CheatsText",
-            "Layer": 0,
-            "IsActive": true,
-            "Tags": [],
-            "Components": [
-                {
-                    "Type": "UITransform",
-                    "Data": {
-                        "Anchor": "TopLeft",
-                        "Offset": [
-                            1536.0,
-                            855.0
-                        ],
-                        "Depth": 0.0,
-                        "Scale": [
-                            1.0,
-                            0.5,
-                            1.0
-                        ],
-                        "Rotation": 0.0
-                    }
-                },
-                {
-                    "Type": "SpriteRenderer",
-                    "Data": {
-                        "TintColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "Alpha": 1.0,
-                        "FrameIndex": 0,
-                        "ParallaxFactorX": 1.0,
-                        "RenderLayer": 0,
-                        "TextureResource": "Data/Resources/CheatsText.tex",
-                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
-                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]
@@ -13066,7 +13024,8 @@
                                 1.0,
                                 0.30000001192092896,
                                 0.30000001192092896
-                            ]
+                            ],
+                            "BossRoomTriggerUUID": "52e186c4-47d2-4006-ac51-64e68a53245e"
                         }
                     }
                 },
@@ -13112,6 +13071,108 @@
                         "FrameDuration": 0.10000000149011612,
                         "IsRunning": 1,
                         "IsLooping": 1
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "52e186c4-47d2-4006-ac51-64e68a53245e",
+            "Name": "BossRoomTrigger",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "Transform",
+                    "Data": {
+                        "Position": [
+                            108.25,
+                            36.5,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            3.0,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "BoxCollider2D",
+                    "Data": {
+                        "Width": 1.0,
+                        "Height": 1.0,
+                        "Offset": [
+                            0.0,
+                            0.0
+                        ],
+                        "IsTrigger": 1
+                    }
+                },
+                {
+                    "Type": "NativeScript",
+                    "Data": {
+                        "Class": "BossRoomTrigger"
+                    }
+                },
+                {
+                    "Type": "RigidBody2D",
+                    "Data": {
+                        "Mass": 1.0,
+                        "Inertia": 1.0,
+                        "LinearVelocity": [
+                            0.0,
+                            0.0
+                        ],
+                        "AngularVelocity": 0.0,
+                        "LinearDamping": 0.0,
+                        "AngularDamping": 0.0,
+                        "GravityScale": 0.0,
+                        "BodyType": 0
+                    }
+                }
+            ]
+        },
+        {
+            "UUID": "e27c4fb8-d5ba-452c-84d6-1f35d918973a",
+            "Name": "CheatsText",
+            "Layer": 0,
+            "IsActive": true,
+            "Tags": [],
+            "Components": [
+                {
+                    "Type": "UITransform",
+                    "Data": {
+                        "Anchor": "TopLeft",
+                        "Offset": [
+                            1536.0,
+                            855.0
+                        ],
+                        "Depth": 0.0,
+                        "Scale": [
+                            1.0,
+                            0.5,
+                            1.0
+                        ],
+                        "Rotation": 0.0
+                    }
+                },
+                {
+                    "Type": "SpriteRenderer",
+                    "Data": {
+                        "TintColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "Alpha": 1.0,
+                        "FrameIndex": 0,
+                        "ParallaxFactorX": 1.0,
+                        "RenderLayer": 0,
+                        "TextureResource": "Data/Resources/CheatsText.tex",
+                        "MeshResource": "Engine/Resources/DefaultMeshResource.mesh",
+                        "ShaderResource": "Engine/Resources/DefaultShaderResource.shader"
                     }
                 }
             ]

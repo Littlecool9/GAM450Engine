@@ -52,6 +52,7 @@
 #include "Engine/EntitySystem/Component/Transform.h"
 #include "Engine/EntitySystem/GameObject/GameObject.h"
 #include "Engine/EntitySystem/GameObject/GameObjectFactory.h"
+#include "Script/BossRoomTrigger.h"
 #include "Script/CreditsButton.h"
 #include "Script/QuitButton.h"
 #include "Script/MenuNavigator.h"
@@ -160,6 +161,8 @@ void AuralMischief::RegisterScripts()
                                        []() { return new MenuNavigator(); });
     mts::ScriptFactory::RegisterScript(IntroScreenScript::StaticClassName(),
                                        []() { return new IntroScreenScript(); });
+    mts::ScriptFactory::RegisterScript(BossRoomTrigger::StaticClassName(),
+                                       []() { return new BossRoomTrigger(); });
 }
 
 void AuralMischief::OnUpdate(float dt)

@@ -12,6 +12,8 @@
 #include "Engine/Scripting/ScriptBase.h"
 #include "Engine/UUID/UUID.h"
 
+class BossRoomTrigger;
+
 namespace mts
 {
     class Collider2D;
@@ -43,10 +45,12 @@ class CheckPoint : public mts::ScriptBase
 
    private:
     bool mIsBossLocked = false;
-    bool mIsWasLocked = false;
     mts::UUID mBossUUID = mts::UUID::InvalidID;
-    mts::GameObject* mBossGO = nullptr;       // inspector display; resolved via UUID
-    mts::EnemyController* mBossEC = nullptr;  // cached in Start()
+    mts::GameObject* mBossGO = nullptr;
+    mts::EnemyController* mBossEC = nullptr;
+    mts::UUID mBossRoomTriggerUUID = mts::UUID::InvalidID;
+    mts::GameObject* mBossRoomTriggerGO = nullptr;
+    BossRoomTrigger* mBossRoomTrigger = nullptr;
     glm::vec3 mLockedTint = {1.0f, 0.3f, 0.3f};
     mts::SpriteRenderer* mSr = nullptr;
     mts::Collider2D* mCollider = nullptr;

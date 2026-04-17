@@ -228,6 +228,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClInclude Include="src\Script\DamageNumberSpawner.h" />
     <ClInclude Include="src\Script\PauseButton.h" />
     <ClInclude Include="src\Script\CheckPoint.h" />
+    <ClInclude Include="src\Script\BossRoomTrigger.h" />
     <ClInclude Include="src\Script\EnemyBehaviors\BulletBehavior.h">
       <SubType>
       </SubType>
@@ -315,6 +316,7 @@ IF NOT EXIST "$(OutDir)Assets" (mklink /J "$(OutDir)Assets" "$(ProjectDir)Assets
     <ClCompile Include="src\Script\DamageNumberSpawner.cpp" />
     <ClCompile Include="src\Script\PauseButton.cpp" />
     <ClCompile Include="src\Script\CheckPoint.cpp" />
+    <ClCompile Include="src\Script\BossRoomTrigger.cpp" />
     <ClCompile Include="src\Script\EnemyBehaviors\BulletBehavior.cpp">
       <SubType>
       </SubType>

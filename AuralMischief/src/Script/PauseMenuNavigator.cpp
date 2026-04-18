@@ -234,12 +234,12 @@ void PauseMenuNavigator::OnUpdate(float /*dt*/)
 
     if (mActiveGroup == Group::Main)
     {
-        if (upPressed)
+        if (upPressed || leftPressed)
         {
             SetMainCursor(mMainCursor - 1);
             mts::AudioManager::Get().Play("event:/hero_evade");
         }
-        else if (downPressed)
+        else if (downPressed || rightPressed)
         {
             SetMainCursor(mMainCursor + 1);
             mts::AudioManager::Get().Play("event:/hero_evade");

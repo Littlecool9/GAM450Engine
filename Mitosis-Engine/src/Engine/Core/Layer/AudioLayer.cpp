@@ -37,7 +37,7 @@ namespace mts
         AudioManager::SetManager(mAudio.get());
 
         AudioConfig audioConfig{};
-        audioConfig.liveUpdate = true;  // Dev only
+        audioConfig.liveUpdate = false;
         audioConfig.maxVirtualVoices = 1024;
         audioConfig.maxRealVoices = 64;
 

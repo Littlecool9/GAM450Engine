@@ -53,7 +53,7 @@ namespace mts
     {
         int maxVirtualVoices = 1024;  // FMOD virtual voices
         int maxRealVoices = 64;       // "real" mixing voices
-        bool liveUpdate = true;       // enable FMOD live update in dev builds
+        bool liveUpdate = false;      // FMOD live update opens TCP 9264 (firewall prompt)
     };
 
     // Convenience 2D helper

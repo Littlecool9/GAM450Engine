@@ -36,7 +36,7 @@ class AuralMischief : public mts::Application
     std::string mInitialScene = "Data/Scenes/MainMenu.scene";
     std::string mSceneRegistry = "Data/Properties/SceneRegistry.json";
     std::string mSplashScreenConfigPath = "Data/Splashscreen.json";
-    mts::WindowProps mWindowProps{.IconPath = "icon.png"};
+    mts::WindowProps mWindowProps;
 
     // One-shot seed for AudioManager category volumes — AudioController::Init()
     // applies scene-authored volumes only on the first scene of the session; later

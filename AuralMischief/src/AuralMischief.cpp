@@ -67,7 +67,7 @@ AuralMischief* AuralMischief::sInstance = nullptr;
 AuralMischief::AuralMischief()
 {
     sInstance = this;
-    mWindowProps = {.Title = "Aural Mischief", .Width = 1600, .Height = 900, .VSync = false};
+    mWindowProps = {.Title = "Aural Mischief", .Width = 1600, .Height = 900, .VSync = false, .IconPath = "Assets/icon.png"};
     mts::Renderer::SetUIReferenceSize(1600, 900);
 }
 
